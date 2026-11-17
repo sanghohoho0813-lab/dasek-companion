@@ -1,5 +1,8 @@
 # PROJECT_STATE
 
+## 배포
+공식 DEMO 주소: https://dasek-companion-522v.vercel.app (운영 AX: `/ax`) — `claude/practical-sagan-nhdlf2` 자동 배포. 데이터는 방문자 브라우저별 저장(공유 안 됨).
+
 ## ▶ 2차 고도화 반영 (2026-11-17) — DELIVERY STAGE: **DEMO** (변경 없음)
 
 | 화면 | 2차 핵심 변경 | 상태 |

@@ -7,6 +7,12 @@ Mobile-first wellness membership platform and connected business AX for Real Sic
 
 > **현재 단계: DEMO.** 데이터는 브라우저(localStorage)에 저장되는 시연 데이터이며 실제 고객·매출이 아닙니다. 예시 메뉴·예시 고양이 프로필·예시 혜택은 운영자 확인 후 교체해야 합니다. **이 상태로 실제 운영에 쓰지 마세요**(브라우저 저장은 조작 가능) — `RECOMMENDATIONS.md` R-01.
 
+## 배포 (DEMO)
+- **공식 주소:** https://dasek-companion-522v.vercel.app  (고객) · https://dasek-companion-522v.vercel.app/ax  (운영 AX)
+- Vercel이 `claude/practical-sagan-nhdlf2` 브랜치를 배포합니다. 이 브랜치에 푸시하면 자동 반영됩니다.
+- `dasek-companion.vercel.app`(이전 프로젝트)은 빈 배포가 연결돼 있어 404입니다 — 사용하지 마세요.
+- DEMO 데이터는 **각 방문자의 브라우저에만** 저장됩니다. 기기·브라우저가 다르면 서로의 가입·확인 내역이 보이지 않습니다.
+
 ## 실행
 ```bash
 npm install
