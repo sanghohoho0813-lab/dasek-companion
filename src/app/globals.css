@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── AX 7 Canonical Themes (Unified v4.1 C절) — 값은 "R G B" ── */
+:root,
+[data-ax-theme='pure-white'] {
+  --ax-shell: 255 255 255; --ax-primary: 23 27 32; --ax-secondary: 52 59 68; --ax-accent: 107 118 128; --ax-highlight: 212 122 74; --ax-soft: 240 241 239;
+  --ax-shell-fg: 23 27 32; --ax-shell-muted: 107 118 128; --ax-shell-hover: 23 27 32;
+}
+[data-ax-theme='deep-navy'] {
+  --ax-shell: 11 24 48; --ax-primary: 36 87 214; --ax-secondary: 22 135 167; --ax-accent: 23 168 137; --ax-highlight: 231 200 115; --ax-soft: 220 232 247;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 190 202 222; --ax-shell-hover: 255 255 255;
+}
+[data-ax-theme='navy-gold'] {
+  --ax-shell: 17 26 45; --ax-primary: 40 71 167; --ax-secondary: 163 122 40; --ax-accent: 208 168 75; --ax-highlight: 240 217 149; --ax-soft: 239 232 215;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 196 202 216; --ax-shell-hover: 255 255 255;
+}
+[data-ax-theme='emerald-gold'] {
+  --ax-shell: 17 51 43; --ax-primary: 14 118 99; --ax-secondary: 44 146 119; --ax-accent: 180 134 42; --ax-highlight: 232 206 136; --ax-soft: 226 240 234;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 192 214 206; --ax-shell-hover: 255 255 255;
+}
+[data-ax-theme='forest-sage'] {
+  --ax-shell: 23 53 44; --ax-primary: 53 110 88; --ax-secondary: 115 151 126; --ax-accent: 165 142 77; --ax-highlight: 217 210 170; --ax-soft: 229 236 229;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 198 214 204; --ax-shell-hover: 255 255 255;
+}
+[data-ax-theme='deep-teal'] {
+  --ax-shell: 8 50 58; --ax-primary: 8 122 131; --ax-secondary: 21 151 163; --ax-accent: 210 112 76; --ax-highlight: 233 181 155; --ax-soft: 221 237 239;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 186 214 218; --ax-shell-hover: 255 255 255;
+}
+[data-ax-theme='onyx-gold'] {
+  --ax-shell: 21 23 28; --ax-primary: 52 57 66; --ax-secondary: 106 113 124; --ax-accent: 184 144 50; --ax-highlight: 224 199 111; --ax-soft: 230 232 236;
+  --ax-shell-fg: 255 255 255; --ax-shell-muted: 190 194 202; --ax-shell-hover: 255 255 255;
+}
+
+/* ── Font scale (설정 > 글자 크기) ── */
+html[data-font='sm'] body { zoom: 0.94; }
+html[data-font='lg'] body { zoom: 1.1; }
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  @apply bg-white text-ink antialiased;
+  font-feature-settings: 'tnum' 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+* { -webkit-tap-highlight-color: transparent; }
+.tabular { font-variant-numeric: tabular-nums; }
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.snap-x-mandatory { scroll-snap-type: x mandatory; }
+.snap-start { scroll-snap-align: start; }
+.pb-safe { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+.clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* 공통 hover 상승 (Desktop만) */
+@media (hover: hover) {
+  .lift { transition: transform 160ms ease-out, box-shadow 160ms ease-out; }
+  .lift:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(16,40,52,.06), 0 14px 30px rgba(16,40,52,.10); }
+  .zoom-img img, .zoom-img svg { transition: transform 260ms ease-out; }
+  .zoom-img:hover img, .zoom-img:hover svg { transform: scale(1.025); }
+}
+.press:active { transform: scale(.985); }
+
+/* 첫 진입 Section reveal */
+.reveal > * { animation: fade-up 320ms cubic-bezier(.2,.7,.2,1) both; }
+.reveal > *:nth-child(2) { animation-delay: 50ms; }
+.reveal > *:nth-child(3) { animation-delay: 100ms; }
+.reveal > *:nth-child(4) { animation-delay: 150ms; }
+.reveal > *:nth-child(5) { animation-delay: 200ms; }
+.reveal > *:nth-child(n+6) { animation-delay: 250ms; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* Route 전환 */
+.route-in { animation: route-in 160ms ease-out both; }
+@keyframes route-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+}
+html[data-motion='reduce'] *, html[data-motion='reduce'] *::before, html[data-motion='reduce'] *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+
+/* Mobile Frame 안에서는 스크롤바 숨김 */
+html[data-frame='mobile'] ::-webkit-scrollbar { display: none; }
+html[data-frame='mobile'] { scrollbar-width: none; }
+
+:focus-visible { outline-offset: 2px; }

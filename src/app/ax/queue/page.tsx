@@ -1,0 +1,109 @@
+'use client';
+import { ClipboardCheck, PlusCircle, Ticket } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
+import { CounterPurchase, CouponRedeem } from '@/components/ax/CounterTools';
+import { PageIntro, Panel, useOperator } from '@/components/ax/Shell';
+import { QueueRow } from '@/components/ax/widgets';
+import { Button, Empty, PageSkeleton, Segmented } from '@/components/ui';
+import { fmtDate, relTime } from '@/lib/util';
+import { getProfile } from '@/lib/rules';
+
+function Inner() {
+  const { s, can } = useOperator();
+  const sp = useSearchParams();
+  const [tab, setTab] = useState<'checkin' | 'purchase' | 'other' | 'done'>((sp.get('tab') as 'other') ?? 'checkin');
+  const [counter, setCounter] = useState(false);
+  const [redeem, setRedeem] = useState(false);
+  if (!s) return <PageSkeleton />;
+  const open = s.tasks.filter((t) => t.status === 'OPEN').sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+  const by = {
+    checkin: open.filter((t) => t.type === 'VERIFY_CHECKIN'),
+    purchase: open.filter((t) => t.type === 'VERIFY_PURCHASE'),
+    other: open.filter((t) => t.type !== 'VERIFY_CHECKIN' && t.type !== 'VERIFY_PURCHASE'),
+  };
+  const done = s.tasks.filter((t) => t.status !== 'OPEN' && (t.type === 'VERIFY_CHECKIN' || t.type === 'VERIFY_PURCHASE')).sort((a, b) => ((a.doneAt ?? '') < (b.doneAt ?? '') ? 1 : -1)).slice(0, 30);
+  return (
+    <div>
+      <PageIntro
+        title="방문·구매 확인"
+        body="고객의 체크인과 구매 확인 요청을 직원이 확인하는 곳입니다. 확인된 건만 스탬프·추천 보상·KPI·Proof에 반영됩니다. 오래된 요청부터 보여요."
+        right={
+          <>
+            <Button tone="ax" variant="outline" onClick={() => setRedeem(true)} data-testid="open-redeem">
+              <Ticket className="h-4 w-4" /> 쿠폰 사용 처리
+            </Button>
+            <Button tone="ax" onClick={() => setCounter(true)} disabled={!can('purchase.create')} data-testid="open-counter">
+              <PlusCircle className="h-4 w-4" /> 카운터 구매 등록
+            </Button>
+          </>
+        }
+      />
+      <Segmented
+        tone="ax"
+        label="큐 종류"
+        value={tab}
+        onChange={setTab}
+        options={[
+          { value: 'checkin', label: '방문 체크인', count: by.checkin.length },
+          { value: 'purchase', label: '구매 확인', count: by.purchase.length },
+          { value: 'other', label: '사진·요청·검토', count: by.other.length },
+          { value: 'done', label: '처리 완료' },
+        ]}
+      />
+      <div className="mt-4">
+        {tab !== 'done' ? (
+          by[tab].length ? (
+            <ul className="space-y-2" data-testid="queue-list">
+              {by[tab].map((t) => (
+                <QueueRow key={t.id} s={s} t={t} canVerify={can('queue.verify')} />
+              ))}
+            </ul>
+          ) : (
+            <Empty icon={<ClipboardCheck className="h-8 w-8" />} title="대기 중인 요청이 없어요" body="고객 화면에서 체크인하거나 '구매했어요'를 누르면 여기로 들어와요." />
+          )
+        ) : (
+          <Panel>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[560px] text-left text-[13px]">
+                <thead className="text-[12px] text-slate-400">
+                  <tr>
+                    <th className="pb-2 font-semibold">요청</th>
+                    <th className="pb-2 font-semibold">결과</th>
+                    <th className="pb-2 font-semibold">처리자</th>
+                    <th className="pb-2 font-semibold">요청 → 처리</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {done.map((t) => {
+                    const rec = t.type === 'VERIFY_CHECKIN' ? s.checkins.find((c) => c.id === t.refId) : s.verifications.find((v) => v.id === t.refId);
+                    return (
+                      <tr key={t.id} className="hover:bg-slate-50">
+                        <td className="py-2.5 font-semibold text-slate-800">{t.title}</td>
+                        <td className="py-2.5">{rec?.status === 'CONFIRMED' ? '확인' : rec?.status === 'REJECTED' ? `반려 (${rec.rejectReason})` : rec?.status}</td>
+                        <td className="py-2.5 text-slate-500">{getProfile(s, t.doneBy)?.name ?? '-'}</td>
+                        <td className="py-2.5 text-slate-500">
+                          {fmtDate(t.createdAt, { time: true })} → {t.doneAt ? relTime(t.doneAt) : '-'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Panel>
+        )}
+      </div>
+      <CounterPurchase s={s} open={counter} onClose={() => setCounter(false)} />
+      <CouponRedeem s={s} open={redeem} onClose={() => setRedeem(false)} />
+    </div>
+  );
+}
+
+export default function QueuePage() {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <Inner />
+    </Suspense>
+  );
+}
