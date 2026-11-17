@@ -7,6 +7,7 @@ import * as D from '@/lib/domain';
 import { getProfile } from '@/lib/rules';
 import { act } from '@/lib/store';
 import { cx, fmtDate, maskName } from '@/lib/util';
+import { StatusPill, statusOf } from '@/components/ui/Status';
 
 const ST: Record<string, { l: string; c: string }> = {
   PENDING: { l: '가입함 · 첫 이용 확인 대기', c: 'bg-brand-50 text-brand-700' },
@@ -43,21 +44,21 @@ export default function ReferralPage() {
       <BackHeader title="친구 추천" fallback="/my" />
       <div className="mx-auto max-w-2xl px-4 pb-10 pt-5 md:px-5 md:pt-10">
         <div className="rounded-3xl bg-gradient-to-br from-sage-50 to-brand-50 p-6">
-          <p className="text-[13px] font-semibold text-sage-600">친구 추천</p>
-          <p className="mt-1 text-[21px] font-extrabold leading-snug text-ink">
+          <p className="text-[0.8125rem] font-semibold text-sage-600">친구 추천</p>
+          <p className="mt-1 text-[1.3125rem] font-extrabold leading-snug text-ink">
             친구의 첫 이용이 확인되면
             <br />
             {rule?.benefit}
           </p>
-          <p className="mt-1 text-[13px] text-ink-2">친구는 가입 시 {refereeRule?.benefit} 쿠폰을 받아요.</p>
+          <p className="mt-1 text-[0.8125rem] text-ink-2">친구는 가입 시 {refereeRule?.benefit} 쿠폰을 받아요.</p>
           <div className="mt-5 flex items-center justify-between rounded-2xl bg-white p-4">
             <div>
-              <p className="text-[12px] font-semibold text-ink-3">내 추천 코드</p>
-              <p className="font-mono text-[26px] font-extrabold tracking-[0.18em] text-ink" data-testid="my-ref-code">
+              <p className="text-[0.8125rem] font-semibold text-ink-3">내 추천 코드</p>
+              <p className="font-mono text-[1.625rem] font-extrabold tracking-[0.18em] text-ink" data-testid="my-ref-code">
                 {me.referralCode}
               </p>
             </div>
-            <button onClick={() => navigator.clipboard?.writeText(me.referralCode ?? '').then(() => toast('코드를 복사했어요.'))} aria-label="코드 복사" className="grid h-10 w-10 place-items-center rounded-full bg-canvas text-ink-2 hover:bg-line">
+            <button onClick={() => navigator.clipboard?.writeText(me.referralCode ?? '').then(() => toast('코드를 복사했어요.'))} aria-label="코드 복사" className="grid h-11 w-11 place-items-center rounded-full bg-canvas text-ink-2 hover:bg-line">
               <Copy className="h-4 w-4" />
             </button>
           </div>
@@ -66,16 +67,16 @@ export default function ReferralPage() {
           </Button>
         </div>
 
-        <h2 className="mt-8 text-[17px] font-extrabold text-ink">내가 추천한 친구</h2>
+        <h2 className="mt-8 text-[1.0625rem] font-extrabold text-ink">내가 추천한 친구</h2>
         <div className="mt-3 space-y-2">
           {list.length ? (
             list.map((r) => (
               <div key={r.id} className="flex items-center justify-between rounded-2xl bg-white p-4 ring-1 ring-line">
                 <div>
-                  <p className="text-[14.5px] font-bold text-ink">{maskName(getProfile(s, r.refereeId)?.name.replace(' (데모 고객)', '') ?? '회원')}</p>
-                  <p className="text-[12px] text-ink-3">{fmtDate(r.createdAt)} 가입</p>
+                  <p className="text-[0.9062rem] font-bold text-ink">{maskName(getProfile(s, r.refereeId)?.name.replace(' (데모 고객)', '') ?? '회원')}</p>
+                  <p className="text-[0.8125rem] text-ink-3">{fmtDate(r.createdAt)} 가입</p>
                 </div>
-                <span className={cx('rounded-full px-2.5 py-1 text-[12px] font-bold', ST[r.status].c)}>{ST[r.status].l}</span>
+                <span className={cx('rounded-full px-2.5 py-1 text-[0.8125rem] font-bold', ST[r.status].c)}>{ST[r.status].l}</span>
               </div>
             ))
           ) : (
@@ -84,20 +85,18 @@ export default function ReferralPage() {
         </div>
         {ledger.length > 0 && (
           <>
-            <h2 className="mt-8 text-[17px] font-extrabold text-ink">보상 내역</h2>
-            <ul className="mt-3 divide-y divide-line rounded-2xl bg-white ring-1 ring-line">
+            <h2 className="mt-8 text-[1.0625rem] font-extrabold text-ink">보상 내역</h2>
+            <ul className="mt-3 divide-y divide-line rounded-2xl border border-cardline bg-white">
               {ledger.map((l) => (
-                <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-3 text-[13.5px]">
+                <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-3 text-[0.9375rem]">
                   <span className="text-ink-2">{l.label}</span>
-                  <span className={cx('shrink-0 rounded-full px-2 py-0.5 text-[12px] font-bold', l.status === 'CONFIRMED' ? 'bg-emerald-50 text-emerald-700' : l.status === 'EXPECTED' ? 'bg-brand-50 text-brand-700' : 'bg-slate-100 text-slate-500')}>
-                    {{ CONFIRMED: '확정', EXPECTED: '예정', REVERSED: '취소' }[l.status]}
-                  </span>
+                  <StatusPill kind={statusOf.ledger(l.status)} label={{ CONFIRMED: '확정', EXPECTED: '확정 예정', REVERSED: '취소' }[l.status]} size="sm" />
                 </li>
               ))}
             </ul>
           </>
         )}
-        <div className="mt-8 rounded-2xl bg-canvas p-4 text-[12.5px] leading-relaxed text-ink-3">
+        <div className="mt-8 rounded-2xl bg-canvas p-4 text-[0.8438rem] leading-relaxed text-ink-3">
           <p className="flex items-center gap-1.5 font-bold text-ink-2">
             <ShieldCheck className="h-4 w-4" /> 추천 보상 기준
           </p>

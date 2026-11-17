@@ -37,13 +37,13 @@ export default function AnalyticsPage() {
           <div className="grid grid-cols-3 gap-2">
             {steps.map(([l, v], i) => (
               <div key={l} className="rounded-xl bg-slate-50 p-4">
-                <p className="text-[12px] font-semibold text-slate-500">{l}</p>
-                <p className="mt-1 text-[26px] font-extrabold text-slate-900 tabular">{v}</p>
-                {i > 0 && <p className="text-[12px] text-slate-500">이전 단계 대비 {Math.round((v / Math.max(1, steps[i - 1][1])) * 100)}%</p>}
+                <p className="text-[0.8125rem] font-semibold text-slate-500">{l}</p>
+                <p className="mt-1 text-[1.625rem] font-extrabold text-slate-900 tabular">{v}</p>
+                {i > 0 && <p className="text-[0.8125rem] text-slate-500">이전 단계 대비 {Math.round((v / Math.max(1, steps[i - 1][1])) * 100)}%</p>}
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[12px] text-slate-500">
+          <p className="mt-3 text-[0.8125rem] text-slate-500">
             추천 가입 {f.referred}명 중 보상 확정 {f.referralRewarded}명 · 두 브랜드 모두 확인 이용한 고객 {cross}명 (교차 이용)
           </p>
         </Panel>
@@ -53,8 +53,8 @@ export default function AnalyticsPage() {
       </div>
       <div className="grid gap-4 xl:grid-cols-2">
         <Panel title="매장별 확인 이용 (30일)" sub="매출 귀속은 사업자 확인 전 — 매장 단위로만 분리">
-          <table className="w-full text-left text-[13px]">
-            <thead className="text-[12px] text-slate-400">
+          <table className="ax-table w-full text-left text-[0.875rem]">
+            <thead className="text-[0.8125rem] text-slate-500">
               <tr>
                 <th className="pb-2 font-semibold">매장</th>
                 <th className="pb-2 text-right font-semibold">방문</th>
@@ -80,8 +80,8 @@ export default function AnalyticsPage() {
       </div>
       <div className="grid gap-4 xl:grid-cols-2">
         <Panel title="메뉴별 관심·구매" sub="저장 = 관심 신호, 구매 = 직원확인 구매(30일)">
-          <table className="w-full text-left text-[13px]">
-            <thead className="text-[12px] text-slate-400">
+          <table className="ax-table w-full text-left text-[0.875rem]">
+            <thead className="text-[0.8125rem] text-slate-500">
               <tr>
                 <th className="pb-2 font-semibold">메뉴</th>
                 <th className="pb-2 text-right font-semibold">조회</th>
@@ -107,7 +107,7 @@ export default function AnalyticsPage() {
           <Panel title="고양이 프로필 조회" sub="방문 의향 신호 · 회원+비회원">
             <ul className="space-y-2">
               {catViews.map((x) => (
-                <li key={x.c.id} className="flex items-center gap-3 text-[13px]">
+                <li key={x.c.id} className="flex items-center gap-3 text-[0.875rem]">
                   <span className="w-14 shrink-0 font-semibold">{x.c.name}</span>
                   <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-100">
                     <div className="h-full origin-left animate-grow rounded-full bg-[#D79A43]" style={{ width: `${(x.n / maxCat) * 100}%` }} />
@@ -118,7 +118,7 @@ export default function AnalyticsPage() {
             </ul>
           </Panel>
           <Panel title="향후 서비스 관심도" sub="수요 검증용 · 출시 알림 동의 포함">
-            <ul className="space-y-1.5 text-[13px]">
+            <ul className="space-y-1.5 text-[0.875rem]">
               {roadmap.map((x) => (
                 <li key={x.r.key} className="flex items-center justify-between">
                   <span>

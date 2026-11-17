@@ -18,11 +18,11 @@ export default function MyPage() {
   if (!me)
     return (
       <div className="mx-auto max-w-md px-5 pt-8">
-        <h1 className="mb-5 text-[24px] font-extrabold text-ink">마이</h1>
+        <h1 className="mb-5 text-[1.5rem] font-extrabold text-ink">마이</h1>
         <LoginGate next="/my" />
         <Link href="/membership" className="mt-4 flex items-center justify-between rounded-2xl bg-white p-4 ring-1 ring-line">
-          <span className="text-[14.5px] font-semibold text-ink">멤버십 혜택 알아보기</span>
-          <ChevronRight className="h-4 w-4 text-ink-4" />
+          <span className="text-[0.9062rem] font-semibold text-ink">멤버십 혜택 알아보기</span>
+          <ChevronRight className="h-4 w-4 text-ink-3" />
         </Link>
       </div>
     );
@@ -51,24 +51,24 @@ export default function MyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 pb-10 pt-5 md:px-5 md:pt-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">마이</h1>
+        <h1 className="text-[1.625rem] font-extrabold tracking-[-0.02em] text-ink">마이</h1>
         <DemoToolsButton />
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         <div className="rounded-3xl bg-white p-5 ring-1 ring-line" data-testid="member-card">
-          <p className="text-[13px] text-ink-3">반가워요</p>
-          <p className="text-[20px] font-extrabold text-ink">{me.name}님</p>
+          <p className="text-[0.8125rem] text-ink-3">반가워요</p>
+          <p className="text-[1.25rem] font-extrabold text-ink">{me.name}님</p>
           <div className="mt-4 rounded-2xl bg-canvas p-4 text-center">
-            <p className="text-[12px] font-semibold text-ink-3">매장에서 보여주세요 · 회원코드</p>
-            <p className="mt-1 font-mono text-[30px] font-extrabold tracking-[0.14em] text-ink" data-testid="member-code">
+            <p className="text-[0.8125rem] font-semibold text-ink-3">매장에서 보여주세요 · 회원코드</p>
+            <p className="mt-1 font-mono text-[1.875rem] font-extrabold tracking-[0.14em] text-ink" data-testid="member-code">
               {me.memberCode}
             </p>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            <Link href="/checkin" className="inline-flex h-11 items-center justify-center rounded-xl bg-brand-600 text-[14px] font-bold text-white">
+            <Link href="/checkin" className="inline-flex h-11 items-center justify-center rounded-xl bg-brand-600 text-[0.875rem] font-bold text-white">
               방문 체크인
             </Link>
-            <Button variant="secondary" size="lg" className="h-11 text-[14px]" onClick={() => setReport(true)} data-testid="my-report">
+            <Button variant="secondary" size="lg" className="h-11 text-[0.875rem]" onClick={() => setReport(true)} data-testid="my-report">
               구매 확인 요청
             </Button>
           </div>
@@ -78,16 +78,16 @@ export default function MyPage() {
       <div className="mt-3 grid grid-cols-4 gap-2" data-testid="my-tiles">
         {tiles.map((t) => (
           <Link key={t.href} href={t.href} className="press flex flex-col items-center gap-1.5 rounded-[20px] bg-white py-3.5 ring-1 ring-line transition hover:ring-brand-200">
-            <span className={cx('grid h-10 w-10 place-items-center rounded-full', t.tone)}>
+            <span className={cx('grid h-11 w-11 place-items-center rounded-full', t.tone)}>
               <t.icon className="h-5 w-5" />
             </span>
-            <span className="text-[12.5px] font-semibold text-ink-3">{t.label}</span>
-            <span className="text-[15px] font-extrabold text-ink tabular">{t.value}</span>
+            <span className="text-[0.8438rem] font-semibold text-ink-3">{t.label}</span>
+            <span className="text-[0.9375rem] font-extrabold text-ink tabular">{t.value}</span>
           </Link>
         ))}
       </div>
       {pending > 0 && (
-        <Link href="/my/activity" className="mt-3 flex items-center gap-2 rounded-2xl bg-brand-50 px-4 py-3 text-[13.5px] font-semibold text-brand-800">
+        <Link href="/my/activity" className="mt-3 flex items-center gap-2 rounded-2xl bg-brand-50 px-4 py-3 text-[0.8438rem] font-semibold text-brand-800">
           <Clock3 className="h-4 w-4" /> 직원 확인을 기다리는 요청이 {pending}건 있어요
           <ChevronRight className="ml-auto h-4 w-4" />
         </Link>
@@ -97,14 +97,14 @@ export default function MyPage() {
           <li key={l.href}>
             <Link href={l.href} className="flex items-center gap-3 px-4 py-4 transition hover:bg-canvas">
               <l.icon className="h-5 w-5 text-ink-3" />
-              <span className="flex-1 text-[15px] font-semibold text-ink">{l.label}</span>
-              <span className={cx('text-[13px]', l.meta === '개발 예정' ? 'font-bold text-violet-700' : 'text-ink-3')}>{l.meta}</span>
-              <ChevronRight className="h-4 w-4 text-ink-4" />
+              <span className="flex-1 text-[0.9375rem] font-semibold text-ink">{l.label}</span>
+              <span className={cx('text-[0.8125rem]', l.meta === '개발 예정' ? 'font-bold text-violet-700' : 'text-ink-3')}>{l.meta}</span>
+              <ChevronRight className="h-4 w-4 text-ink-3" />
             </Link>
           </li>
         ))}
       </ul>
-      <button onClick={() => act((d) => D.logout(d))} className="mt-4 flex items-center gap-2 px-2 py-2 text-[13.5px] font-semibold text-ink-3 hover:text-ink">
+      <button onClick={() => act((d) => D.logout(d))} className="mt-4 flex min-h-11 items-center gap-2 px-2 text-[0.9375rem] font-semibold text-ink-2 hover:text-ink">
         <LogOut className="h-4 w-4" /> 로그아웃
       </button>
       <PurchaseReportSheet open={report} onClose={() => setReport(false)} s={s} me={me} />

@@ -46,14 +46,14 @@ function StoreFacts({ store, canEdit }: { store: Store; canEdit: boolean }) {
           const f = store[key] as Store['address'];
           return (
             <li key={label} className="flex flex-col gap-1 py-2.5 md:flex-row md:items-center md:gap-3">
-              <span className="w-28 shrink-0 text-[12.5px] font-semibold text-slate-500">{label}</span>
-              <span className="min-w-0 flex-1 text-[13px] text-slate-900">
-                {f.value ?? <span className="text-slate-400">미입력</span>}
-                <span className="block text-[12px] text-slate-400">{f.source}</span>
+              <span className="w-28 shrink-0 text-[0.8438rem] font-semibold text-slate-500">{label}</span>
+              <span className="min-w-0 flex-1 text-[0.875rem] text-slate-900">
+                {f.value ?? <span className="text-slate-500">미입력</span>}
+                <span className="block text-[0.8125rem] text-slate-500">{f.source}</span>
               </span>
               <EvidenceBadge ev={f.evidence} />
               {editable && canEdit && (
-                <button onClick={() => setEdit({ field: key as 'hours', label, value: f.value ?? '' })} className="grid h-7 w-7 place-items-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label={`${label} 수정`}>
+                <button onClick={() => setEdit({ field: key as 'hours', label, value: f.value ?? '' })} className="grid h-11 w-11 lg:h-7 lg:w-7 place-items-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700" aria-label={`${label} 수정`}>
                   <Pencil className="h-3.5 w-3.5" />
                 </button>
               )}
@@ -124,7 +124,7 @@ function Inner() {
                     }}
                     aria-pressed={on}
                     data-testid={`theme-${t.id}`}
-                    className={cx('lift rounded-xl p-3 text-left ring-2 transition', on ? 'ring-ax-primary' : 'ring-slate-200/70 hover:ring-slate-300')}
+                    className={cx('lift rounded-xl p-3 text-left ring-2 transition', on ? 'ring-ax-primary' : 'ring-axline hover:ring-slate-300')}
                   >
                     <div className="flex h-14 overflow-hidden rounded-lg ring-1 ring-black/5">
                       <div className="w-1/3" style={{ background: t.colors[0] }} />
@@ -137,7 +137,7 @@ function Inner() {
                         </div>
                       </div>
                     </div>
-                    <p className="mt-2 flex items-center justify-between text-[13px] font-bold text-slate-900">
+                    <p className="mt-2 flex items-center justify-between text-[0.875rem] font-bold text-slate-900">
                       {t.name}
                       {on && <Check className="h-4 w-4 text-ax-primary" />}
                     </p>
@@ -159,7 +159,7 @@ function Inner() {
                   { value: 'lg', label: '크게' },
                 ]}
               />
-              <p className="mt-2 text-[12px] text-slate-500">움직임 줄이기는 기기의 '동작 줄이기' 설정을 그대로 따릅니다.</p>
+              <p className="mt-2 text-[0.8125rem] text-slate-500">움직임 줄이기는 기기의 '동작 줄이기' 설정을 그대로 따릅니다.</p>
             </Panel>
             <Panel title="둘러보기 · 데모">
               <div className="flex flex-wrap gap-2">
@@ -170,7 +170,7 @@ function Inner() {
                   데모 데이터 초기화
                 </Button>
               </div>
-              <p className="mt-2 text-[12px] text-slate-500">초기화해도 테마·글자 크기는 유지돼요.</p>
+              <p className="mt-2 text-[0.8125rem] text-slate-500">초기화해도 테마·글자 크기는 유지돼요.</p>
             </Panel>
           </div>
         </div>
@@ -178,8 +178,8 @@ function Inner() {
       {tab === 'roles' && (
         <Panel title="역할별 권한" sub={`현재 미리보기: ${op?.name} — 상단 '책임자/직원' 전환으로 화면 잠금을 바로 확인할 수 있어요. 운영 시 Supabase RLS로 같은 규칙을 강제합니다.`}>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[520px] text-left text-[13px]" data-testid="permission-matrix">
-              <thead className="border-b border-slate-100 text-[12px] text-slate-400">
+            <table className="ax-table w-full min-w-[520px] text-left text-[0.875rem]" data-testid="permission-matrix">
+              <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
                 <tr>
                   <th className="pb-2 font-semibold">권한</th>
                   <th className="pb-2 text-center font-semibold">매장 직원</th>
@@ -201,7 +201,7 @@ function Inner() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-[12px] text-slate-500">고객은 본인 기록·쿠폰만 볼 수 있어요. 직원은 담당 매장 업무만, 책임자는 사업·매장 관리 전체를 다룹니다. 두 사업자의 데이터 분리가 확정되면 business_entity 단위로 접근을 나눕니다.</p>
+          <p className="mt-3 text-[0.8125rem] text-slate-500">고객은 본인 기록·쿠폰만 볼 수 있어요. 직원은 담당 매장 업무만, 책임자는 사업·매장 관리 전체를 다룹니다. 두 사업자의 데이터 분리가 확정되면 business_entity 단위로 접근을 나눕니다.</p>
         </Panel>
       )}
       {tab === 'store' && (
@@ -218,17 +218,17 @@ function Inner() {
             <ul className="divide-y divide-slate-100">
               {INTEGRATIONS.map((i) => (
                 <li key={i.name} className="flex flex-col gap-1 py-2.5 md:flex-row md:items-center md:gap-3">
-                  <span className="w-72 shrink-0 text-[13.5px] font-semibold text-slate-900">{i.name}</span>
+                  <span className="w-72 shrink-0 text-[0.9375rem] font-semibold text-slate-900">{i.name}</span>
                   <Tag tone={i.status === 'LIVE' ? 'green' : i.status === 'DEMO' ? 'amber' : i.status === 'READY' ? 'slate' : 'violet'}>{i.status}</Tag>
-                  <span className="text-[12.5px] text-slate-500">{i.note}</span>
+                  <span className="text-[0.8438rem] text-slate-500">{i.note}</span>
                 </li>
               ))}
             </ul>
           </Panel>
           <Panel title="사실 정보 근거 현황" sub="VERIFIED / USER_PROVIDED / ASSUMPTION / UNKNOWN">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[640px] text-left text-[13px]">
-                <thead className="border-b border-slate-100 text-[12px] text-slate-400">
+              <table className="ax-table w-full min-w-[640px] text-left text-[0.875rem]">
+                <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
                   <tr>
                     <th className="pb-2 font-semibold">대상</th>
                     <th className="pb-2 font-semibold">항목</th>
@@ -244,7 +244,7 @@ function Inner() {
                       <td className="py-2">
                         <EvidenceBadge ev={r.evidence as 'UNKNOWN'} />
                       </td>
-                      <td className="py-2 text-[12px] text-slate-500">{r.source}</td>
+                      <td className="py-2 text-[0.8125rem] text-slate-500">{r.source}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -252,7 +252,7 @@ function Inner() {
             </div>
           </Panel>
           <Panel title="데이터 처리 원칙">
-            <ul className="list-disc space-y-1 pl-5 text-[13px] text-slate-600">
+            <ul className="list-disc space-y-1 pl-5 text-[0.875rem] text-slate-600">
               <li>원본 전화번호 미저장(해시 + 뒤 4자리). 건강·알레르기·정서·반려묘 건강 정보는 1차에서 수집하지 않음.</li>
               <li>마케팅 동의는 목적별·버전별·철회 시각 기록. 동의 없는 고객에게 마케팅 알림 미발송.</li>
               <li>DEMO 시드는 isDemo 플래그로 구분 — 운영 KPI 집계에서 제외 예정.</li>
@@ -265,13 +265,13 @@ function Inner() {
         <Panel title="감사 기록" sub="누가 · 언제 · 무엇을 바꿨는지 (최근 80건)">
           <ul className="divide-y divide-slate-100">
             {s.auditLogs.slice(0, 80).map((a) => (
-              <li key={a.id} className="flex flex-wrap items-center gap-2 py-2 text-[12.5px]">
+              <li key={a.id} className="flex flex-wrap items-center gap-2 py-2 text-[0.8438rem]">
                 <Tag>{a.action}</Tag>
                 <span className="font-semibold text-slate-800">{getProfile(s, a.actorId)?.name ?? a.actorRole}</span>
                 <span className="min-w-0 flex-1 truncate text-slate-500">
                   {a.target} {a.detail && `· ${a.detail}`}
                 </span>
-                <span className="text-slate-400">{fmtDate(a.at, { time: true })}</span>
+                <span className="text-slate-500">{fmtDate(a.at, { time: true })}</span>
               </li>
             ))}
           </ul>
@@ -294,7 +294,7 @@ function Inner() {
           </div>
         }
       >
-        <p className="text-[13px] text-slate-600">시연 기록이 처음 상태로 돌아가요.</p>
+        <p className="text-[0.875rem] text-slate-600">시연 기록이 처음 상태로 돌아가요.</p>
       </Sheet>
     </div>
   );

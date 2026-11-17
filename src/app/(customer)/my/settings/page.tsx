@@ -26,15 +26,15 @@ export default function SettingsPage() {
     <div>
       <BackHeader title="동의·개인정보 설정" fallback="/my" />
       <div className="mx-auto max-w-2xl px-4 pb-10 pt-4 md:px-5 md:pt-10">
-        <h1 className="hidden text-[24px] font-extrabold text-ink md:block">동의·개인정보 설정</h1>
+        <h1 className="hidden text-[1.5rem] font-extrabold text-ink md:block">동의·개인정보 설정</h1>
         <section className="mt-0 rounded-3xl bg-white ring-1 ring-line md:mt-4">
-          <p className="px-5 pt-5 text-[15px] font-extrabold text-ink">마케팅 수신 동의</p>
+          <p className="px-5 pt-5 text-[0.9375rem] font-extrabold text-ink">마케팅 수신 동의</p>
           <ul className="divide-y divide-line">
             {OPT.map((o) => (
               <li key={o.k} className="flex items-center gap-3 px-5 py-4">
                 <div className="flex-1">
-                  <p className="text-[14.5px] font-semibold text-ink">{o.l}</p>
-                  <p className="text-[12.5px] text-ink-3">{o.d}</p>
+                  <p className="text-[0.9062rem] font-semibold text-ink">{o.l}</p>
+                  <p className="text-[0.8438rem] text-ink-3">{o.d}</p>
                 </div>
                 <Toggle checked={hasConsent(s, me.id, o.k)} onChange={(v) => run(() => act((d, c) => D.setConsent(d, c, me.id, o.k, v)), v ? '수신에 동의했어요.' : '수신 동의를 철회했어요.')} label={o.l} testId={`toggle-${o.k}`} />
               </li>
@@ -42,7 +42,7 @@ export default function SettingsPage() {
           </ul>
         </section>
         <section className="mt-4 rounded-3xl bg-white p-5 ring-1 ring-line">
-          <p className="text-[15px] font-extrabold text-ink">글자 크기</p>
+          <p className="text-[0.9375rem] font-extrabold text-ink">글자 크기</p>
           <div className="mt-3">
             <Segmented<FontScale>
               label="글자 크기"
@@ -57,14 +57,14 @@ export default function SettingsPage() {
           </div>
         </section>
         <section className="mt-4 rounded-3xl bg-white p-5 ring-1 ring-line">
-          <p className="text-[15px] font-extrabold text-ink">동의 이력</p>
-          <ul className="mt-3 space-y-1.5 text-[12.5px]">
+          <p className="text-[0.9375rem] font-extrabold text-ink">동의 이력</p>
+          <ul className="mt-3 space-y-1.5 text-[0.8438rem]">
             {history.slice(0, 12).map((c) => (
               <li key={c.id} className="flex justify-between gap-3 text-ink-2">
                 <span>
-                  {c.purpose} · {c.granted ? '동의' : '미동의'} {c.withdrawnAt && <span className="text-ink-4">(변경됨 {fmtDate(c.withdrawnAt)})</span>}
+                  {c.purpose} · {c.granted ? '동의' : '미동의'} {c.withdrawnAt && <span className="text-ink-3">(변경됨 {fmtDate(c.withdrawnAt)})</span>}
                 </span>
-                <span className="shrink-0 text-ink-4">
+                <span className="shrink-0 text-ink-3">
                   {fmtDate(c.at, { time: true })} · v{c.version}
                 </span>
               </li>
@@ -72,10 +72,10 @@ export default function SettingsPage() {
           </ul>
         </section>
         <section className="mt-4 rounded-3xl bg-white p-5 ring-1 ring-line">
-          <p className="text-[15px] font-extrabold text-ink">탈퇴·정보 삭제</p>
-          <p className="mt-1 text-[12.5px] leading-relaxed text-ink-3">요청하면 운영자가 확인 후 개인정보를 삭제(익명화)해요. 사용하지 않은 쿠폰은 소멸돼요. 거래 확인 기록은 법정 보관 기준 확인 후 처리돼요.</p>
+          <p className="text-[0.9375rem] font-extrabold text-ink">탈퇴·정보 삭제</p>
+          <p className="mt-1 text-[0.8438rem] leading-relaxed text-ink-3">요청하면 운영자가 확인 후 개인정보를 삭제(익명화)해요. 사용하지 않은 쿠폰은 소멸돼요. 거래 확인 기록은 법정 보관 기준 확인 후 처리돼요.</p>
           {me.status === 'deletion_requested' ? (
-            <p className="mt-3 rounded-xl bg-amber-50 p-3 text-[13px] font-semibold text-amber-900">삭제 요청이 접수되어 처리 대기 중이에요.</p>
+            <p className="mt-3 rounded-xl bg-amber-50 p-3 text-[0.8125rem] font-semibold text-amber-900">삭제 요청이 접수되어 처리 대기 중이에요.</p>
           ) : (
             <Button variant="outline" className="mt-3" onClick={() => setDel(true)}>
               탈퇴·삭제 요청

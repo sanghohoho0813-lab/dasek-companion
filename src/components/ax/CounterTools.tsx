@@ -55,45 +55,45 @@ export function CounterPurchase({ s, open, onClose, presetUserId }: { s: AppStat
       {!presetUserId && (
         <>
           <label className="flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 focus-within:border-ax-primary">
-            <Search className="h-4 w-4 text-slate-400" />
-            <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="회원코드(DC-0000) 또는 이름" className="w-full text-sm outline-none" data-testid="counter-search" autoFocus />
+            <Search className="h-4 w-4 text-slate-500" />
+            <input value={code} onChange={(e) => setCode(e.target.value)} placeholder="회원코드(DC-0000) 또는 이름" className="h-11 w-full bg-transparent text-[0.9375rem] outline-none placeholder:text-slate-500" data-testid="counter-search" autoFocus />
           </label>
           <ul className="mt-2 max-h-40 space-y-1 overflow-y-auto">
             {match.slice(0, 6).map((p) => (
               <li key={p.id}>
-                <button onClick={() => setUserId(p.id)} className={cx('flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[13.5px] transition', userId === p.id ? 'bg-ax-soft font-bold text-slate-900' : 'hover:bg-slate-50')}>
+                <button onClick={() => setUserId(p.id)} className={cx('flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-[0.9375rem] transition', userId === p.id ? 'bg-ax-soft font-bold text-slate-900' : 'hover:bg-slate-50')}>
                   <span>{p.name}</span>
-                  <span className="text-[12px] text-slate-400">{p.memberCode}</span>
+                  <span className="text-[0.8125rem] text-slate-500">{p.memberCode}</span>
                 </button>
               </li>
             ))}
           </ul>
         </>
       )}
-      {user && <p className="mt-2 rounded-lg bg-slate-50 px-3 py-2 text-[13px] font-semibold text-slate-700">선택: {user.name} ({user.memberCode})</p>}
-      <p className="mt-4 text-[12.5px] font-bold text-slate-500">매장</p>
+      {user && <p className="mt-2 rounded-lg bg-slate-50 px-3 py-2 text-[0.875rem] font-semibold text-slate-700">선택: {user.name} ({user.memberCode})</p>}
+      <p className="mt-4 text-[0.8438rem] font-bold text-slate-500">매장</p>
       <div className="mt-1.5 grid grid-cols-2 gap-2">
         {s.stores.map((st) => (
-          <button key={st.id} onClick={() => { setStoreId(st.id); setItems([]); }} className={cx('h-10 rounded-lg text-[13.5px] font-bold ring-1', storeId === st.id ? 'bg-ax-primary text-white ring-ax-primary' : 'bg-white text-slate-600 ring-slate-200')}>
+          <button key={st.id} onClick={() => { setStoreId(st.id); setItems([]); }} className={cx('h-10 rounded-lg text-[0.9375rem] font-bold ring-1', storeId === st.id ? 'bg-ax-primary text-white ring-ax-primary' : 'bg-white text-slate-600 ring-slate-200')}>
             {st.name}
           </button>
         ))}
       </div>
-      <p className="mt-4 text-[12.5px] font-bold text-slate-500">메뉴 (선택)</p>
+      <p className="mt-4 text-[0.8438rem] font-bold text-slate-500">메뉴 (선택)</p>
       <div className="mt-1.5 flex flex-wrap gap-1.5">
         {s.menuItems
           .filter((m) => m.storeId === storeId && m.published)
           .map((m) => {
             const on = items.includes(m.id);
             return (
-              <button key={m.id} onClick={() => setItems(on ? items.filter((x) => x !== m.id) : [...items, m.id])} className={cx('rounded-full px-2.5 py-1 text-[12.5px] font-semibold ring-1', on ? 'bg-ax-soft text-slate-900 ring-slate-300' : 'bg-white text-slate-600 ring-slate-200')}>
+              <button key={m.id} onClick={() => setItems(on ? items.filter((x) => x !== m.id) : [...items, m.id])} className={cx('rounded-full px-2.5 py-1 text-[0.8438rem] font-semibold ring-1', on ? 'bg-ax-soft text-slate-900 ring-slate-300' : 'bg-white text-slate-600 ring-slate-200')}>
                 {on && '✓ '}
                 {m.name}
               </button>
             );
           })}
       </div>
-      <label className="mt-4 block text-[12.5px] font-bold text-slate-500">
+      <label className="mt-4 block text-[0.8438rem] font-bold text-slate-500">
         결제 금액 (선택)
         <input value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="numeric" placeholder="예: 9000" className={cx(axInputCls, 'mt-1.5')} />
       </label>
@@ -111,17 +111,17 @@ export function CouponRedeem({ s, open, onClose }: { s: AppState; open: boolean;
   return (
     <Sheet open={open} onClose={onClose} tone="ax" title="쿠폰 사용 처리" description="고객 화면의 쿠폰 코드를 입력하세요." size="sm" testId="redeem-sheet">
       <label className="flex h-11 items-center gap-2 rounded-lg border border-slate-200 px-3 focus-within:border-ax-primary">
-        <Ticket className="h-4 w-4 text-slate-400" />
-        <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="DC-XXXXXX" className="w-full font-mono text-[15px] tracking-wider outline-none" data-testid="redeem-code" autoFocus />
+        <Ticket className="h-4 w-4 text-slate-500" />
+        <input value={code} onChange={(e) => setCode(e.target.value.toUpperCase())} placeholder="DC-XXXXXX" className="w-full font-mono text-[1rem] tracking-wider outline-none" data-testid="redeem-code" autoFocus />
       </label>
-      {code.length >= 6 && !c && <p className="mt-2 text-[12.5px] text-red-600">해당 코드의 쿠폰이 없어요.</p>}
+      {code.length >= 6 && !c && <p className="mt-2 text-[0.8438rem] text-red-600">해당 코드의 쿠폰이 없어요.</p>}
       {c && (
         <div className="mt-3 rounded-xl bg-slate-50 p-4">
-          <p className="text-[15px] font-bold text-slate-900">{c.benefit}</p>
-          <p className="text-[12.5px] text-slate-500">
+          <p className="text-[1rem] font-bold text-slate-900">{c.benefit}</p>
+          <p className="text-[0.8438rem] text-slate-500">
             {user?.name} · {c.title} · {fmtDate(c.expiresAt)}까지
           </p>
-          <p className="mt-1 text-[12.5px] font-semibold">상태: {{ ISSUED: '사용 가능', REDEEMED: '이미 사용됨', EXPIRED: '기간 만료', CANCELLED: '취소됨' }[st!]}</p>
+          <p className="mt-1 text-[0.8438rem] font-semibold">상태: {{ ISSUED: '사용 가능', REDEEMED: '이미 사용됨', EXPIRED: '기간 만료', CANCELLED: '취소됨' }[st!]}</p>
           <Button
             tone="ax"
             full

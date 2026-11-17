@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
 import { LogoMark } from '@/components/shell/Logo';
@@ -89,11 +89,32 @@ const isActive = (pathname: string, href: string) => (href === '/ax' ? pathname 
 
 function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolean; onNavigate?: () => void }) {
   const pathname = usePathname();
+  const navRef = useRef<HTMLElement>(null);
+  const [bar, setBar] = useState({ top: 0, h: 0 });
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const a = nav?.querySelector<HTMLElement>('a[aria-current="page"]');
+    if (!nav || !a) return setBar({ top: 0, h: 0 });
+    const nr = nav.getBoundingClientRect();
+    const ar = a.getBoundingClientRect();
+    setBar({ top: ar.top - nr.top + 8, h: ar.height - 16 });
+  }, [pathname, collapsed]);
   return (
-    <nav aria-label="운영 메뉴" className="space-y-5">
+    <nav aria-label="운영 메뉴" className="relative space-y-5" ref={navRef}>
+      {/* 선택 메뉴 강조 막대 — 누른 메뉴로 미끄러져 간다 (비원미래 0103 layoutId 방식을 CSS transform 으로) */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute left-0 top-0 w-1 rounded-r-full bg-ax-highlight transition-[transform,height,opacity] duration-200 ease-out"
+        style={{ transform: `translateY(${bar.top}px)`, height: bar.h, opacity: bar.h ? 1 : 0 }}
+      />
       {AX_NAV.map((g) => (
         <div key={g.key}>
-          {!collapsed && <p className="mb-1.5 px-3 text-[12px] font-bold uppercase tracking-[0.12em] text-ax-shell-muted">{g.label}</p>}
+          {!collapsed && (
+            <p className="mb-1.5 flex items-center gap-2 px-2.5 text-[0.8125rem] font-bold tracking-[0.08em] text-ax-shell-muted">
+              <span className="h-2 w-2 rounded-full" style={{ background: g.hue }} aria-hidden />
+              {g.label}
+            </p>
+          )}
           <ul className="space-y-0.5">
             {g.items.map((it) => {
               const active = isActive(pathname, it.href);
@@ -106,18 +127,17 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
                     title={collapsed ? it.label : undefined}
                     aria-current={active ? 'page' : undefined}
                     className={cx(
-                      'group relative flex items-center gap-2.5 rounded-xl px-2 py-1.5 text-[13.5px] font-semibold transition duration-150',
-                      active ? 'bg-ax-shell-hover/[.10] text-ax-shell-fg' : 'text-ax-shell-fg/80 hover:bg-ax-shell-hover/[.06] hover:text-ax-shell-fg',
+                      'group relative flex min-h-11 items-center gap-3 rounded-xl px-2.5 py-1.5 text-[0.9375rem] transition duration-150',
+                      active ? 'bg-ax-shell-hover/[.12] font-bold text-ax-shell-fg' : 'font-semibold text-ax-shell-fg/85 hover:bg-ax-shell-hover/[.07] hover:text-ax-shell-fg',
                       collapsed && 'justify-center',
                     )}
                   >
-                    {active && <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full" style={{ background: g.hue }} />}
-                    <span className="grid h-[30px] w-[30px] shrink-0 place-items-center rounded-lg transition" style={{ background: `${g.hue}${active ? '33' : '1F'}`, color: g.hue }}>
-                      <it.icon className="h-4 w-4" />
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg transition duration-150 group-hover:scale-105" style={{ background: `${g.hue}${active ? '38' : '24'}`, color: g.hue }}>
+                      <it.icon className="h-[18px] w-[18px]" />
                     </span>
                     {!collapsed && <span className="min-w-0 flex-1 truncate">{it.label}</span>}
                     {n > 0 && (
-                      <span className={cx('grid h-5 min-w-5 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white', collapsed && 'absolute right-0.5 top-0.5 h-4 min-w-4')}>{n}</span>
+                      <span data-badge aria-label={`대기 ${n}건`} className={cx('grid h-6 min-w-6 place-items-center rounded-full bg-red-600 px-1.5 text-[0.8125rem] font-bold text-white tabular-nums', collapsed && 'absolute right-0 top-0 h-5 min-w-5 text-[0.75rem]')}>{n}</span>
                     )}
                   </Link>
                 </li>
@@ -147,7 +167,7 @@ function RoleSwitch({ s }: { s: AppState }) {
               dispatch((d) => void (d.session.operatorId = id));
               toast(`${p.role === 'manager' ? '운영 책임자' : '매장 직원'} 권한으로 보는 중`, 'info');
             }}
-            className={cx('inline-flex h-7 items-center gap-1 rounded-md px-2 text-[12px] font-semibold transition', on ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800')}
+            className={cx('inline-flex h-11 items-center gap-1 rounded-md px-2.5 text-[0.875rem] font-semibold transition lg:h-8', on ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:text-slate-900')}
           >
             {p.role === 'manager' ? '책임자' : '직원'}
           </button>
@@ -198,8 +218,8 @@ function Tutorial({ open, onClose }: { open: boolean; onClose: () => void }) {
         </div>
       }
     >
-      <p className="text-[14.5px] leading-relaxed text-slate-700">{step.b}</p>
-      <Link href={step.href} onClick={onClose} className="mt-3 inline-block text-[13px] font-semibold text-ax-primary underline-offset-2 hover:underline">
+      <p className="text-[0.9688rem] leading-relaxed text-slate-700">{step.b}</p>
+      <Link href={step.href} onClick={onClose} className="mt-3 inline-block text-[0.875rem] font-semibold text-ax-primary underline-offset-2 hover:underline">
         이 화면 열기 →
       </Link>
     </Sheet>
@@ -231,57 +251,57 @@ export function AxShell({ children }: { children: React.ReactNode }) {
 
   return (
     <TutorialCtx.Provider value={() => setTutorial(true)}>
-      <div className="min-h-dvh bg-[#F6F7F9] text-slate-900">
+      <div className="min-h-dvh bg-[#F4F6F8] text-slate-900">
         {/* Desktop sidebar */}
-        <aside className={cx('fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-black/5 bg-ax-shell lg:flex', compact ? 'w-[72px]' : 'w-[248px]')} data-testid="ax-sidebar">
+        <aside className={cx('fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-black/10 bg-ax-shell lg:flex', compact ? 'w-[76px]' : 'w-[264px]')} data-testid="ax-sidebar">
           <Link href="/ax" className={cx('flex h-16 shrink-0 items-center gap-2.5', compact ? 'justify-center' : 'px-5')}>
-            <LogoMark className="h-8 w-8" />
+            <LogoMark className="h-11 w-11 lg:h-8 lg:w-8" />
             {!compact && (
               <span className="leading-none">
-                <span className="block text-[15px] font-extrabold tracking-tight text-ax-shell-fg">다색컴패니언</span>
-                <span className="mt-1 block text-[11px] font-bold tracking-[0.2em] text-ax-shell-muted">BUSINESS AX</span>
+                <span className="block text-[1rem] font-extrabold tracking-tight text-ax-shell-fg">다색컴패니언</span>
+                <span className="mt-1 block text-[0.8125rem] font-bold tracking-[0.16em] text-ax-shell-muted">BUSINESS AX</span>
               </span>
             )}
           </Link>
           <div className={cx('min-h-0 flex-1 overflow-y-auto pb-4 no-scrollbar', compact ? 'px-2' : 'px-3')}>{s && <NavList s={s} collapsed={compact} />}</div>
           {!compact && (
-            <div className="border-t border-black/5 p-3">
-              <Link href="/" data-testid="surface-to-customer" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[13px] font-semibold text-ax-shell-fg/80 transition hover:bg-ax-shell-hover/[.06] hover:text-ax-shell-fg">
+            <div className="border-t border-black/10 p-3">
+              <Link href="/" data-testid="surface-to-customer" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80 transition hover:bg-ax-shell-hover/[.06] hover:text-ax-shell-fg">
                 <Smartphone className="h-4 w-4" /> 고객 플랫폼 보기
               </Link>
             </div>
           )}
         </aside>
 
-        <div className={cx(compact ? 'lg:pl-[72px]' : 'lg:pl-[248px]')}>
+        <div className={cx(compact ? 'lg:pl-[76px]' : 'lg:pl-[264px]')}>
           {/* Header */}
-          <header className="sticky top-0 z-20 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
-            <div className="flex h-14 items-center gap-2 px-3 md:h-16 md:px-6">
-              <button onClick={() => setDrawer(true)} aria-label="메뉴 열기" data-testid="ax-menu" className="grid h-10 w-10 place-items-center rounded-xl text-slate-700 hover:bg-slate-100 lg:hidden">
+          <header className="sticky top-0 z-20 border-b border-axline bg-white">
+            <div className="flex h-16 items-center gap-2 px-3 md:px-6">
+              <button onClick={() => setDrawer(true)} aria-label="메뉴 열기" data-testid="ax-menu" className="grid h-11 w-11 lg:h-10 lg:w-10 place-items-center rounded-xl text-slate-700 hover:bg-slate-100 lg:hidden">
                 <Menu className="h-5 w-5" />
               </button>
               <div className="min-w-0 flex-1">
-                <p className="hidden text-[12px] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
-                <h1 className="truncate text-[16px] font-extrabold tracking-tight text-slate-900 md:text-[18px]">{title}</h1>
+                <p className="hidden text-[0.8125rem] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
+                <h1 className="truncate text-[1.125rem] font-extrabold tracking-tight text-slate-900 md:text-[1.1875rem]">{title}</h1>
               </div>
               <StatusBadge status="DEMO" className="hidden lg:inline-flex" />
               <DemoToolsButton tone="ax" className="lg:hidden" />
               {s && <RoleSwitch s={s} />}
               <div className={cx('hidden items-center gap-2', compact ? '2xl:flex' : 'xl:flex')}>
-                <Link href="/" className="inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[12.5px] font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">
+                <Link href="/" className="inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[0.8438rem] font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">
                   <Smartphone className="h-3.5 w-3.5" /> 고객 화면
                 </Link>
               </div>
               <DeviceSwitch />
-              <button onClick={() => setTutorial(true)} aria-label="둘러보기 다시 보기" className="hidden h-9 w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
+              <button onClick={() => setTutorial(true)} aria-label="둘러보기 다시 보기" className="hidden h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
                 <HelpCircle className="h-[18px] w-[18px]" />
               </button>
-              <button onClick={() => setReset(true)} aria-label="데모 초기화" className="hidden h-9 w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
+              <button onClick={() => setReset(true)} aria-label="데모 초기화" className="hidden h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
                 <RotateCcw className="h-[18px] w-[18px]" />
               </button>
             </div>
             {op?.role === 'staff' && (
-              <div className="flex items-center gap-2 border-t border-amber-200/70 bg-amber-50 px-4 py-1.5 text-[12px] font-medium text-amber-900 md:px-6">
+              <div className="flex items-center gap-2 border-t border-amber-200/70 bg-amber-50 px-4 py-1.5 text-[0.8125rem] font-medium text-amber-900 md:px-6">
                 <UserCog className="h-3.5 w-3.5" /> 매장 직원 권한으로 보는 중 — 규칙 변경·캠페인 승인·쿠폰 취소는 잠겨 있어요.
               </div>
             )}
@@ -293,7 +313,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Mobile bottom nav */}
-        <nav aria-label="운영 하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 backdrop-blur lg:hidden">
+        <nav aria-label="운영 하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white lg:hidden">
           <div className="grid grid-cols-5 pb-safe pt-1">
             {[
               { href: '/ax', label: '대시보드', icon: LayoutDashboard },
@@ -305,15 +325,15 @@ export function AxShell({ children }: { children: React.ReactNode }) {
               const badge = n.href === '/ax/queue' && s ? s.tasks.filter((t) => t.status === 'OPEN').length : 0;
               return (
                 <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined} className="press relative flex flex-col items-center gap-0.5 py-1.5">
-                  <n.icon className={cx('h-[22px] w-[22px]', active ? 'text-ax-primary' : 'text-slate-400')} />
-                  <span className={cx('text-[11px] font-semibold', active ? 'text-slate-900' : 'text-slate-500')}>{n.label}</span>
-                  {badge > 0 && <span className="absolute right-[22%] top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white">{badge}</span>}
+                  <n.icon className={cx('h-[22px] w-[22px]', active ? 'text-ax-primary' : 'text-slate-500')} />
+                  <span className={cx('text-[0.8125rem]', active ? 'font-bold text-slate-900' : 'font-semibold text-slate-600')}>{n.label}</span>
+                  {badge > 0 && <span data-badge className="absolute right-[18%] top-0 grid h-5 min-w-5 place-items-center rounded-full bg-red-600 px-1 text-[0.75rem] font-bold text-white ring-2 ring-white">{badge}</span>}
                 </Link>
               );
             })}
             <button onClick={() => setDrawer(true)} className="press flex flex-col items-center gap-0.5 py-1.5">
-              <Menu className="h-[22px] w-[22px] text-slate-400" />
-              <span className="text-[11px] font-semibold text-slate-500">더보기</span>
+              <Menu className="h-[22px] w-[22px] text-slate-500" />
+              <span className="text-[0.8125rem] font-semibold text-slate-600">더보기</span>
             </button>
           </div>
         </nav>
@@ -325,18 +345,18 @@ export function AxShell({ children }: { children: React.ReactNode }) {
             <div className="absolute inset-y-0 left-0 flex w-[84%] max-w-[320px] animate-drawer-in flex-col bg-ax-shell shadow-2xl">
               <div className="flex h-14 items-center justify-between px-4">
                 <span className="flex items-center gap-2">
-                  <LogoMark className="h-7 w-7" />
-                  <span className="text-[14px] font-extrabold text-ax-shell-fg">Business AX</span>
+                  <LogoMark className="h-11 w-11 lg:h-7 lg:w-7" />
+                  <span className="text-[0.9375rem] font-extrabold text-ax-shell-fg">Business AX</span>
                 </span>
-                <button onClick={() => setDrawer(false)} aria-label="메뉴 닫기" className="grid h-9 w-9 place-items-center rounded-lg text-ax-shell-fg/80 hover:bg-ax-shell-hover/10">
+                <button onClick={() => setDrawer(false)} aria-label="메뉴 닫기" className="grid h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-lg text-ax-shell-fg/80 hover:bg-ax-shell-hover/10">
                   <X className="h-5 w-5" />
                 </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">
                 <NavList s={s} onNavigate={() => setDrawer(false)} />
               </div>
-              <div className="space-y-1 border-t border-black/5 p-3">
-                <Link href="/" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[13px] font-semibold text-ax-shell-fg/80">
+              <div className="space-y-1 border-t border-black/10 p-3">
+                <Link href="/" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80">
                   <Smartphone className="h-4 w-4" /> 고객 플랫폼 보기
                 </Link>
                 <button
@@ -344,7 +364,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
                     setDrawer(false);
                     setTutorial(true);
                   }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[13px] font-semibold text-ax-shell-fg/80"
+                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80"
                 >
                   <HelpCircle className="h-4 w-4" /> 둘러보기
                 </button>
@@ -353,7 +373,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
                     setDrawer(false);
                     setReset(true);
                   }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[13px] font-semibold text-ax-shell-fg/80"
+                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80"
                 >
                   <RotateCcw className="h-4 w-4" /> 데모 초기화
                 </button>
@@ -397,14 +417,15 @@ export function AxShell({ children }: { children: React.ReactNode }) {
 }
 
 /* ── AX 공통 UI ───────────────────────────────────── */
+/** 업무 카드 — 실선 테두리 + 절제된 그림자(.ax-card), 제목 18px · 설명 14px */
 export function Panel({ title, sub, action, children, className, id, testId }: { title?: React.ReactNode; sub?: React.ReactNode; action?: React.ReactNode; children: React.ReactNode; className?: string; id?: string; testId?: string }) {
   return (
-    <section id={id} data-testid={testId} className={cx('min-w-0 rounded-2xl bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,.04)] ring-1 ring-slate-200/70 md:p-5', className)}>
+    <section id={id} data-testid={testId} className={cx('ax-card min-w-0 p-4 md:p-5', className)}>
       {(title || action) && (
-        <div className="mb-3 flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            {title && <h2 className="text-[15px] font-extrabold tracking-tight text-slate-900">{title}</h2>}
-            {sub && <p className="mt-0.5 text-[12.5px] text-slate-500">{sub}</p>}
+        <div className="mb-3.5 flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
+          <div className="min-w-0 flex-[1_1_14rem]">
+            {title && <h2 className="ax-h2">{title}</h2>}
+            {sub && <p className="mt-0.5 text-[0.875rem] leading-snug text-slate-500">{sub}</p>}
           </div>
           {action && <div className="shrink-0">{action}</div>}
         </div>
@@ -416,18 +437,19 @@ export function Panel({ title, sub, action, children, className, id, testId }: {
 
 export function Locked({ reason }: { reason: string }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-[12px] font-semibold text-slate-500" title={reason}>
-      <ShieldCheck className="h-3.5 w-3.5" /> {reason}
+    <span data-badge className="inline-flex items-center gap-1.5 rounded-lg bg-slate-100 px-2.5 py-1.5 text-[0.875rem] font-semibold text-slate-600 ring-1 ring-inset ring-slate-200" title={reason}>
+      <ShieldCheck className="h-4 w-4" /> {reason}
     </span>
   );
 }
 
+/** 화면 머리 — 제목 24~26px, 설명 15px (비원미래 PageHeader: 제목이 짓눌리지 않게 basis 를 준다) */
 export function PageIntro({ title, body, right }: { title: string; body: string; right?: React.ReactNode }) {
   return (
-    <div className="mb-4 flex flex-col gap-3 md:mb-5 md:flex-row md:items-end md:justify-between">
-      <div className="min-w-0">
-        <h2 className="text-[20px] font-extrabold tracking-tight text-slate-900 md:text-[22px]">{title}</h2>
-        <p className="mt-1 max-w-3xl text-[13.5px] leading-relaxed text-slate-500">{body}</p>
+    <div className="mb-5 flex flex-wrap items-end justify-between gap-3 md:mb-6">
+      <div className="min-w-0 flex-[1_1_20rem]">
+        <h2 className="ax-h1">{title}</h2>
+        <p className="mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed text-slate-600">{body}</p>
       </div>
       {right && <div className="flex shrink-0 flex-wrap items-center gap-2">{right}</div>}
     </div>
@@ -435,6 +457,6 @@ export function PageIntro({ title, body, right }: { title: string; body: string;
 }
 
 export function Tag({ children, tone = 'slate' }: { children: React.ReactNode; tone?: 'slate' | 'green' | 'blue' | 'amber' | 'red' | 'violet' }) {
-  const t = { slate: 'bg-slate-100 text-slate-600', green: 'bg-emerald-50 text-emerald-700', blue: 'bg-sky-50 text-sky-700', amber: 'bg-amber-50 text-amber-800', red: 'bg-red-50 text-red-700', violet: 'bg-violet-50 text-violet-700' }[tone];
-  return <span className={cx('inline-flex items-center whitespace-nowrap rounded-md px-1.5 py-0.5 text-[12px] font-semibold', t)}>{children}</span>;
+  const t = { slate: 'bg-slate-100 text-slate-700 ring-slate-200', green: 'bg-emerald-50 text-emerald-800 ring-emerald-200', blue: 'bg-sky-50 text-sky-800 ring-sky-200', amber: 'bg-amber-50 text-amber-900 ring-amber-200', red: 'bg-red-50 text-red-800 ring-red-200', violet: 'bg-violet-50 text-violet-800 ring-violet-200' }[tone];
+  return <span data-badge className={cx('inline-flex items-center whitespace-nowrap rounded-md px-1.5 py-0.5 text-[0.8125rem] font-semibold ring-1 ring-inset', t)}>{children}</span>;
 }

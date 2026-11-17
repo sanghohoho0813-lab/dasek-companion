@@ -46,8 +46,8 @@ function Inner() {
   if (me && !done)
     return (
       <div className="mx-auto max-w-md p-6 text-center">
-        <p className="text-[16px] font-bold text-ink">이미 로그인되어 있어요</p>
-        <Link href="/my" className="mt-3 inline-block font-semibold text-brand-700">
+        <p className="text-[1rem] font-bold text-ink">이미 로그인되어 있어요</p>
+        <Link href="/my" className="mt-3 inline-flex min-h-11 items-center px-3 font-semibold text-brand-700">
           마이로 이동
         </Link>
       </div>
@@ -60,20 +60,20 @@ function Inner() {
         <div className="mx-auto grid h-16 w-16 animate-scale-in place-items-center rounded-3xl bg-brand-50 text-brand-600">
           <PartyPopper className="h-8 w-8" />
         </div>
-        <h1 className="mt-4 text-[24px] font-extrabold text-ink">{me.name}님, 환영해요!</h1>
-        <p className="mt-1 text-[14px] text-ink-3">회원코드 {me.memberCode} — 매장에서 보여주면 적립돼요.</p>
+        <h1 className="mt-4 text-[1.5rem] font-extrabold text-ink">{me.name}님, 환영해요!</h1>
+        <p className="mt-1 text-[0.875rem] text-ink-3">회원코드 {me.memberCode} — 매장에서 보여주면 적립돼요.</p>
         <div className="mt-6 space-y-2 text-left">
           {coupons.map((x) => (
             <div key={x.id} className="flex items-center gap-3 rounded-2xl bg-promo-50 p-4">
               <Gift className="h-5 w-5 shrink-0 text-promo-600" />
               <div>
-                <p className="text-[14.5px] font-bold text-ink">{x.benefit}</p>
-                <p className="text-[12px] text-ink-3">{x.title} 발급 완료</p>
+                <p className="text-[0.9062rem] font-bold text-ink">{x.benefit}</p>
+                <p className="text-[0.8125rem] text-ink-3">{x.title} 발급 완료</p>
               </div>
             </div>
           ))}
           {done.referral && (
-            <p className={cx('rounded-2xl p-3 text-[13px]', done.referral.status === 'PENDING' ? 'bg-sage-50 text-sage-600' : 'bg-amber-50 text-amber-900')}>
+            <p className={cx('rounded-2xl p-3 text-[0.8125rem]', done.referral.status === 'PENDING' ? 'bg-sage-50 text-sage-600' : 'bg-amber-50 text-amber-900')}>
               {done.referral.status === 'PENDING' ? '추천 코드가 적용됐어요. 첫 이용이 매장에서 확인되면 추천한 친구에게 보상이 지급돼요.' : `추천 코드가 적용되지 않았어요: ${done.referral.reason}`}
             </p>
           )}
@@ -107,14 +107,14 @@ function Inner() {
     <div>
       <BackHeader title="회원가입" />
       <div className="mx-auto max-w-md px-5 pb-10 pt-6 md:pt-10">
-        <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">가입하고 혜택 받기</h1>
-        <p className="mt-1 text-[15px] text-ink-2">이름만 입력하면 30초면 끝나요.</p>
+        <h1 className="text-[1.625rem] font-extrabold tracking-[-0.02em] text-ink">가입하고 혜택 받기</h1>
+        <p className="mt-1 text-[0.9375rem] text-ink-2">이름만 입력하면 30초면 끝나요.</p>
         <div className="mt-4 flex items-center gap-3 rounded-[20px] bg-promo-50 p-3 pr-4">
           <AssetImage slot="menu_m_pie120" fallback={{ kind: 'pie', variant: 0 }} alt="" className="h-16 w-16 shrink-0 rounded-2xl" sizes="64px" />
           <div className="min-w-0">
-            <p className="text-[13px] font-bold text-promo-600">가입 즉시 발급</p>
-            <p className="text-[17px] font-extrabold leading-snug text-ink">{s.loyaltyRules.find((r) => r.kind === 'SIGNUP')?.benefit} 쿠폰</p>
-            <p className="text-[12px] text-amber-800">DEMO 예시 혜택 · 운영자 확정 전</p>
+            <p className="text-[0.8125rem] font-bold text-promo-600">가입 즉시 발급</p>
+            <p className="text-[1.0625rem] font-extrabold leading-snug text-ink">{s.loyaltyRules.find((r) => r.kind === 'SIGNUP')?.benefit} 쿠폰</p>
+            <p className="text-[0.8125rem] text-amber-800">DEMO 예시 혜택 · 운영자 확정 전</p>
           </div>
         </div>
 
@@ -130,12 +130,12 @@ function Inner() {
               <input value={ref} onChange={(e) => setRef(e.target.value.toUpperCase())} maxLength={8} placeholder="예: AB3CD" className={cx(inputCls, 'uppercase tracking-widest')} data-testid="signup-ref" />
             </Field>
           ) : (
-            <button type="button" onClick={() => setRefOpen(true)} className="text-[14px] font-bold text-brand-700">
+            <button type="button" onClick={() => setRefOpen(true)} className="text-[0.875rem] font-bold text-brand-700">
               + 친구에게 받은 추천 코드가 있어요
             </button>
           )}
           <div>
-            <p className="mb-2 text-[13px] font-semibold text-ink-2">관심 있는 서비스 (선택 · 맞춤 안내에만 사용)</p>
+            <p className="mb-2 text-[0.8125rem] font-semibold text-ink-2">관심 있는 서비스 (선택 · 맞춤 안내에만 사용)</p>
             <div className="flex gap-2">
               {(
                 [
@@ -145,7 +145,7 @@ function Inner() {
               ).map(([v, l]) => {
                 const on = brands.includes(v);
                 return (
-                  <button key={v} type="button" aria-pressed={on} onClick={() => setBrands(on ? brands.filter((b) => b !== v) : [...brands, v])} className={cx('inline-flex h-11 items-center gap-1.5 rounded-full px-4 text-[14.5px] font-bold ring-1 transition', on ? 'bg-brand-50 text-brand-800 ring-brand-300' : 'bg-white text-ink-2 ring-line hover:bg-canvas')}>
+                  <button key={v} type="button" aria-pressed={on} onClick={() => setBrands(on ? brands.filter((b) => b !== v) : [...brands, v])} className={cx('inline-flex h-11 items-center gap-1.5 rounded-full px-4 text-[0.9062rem] font-bold ring-1 transition', on ? 'bg-brand-50 text-brand-800 ring-brand-300' : 'bg-white text-ink-2 ring-line hover:bg-canvas')}>
                     {on && <Check className="h-4 w-4" strokeWidth={3} />}
                     {l}
                   </button>
@@ -163,9 +163,9 @@ function Inner() {
               onChange={(e) => setC(Object.fromEntries(CONSENTS.map((x) => [x.key, e.target.checked])) as Record<ConsentKey, boolean>)}
               className="h-5 w-5 accent-brand-600"
             />
-            <span className="text-[15px] font-bold text-ink">전체 동의 (선택 항목 포함)</span>
+            <span className="text-[0.9375rem] font-bold text-ink">전체 동의 (선택 항목 포함)</span>
           </label>
-          <button type="button" onClick={() => setC({ ...c, terms: true, privacy: true, age14: true })} className="w-full border-b border-line px-4 py-3 text-left text-[14px] font-semibold text-brand-700 hover:bg-canvas">
+          <button type="button" onClick={() => setC({ ...c, terms: true, privacy: true, age14: true })} className="w-full border-b border-line px-4 py-3 text-left text-[0.875rem] font-semibold text-brand-700 hover:bg-canvas">
             필수 항목만 한 번에 동의하기
           </button>
           <ul className="divide-y divide-line/70">
@@ -173,30 +173,30 @@ function Inner() {
               <li key={x.key} className="px-4 py-3">
                 <div className="flex items-center gap-3">
                   <input id={`c-${x.key}`} type="checkbox" checked={c[x.key]} onChange={(e) => setC({ ...c, [x.key]: e.target.checked })} className="h-5 w-5 accent-brand-600" data-testid={`consent-${x.key}`} />
-                  <label htmlFor={`c-${x.key}`} className={cx('flex-1 cursor-pointer text-[13.5px]', x.required ? 'font-semibold text-ink' : 'text-ink-2')}>
+                  <label htmlFor={`c-${x.key}`} className={cx('flex-1 cursor-pointer text-[0.8438rem]', x.required ? 'font-semibold text-ink' : 'text-ink-2')}>
                     {x.label}
                   </label>
                   <button type="button" onClick={() => setOpen(open === x.key ? null : x.key)} aria-expanded={open === x.key} aria-label={`${x.label} 내용 보기`} className="grid h-8 w-8 place-items-center rounded-full text-ink-3 hover:bg-canvas">
                     <ChevronDown className={cx('h-4 w-4 transition', open === x.key && 'rotate-180')} />
                   </button>
                 </div>
-                {open === x.key && <p className="mt-2 rounded-xl bg-canvas p-3 text-[12.5px] leading-relaxed text-ink-3">{x.desc}</p>}
+                {open === x.key && <p className="mt-2 rounded-xl bg-canvas p-3 text-[0.8438rem] leading-relaxed text-ink-3">{x.desc}</p>}
               </li>
             ))}
           </ul>
         </div>
-        {touched && !requiredOk && <p className="mt-2 text-[12.5px] font-medium text-red-600">필수 항목에 동의해 주세요.</p>}
+        {touched && !requiredOk && <p className="mt-2 text-[0.8438rem] font-medium text-red-600">필수 항목에 동의해 주세요.</p>}
 
         <Button size="lg" full className="mt-6" onClick={submit} data-testid="signup-submit">
           가입하고 쿠폰 받기
         </Button>
-        <p className="mt-3 text-center text-[13px] text-ink-3">
+        <p className="mt-3 text-center text-[0.8125rem] text-ink-3">
           이미 회원인가요?{' '}
           <Link href={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-brand-700">
             로그인
           </Link>
         </p>
-        <p className="mt-4 rounded-xl bg-amber-50 p-3 text-[12px] leading-relaxed text-amber-900">DEMO 단계: 가입 정보는 이 브라우저에만 저장되며, 운영 전환 시 휴대폰 본인확인(Supabase Auth)으로 교체됩니다.</p>
+        <p className="mt-4 rounded-xl bg-amber-50 p-3 text-[0.8125rem] leading-relaxed text-amber-900">DEMO 단계: 가입 정보는 이 브라우저에만 저장되며, 운영 전환 시 휴대폰 본인확인(Supabase Auth)으로 교체됩니다.</p>
       </div>
     </div>
   );

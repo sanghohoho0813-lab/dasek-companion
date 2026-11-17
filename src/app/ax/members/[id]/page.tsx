@@ -11,6 +11,7 @@ import { couponsFor, getMenuItem, getProfile, hasConsent, stampCount, verifiedUs
 import { opAct } from '@/lib/store';
 import type { CouponIssue } from '@/lib/types';
 import { cx, fmtDate } from '@/lib/util';
+import { StatusPill, statusOf } from '@/components/ui/Status';
 
 const LEVEL: Record<string, { l: string; tone: 'slate' | 'blue' | 'green' | 'amber' }> = {
   order_link_click: { l: '링크 클릭', tone: 'slate' },
@@ -51,18 +52,18 @@ export default function MemberDetail() {
 
   return (
     <div className="space-y-4">
-      <Link href="/ax/members" className="inline-flex items-center gap-1 text-[13px] font-semibold text-slate-500 hover:text-slate-900">
+      <Link href="/ax/members" className="inline-flex items-center gap-1 text-[0.875rem] font-semibold text-slate-500 hover:text-slate-900">
         <ArrowLeft className="h-4 w-4" /> 회원 목록
       </Link>
       <Panel>
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-ax-soft text-[18px] font-extrabold text-ax-primary">{p.name.slice(0, 1)}</span>
+            <span className="grid h-12 w-12 place-items-center rounded-full bg-ax-soft text-[1.125rem] font-extrabold text-ax-primary">{p.name.slice(0, 1)}</span>
             <div>
-              <p className="flex flex-wrap items-center gap-2 text-[19px] font-extrabold text-slate-900">
+              <p className="flex flex-wrap items-center gap-2 text-[1.1875rem] font-extrabold text-slate-900">
                 {p.name} {p.isDemo && <Tag tone="amber">DEMO</Tag>} {p.status !== 'active' && <Tag tone="red">{p.status === 'deletion_requested' ? '삭제 요청' : '익명화됨'}</Tag>}
               </p>
-              <p className="text-[12.5px] text-slate-500">
+              <p className="text-[0.8438rem] text-slate-500">
                 {p.memberCode} · {fmtDate(p.createdAt)} 가입 · 관심: {p.preferredBrands.map((b) => (b === 'dasek' ? '다색냥' : '리얼식단')).join(', ') || '-'}
                 {can('member.viewContact') && p.phoneLast4 ? ` · 전화 ****${p.phoneLast4}` : ''}
               </p>
@@ -82,14 +83,14 @@ export default function MemberDetail() {
             ['앱 알림 동의', hasConsent(s, p.id, 'marketing_inapp') ? '동의' : '미동의'],
           ].map(([l, v]) => (
             <div key={l} className="rounded-xl bg-slate-50 p-3">
-              <p className="text-[12px] text-slate-500">{l}</p>
-              <p className="text-[17px] font-extrabold text-slate-900">{v}</p>
+              <p className="text-[0.8125rem] text-slate-500">{l}</p>
+              <p className="text-[1.125rem] font-extrabold text-slate-900">{v}</p>
             </div>
           ))}
         </div>
         {deletionTask && (
           <div className="mt-4 flex flex-col gap-2 rounded-xl bg-red-50 p-3 md:flex-row md:items-center md:justify-between">
-            <p className="text-[13px] font-semibold text-red-800">고객이 탈퇴·정보 삭제를 요청했어요.</p>
+            <p className="text-[0.875rem] font-semibold text-red-800">고객이 탈퇴·정보 삭제를 요청했어요.</p>
             {can('member.process_deletion') ? (
               <Button tone="ax" variant="danger" size="sm" onClick={() => run(() => opAct((d, c) => D.processDeletion(d, c, p.id)), '개인정보를 익명화했어요.')}>
                 삭제(익명화) 처리
@@ -106,14 +107,14 @@ export default function MemberDetail() {
           {uses.length ? (
             <ul className="divide-y divide-slate-100">
               {uses.map((u) => (
-                <li key={u.id} className="flex items-center gap-3 py-2.5 text-[13px]">
+                <li key={u.id} className="flex items-center gap-3 py-2.5 text-[0.875rem]">
                   <Tag tone={u.kind === 'VISIT' ? 'blue' : 'green'}>{u.kind === 'VISIT' ? '방문' : '구매'}</Tag>
                   <span className="min-w-0 flex-1 truncate text-slate-700">
                     {storeName(u.storeId)} {u.menuItemIds.length ? `· ${u.menuItemIds.map((m) => getMenuItem(s, m)?.name).join(', ')}` : ''} {u.amount ? `· ${u.amount.toLocaleString()}원` : ''}
                   </span>
-                  <span className="text-[12px] text-slate-400">{fmtDate(u.at, { time: true })}</span>
+                  <span className="text-[0.8125rem] text-slate-500">{fmtDate(u.at, { time: true })}</span>
                   {can('verification.reverse') && (
-                    <button onClick={() => setReverse({ kind: u.kind, id: u.id })} className="grid h-7 w-7 place-items-center rounded-md text-slate-400 hover:bg-slate-100 hover:text-slate-700" aria-label="확인 취소">
+                    <button onClick={() => setReverse({ kind: u.kind, id: u.id })} className="grid h-11 w-11 lg:h-7 lg:w-7 place-items-center rounded-md text-slate-500 hover:bg-slate-100 hover:text-slate-700" aria-label="확인 취소">
                       <Undo2 className="h-3.5 w-3.5" />
                     </button>
                   )}
@@ -121,20 +122,20 @@ export default function MemberDetail() {
               ))}
             </ul>
           ) : (
-            <p className="text-[13px] text-slate-400">아직 확인된 이용이 없어요.</p>
+            <p className="text-[0.875rem] text-slate-500">아직 확인된 이용이 없어요.</p>
           )}
         </Panel>
         <Panel title="쿠폰" sub="사용 처리는 직원, 취소·재발급은 책임자(사유 기록)">
           <ul className="divide-y divide-slate-100">
             {coupons.map((c) => (
-              <li key={c.id} className="flex flex-wrap items-center gap-2 py-2.5 text-[13px]">
+              <li key={c.id} className="flex flex-wrap items-center gap-2 py-2.5 text-[0.875rem]">
                 <span className="min-w-0 flex-1">
                   <span className="font-semibold text-slate-800">{c.benefit}</span>
-                  <span className="block text-[12px] text-slate-400">
+                  <span className="block text-[0.8125rem] text-slate-500">
                     {c.title} · {c.code} · {fmtDate(c.expiresAt)}까지
                   </span>
                 </span>
-                <Tag tone={c.status === 'ISSUED' ? 'green' : c.status === 'REDEEMED' ? 'blue' : 'slate'}>{{ ISSUED: '사용 가능', REDEEMED: '사용됨', EXPIRED: '만료', CANCELLED: '취소' }[c.status]}</Tag>
+                <StatusPill kind={statusOf.coupon(c.status)} size="sm" />
                 {c.status === 'ISSUED' && (
                   <>
                     <Button tone="ax" size="sm" variant="outline" disabled={!can('coupon.redeem')} onClick={() => run(() => opAct((d, ctx) => D.redeemCoupon(d, ctx, c.id)), '사용 처리했어요.')}>
@@ -162,17 +163,17 @@ export default function MemberDetail() {
         <Panel title="행동 기록 (근거 수준 표시)" sub="클릭·자가신고·조회는 실적이 아닌 신호로만 사용">
           <ul className="max-h-80 space-y-1.5 overflow-y-auto pr-1">
             {events.map((e) => (
-              <li key={e.id} className="flex items-center gap-2 text-[12.5px]">
+              <li key={e.id} className="flex items-center gap-2 text-[0.8438rem]">
                 <Tag tone={LEVEL[e.type]?.tone ?? 'slate'}>{LEVEL[e.type]?.l ?? e.type}</Tag>
                 <span className="min-w-0 flex-1 truncate text-slate-600">{e.label}</span>
-                <span className="shrink-0 text-[12px] text-slate-400">{fmtDate(e.createdAt, { time: true })}</span>
+                <span className="shrink-0 text-[0.8125rem] text-slate-500">{fmtDate(e.createdAt, { time: true })}</span>
               </li>
             ))}
           </ul>
         </Panel>
         <div className="space-y-4">
           <Panel title="추천 관계">
-            <ul className="space-y-1.5 text-[13px] text-slate-600">
+            <ul className="space-y-1.5 text-[0.875rem] text-slate-600">
               {refAsReferee && (
                 <li>
                   <Tag tone="violet">추천받음</Tag> {getProfile(s, refAsReferee.referrerId)?.name}님 코드 · {refAsReferee.status}
@@ -183,13 +184,13 @@ export default function MemberDetail() {
                   <Tag tone="blue">추천함</Tag> {getProfile(s, r.refereeId)?.name} · {r.status}
                 </li>
               ))}
-              {!refAsReferee && !refAsReferrer.length && <li className="text-slate-400">추천 관계 없음</li>}
+              {!refAsReferee && !refAsReferrer.length && <li className="text-slate-500">추천 관계 없음</li>}
             </ul>
           </Panel>
           <Panel title="동의 이력" sub={`목적·버전·시각 기록 · 현재 버전 ${D.CONSENT_VERSION}`}>
-            <ul className="max-h-44 space-y-1 overflow-y-auto text-[12.5px]">
+            <ul className="max-h-44 space-y-1 overflow-y-auto text-[0.8438rem]">
               {consents.map((c) => (
-                <li key={c.id} className={cx('flex justify-between gap-2', c.withdrawnAt ? 'text-slate-400 line-through' : 'text-slate-600')}>
+                <li key={c.id} className={cx('flex justify-between gap-2', c.withdrawnAt ? 'text-slate-500 line-through' : 'text-slate-600')}>
                   <span>
                     {c.purpose} · {c.granted ? '동의' : '미동의'}
                   </span>

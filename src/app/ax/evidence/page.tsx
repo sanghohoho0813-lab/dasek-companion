@@ -43,8 +43,8 @@ export default function EvidencePage() {
       />
       <Panel title="Money KPI 3 · Baseline 상태">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[640px] text-left text-[13px]">
-            <thead className="text-[12px] text-slate-400">
+          <table className="ax-table w-full min-w-[640px] text-left text-[0.875rem]">
+            <thead className="text-[0.8125rem] text-slate-500">
               <tr>
                 <th className="pb-2 font-semibold">구분</th>
                 <th className="pb-2 font-semibold">지표</th>
@@ -63,12 +63,12 @@ export default function EvidencePage() {
                 <tr key={a}>
                   <td className="py-2.5 font-bold">{a}</td>
                   <td className="py-2.5">{b}</td>
-                  <td className="py-2.5 font-mono text-[12px] text-slate-500">{c}</td>
+                  <td className="py-2.5 font-mono text-[0.8125rem] text-slate-500">{c}</td>
                   <td className="py-2.5 font-semibold tabular">{d}</td>
                   <td className="py-2.5">
                     <Tag tone="amber">REQUIRED / UNKNOWN</Tag>
                   </td>
-                  <td className="py-2.5 text-slate-400">DO NOT INVENT</td>
+                  <td className="py-2.5 text-slate-500">DO NOT INVENT</td>
                 </tr>
               ))}
             </tbody>
@@ -79,9 +79,9 @@ export default function EvidencePage() {
         <ol className="grid gap-3 md:grid-cols-4">
           {WEEKS.map((w, i) => (
             <li key={w.w} className="rounded-xl bg-slate-50 p-4">
-              <p className="text-[12px] font-bold text-slate-400">{w.w}</p>
-              <p className="text-[14.5px] font-extrabold text-slate-900">{w.t}</p>
-              <p className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{w.d}</p>
+              <p className="text-[0.8125rem] font-bold text-slate-500">{w.w}</p>
+              <p className="text-[0.9688rem] font-extrabold text-slate-900">{w.t}</p>
+              <p className="mt-1 text-[0.8438rem] leading-relaxed text-slate-600">{w.d}</p>
               <p className="mt-2">
                 <Tag tone={i === 1 ? 'blue' : i === 0 ? 'amber' : 'slate'}>{w.status}</Tag>
               </p>
@@ -92,7 +92,7 @@ export default function EvidencePage() {
       <Panel
         title={`Proof Event ${s.proofEvents.length}건`}
         action={
-          <select value={type} onChange={(e) => setType(e.target.value)} className="h-8 rounded-lg border border-slate-200 px-2 text-[12.5px]" aria-label="유형 필터">
+          <select value={type} onChange={(e) => setType(e.target.value)} className="h-11 rounded-lg border border-axline bg-white px-2.5 text-[0.9375rem] lg:h-9" aria-label="유형 필터">
             <option value="all">전체 유형</option>
             {types.map((t) => (
               <option key={t}>{t}</option>
@@ -101,8 +101,8 @@ export default function EvidencePage() {
         }
       >
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[780px] text-left text-[12.5px]" data-testid="proof-table">
-            <thead className="border-b border-slate-100 text-[12px] text-slate-400">
+          <table className="ax-table w-full min-w-[780px] text-left text-[0.8438rem]" data-testid="proof-table">
+            <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
               <tr>
                 <th className="pb-2 font-semibold">유형</th>
                 <th className="pb-2 font-semibold">Trigger</th>
@@ -135,10 +135,10 @@ export default function EvidencePage() {
       </Panel>
       <Sheet open={!!open} onClose={() => setOpen(null)} tone="ax" side="right" title={open?.event_type ?? ''} description="PROOF_EVENT_SCHEMA 전체 필드">
         {open && (
-          <dl className="space-y-2 text-[12.5px]">
+          <dl className="space-y-2 text-[0.8438rem]">
             {Object.entries(open).map(([k2, v]) => (
               <div key={k2} className="grid grid-cols-[140px_1fr] gap-2 border-b border-slate-100 pb-2">
-                <dt className="font-mono text-slate-400">{k2}</dt>
+                <dt className="font-mono text-slate-500">{k2}</dt>
                 <dd className="break-words text-slate-800">{v == null ? '—' : String(v)}</dd>
               </div>
             ))}

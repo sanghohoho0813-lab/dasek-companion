@@ -90,9 +90,9 @@ test('AX home shows work-first tiers and quick staff actions', async ({ page }) 
   await expect(page.getByTestId('urgent-summary')).toContainText('방문·구매 확인 대기');
   await expect(page.getByTestId('content-fixes')).toContainText('예시 고양이 프로필');
   // 첫 화면 큐에서 바로 확인 → 오늘 현황 반영
-  const visitsBefore = Number((await page.getByTestId('today-stats').locator('div', { hasText: '확인된 방문' }).locator('p.text-\\[26px\\]').first().textContent())!.trim());
+  const visitsBefore = Number((await page.getByTestId('today-stats').locator('div', { hasText: '확인된 방문' }).locator('[data-stat-value]').first().textContent())!.trim());
   await page.getByTestId('queue-approve').filter({ hasText: '방문 확인' }).first().click();
-  await expect(page.getByTestId('today-stats').locator('div', { hasText: '확인된 방문' }).locator('p.text-\\[26px\\]').first()).toHaveText(String(visitsBefore + 1));
+  await expect(page.getByTestId('today-stats').locator('div', { hasText: '확인된 방문' }).locator('[data-stat-value]').first()).toHaveText(String(visitsBefore + 1));
   await page.getByTestId('queue-search').waitFor({ state: 'detached' }).catch(() => {});
   await page.goto('/ax/queue');
   await page.getByTestId('queue-search').fill('없는이름');

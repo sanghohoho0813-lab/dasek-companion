@@ -9,6 +9,7 @@ import * as D from '@/lib/domain';
 import { opAct } from '@/lib/store';
 import type { AppState, CafeCat, Evidence, MenuItem } from '@/lib/types';
 import { cx, won } from '@/lib/util';
+import { StatusPill } from '@/components/ui/Status';
 
 /** 업로드 이미지를 최대 960px JPEG로 줄여 저장(DEMO: 브라우저 저장 공간 보호) */
 async function resizeToDataUrl(file: File, max = 960): Promise<string> {
@@ -76,12 +77,12 @@ function MenuEditor({ s, item, onClose }: { s: AppState; item: MenuItem; onClose
         </div>
       }
     >
-      <div className="space-y-3 text-[13px]">
+      <div className="space-y-3 text-[0.875rem]">
         <div className="flex gap-3 rounded-xl bg-slate-50 p-3">
           <AssetImage slots={menuSlots(item)} dataUrl={current?.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className="h-24 w-24 shrink-0 rounded-lg" sizes="96px" sampleBadge badgePosition="bl" />
           <div className="min-w-0">
             <p className="font-bold text-slate-800">메뉴 사진</p>
-            <p className="mt-0.5 text-[12px] text-slate-500">{current?.photoDataUrl ? '운영자가 올린 사진이 고객 화면에 보여요.' : '지금은 샘플 사진(또는 일러스트)이 보여요. 권리가 확인된 실제 사진으로 바꿔 주세요.'}</p>
+            <p className="mt-0.5 text-[0.8125rem] text-slate-500">{current?.photoDataUrl ? '운영자가 올린 사진이 고객 화면에 보여요.' : '지금은 샘플 사진(또는 일러스트)이 보여요. 권리가 확인된 실제 사진으로 바꿔 주세요.'}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               <input
                 ref={photoRef}
@@ -147,7 +148,7 @@ function MenuEditor({ s, item, onClose }: { s: AppState; item: MenuItem; onClose
           <span className="font-semibold text-slate-700">대표 메뉴</span>
           <Toggle tone="ax" checked={f.isSignature} onChange={(v) => setF({ ...f, isSignature: v })} label="대표 메뉴" />
         </div>
-        <p className="rounded-lg bg-amber-50 p-3 text-[12px] text-amber-900">영양성분·알레르기는 원재료·중량 검증 자료가 연결될 때만 표시돼요(현재 미확인). 1차에서는 입력 기능을 열지 않습니다.</p>
+        <p className="rounded-lg bg-amber-50 p-3 text-[0.8125rem] text-amber-900">영양성분·알레르기는 원재료·중량 검증 자료가 연결될 때만 표시돼요(현재 미확인). 1차에서는 입력 기능을 열지 않습니다.</p>
       </div>
     </Sheet>
   );
@@ -185,7 +186,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
         </div>
       }
     >
-      <div className="grid gap-3 text-[13px] md:grid-cols-2">
+      <div className="grid gap-3 text-[0.875rem] md:grid-cols-2">
         <label className="block font-semibold text-slate-600">
           이름
           <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={cx(axInputCls, 'mt-1')} />
@@ -216,7 +217,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
         </div>
       </div>
       <div className="mt-5 flex items-center justify-between">
-        <p className="text-[14px] font-bold text-slate-900">사진 {photos.length}장</p>
+        <p className="text-[0.9375rem] font-bold text-slate-900">사진 {photos.length}장</p>
         <input
           ref={fileRef}
           type="file"
@@ -246,24 +247,24 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
               <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? cat.coverArt} alt={p.alt} className="aspect-square w-full" sizes="200px" sampleBadge badgePosition="br" />
               <span className="absolute left-1.5 top-1.5 flex gap-1">
                 {i === 0 && p.status === 'PUBLISHED' && <Tag tone="blue">대표</Tag>}
-                <Tag tone={p.status === 'PUBLISHED' ? 'green' : p.status === 'PENDING_REVIEW' ? 'amber' : 'slate'}>{{ PUBLISHED: '공개', PENDING_REVIEW: '승인 대기', HIDDEN: '숨김' }[p.status]}</Tag>
+                <StatusPill kind={({ PUBLISHED: 'done', PENDING_REVIEW: 'pending', HIDDEN: 'paused' } as const)[p.status]} label={{ PUBLISHED: '공개', PENDING_REVIEW: '승인 대기', HIDDEN: '숨김' }[p.status]} size="sm" />
               </span>
             </div>
             <div className="flex flex-wrap items-center gap-1 p-1.5">
-              <button disabled={i === 0} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, -1)))} className="grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="앞으로">
+              <button disabled={i === 0} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, -1)))} className="grid h-11 w-11 lg:h-8 lg:w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="앞으로">
                 ←
               </button>
-              <button disabled={i === photos.length - 1} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, 1)))} className="grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="뒤로">
+              <button disabled={i === photos.length - 1} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, 1)))} className="grid h-11 w-11 lg:h-8 lg:w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="뒤로">
                 →
               </button>
               {p.status === 'PUBLISHED' && i !== 0 && (
-                <button onClick={() => run(() => opAct((d, c) => D.setCatCover(d, c, p.id)), '대표 사진으로 지정했어요.')} className="h-8 rounded-md px-2 text-[12px] font-bold text-ax-primary hover:bg-slate-100" data-testid="set-cover">
+                <button onClick={() => run(() => opAct((d, c) => D.setCatCover(d, c, p.id)), '대표 사진으로 지정했어요.')} className="h-11 rounded-md px-2.5 text-[0.875rem] font-bold text-ax-primary hover:bg-slate-100 lg:h-8" data-testid="set-cover">
                   대표로
                 </button>
               )}
               <button
                 onClick={() => run(() => opAct((d, c) => D.reviewPhoto(d, c, p.id, p.status === 'PUBLISHED' ? 'HIDDEN' : 'PUBLISHED')), p.status === 'PUBLISHED' ? '숨겼어요.' : '공개했어요.')}
-                className="ml-auto h-8 rounded-md px-2 text-[12px] font-bold text-slate-600 hover:bg-slate-100"
+                className="ml-auto h-8 rounded-md px-2 text-[0.8125rem] font-bold text-slate-600 hover:bg-slate-100"
               >
                 {p.status === 'PUBLISHED' ? '숨기기' : '공개'}
               </button>
@@ -271,7 +272,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
           </div>
         ))}
       </div>
-      <p className="mt-2 text-[12px] text-slate-400">DEMO: 사진은 이 브라우저에만 저장돼요(960px로 축소). 운영 시 Supabase Storage + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
+      <p className="mt-2 text-[0.8125rem] text-slate-500">DEMO: 사진은 이 브라우저에만 저장돼요(960px로 축소). 운영 시 Supabase Storage + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
     </Sheet>
   );
 }
@@ -311,8 +312,8 @@ function Inner() {
         {tab === 'menu' && (
           <Panel>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[760px] text-left text-[13px]">
-                <thead className="border-b border-slate-100 text-[12px] text-slate-400">
+              <table className="ax-table w-full min-w-[760px] text-left text-[0.875rem]">
+                <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
                   <tr>
                     <th className="pb-2 font-semibold">메뉴</th>
                     <th className="pb-2 font-semibold">브랜드</th>
@@ -331,7 +332,7 @@ function Inner() {
                           <AssetImage slots={menuSlots(m)} dataUrl={m.photoDataUrl} fallback={m.art} alt="" className="h-11 w-11 shrink-0 rounded-lg" sizes="44px" />
                           <span>
                             <span className="font-bold text-slate-900">{m.name}</span>
-                            {m.isSignature && <span className="ml-1.5 text-[12px] font-bold text-orange-600">대표</span>}
+                            {m.isSignature && <span className="ml-1.5 text-[0.8125rem] font-bold text-orange-800">대표</span>}
                             {m.isDemo && <span className="ml-1.5"><Tag tone="amber">예시</Tag></span>}
                           </span>
                         </div>
@@ -343,7 +344,7 @@ function Inner() {
                       <td className="py-2">
                         <EvidenceBadge ev={m.evidence} />
                       </td>
-                      <td className="py-2 text-[12px] text-slate-500">{m.nutritionStatus === 'VERIFIED' ? '확인' : '미확인'} / {m.allergenStatus === 'VERIFIED' ? '확인' : '미확인'}</td>
+                      <td className="py-2 text-[0.8125rem] text-slate-500">{m.nutritionStatus === 'VERIFIED' ? '확인' : '미확인'} / {m.allergenStatus === 'VERIFIED' ? '확인' : '미확인'}</td>
                       <td className="py-2">{m.published ? <Tag tone="green">공개</Tag> : <Tag>비공개</Tag>}</td>
                       <td className="py-2 text-right">
                         <Button tone="ax" variant="ghost" size="sm" disabled={!canEdit} onClick={() => setEditMenu(m)} aria-label={`${m.name} 수정`}>
@@ -355,7 +356,7 @@ function Inner() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-3 text-[12px] text-slate-400">메뉴 일괄 등록(CSV 가져오기)은 READY — 메뉴 권리·가맹 정책 확인 후 열어요.</p>
+            <p className="mt-3 text-[0.8125rem] text-slate-500">메뉴 일괄 등록(CSV 가져오기)은 READY — 메뉴 권리·가맹 정책 확인 후 열어요.</p>
           </Panel>
         )}
         {tab === 'cats' && (
@@ -369,14 +370,14 @@ function Inner() {
               {cats.map((c, i) => {
                 const n = s.catPhotos.filter((p) => p.catId === c.id && p.status === 'PUBLISHED').length;
                 return (
-                  <div key={c.id} className="flex gap-3 rounded-2xl bg-white p-3 ring-1 ring-slate-200/70">
+                  <div key={c.id} className="flex gap-3 rounded-2xl bg-white p-3 ring-1 ring-axline">
                     <AssetImage slot={D.publishedCatPhotos(s, c.id)[0]?.slot} dataUrl={D.publishedCatPhotos(s, c.id)[0]?.dataUrl} fallback={c.coverArt} alt={c.name} className="h-24 w-20 shrink-0 rounded-xl" sizes="80px" position="center 35%" />
                     <div className="min-w-0 flex-1">
-                      <p className="flex items-center gap-1.5 text-[15px] font-bold text-slate-900">
+                      <p className="flex items-center gap-1.5 text-[1rem] font-bold text-slate-900">
                         {c.name} {c.isPlaceholder && <Tag tone="amber">예시</Tag>}
                       </p>
-                      <p className="clamp-1 text-[12.5px] text-slate-500">{c.tagline}</p>
-                      <p className="mt-1 text-[12px] text-slate-400">공개 사진 {n}장 · {c.published ? '공개' : '비공개'}</p>
+                      <p className="clamp-1 text-[0.8438rem] text-slate-500">{c.tagline}</p>
+                      <p className="mt-1 text-[0.8125rem] text-slate-500">공개 사진 {n}장 · {c.published ? '공개' : '비공개'}</p>
                       <div className="mt-2 flex flex-wrap gap-1">
                         <Button tone="ax" variant="outline" size="sm" disabled={!canEdit} onClick={() => setEditCat(c)}>
                           <Pencil className="h-3.5 w-3.5" /> 편집
@@ -396,7 +397,7 @@ function Inner() {
                 );
               })}
             </div>
-            <p className="text-[12px] text-slate-400">실제 고양이 수·이름·사진 확인 전이므로 예시 프로필입니다. 매장 고양이의 건강 기록은 이 화면에도 저장하지 않아요(별도 관리 정책 확정 전).</p>
+            <p className="text-[0.8125rem] text-slate-500">실제 고양이 수·이름·사진 확인 전이므로 예시 프로필입니다. 매장 고양이의 건강 기록은 이 화면에도 저장하지 않아요(별도 관리 정책 확정 전).</p>
           </div>
         )}
         {tab === 'photos' && (
@@ -409,8 +410,8 @@ function Inner() {
                     <div key={p.id} className="overflow-hidden rounded-xl ring-1 ring-slate-200">
                       <AssetImage dataUrl={p.dataUrl} fallback={p.art ?? cat.coverArt} alt={p.alt} className="aspect-[4/3] w-full" />
                       <div className="p-3">
-                        <p className="text-[13.5px] font-bold text-slate-900">{cat.name}</p>
-                        <p className="text-[12px] text-slate-500">{p.caption}</p>
+                        <p className="text-[0.9375rem] font-bold text-slate-900">{cat.name}</p>
+                        <p className="text-[0.8125rem] text-slate-500">{p.caption}</p>
                         <div className="mt-2 flex gap-1.5">
                           {can('photo.approve') ? (
                             <>
@@ -431,7 +432,7 @@ function Inner() {
                 })}
               </div>
             ) : (
-              <p className="text-[13px] text-slate-400">승인 대기 사진이 없어요.</p>
+              <p className="text-[0.875rem] text-slate-500">승인 대기 사진이 없어요.</p>
             )}
           </Panel>
         )}

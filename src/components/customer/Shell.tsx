@@ -31,18 +31,18 @@ function DemoBar() {
   const [confirm, setConfirm] = useState(false);
   if (inFrame || !desktop) return null;
   return (
-    <div className="border-b border-amber-200/70 bg-amber-50/80">
-      <div className="mx-auto flex h-10 max-w-6xl items-center justify-between gap-3 px-5 text-[12px] text-amber-900">
+    <div className="border-b border-amber-200 bg-amber-50">
+      <div className="mx-auto flex min-h-11 max-w-6xl items-center justify-between gap-3 px-5 py-1 text-[0.875rem] text-amber-900">
         <div className="flex min-w-0 items-center gap-2">
           <StatusBadge status="DEMO" />
           <span className="truncate">시연용 데이터입니다. 실제 고양이·메뉴·혜택은 운영자 확인 후 교체됩니다.</span>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <DeviceSwitch tone="brand" />
-          <Link href="/ax" data-testid="surface-to-ax" className="inline-flex h-7 items-center gap-1 rounded-md bg-white px-2.5 font-semibold text-slate-700 ring-1 ring-slate-200 transition hover:bg-slate-50">
+          <Link href="/ax" data-testid="surface-to-ax" className="inline-flex h-8 items-center gap-1 rounded-md bg-white px-2.5 font-semibold text-slate-800 ring-1 ring-slate-300 transition hover:bg-slate-50">
             <LayoutDashboard className="h-3.5 w-3.5" /> 운영 AX
           </Link>
-          <button onClick={() => setConfirm(true)} className="inline-flex h-7 items-center gap-1 rounded-md px-2 font-semibold text-amber-900 transition hover:bg-amber-100">
+          <button onClick={() => setConfirm(true)} className="inline-flex h-8 items-center gap-1 rounded-md px-2 font-semibold text-amber-900 transition hover:bg-amber-100">
             <RotateCcw className="h-3.5 w-3.5" /> 데모 초기화
           </button>
         </div>
@@ -84,9 +84,9 @@ function DesktopHeader() {
   const unread = me && s ? s.notifications.filter((n) => n.userId === me.id && !n.readAt).length : 0;
   const [q, setQ] = useState('');
   return (
-    <header className="sticky top-0 z-30 hidden border-b border-line/80 bg-white/90 backdrop-blur-md md:block">
+    <header className="sticky top-0 z-30 hidden border-b border-line bg-white md:block">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
-        <Link href="/" aria-label="다색컴패니언 홈" className="shrink-0">
+        <Link href="/" aria-label="다색컴패니언 홈" className="inline-flex min-h-11 shrink-0 items-center">
           <Wordmark compact={compact} />
         </Link>
         <nav className="flex items-center gap-1" aria-label="주요 메뉴">
@@ -95,7 +95,7 @@ function DesktopHeader() {
               key={n.href}
               href={n.href}
               aria-current={n.match(pathname) ? 'page' : undefined}
-              className={cx('rounded-lg px-3 py-2 text-[14.5px] font-semibold transition', n.match(pathname) ? 'bg-brand-50 text-brand-700' : 'text-ink-2 hover:bg-canvas hover:text-ink')}
+              className={cx('inline-flex h-11 items-center rounded-lg px-3.5 text-[0.9375rem] transition', n.match(pathname) ? 'bg-brand-50 font-bold text-brand-700' : 'font-semibold text-ink-2 hover:bg-canvas hover:text-ink')}
             >
               {n.label}
             </Link>
@@ -109,29 +109,29 @@ function DesktopHeader() {
             router.push(`/realsicdan?q=${encodeURIComponent(q)}`);
           }}
         >
-          <label className="flex h-10 w-64 items-center gap-2 rounded-full bg-canvas px-3.5 ring-1 ring-inset ring-line focus-within:ring-2 focus-within:ring-brand-200">
+          <label className="flex h-11 w-64 items-center gap-2 rounded-full bg-canvas px-3.5 ring-1 ring-inset ring-cardline focus-within:ring-2 focus-within:ring-brand-200">
             <Search className="h-4 w-4 text-ink-3" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="메뉴 검색" aria-label="메뉴 검색" className="w-full bg-transparent text-[14px] outline-none placeholder:text-ink-4" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="메뉴 검색" aria-label="메뉴 검색" className="w-full bg-transparent text-[0.9375rem] outline-none placeholder:text-ink-3" />
           </label>
         </form>
         <div className={cx('flex items-center gap-1.5', compact ? 'ml-auto xl:ml-0' : 'ml-auto lg:ml-0')}>
           {me && (
-            <Link href="/my/inbox" aria-label={`알림 ${unread}개`} className="relative grid h-10 w-10 place-items-center rounded-full text-ink-2 transition hover:bg-canvas">
+            <Link href="/my/inbox" aria-label={`알림 ${unread}개`} className="relative grid h-11 w-11 place-items-center rounded-full text-ink-2 transition hover:bg-canvas">
               <Bell className="h-5 w-5" />
-              {unread > 0 && <span className="absolute right-1.5 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[11px] font-bold text-white">{unread}</span>}
+              {unread > 0 && <span data-badge className="absolute right-0.5 top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-coral-600 px-1 text-[0.75rem] font-bold text-white ring-2 ring-white">{unread}</span>}
             </Link>
           )}
           {me ? (
-            <Link href="/my" className="inline-flex h-10 items-center gap-2 rounded-full bg-canvas pl-1.5 pr-3.5 text-[14px] font-semibold text-ink transition hover:bg-line">
-              <span className="grid h-7 w-7 place-items-center rounded-full bg-brand-600 text-[12px] font-bold text-white">{me.name.slice(0, 1)}</span>
+            <Link href="/my" className="inline-flex h-11 items-center gap-2 rounded-full bg-canvas pl-1.5 pr-3.5 text-[0.9375rem] font-semibold text-ink ring-1 ring-inset ring-cardline transition hover:bg-line">
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-600 text-[0.875rem] font-bold text-white">{me.name.slice(0, 1)}</span>
               마이
             </Link>
           ) : (
             <div className="flex items-center gap-1.5">
-              <Link href="/login" className="rounded-full px-3.5 py-2 text-[14px] font-semibold text-ink-2 transition hover:bg-canvas">
+              <Link href="/login" className="inline-flex h-11 items-center rounded-full px-4 text-[0.9375rem] font-semibold text-ink-2 transition hover:bg-canvas">
                 로그인
               </Link>
-              <Link href="/signup" className="rounded-full bg-brand-600 px-4 py-2 text-[14px] font-semibold text-white shadow-sm transition hover:bg-brand-700">
+              <Link href="/signup" className="inline-flex h-11 items-center rounded-full bg-brand-600 px-4 text-[0.9375rem] font-bold text-white shadow-sm transition hover:bg-brand-700">
                 가입하고 혜택 받기
               </Link>
             </div>
@@ -147,18 +147,18 @@ export function BottomNav() {
   const { s, me } = useCustomer();
   const unread = me && s ? s.notifications.filter((n) => n.userId === me.id && !n.readAt).length : 0;
   return (
-    <nav aria-label="하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-line/80 bg-white/95 backdrop-blur-md md:hidden">
+    <nav aria-label="하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-cardline bg-white md:hidden">
       <div className="mx-auto grid max-w-md grid-cols-4 pb-safe pt-1.5">
         {NAV.map((n) => {
           const active = n.match(pathname);
           const Icon = n.icon;
           return (
             <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined} className="group flex flex-col items-center gap-0.5 py-1 press">
-              <span className={cx('relative grid h-8 w-12 place-items-center rounded-full transition duration-150', active ? 'bg-brand-50 text-brand-700' : 'text-ink-3 group-active:bg-canvas')}>
+              <span className={cx('relative grid h-8 w-14 place-items-center rounded-full transition duration-150', active ? 'bg-brand-100 text-brand-700' : 'text-ink-3 group-active:bg-canvas')}>
                 <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.9} />
-                {n.href === '/my' && unread > 0 && <span className="absolute right-2 top-0.5 h-2 w-2 rounded-full bg-coral-500" />}
+                {n.href === '/my' && unread > 0 && <span className="absolute right-3 top-0.5 h-2.5 w-2.5 rounded-full bg-coral-600 ring-2 ring-white" />}
               </span>
-              <span className={cx('text-[12px] font-semibold', active ? 'text-brand-700' : 'text-ink-3')}>{n.label}</span>
+              <span className={cx('text-[0.8125rem]', active ? 'font-bold text-brand-700' : 'font-semibold text-ink-3')}>{n.label}</span>
             </Link>
           );
         })}
@@ -171,17 +171,17 @@ export function BottomNav() {
 export function BackHeader({ title, right, fallback = '/' }: { title: string; right?: React.ReactNode; fallback?: string }) {
   const router = useRouter();
   return (
-    <div className="sticky top-0 z-20 flex h-14 items-center gap-1 border-b border-line/70 bg-white/92 px-2 backdrop-blur-md md:hidden">
+    <div className="sticky top-0 z-20 flex h-14 items-center gap-1 border-b border-line bg-white px-2 md:hidden">
       <button
         aria-label="뒤로"
         onClick={() => (window.history.length > 1 ? router.back() : router.push(fallback))}
-        className="grid h-10 w-10 place-items-center rounded-full text-ink transition active:bg-canvas"
+        className="grid h-11 w-11 place-items-center rounded-full text-ink transition active:bg-canvas"
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
-      <p className="min-w-0 flex-1 truncate text-[16.5px] font-bold text-ink">{title}</p>
+      <p className="min-w-0 flex-1 truncate text-[1.0625rem] font-bold text-ink">{title}</p>
       <div className="flex items-center gap-1 pr-1">
-        <DemoToolsButton label="DEMO" className="h-8 px-2" />
+        <DemoToolsButton label="DEMO" className="px-2" />
         {right}
       </div>
     </div>
@@ -191,22 +191,22 @@ export function BackHeader({ title, right, fallback = '/' }: { title: string; ri
 function Footer() {
   return (
     <footer className="mt-16 border-t border-line bg-canvas pb-28 md:pb-10">
-      <div className="mx-auto max-w-6xl px-5 py-8 text-[12.5px] leading-relaxed text-ink-3">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-          <span className="font-bold text-ink-2">다색컴패니언</span>
-          <Link href="/membership" className="hover:text-ink">
+      <div className="mx-auto max-w-6xl px-5 py-8 text-[0.875rem] leading-relaxed text-ink-3">
+        <div className="-mx-2 flex flex-wrap items-center gap-x-0.5 gap-y-0">
+          <span className="px-2 font-bold text-ink-2">다색컴패니언</span>
+          <Link href="/membership" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             멤버십 안내
           </Link>
-          <Link href="/roadmap" className="hover:text-ink">
+          <Link href="/roadmap" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             준비 중인 서비스
           </Link>
-          <Link href="/privacy" className="hover:text-ink">
+          <Link href="/privacy" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             개인정보 처리 안내(초안)
           </Link>
-          <Link href="/credits" className="hover:text-ink">
+          <Link href="/credits" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             샘플 사진 출처
           </Link>
-          <Link href="/ax" className="hover:text-ink">
+          <Link href="/ax" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             매장 운영자
           </Link>
         </div>
@@ -254,7 +254,7 @@ function Onboarding() {
         </div>
       }
     >
-      <p className="text-[15px] leading-relaxed text-ink-2">{steps[step].b}</p>
+      <p className="text-[0.9375rem] leading-relaxed text-ink-2">{steps[step].b}</p>
       <div className="mt-4 flex gap-1.5" aria-hidden>
         {steps.map((_, i) => (
           <span key={i} className={cx('h-1.5 rounded-full transition-all', i === step ? 'w-6 bg-brand-600' : 'w-1.5 bg-line')} />

@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import colors from 'tailwindcss/colors';
 
 const v = (name: string) => `rgb(var(${name}) / <alpha-value>)`;
 
@@ -11,14 +12,17 @@ export default {
       },
       colors: {
         // Customer brand (밝은 다색컴패니언 테마)
-        brand: { 50: '#EEF8FB', 100: '#D8F0F7', 200: '#B3E2EF', 400: '#55BEDD', 500: '#36A9C9', 600: '#258EA8', 700: '#1C7186', 800: '#175B6B' },
+        // 600 이상은 흰 글자·글자색으로 쓰이므로 WCAG AA(4.5:1) 이상으로 잡는다 (600: 4.95 · 700: 6.62)
+        brand: { 50: '#EEF8FB', 100: '#D8F0F7', 200: '#B3E2EF', 300: '#86CFE3', 400: '#55BEDD', 500: '#2B93AE', 600: '#1B7A92', 700: '#166579', 800: '#13576A' },
         ink: { DEFAULT: '#1F2B32', 2: '#3F4E57', 3: '#5B6A73', 4: '#7F8C95' },
         canvas: '#F7FAFB',
-        line: '#E7EDF0',
-        sage: { 50: '#F3FAF8', 100: '#EAF7F4', 300: '#B9DFD4', 600: '#3C8C74' },
+        line: '#E3E9ED', // 구분선(가벼운)
+        cardline: '#D3DCE2', // 카드 테두리 — 흰 바탕 대비 1.39:1 (보이는 경계)
+        axline: '#CDD5DF', // 운영 AX 카드 테두리 — 1.48:1
+        sage: { 50: '#F3FAF8', 100: '#EAF7F4', 300: '#B9DFD4', 600: '#2B6B57' },
         ivory: { 50: '#FFFBF4', 100: '#FBF4E6' },
-        promo: { 50: '#FFF8E6', 100: '#FFEFC2', 600: '#A86D00' },
-        coral: { 50: '#FFF1EC', 500: '#EE7A55', 600: '#D35F3A' },
+        promo: { 50: '#FFF8E6', 100: '#FFEFC2', 600: '#845400' },
+        coral: { 50: '#FFF1EC', 500: '#E2683F', 600: '#B0482A' },
         // AX theme tokens (7 canonical themes via CSS variables)
         ax: {
           shell: v('--ax-shell'),
@@ -32,6 +36,8 @@ export default {
           'shell-hover': v('--ax-shell-hover'),
         },
         grp: { ops: '#5B8DEF', growth: '#D79A43', intel: '#3C9A75', sys: '#718096' },
+        // 보조 글자용 slate-500 을 한 단계 진하게 (흰 6.38:1 · slate-100 5.82:1)
+        slate: { ...colors.slate, 500: '#556070' },
       },
       borderRadius: { '4xl': '2rem' },
       boxShadow: {

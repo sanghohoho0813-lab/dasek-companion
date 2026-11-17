@@ -31,19 +31,19 @@ export default function ReorderPage() {
       />
       <div className="grid gap-3 md:grid-cols-3">
         <Panel>
-          <p className="text-[12px] font-semibold text-slate-500">검토 대기</p>
-          <p className="text-[26px] font-extrabold tabular">{count('SUGGESTED') + fresh}</p>
+          <p className="text-[0.8125rem] font-semibold text-slate-500">검토 대기</p>
+          <p className="text-[1.625rem] font-extrabold tabular">{count('SUGGESTED') + fresh}</p>
         </Panel>
         <Panel>
-          <p className="text-[12px] font-semibold text-slate-500">승인 → 전환</p>
-          <p className="text-[26px] font-extrabold tabular">
-            {count('CONVERTED')} <span className="text-[15px] font-bold text-slate-400">/ {approved}</span>
+          <p className="text-[0.8125rem] font-semibold text-slate-500">승인 → 전환</p>
+          <p className="text-[1.625rem] font-extrabold tabular">
+            {count('CONVERTED')} <span className="text-[1rem] font-bold text-slate-500">/ {approved}</span>
           </p>
         </Panel>
         <Panel>
-          <p className="text-[12px] font-semibold text-slate-500">방식</p>
-          <p className="mt-1 text-[13.5px] font-bold">RULE + 사람 승인 (L3)</p>
-          <p className="text-[12px] text-slate-500">자동 발송(L4)은 하지 않아요</p>
+          <p className="text-[0.8125rem] font-semibold text-slate-500">방식</p>
+          <p className="mt-1 text-[0.9375rem] font-bold">RULE + 사람 승인 (L3)</p>
+          <p className="text-[0.8125rem] text-slate-500">자동 발송(L4)은 하지 않아요</p>
         </Panel>
       </div>
       <Segmented tone="ax" label="상태" value={tab} onChange={setTab} options={[{ value: 'SUGGESTED', label: '검토 대기', count: count('SUGGESTED') }, { value: 'APPROVED', label: '안내함', count: count('APPROVED') }, { value: 'CONVERTED', label: '구매 전환', count: count('CONVERTED') }, { value: 'DISMISSED', label: '보류', count: count('DISMISSED') }]} />
@@ -56,19 +56,19 @@ export default function ReorderPage() {
               return (
                 <li key={c.id} className="flex flex-col gap-3 py-3 md:flex-row md:items-start">
                   <div className="min-w-0 flex-1">
-                    <p className="text-[14px] font-bold text-slate-900">
+                    <p className="text-[0.9375rem] font-bold text-slate-900">
                       <Link href={`/ax/members/${c.userId}`} className="hover:underline">
                         {u?.name}
                       </Link>{' '}
                       · {m?.name} {hasConsent(s, c.userId, 'marketing_inapp') ? <Tag tone="green">알림 동의</Tag> : <Tag>알림 미동의</Tag>}
                     </p>
-                    <p className="mt-1 text-[12px] font-bold text-slate-400">왜? (사용한 정보: 저장 기록 · 확인 구매 기록 · 동의 상태)</p>
-                    <ul className="mt-0.5 space-y-0.5 text-[12.5px] text-slate-600">
+                    <p className="mt-1 text-[0.8125rem] font-bold text-slate-500">왜? (사용한 정보: 저장 기록 · 확인 구매 기록 · 동의 상태)</p>
+                    <ul className="mt-0.5 space-y-0.5 text-[0.8438rem] text-slate-600">
                       {c.reasons.map((r) => (
                         <li key={r}>· {r}</li>
                       ))}
                     </ul>
-                    <p className="mt-1 text-[12px] text-slate-400">
+                    <p className="mt-1 text-[0.8125rem] text-slate-500">
                       생성 {fmtDate(c.createdAt, { time: true })} {c.decidedAt && `· 결정 ${fmtDate(c.decidedAt, { time: true })}`}
                     </p>
                   </div>
@@ -91,7 +91,7 @@ export default function ReorderPage() {
             })}
           </ul>
         ) : (
-          <p className="py-8 text-center text-[13px] text-slate-400">{tab === 'SUGGESTED' && fresh ? "'후보 갱신'을 눌러 새 후보를 만드세요." : '해당 상태의 후보가 없어요.'}</p>
+          <p className="py-8 text-center text-[0.875rem] text-slate-500">{tab === 'SUGGESTED' && fresh ? "'후보 갱신'을 눌러 새 후보를 만드세요." : '해당 상태의 후보가 없어요.'}</p>
         )}
       </Panel>
     </div>

@@ -86,8 +86,10 @@ export function AssetImage({
       )}
       {sampleBadge && label && (
         <span
+          data-on-media
+          data-badge
           className={cx(
-            'pointer-events-none absolute z-[1] rounded-full bg-black/45 px-2 py-0.5 text-[12px] font-semibold text-white backdrop-blur-sm',
+            'pointer-events-none absolute z-[1] rounded-full bg-[#1F2B32]/75 px-2 py-0.5 text-[0.75rem] font-semibold text-white',
             badgePosition === 'bl' && 'bottom-2 left-2',
             badgePosition === 'tr' && 'right-2 top-2',
             badgePosition === 'br' && 'bottom-2 right-2',

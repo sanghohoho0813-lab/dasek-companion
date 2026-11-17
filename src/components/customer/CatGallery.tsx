@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ImageOff, Maximize2, X } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AssetImage } from '@/components/art/AssetImage';
+import { isTopOverlay, popOverlay, pushOverlay } from '@/components/ui';
 import type { CatPhoto } from '@/lib/types';
 import { cx } from '@/lib/util';
 
@@ -38,8 +39,8 @@ export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string 
       <div className="grid aspect-[4/5] w-full place-items-center bg-canvas md:aspect-[4/3] md:rounded-[28px]">
         <div className="text-center text-ink-3">
           <ImageOff className="mx-auto h-8 w-8" />
-          <p className="mt-2 text-[14px] font-semibold">아직 공개된 사진이 없어요</p>
-          <p className="text-[12.5px]">매장에서 사진을 준비하고 있어요</p>
+          <p className="mt-2 text-[0.875rem] font-semibold">아직 공개된 사진이 없어요</p>
+          <p className="text-[0.8438rem]">매장에서 사진을 준비하고 있어요</p>
         </div>
       </div>
     );
@@ -64,23 +65,23 @@ export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string 
             </button>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/45 to-transparent p-4 pt-12 md:rounded-b-[28px]">
-          <p className="clamp-1 text-[13.5px] font-semibold text-white drop-shadow">{photos[idx]?.caption}</p>
-          <span className="rounded-full bg-black/40 px-2.5 py-1 text-[12px] font-bold text-white tabular">
+        <div data-on-media className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/45 to-transparent p-4 pt-12 md:rounded-b-[28px]">
+          <p className="clamp-1 text-[0.8438rem] font-semibold text-white drop-shadow">{photos[idx]?.caption}</p>
+          <span className="rounded-full bg-black/40 px-2.5 py-1 text-[0.8125rem] font-bold text-white tabular">
             {idx + 1} / {photos.length}
           </span>
         </div>
         {photos.length > 1 && (
           <>
-            <button onClick={() => go(idx - 1)} disabled={idx === 0} aria-label="이전 사진" className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
+            <button onClick={() => go(idx - 1)} disabled={idx === 0} aria-label="이전 사진" className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <button onClick={() => go(idx + 1)} disabled={idx === photos.length - 1} aria-label="다음 사진" data-testid="gallery-next" className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
+            <button onClick={() => go(idx + 1)} disabled={idx === photos.length - 1} aria-label="다음 사진" data-testid="gallery-next" className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
               <ChevronRight className="h-5 w-5" />
             </button>
           </>
         )}
-        <button onClick={() => setFull(true)} aria-label="전체화면" className="absolute left-3 top-3 hidden h-9 w-9 place-items-center rounded-full bg-white/90 text-ink-2 shadow-sm transition hover:bg-white md:grid">
+        <button onClick={() => setFull(true)} aria-label="전체화면" className="absolute left-3 top-3 hidden h-11 w-11 place-items-center rounded-full bg-white text-ink-2 shadow-sm transition hover:bg-white md:grid">
           <Maximize2 className="h-4 w-4" />
         </button>
       </div>
@@ -110,7 +111,9 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     ref.current?.focus();
+    pushOverlay('lightbox');
     const key = (e: KeyboardEvent) => {
+      if (!isTopOverlay('lightbox')) return;
       if (e.key === 'Escape') onClose(iRef.current);
       if (e.key === 'ArrowRight') setI((x) => Math.min(photos.length - 1, x + 1));
       if (e.key === 'ArrowLeft') setI((x) => Math.max(0, x - 1));
@@ -124,6 +127,7 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
     window.addEventListener('popstate', pop);
     document.addEventListener('keydown', key);
     return () => {
+      popOverlay('lightbox');
       document.body.style.overflow = prev;
       document.removeEventListener('keydown', key);
       window.removeEventListener('popstate', pop);
@@ -136,10 +140,10 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
   return createPortal(
     <div ref={ref} tabIndex={-1} role="dialog" aria-modal="true" aria-label={`${name} 사진 크게 보기`} className="fixed inset-0 z-[85] flex animate-fade-in flex-col bg-white outline-none" data-testid="cat-lightbox">
       <div className="flex h-14 items-center justify-between px-3">
-        <span className="pl-2 text-[14px] font-bold text-ink tabular">
+        <span className="pl-2 text-[0.875rem] font-bold text-ink tabular">
           {name} · {i + 1}/{photos.length}
         </span>
-        <button onClick={() => onClose(i)} aria-label="닫기" className="grid h-10 w-10 place-items-center rounded-full text-ink hover:bg-canvas">
+        <button onClick={() => onClose(i)} aria-label="닫기" className="grid h-11 w-11 place-items-center rounded-full text-ink hover:bg-canvas">
           <X className="h-5 w-5" />
         </button>
       </div>
@@ -162,7 +166,7 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
           <ChevronRight className="h-5 w-5" />
         </button>
       </div>
-      <p className="px-5 pb-8 pt-4 text-center text-[14px] text-ink-2">{p.caption}</p>
+      <p className="px-5 pb-8 pt-4 text-center text-[0.875rem] text-ink-2">{p.caption}</p>
     </div>,
     document.body,
   );

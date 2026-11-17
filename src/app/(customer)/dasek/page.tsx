@@ -42,16 +42,16 @@ export default function DasekPage() {
       <section className="mx-auto max-w-6xl px-4 pt-3 md:px-5 md:pt-7">
         <div className="relative overflow-hidden rounded-[24px] md:rounded-[28px]">
           <AssetImage slot="service_02_cafe" fallback={{ kind: 'space', variant: 0 }} alt="밝은 카페 내부 (샘플 사진)" className="aspect-[4/3] sm:aspect-[16/8] md:aspect-[16/5]" sampleBadge badgePosition="tr" priority sizes="(min-width: 1024px) 1100px, 100vw" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent md:bg-gradient-to-r" />
-          <div className="absolute inset-x-0 bottom-0 p-5 text-white md:inset-y-0 md:right-auto md:flex md:max-w-lg md:flex-col md:justify-center md:p-10">
-            <p className="text-[13px] font-semibold text-white/90">고양이카페 · 음료 · 디저트</p>
-            <h1 className="text-[30px] font-extrabold tracking-[-0.02em] md:text-[40px]">다색냥</h1>
-            <p className="text-[15px] font-medium text-white/95 md:text-[17px]">{store.tagline}</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/35" />
+          <div data-on-media className="absolute inset-x-0 bottom-0 p-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,.3)] md:inset-y-0 md:right-auto md:flex md:max-w-lg md:flex-col md:justify-center md:p-10">
+            <p className="text-[0.875rem] font-semibold text-white">고양이카페 · 음료 · 디저트</p>
+            <h1 className="text-[1.875rem] font-extrabold tracking-[-0.02em] md:text-[2.5rem]">다색냥</h1>
+            <p className="text-[1rem] font-semibold text-white md:text-[1.0625rem]">{store.tagline}</p>
             <div className="mt-4 hidden gap-2 md:flex">
-              <a href="#cats" className="inline-flex h-12 items-center rounded-2xl bg-white px-5 text-[15px] font-bold text-ink">
+              <a href="#cats" className="inline-flex h-12 items-center rounded-2xl bg-white px-5 text-[0.9375rem] font-bold text-ink">
                 고양이 먼저 보기
               </a>
-              <a href="#visit" className="inline-flex h-12 items-center rounded-2xl bg-white/20 px-5 text-[15px] font-bold text-white backdrop-blur">
+              <a href="#visit" className="inline-flex h-12 items-center rounded-2xl bg-ink px-5 text-[0.9375rem] font-bold text-white ring-1 ring-inset ring-white/40">
                 방문 안내
               </a>
             </div>
@@ -64,7 +64,7 @@ export default function DasekPage() {
             { i: <Coffee className="h-4 w-4" />, t: '기본 음료 머신 제공' },
             { i: <Wifi className="h-4 w-4" />, t: '무선 인터넷 · 포장' },
           ].map((x) => (
-            <span key={x.t} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-canvas px-3.5 py-2 text-[13.5px] font-semibold text-ink-2">
+            <span key={x.t} className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-canvas px-3.5 py-2 text-[0.875rem] font-semibold text-ink-2 ring-1 ring-inset ring-line">
               {x.i}
               {x.t}
             </span>
@@ -83,24 +83,24 @@ export default function DasekPage() {
           </Rail>
           {moments.length > 0 && (
             <div className="mt-7">
-              <h3 className="mb-3 text-[17px] font-extrabold text-ink">오늘의 순간</h3>
+              <h3 className="mb-3 text-[1.0625rem] font-extrabold text-ink">오늘의 순간</h3>
               <Rail label="고양이 사진 모음">
                 {moments.map(({ p, c }) => (
                   <Link key={p.id} href={`/dasek/cats/${c.id}`} className="group block w-[250px] shrink-0 snap-start md:w-[320px]">
                     <div className="zoom-img overflow-hidden rounded-[20px]">
                       <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? c.coverArt} alt={p.alt} className="aspect-[16/10] w-full" sizes="(min-width: 768px) 320px, 250px" position="center 35%" />
                     </div>
-                    <p className="mt-2 flex items-center gap-1 text-[15px] font-bold text-ink">
+                    <p className="mt-2 flex items-center gap-1 text-[0.9375rem] font-bold text-ink">
                       {c.name} <ChevronRight className="h-4 w-4 text-ink-3 transition group-hover:translate-x-0.5" />
                     </p>
-                    <p className="clamp-1 text-[13px] text-ink-3">{p.caption}</p>
+                    <p className="clamp-1 text-[0.8125rem] text-ink-3">{p.caption}</p>
                   </Link>
                 ))}
               </Rail>
             </div>
           )}
           {cats.some((c) => c.isPlaceholder) && (
-            <p className="mt-3 rounded-2xl bg-white px-4 py-3 text-[13px] leading-relaxed text-ink-2">
+            <p className="mt-3 rounded-2xl bg-white px-4 py-3 text-[0.8125rem] leading-relaxed text-ink-2">
               지금은 <b>예시 프로필과 샘플 사진</b>이에요. 실제 다색냥 고양이 수·이름·사진은 매장 확인 후 공개됩니다.
             </p>
           )}
@@ -112,15 +112,15 @@ export default function DasekPage() {
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {RULES.map((r) => (
             <div key={r.t} className="rounded-[20px] bg-sage-50 p-4">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-sage-600">
+              <span className="grid h-11 w-11 place-items-center rounded-xl bg-white text-sage-600">
                 <r.icon className="h-5 w-5" />
               </span>
-              <p className="mt-3 text-[15px] font-bold leading-snug text-ink">{r.t}</p>
-              <p className="mt-1 text-[13.5px] leading-relaxed text-ink-2">{r.b}</p>
+              <p className="mt-3 text-[0.9375rem] font-bold leading-snug text-ink">{r.t}</p>
+              <p className="mt-1 text-[0.8438rem] leading-relaxed text-ink-2">{r.b}</p>
             </div>
           ))}
         </div>
-        <p className="mt-2.5 flex items-center gap-1.5 text-[13px] text-ink-3">
+        <p className="mt-2.5 flex items-center gap-1.5 text-[0.8125rem] text-ink-3">
           <ShieldCheck className="h-4 w-4" /> 매장 고양이의 건강 관리 기록은 공개하지 않아요.
         </p>
       </section>
@@ -141,21 +141,21 @@ export default function DasekPage() {
         <SectionHeader id="sec-use" title="이용 · 방문 안내" />
         <div className="grid gap-3 md:grid-cols-3">
           <div className="rounded-[20px] bg-white p-5 ring-1 ring-line">
-            <p className="flex items-center gap-1.5 text-[13.5px] font-bold text-ink-3">
+            <p className="flex items-center gap-1.5 text-[0.8438rem] font-bold text-ink-3">
               이용요금 <EvidenceBadge ev={store.feeInfo.evidence} />
             </p>
-            <p className="mt-1 text-[17px] font-bold text-ink">{store.feeInfo.value ?? '매장 문의'}</p>
-            <p className="mt-1 text-[13px] text-ink-3">요금·기본 음료 포함 여부는 운영자 확인 후 안내돼요.</p>
+            <p className="mt-1 text-[1.0625rem] font-bold text-ink">{store.feeInfo.value ?? '매장 문의'}</p>
+            <p className="mt-1 text-[0.8125rem] text-ink-3">요금·기본 음료 포함 여부는 운영자 확인 후 안내돼요.</p>
           </div>
           <div className="rounded-[20px] bg-white p-5 ring-1 ring-line">
-            <p className="text-[13.5px] font-bold text-ink-3">음료·주문</p>
-            <p className="mt-1 text-[17px] font-bold text-ink">기본 음료는 머신으로</p>
-            <p className="mt-1 text-[13px] text-ink-3">추가 메뉴는 데스크에서 주문할 수 있어요.</p>
+            <p className="text-[0.8438rem] font-bold text-ink-3">음료·주문</p>
+            <p className="mt-1 text-[1.0625rem] font-bold text-ink">기본 음료는 머신으로</p>
+            <p className="mt-1 text-[0.8125rem] text-ink-3">추가 메뉴는 데스크에서 주문할 수 있어요.</p>
           </div>
           <div className="rounded-[20px] bg-white p-5 ring-1 ring-line">
-            <p className="text-[13.5px] font-bold text-ink-3">방문 적립</p>
-            <p className="mt-1 text-[17px] font-bold text-ink">오늘 코드로 체크인</p>
-            <p className="mt-1 text-[13px] text-ink-3">직원이 확인하면 스탬프 1개가 적립돼요.</p>
+            <p className="text-[0.8438rem] font-bold text-ink-3">방문 적립</p>
+            <p className="mt-1 text-[1.0625rem] font-bold text-ink">오늘 코드로 체크인</p>
+            <p className="mt-1 text-[0.8125rem] text-ink-3">직원이 확인하면 스탬프 1개가 적립돼요.</p>
           </div>
         </div>
         <div className="mt-4 grid gap-4 md:grid-cols-[1.1fr_1fr]">
@@ -164,8 +164,8 @@ export default function DasekPage() {
             <AssetImage slot="cat_05_03" fallback={{ kind: 'space', variant: 1 }} alt="벤치에서 쉬는 고양이 (샘플 사진)" className="aspect-[16/9] w-full" sampleBadge badgePosition="tr" sizes="(min-width: 768px) 45vw, 100vw" position="center 40%" />
             <div className="p-5">
               <CalendarHeart className="h-6 w-6 text-brand-600" />
-              <p className="mt-2 text-[18px] font-extrabold text-ink">방문할 예정이에요</p>
-              <p className="mt-1 text-[14px] text-ink-2">방문 예정을 남기면 매장이 손님 흐름을 준비하는 데 참고해요. 예약 확정은 아니에요.</p>
+              <p className="mt-2 text-[1.125rem] font-extrabold text-ink">방문할 예정이에요</p>
+              <p className="mt-1 text-[0.875rem] text-ink-2">방문 예정을 남기면 매장이 손님 흐름을 준비하는 데 참고해요. 예약 확정은 아니에요.</p>
               <Button className="mt-4" size="lg" variant="outline" onClick={() => run(() => act((d, c) => D.recordVisitIntent(d, c, me?.id ?? null, store.id)), '방문 예정을 남겼어요. 매장에서 체크인하면 적립돼요.')}>
                 <HeartHandshake className="h-4 w-4" /> 방문 예정 남기기
               </Button>

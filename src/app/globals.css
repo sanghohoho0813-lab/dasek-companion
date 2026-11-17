@@ -33,16 +33,58 @@
   --ax-shell-fg: 255 255 255; --ax-shell-muted: 190 194 202; --ax-shell-hover: 255 255 255;
 }
 
-/* ── Font scale (설정 > 글자 크기) ── */
-html[data-font='sm'] body { zoom: 0.94; }
-html[data-font='lg'] body { zoom: 1.1; }
-
-html { -webkit-text-size-adjust: 100%; }
+/* ── Font scale (설정 > 글자 크기) ──
+   v3: CSS zoom → root font-size. 글자 크기는 전부 rem 이라 비율대로 커지고,
+   zoom 처럼 vh·fixed·iframe 크기가 함께 틀어지지 않는다.
+   ⚠ 화면 폭에 따라 root 를 바꾸지 않는다 (비원미래 0080 — 접는 폰·태블릿에서 글자가 작아지는 원인). */
+html { -webkit-text-size-adjust: 100%; font-size: 16px; }
+html[data-font='sm'] { font-size: 15px; }
+html[data-font='lg'] { font-size: 17.6px; }
 body {
   @apply bg-white text-ink antialiased;
   font-feature-settings: 'tnum' 0;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
+  line-height: 1.55;
+  word-break: keep-all; /* 한글은 낱말 단위 줄바꿈 */
+  overflow-wrap: break-word; /* 칸보다 긴 낱말만 끊음 */
+}
+
+/* ── v3 디자인 시스템 — 카드·표면 ───────────────────────────────
+   흰 바탕 위 흰 카드가 녹지 않도록 '실선 1겹 + 절제된 2단 그림자' (비원미래 0082).
+   반투명 표면 대신 불투명 색을 쓴다. 흐림은 배경에만, 글자에는 opacity 를 주지 않는다. */
+@layer components {
+  .card-edge { border: 1px solid theme('colors.cardline'); }
+  .card {
+    @apply card-edge bg-white;
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(16, 40, 52, 0.05), 0 6px 18px -10px rgba(16, 40, 52, 0.14);
+  }
+  .card-muted { @apply rounded-[20px] bg-canvas; border: 1px solid theme('colors.line'); }
+  .ax-card {
+    @apply bg-white;
+    border: 1px solid theme('colors.axline');
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgb(var(--ax-primary) / 0.05), 0 6px 18px -12px rgb(var(--ax-primary) / 0.16);
+  }
+  .ax-edge { border: 1px solid theme('colors.axline'); }
+  /* 업무 표 — 열 사이 숨 쉴 간격, 머리글 줄바꿈 금지, 숫자 열 정렬 */
+  .ax-table th, .ax-table td { padding-right: 1.25rem; vertical-align: middle; }
+  .ax-table th:last-child, .ax-table td:last-child { padding-right: 0; }
+  .ax-table th { white-space: nowrap; }
+  .ax-well { @apply rounded-xl bg-slate-50; border: 1px solid theme('colors.slate.200'); }
+
+  /* 타이포 위계 — 고객 */
+  .t-display { @apply text-[1.875rem] font-extrabold leading-[1.2] tracking-[-0.03em] md:text-[2.75rem]; }
+  .t-h1 { @apply text-[1.625rem] font-extrabold leading-tight tracking-[-0.025em] md:text-[2.125rem]; }
+  .t-h2 { @apply text-[1.3125rem] font-extrabold leading-tight tracking-[-0.02em] md:text-[1.5rem]; }
+  .t-h3 { @apply text-[1.0625rem] font-bold leading-snug; }
+  .t-body { @apply text-[0.9375rem] leading-relaxed; }
+  .t-caption { @apply text-[0.8125rem] font-medium leading-snug; }
+  /* 타이포 위계 — 운영 AX (본문 15~16px, 보조 13~14px) */
+  .ax-h1 { @apply text-[1.5rem] font-extrabold leading-tight tracking-tight text-slate-900 md:text-[1.625rem]; }
+  .ax-h2 { @apply text-[1.125rem] font-extrabold leading-snug tracking-tight text-slate-900; }
+  .ax-body { @apply text-[0.9375rem] leading-relaxed text-slate-700; }
+  .ax-caption { @apply text-[0.8125rem] font-medium text-slate-500; }
+  .ax-num { @apply font-extrabold tabular-nums tracking-tight text-slate-900; }
 }
 * { -webkit-tap-highlight-color: transparent; }
 .tabular { font-variant-numeric: tabular-nums; }
@@ -55,9 +97,11 @@ body {
 .clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* 공통 hover 상승 (Desktop만) */
+/* 누를 수 있는 카드: PC 는 1~2px 상승, 폰은 눌린 느낌 (비원미래 .pressable) */
+.lift { transition: transform 180ms ease-out, box-shadow 180ms ease-out, border-color 180ms ease-out; }
+.lift:active { transform: scale(.985); }
 @media (hover: hover) {
-  .lift { transition: transform 160ms ease-out, box-shadow 160ms ease-out; }
-  .lift:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(16,40,52,.06), 0 14px 30px rgba(16,40,52,.10); }
+  .lift:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(16,40,52,.06), 0 14px 30px -10px rgba(16,40,52,.18); }
   .zoom-img img, .zoom-img svg { transition: transform 260ms ease-out; }
   .zoom-img:hover img, .zoom-img:hover svg { transform: scale(1.025); }
 }
@@ -77,7 +121,8 @@ body {
 @keyframes route-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 1ms !important; animation-iteration-count: 1 !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; scroll-behavior: auto !important; }
+  .lift:hover, .lift:active { transform: none !important; }
 }
 html[data-motion='reduce'] *, html[data-motion='reduce'] *::before, html[data-motion='reduce'] *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
 

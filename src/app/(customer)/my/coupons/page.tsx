@@ -19,7 +19,7 @@ export default function CouponsPage() {
     <div>
       <BackHeader title="쿠폰함" fallback="/my" />
       <div className="mx-auto max-w-2xl px-4 pb-10 pt-4 md:px-5 md:pt-10">
-        <h1 className="hidden text-[24px] font-extrabold text-ink md:block">쿠폰함</h1>
+        <h1 className="hidden text-[1.5rem] font-extrabold text-ink md:block">쿠폰함</h1>
         <div className="md:mt-4">
           <Segmented
             label="쿠폰 상태"

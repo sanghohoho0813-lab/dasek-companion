@@ -45,38 +45,38 @@ export default function CatProfilePage() {
         </div>
         <div className="min-w-0 px-4 pt-5 md:px-0 md:pt-2">
           <div className="flex flex-wrap items-center gap-2">
-            <Link href="/dasek#cats" className="text-[13.5px] font-bold text-brand-700 hover:underline">
+            <Link href="/dasek#cats" className="-ml-1 inline-flex min-h-11 items-center px-1 text-[0.9375rem] font-bold text-brand-700 hover:underline">
               다색냥 친구들
             </Link>
-            {cat.isPlaceholder && <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[12px] font-bold text-amber-800">예시 프로필 · 샘플 사진</span>}
+            {cat.isPlaceholder && <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[0.8125rem] font-bold text-amber-800">예시 프로필 · 샘플 사진</span>}
           </div>
-          <h1 className="mt-1.5 text-[32px] font-extrabold leading-tight tracking-[-0.025em] text-ink md:text-[42px]">{cat.name}</h1>
-          <p className="mt-1 text-[17px] font-medium leading-snug text-ink-2">{cat.tagline}</p>
+          <h1 className="mt-1.5 text-[2rem] font-extrabold leading-tight tracking-[-0.025em] text-ink md:text-[2.625rem]">{cat.name}</h1>
+          <p className="mt-1 text-[1.0625rem] font-medium leading-snug text-ink-2">{cat.tagline}</p>
 
           <div className="mt-6 grid gap-4">
             <div>
-              <p className="flex items-center gap-1.5 text-[14px] font-bold text-ink-3">
+              <p className="flex items-center gap-1.5 text-[0.875rem] font-bold text-ink-3">
                 <Sparkles className="h-4 w-4" /> 성격
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {cat.personality.length ? cat.personality.map((p) => <span key={p} className="rounded-full bg-brand-50 px-3.5 py-2 text-[14px] font-semibold text-brand-800">{p}</span>) : <span className="text-[14px] text-ink-3">소개 준비 중</span>}
+                {cat.personality.length ? cat.personality.map((p) => <span key={p} className="rounded-full bg-brand-50 px-3.5 py-2 text-[0.875rem] font-semibold text-brand-800">{p}</span>) : <span className="text-[0.875rem] text-ink-3">소개 준비 중</span>}
               </div>
             </div>
             <div>
-              <p className="flex items-center gap-1.5 text-[14px] font-bold text-ink-3">
+              <p className="flex items-center gap-1.5 text-[0.875rem] font-bold text-ink-3">
                 <Heart className="h-4 w-4" /> 좋아하는 것
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {cat.likes.length ? cat.likes.map((p) => <span key={p} className="rounded-full bg-promo-50 px-3.5 py-2 text-[14px] font-semibold text-promo-600">{p}</span>) : <span className="text-[14px] text-ink-3">소개 준비 중</span>}
+                {cat.likes.length ? cat.likes.map((p) => <span key={p} className="rounded-full bg-promo-50 px-3.5 py-2 text-[0.875rem] font-semibold text-promo-600">{p}</span>) : <span className="text-[0.875rem] text-ink-3">소개 준비 중</span>}
               </div>
             </div>
             <div className="rounded-[20px] bg-sage-50 p-5">
-              <p className="flex items-center gap-1.5 text-[15px] font-bold text-sage-600">
+              <p className="flex items-center gap-1.5 text-[0.9375rem] font-bold text-sage-600">
                 <HandHeart className="h-5 w-5" /> {cat.name}와(과) 친해지는 법
               </p>
               <ul className="mt-2.5 space-y-2">
                 {cat.interactionTips.map((t) => (
-                  <li key={t} className="flex gap-2.5 text-[15px] leading-snug text-ink-2">
+                  <li key={t} className="flex gap-2.5 text-[0.9375rem] leading-snug text-ink-2">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sage-600" />
                     {t}
                   </li>
@@ -84,13 +84,13 @@ export default function CatProfilePage() {
               </ul>
             </div>
             {cat.isPlaceholder && (
-              <p className="flex gap-2 rounded-2xl bg-canvas px-4 py-3 text-[13px] leading-relaxed text-ink-2">
+              <p className="flex gap-2 rounded-2xl bg-canvas px-4 py-3 text-[0.8125rem] leading-relaxed text-ink-2">
                 <Info className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />이 프로필과 사진은 실제 다색냥 고양이가 아니라 시연용 예시예요. 건강 상태나 치유 효과에 대한 정보는 제공하지 않아요.
               </p>
             )}
           </div>
 
-          <Link href="/checkin?store=store_dasek" className="press mt-6 flex h-[52px] items-center justify-center rounded-2xl bg-brand-600 text-[16px] font-bold text-white shadow-sm transition hover:bg-brand-700">
+          <Link href="/checkin?store=store_dasek" className="press mt-6 flex h-[52px] items-center justify-center rounded-2xl bg-brand-600 text-[1rem] font-bold text-white shadow-sm transition hover:bg-brand-700">
             {cat.name} 만나러 가기 · 방문 체크인
           </Link>
 
@@ -98,15 +98,15 @@ export default function CatProfilePage() {
             <Link href={`/dasek/cats/${next.id}`} data-testid="next-cat" className="group mt-3 flex items-center gap-3 rounded-[20px] bg-white p-2.5 pr-4 ring-1 ring-line transition hover:ring-brand-200">
               <AssetImage slot={nextPhoto?.slot} dataUrl={nextPhoto?.dataUrl} fallback={nextPhoto?.art ?? next.coverArt} alt="" className="h-16 w-16 shrink-0 rounded-2xl" sizes="64px" position="center 35%" />
               <span className="min-w-0 flex-1">
-                <span className="block text-[12.5px] font-semibold text-ink-3">다음 친구</span>
-                <span className="block text-[17px] font-extrabold text-ink">{next.name}</span>
-                <span className="clamp-1 block text-[13px] text-ink-3">{next.tagline}</span>
+                <span className="block text-[0.8438rem] font-semibold text-ink-3">다음 친구</span>
+                <span className="block text-[1.0625rem] font-extrabold text-ink">{next.name}</span>
+                <span className="clamp-1 block text-[0.8125rem] text-ink-3">{next.tagline}</span>
               </span>
               <ArrowRight className="h-5 w-5 text-ink-3 transition group-hover:translate-x-0.5" />
             </Link>
           )}
           {prev && (
-            <Link href={`/dasek/cats/${prev.id}`} className="mt-2 inline-flex items-center gap-1 px-1 py-2 text-[14px] font-semibold text-ink-3 hover:text-ink">
+            <Link href={`/dasek/cats/${prev.id}`} className="mt-2 inline-flex min-h-11 items-center gap-1 px-1 text-[0.9375rem] font-semibold text-ink-2 hover:text-ink">
               <ChevronLeft className="h-4 w-4" /> 이전 친구 {prev.name}
             </Link>
           )}

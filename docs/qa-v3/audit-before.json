@@ -1,0 +1,5636 @@
+{
+ "summary": {
+  "rows": 138,
+  "texts": 15067,
+  "contrast": 2534,
+  "tiny": 887,
+  "smallAx": 5804,
+  "dimmed": 0,
+  "touch": 1149,
+  "cardEdge": 0,
+  "clipped": 0,
+  "overflowRows": 0
+ },
+ "rows": [
+  {
+   "route": "/",
+   "width": 390,
+   "texts": 199,
+   "contrast": 52,
+   "tiny": 13,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 31,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "a「다색냥 만나기」 3.81:1 16px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「리얼식단」 1.00:1 19px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「다색냥」 1.00:1 19px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언 향동천 산책길 · 21시까지」 197×39",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "a「전체 보기」 81×33",
+     "button「」 40×40",
+     "button「」 40×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/realsicdan",
+   "width": 390,
+   "texts": 134,
+   "contrast": 31,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 28,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "p「식단 · 샐러드 · 도시락」 1.00:1 13px",
+     "h1「리얼식단」 1.00:1 28px",
+     "p「가볍고 든든한 하루 한 끼」 1.00:1 14.5px",
+     "button「전체」 3.81:1 13px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「전체」 52×36",
+     "button「샐러드」 64×36",
+     "button「도시락」 64×36",
+     "button「간식」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/menu/m_pie120",
+   "width": 390,
+   "texts": 67,
+   "contrast": 5,
+   "tiny": 1,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "span「대표 메뉴」 2.78:1 12px",
+     "p「매장에서 확인된 구매 4건 (DEMO 집계)」 4.04:1 13px",
+     "span「가능」 4.04:1 12px",
+     "button「구매 방법 보기」 3.81:1 15px"
+    ],
+    "tiny": [
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「왜?」 47×36",
+     "button「왜?」 47×36",
+     "button「왜?」 47×36",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek",
+   "width": 390,
+   "texts": 157,
+   "contrast": 31,
+   "tiny": 13,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "p「고양이카페 · 음료 · 디저트」 1.00:1 13px",
+     "h1「다색냥」 1.00:1 30px",
+     "p「120겹파이와 함께하는 달콤한 휴식」 1.00:1 15px",
+     "p「다색냥 친구들 6마리」 3.56:1 12px",
+     "p「모카」 1.05:1 18px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "button「」 40×40",
+     "button「」 40×40",
+     "button「」 40×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek/cats/cat_5",
+   "width": 390,
+   "texts": 58,
+   "contrast": 20,
+   "tiny": 5,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「담요 위 낮잠이 하루 일과」 1.00:1 13.5px",
+     "span「1 / 4」 2.85:1 12px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「다색냥 친구들」 78×20",
+     "a「이전 친구 콩떡」 113×37",
+     "a「전체 보기」 81×33",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/membership",
+   "width": 390,
+   "texts": 36,
+   "contrast": 1,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 8,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「혜택 예시 · 운영자 확정 전」 11px",
+     "span「준비 중」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「관심 남기기 →」 80×20",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my",
+   "width": 390,
+   "texts": 44,
+   "contrast": 7,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "a「방문 체크인」 3.81:1 14px",
+     "p「다색컴패니언 스탬프」 4.21:1 13px",
+     "span「/ 10」 3.62:1 16px",
+     "span「누적 7개」 4.13:1 12px",
+     "span「8」 2.60:1 12px",
+     "span「9」 2.60:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「DEMO」 75×36",
+     "button「로그아웃」 90×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/coupons",
+   "width": 390,
+   "texts": 22,
+   "contrast": 0,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「사용 가능0」 100×32",
+     "button「사용 완료0」 100×32",
+     "button「만료·취소1」 104×32",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/referral",
+   "width": 390,
+   "texts": 37,
+   "contrast": 2,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 8,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "p「친구 추천」 4.04:1 13px",
+     "button「추천 링크 공유하기」 3.81:1 15px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/signup",
+   "width": 390,
+   "texts": 14,
+   "contrast": 0,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「마이로 이동」 78×24",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20",
+     "a「매장 운영자」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/roadmap",
+   "width": 390,
+   "texts": 71,
+   "contrast": 1,
+   "tiny": 11,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「● 지금 이용 가능: 메뉴·고양이 탐색, 회」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/checkin",
+   "width": 390,
+   "texts": 20,
+   "contrast": 2,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「다색냥」 3.81:1 14.5px",
+     "p「코드는 매일 바뀌어요. 같은 매장은 하루 한」 3.45:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/content",
+   "width": 390,
+   "texts": 121,
+   "contrast": 16,
+   "tiny": 28,
+   "smallAx": 71,
+   "dimmed": 0,
+   "touch": 18,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객 화면에 보이는 메뉴와 고양이 프로필·사」 4.44:1 13.5px",
+     "button「고양이6」 4.34:1 13px",
+     "button「사진 승인1」 4.34:1 13px",
+     "th「메뉴」 2.56:1 12px",
+     "th「브랜드」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「미확인」 11px",
+     "span「제공 정보」 11px",
+     "span「미확인」 11px",
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「11」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「메뉴11」 80×32",
+     "button「고양이6」 85×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/rewards",
+   "width": 390,
+   "texts": 43,
+   "contrast": 10,
+   "tiny": 10,
+   "smallAx": 28,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「혜택 규칙과 발급·사용·추천 귀속·보상 원장」 4.44:1 13.5px",
+     "button「쿠폰 발급·사용16」 4.34:1 13px",
+     "button「추천 관계2」 4.34:1 13px",
+     "button「보상 원장」 4.34:1 13px",
+     "p「가입 혜택」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「4」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「혜택 규칙4」 100×32",
+     "button「쿠폰 발급·사용16」 139×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/campaigns",
+   "width": 390,
+   "texts": 57,
+   "contrast": 5,
+   "tiny": 6,
+   "smallAx": 33,
+   "dimmed": 0,
+   "touch": 9,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「규칙(세그먼트)이 대상과 문안 초안을 만들고」 4.44:1 13.5px",
+     "p「작성 매장 직원 (데모) · 11. 17. 」 2.56:1 12px",
+     "p「작성 운영 책임자 (데모) · 11. 6. 」 2.56:1 12px",
+     "span「4」 3.76:1 11px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「앱 알림 수신 동의자만 포함」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「초안 만들기」 109×32",
+     "button「초안 만들기」 109×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/analytics",
+   "width": 390,
+   "texts": 144,
+   "contrast": 17,
+   "tiny": 8,
+   "smallAx": 49,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「모든 수치는 집계(ANALYTICS)이며 A」 4.44:1 13.5px",
+     "p「의향 신호 — 실적 아님」 2.56:1 12px",
+     "p「확인 전 — 실적 아님」 2.56:1 12px",
+     "p「KPI 집계 기준」 2.56:1 12px",
+     "p「연동권 확인 전 — 미연결」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「11-05」 11px",
+     "span「오늘」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「DEMO 시드 데이터」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/reorder",
+   "width": 390,
+   "texts": 30,
+   "contrast": 8,
+   "tiny": 6,
+   "smallAx": 17,
+   "dimmed": 0,
+   "touch": 9,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객이 저장한 메뉴 중 14일간 확인 구매가」 4.44:1 13.5px",
+     "span「/ 0」 2.56:1 15px",
+     "button「안내함0」 4.34:1 13px",
+     "button「구매 전환0」 4.34:1 13px",
+     "button「보류0」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「검토 대기」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「후보 갱신 (10)」 140×40",
+     "button「검토 대기0」 100×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/evidence",
+   "width": 390,
+   "texts": 224,
+   "contrast": 23,
+   "tiny": 6,
+   "smallAx": 201,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「로그인 수나 화면 캡처가 아니라 'Trigg」 4.44:1 13.5px",
+     "th「구분」 2.56:1 12px",
+     "th「지표」 2.56:1 12px",
+     "th「측정 지점」 2.56:1 12px",
+     "th「현재(DEMO)」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「구분」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「Evidence Pack(JSON)」 201×40",
+     "select「전체 유형CAMPAIGN_SENTVERIFI」 163×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/settings",
+   "width": 390,
+   "texts": 35,
+   "contrast": 9,
+   "tiny": 6,
+   "smallAx": 12,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「테마와 글자 크기, 역할별 권한, 매장 정보」 4.44:1 13.5px",
+     "button「역할·권한」 4.34:1 13px",
+     "button「매장 정보」 4.34:1 13px",
+     "button「데이터·권리」 4.34:1 13px",
+     "button「감사 기록」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「고객 화면은 다색컴패니언 브랜드 테마로 고정」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「화면」 48×32",
+     "button「역할·권한」 79×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/coach",
+   "width": 390,
+   "texts": 58,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 24,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「AX Coach는 규칙으로 오늘 처리할 일 」 4.44:1 13.5px",
+     "span「남는 실증 기록: VERIFIED_VISIT」 2.45:1 12px",
+     "span「남는 실증 기록: REORDER_CONVER」 2.45:1 12px",
+     "span「남는 실증 기록: CAMPAIGN_SENT 」 2.45:1 12px",
+     "span「목표: Baseline 측정 후 설정」 2.45:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「Mission → Action → Resul」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/why",
+   "width": 390,
+   "texts": 242,
+   "contrast": 29,
+   "tiny": 7,
+   "smallAx": 153,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "h2「한 번 오고 끝나는 매장에서,다시 오게 만드」 1.07:1 22px",
+     "p「다색컴패니언 Why AX · 기획 의도 (가」 1.06:1 13px",
+     "span「샘플 일러스트」 3.70:1 12px",
+     "th「현재 단계」 2.56:1 12.5px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「샘플 사진」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/",
+   "width": 673,
+   "texts": 201,
+   "contrast": 54,
+   "tiny": 13,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 31,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "a「다색냥 만나기」 3.81:1 16px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「리얼식단」 1.00:1 19px",
+     "span「샐러드 · 도시락 · 간식」 1.00:1 13px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언 향동천 산책길 · 21시까지」 197×39",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "a「전체 보기」 81×33",
+     "button「」 40×40",
+     "button「」 40×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/realsicdan",
+   "width": 673,
+   "texts": 141,
+   "contrast": 34,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 29,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "p「식단 · 샐러드 · 도시락」 1.00:1 13px",
+     "h1「리얼식단」 1.00:1 28px",
+     "p「가볍고 든든한 하루 한 끼」 1.00:1 14.5px",
+     "button「전체」 3.81:1 13px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「전체」 52×36",
+     "button「샐러드」 64×36",
+     "button「도시락」 64×36",
+     "button「간식」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/menu/m_pie120",
+   "width": 673,
+   "texts": 67,
+   "contrast": 5,
+   "tiny": 1,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "span「대표 메뉴」 2.78:1 12px",
+     "p「매장에서 확인된 구매 4건 (DEMO 집계)」 4.04:1 13px",
+     "span「가능」 4.04:1 12px",
+     "button「구매 방법 보기」 3.81:1 15px"
+    ],
+    "tiny": [
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「왜?」 47×36",
+     "button「왜?」 47×36",
+     "button「왜?」 47×36",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek",
+   "width": 673,
+   "texts": 157,
+   "contrast": 31,
+   "tiny": 13,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "p「고양이카페 · 음료 · 디저트」 1.00:1 13px",
+     "h1「다색냥」 1.00:1 30px",
+     "p「120겹파이와 함께하는 달콤한 휴식」 1.00:1 15px",
+     "p「다색냥 친구들 6마리」 3.56:1 12px",
+     "p「모카」 1.05:1 18px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "button「」 40×40",
+     "button「」 40×40",
+     "button「」 40×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek/cats/cat_5",
+   "width": 673,
+   "texts": 58,
+   "contrast": 20,
+   "tiny": 5,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「담요 위 낮잠이 하루 일과」 1.00:1 13.5px",
+     "span「1 / 4」 2.85:1 12px"
+    ],
+    "tiny": [
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「다색냥 친구들」 78×20",
+     "a「이전 친구 콩떡」 113×37",
+     "a「전체 보기」 81×33",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/membership",
+   "width": 673,
+   "texts": 36,
+   "contrast": 1,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 8,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「혜택 예시 · 운영자 확정 전」 11px",
+     "span「준비 중」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「관심 남기기 →」 80×20",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my",
+   "width": 673,
+   "texts": 44,
+   "contrast": 7,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "a「방문 체크인」 3.81:1 14px",
+     "p「다색컴패니언 스탬프」 4.21:1 13px",
+     "span「/ 10」 3.62:1 16px",
+     "span「누적 7개」 4.13:1 12px",
+     "span「8」 2.60:1 12px",
+     "span「9」 2.60:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「DEMO」 75×36",
+     "button「로그아웃」 90×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/coupons",
+   "width": 673,
+   "texts": 22,
+   "contrast": 0,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 10,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「사용 가능0」 100×32",
+     "button「사용 완료0」 100×32",
+     "button「만료·취소1」 104×32",
+     "a「멤버십 안내」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/referral",
+   "width": 673,
+   "texts": 37,
+   "contrast": 2,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 8,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "p「친구 추천」 4.04:1 13px",
+     "button「추천 링크 공유하기」 3.81:1 15px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「」 40×40",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/signup",
+   "width": 673,
+   "texts": 14,
+   "contrast": 0,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「마이로 이동」 78×24",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20",
+     "a「매장 운영자」 61×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/roadmap",
+   "width": 673,
+   "texts": 71,
+   "contrast": 1,
+   "tiny": 11,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「● 지금 이용 가능: 메뉴·고양이 탐색, 회」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/checkin",
+   "width": 673,
+   "texts": 20,
+   "contrast": 2,
+   "tiny": 0,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 7,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「다색냥」 3.81:1 14.5px",
+     "p「코드는 매일 바뀌어요. 같은 매장은 하루 한」 3.45:1 12px"
+    ],
+    "tiny": [],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "a「멤버십 안내」 61×20",
+     "a「준비 중인 서비스」 88×20",
+     "a「개인정보 처리 안내(초안)」 130×20",
+     "a「샘플 사진 출처」 76×20"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 673,
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 20,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "button「반려」 82×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 673,
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 16,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 673,
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 617×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/content",
+   "width": 673,
+   "texts": 121,
+   "contrast": 16,
+   "tiny": 28,
+   "smallAx": 71,
+   "dimmed": 0,
+   "touch": 18,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객 화면에 보이는 메뉴와 고양이 프로필·사」 4.44:1 13.5px",
+     "button「고양이6」 4.34:1 13px",
+     "button「사진 승인1」 4.34:1 13px",
+     "th「메뉴」 2.56:1 12px",
+     "th「브랜드」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「미확인」 11px",
+     "span「제공 정보」 11px",
+     "span「미확인」 11px",
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「11」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「메뉴11」 80×32",
+     "button「고양이6」 85×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/rewards",
+   "width": 673,
+   "texts": 43,
+   "contrast": 10,
+   "tiny": 10,
+   "smallAx": 28,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「혜택 규칙과 발급·사용·추천 귀속·보상 원장」 4.44:1 13.5px",
+     "button「쿠폰 발급·사용16」 4.34:1 13px",
+     "button「추천 관계2」 4.34:1 13px",
+     "button「보상 원장」 4.34:1 13px",
+     "p「가입 혜택」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「4」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「혜택 규칙4」 100×32",
+     "button「쿠폰 발급·사용16」 139×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/campaigns",
+   "width": 673,
+   "texts": 57,
+   "contrast": 5,
+   "tiny": 6,
+   "smallAx": 33,
+   "dimmed": 0,
+   "touch": 9,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「규칙(세그먼트)이 대상과 문안 초안을 만들고」 4.44:1 13.5px",
+     "p「작성 매장 직원 (데모) · 11. 17. 」 2.56:1 12px",
+     "p「작성 운영 책임자 (데모) · 11. 6. 」 2.56:1 12px",
+     "span「4」 3.76:1 11px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「앱 알림 수신 동의자만 포함」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「초안 만들기」 109×32",
+     "button「초안 만들기」 109×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/analytics",
+   "width": 673,
+   "texts": 144,
+   "contrast": 17,
+   "tiny": 8,
+   "smallAx": 49,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「모든 수치는 집계(ANALYTICS)이며 A」 4.44:1 13.5px",
+     "p「의향 신호 — 실적 아님」 2.56:1 12px",
+     "p「확인 전 — 실적 아님」 2.56:1 12px",
+     "p「KPI 집계 기준」 2.56:1 12px",
+     "p「연동권 확인 전 — 미연결」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「11-05」 11px",
+     "span「오늘」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「DEMO 시드 데이터」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/reorder",
+   "width": 673,
+   "texts": 30,
+   "contrast": 8,
+   "tiny": 6,
+   "smallAx": 17,
+   "dimmed": 0,
+   "touch": 9,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객이 저장한 메뉴 중 14일간 확인 구매가」 4.44:1 13.5px",
+     "span「/ 0」 2.56:1 15px",
+     "button「안내함0」 4.34:1 13px",
+     "button「구매 전환0」 4.34:1 13px",
+     "button「보류0」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「검토 대기」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「후보 갱신 (10)」 140×40",
+     "button「검토 대기0」 100×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/evidence",
+   "width": 673,
+   "texts": 224,
+   "contrast": 23,
+   "tiny": 6,
+   "smallAx": 201,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「로그인 수나 화면 캡처가 아니라 'Trigg」 4.44:1 13.5px",
+     "th「구분」 2.56:1 12px",
+     "th「지표」 2.56:1 12px",
+     "th「측정 지점」 2.56:1 12px",
+     "th「현재(DEMO)」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「구분」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「Evidence Pack(JSON)」 201×40",
+     "select「전체 유형CAMPAIGN_SENTVERIFI」 163×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/settings",
+   "width": 673,
+   "texts": 35,
+   "contrast": 9,
+   "tiny": 6,
+   "smallAx": 12,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「테마와 글자 크기, 역할별 권한, 매장 정보」 4.44:1 13.5px",
+     "button「역할·권한」 4.34:1 13px",
+     "button「매장 정보」 4.34:1 13px",
+     "button「데이터·권리」 4.34:1 13px",
+     "button「감사 기록」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「고객 화면은 다색컴패니언 브랜드 테마로 고정」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「화면」 48×32",
+     "button「역할·권한」 79×32"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/coach",
+   "width": 673,
+   "texts": 58,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 24,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「AX Coach는 규칙으로 오늘 처리할 일 」 4.44:1 13.5px",
+     "span「남는 실증 기록: VERIFIED_VISIT」 2.45:1 12px",
+     "span「남는 실증 기록: REORDER_CONVER」 2.45:1 12px",
+     "span「남는 실증 기록: CAMPAIGN_SENT 」 2.45:1 12px",
+     "span「목표: Baseline 측정 후 설정」 2.45:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "p「Mission → Action → Resul」 12.5px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/why",
+   "width": 673,
+   "texts": 242,
+   "contrast": 29,
+   "tiny": 7,
+   "smallAx": 153,
+   "dimmed": 0,
+   "touch": 4,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "h2「한 번 오고 끝나는 매장에서,다시 오게 만드」 1.07:1 22px",
+     "p「다색컴패니언 Why AX · 기획 의도 (가」 1.06:1 13px",
+     "span「샘플 일러스트」 3.70:1 12px",
+     "th「현재 단계」 2.56:1 12.5px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「샘플 사진」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/",
+   "width": 768,
+   "texts": 201,
+   "contrast": 57,
+   "tiny": 15,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 35,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "a「다색냥 만나기」 3.81:1 16px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/realsicdan",
+   "width": 768,
+   "texts": 144,
+   "contrast": 38,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 33,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「식단 · 샐러드 · 도시락」 1.00:1 13px",
+     "h1「리얼식단」 1.00:1 38px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/menu/m_pie120",
+   "width": 768,
+   "texts": 71,
+   "contrast": 7,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「대표 메뉴」 2.78:1 12px",
+     "p「매장에서 확인된 구매 4건 (DEMO 집계)」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek",
+   "width": 768,
+   "texts": 161,
+   "contrast": 35,
+   "tiny": 15,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 18,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「고양이카페 · 음료 · 디저트」 1.00:1 13px",
+     "h1「다색냥」 1.00:1 40px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek/cats/cat_5",
+   "width": 768,
+   "texts": 60,
+   "contrast": 23,
+   "tiny": 7,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 15,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/membership",
+   "width": 768,
+   "texts": 38,
+   "contrast": 4,
+   "tiny": 4,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「혜택 예시 · 운영자 확정 전」 11px",
+     "span「준비 중」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my",
+   "width": 768,
+   "texts": 48,
+   "contrast": 10,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 13,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "a「방문 체크인」 3.81:1 14px",
+     "p「다색컴패니언 스탬프」 4.21:1 13px",
+     "span「/ 10」 3.62:1 16px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/coupons",
+   "width": 768,
+   "texts": 25,
+   "contrast": 3,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/referral",
+   "width": 768,
+   "texts": 39,
+   "contrast": 5,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "p「친구 추천」 4.04:1 13px",
+     "button「추천 링크 공유하기」 3.81:1 15px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/signup",
+   "width": 768,
+   "texts": 18,
+   "contrast": 3,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/roadmap",
+   "width": 768,
+   "texts": 73,
+   "contrast": 4,
+   "tiny": 13,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「● 지금 이용 가능: 메뉴·고양이 탐색, 회」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「개발 예정」 11px",
+     "span「개발 예정」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/checkin",
+   "width": 768,
+   "texts": 22,
+   "contrast": 5,
+   "tiny": 2,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "button「다색냥」 3.81:1 14.5px",
+     "p「코드는 매일 바뀌어요. 같은 매장은 하루 한」 3.45:1 12px"
+    ],
+    "tiny": [
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [
+     "a「다색컴패니언DASEK COMPANION」 157×37",
+     "a「리얼식단」 77×38",
+     "a「다색냥」 64×38",
+     "a「멤버십」 64×38",
+     "a「10」 40×40",
+     "a「하마이」 82×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 768,
+   "texts": 196,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 101,
+   "dimmed": 0,
+   "touch": 24,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 768,
+   "texts": 41,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 22,
+   "dimmed": 0,
+   "touch": 18,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 768,
+   "texts": 154,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 61,
+   "dimmed": 0,
+   "touch": 13,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/content",
+   "width": 768,
+   "texts": 122,
+   "contrast": 16,
+   "tiny": 28,
+   "smallAx": 72,
+   "dimmed": 0,
+   "touch": 20,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객 화면에 보이는 메뉴와 고양이 프로필·사」 4.44:1 13.5px",
+     "button「고양이6」 4.34:1 13px",
+     "button「사진 승인1」 4.34:1 13px",
+     "th「메뉴」 2.56:1 12px",
+     "th「브랜드」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「미확인」 11px",
+     "span「제공 정보」 11px",
+     "span「미확인」 11px",
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/rewards",
+   "width": 768,
+   "texts": 44,
+   "contrast": 10,
+   "tiny": 10,
+   "smallAx": 29,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「혜택 규칙과 발급·사용·추천 귀속·보상 원장」 4.44:1 13.5px",
+     "button「쿠폰 발급·사용16」 4.34:1 13px",
+     "button「추천 관계2」 4.34:1 13px",
+     "button「보상 원장」 4.34:1 13px",
+     "p「가입 혜택」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px",
+     "span「가정」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/campaigns",
+   "width": 768,
+   "texts": 58,
+   "contrast": 5,
+   "tiny": 6,
+   "smallAx": 34,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「규칙(세그먼트)이 대상과 문안 초안을 만들고」 4.44:1 13.5px",
+     "p「작성 매장 직원 (데모) · 11. 17. 」 2.56:1 12px",
+     "p「작성 운영 책임자 (데모) · 11. 6. 」 2.56:1 12px",
+     "span「4」 3.76:1 11px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/analytics",
+   "width": 768,
+   "texts": 145,
+   "contrast": 17,
+   "tiny": 8,
+   "smallAx": 50,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「모든 수치는 집계(ANALYTICS)이며 A」 4.44:1 13.5px",
+     "p「의향 신호 — 실적 아님」 2.56:1 12px",
+     "p「확인 전 — 실적 아님」 2.56:1 12px",
+     "p「KPI 집계 기준」 2.56:1 12px",
+     "p「연동권 확인 전 — 미연결」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「11-05」 11px",
+     "span「오늘」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/reorder",
+   "width": 768,
+   "texts": 31,
+   "contrast": 8,
+   "tiny": 6,
+   "smallAx": 18,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객이 저장한 메뉴 중 14일간 확인 구매가」 4.44:1 13.5px",
+     "span「/ 0」 2.56:1 15px",
+     "button「안내함0」 4.34:1 13px",
+     "button「구매 전환0」 4.34:1 13px",
+     "button「보류0」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/evidence",
+   "width": 768,
+   "texts": 225,
+   "contrast": 23,
+   "tiny": 6,
+   "smallAx": 202,
+   "dimmed": 0,
+   "touch": 8,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「로그인 수나 화면 캡처가 아니라 'Trigg」 4.44:1 13.5px",
+     "th「구분」 2.56:1 12px",
+     "th「지표」 2.56:1 12px",
+     "th「측정 지점」 2.56:1 12px",
+     "th「현재(DEMO)」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/settings",
+   "width": 768,
+   "texts": 36,
+   "contrast": 9,
+   "tiny": 6,
+   "smallAx": 13,
+   "dimmed": 0,
+   "touch": 16,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「테마와 글자 크기, 역할별 권한, 매장 정보」 4.44:1 13.5px",
+     "button「역할·권한」 4.34:1 13px",
+     "button「매장 정보」 4.34:1 13px",
+     "button「데이터·권리」 4.34:1 13px",
+     "button「감사 기록」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/coach",
+   "width": 768,
+   "texts": 59,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 25,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「AX Coach는 규칙으로 오늘 처리할 일 」 4.44:1 13.5px",
+     "span「남는 실증 기록: VERIFIED_VISIT」 2.45:1 12px",
+     "span「남는 실증 기록: REORDER_CONVER」 2.45:1 12px",
+     "span「남는 실증 기록: CAMPAIGN_SENT 」 2.45:1 12px",
+     "span「목표: Baseline 측정 후 설정」 2.45:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/why",
+   "width": 768,
+   "texts": 243,
+   "contrast": 29,
+   "tiny": 7,
+   "smallAx": 154,
+   "dimmed": 0,
+   "touch": 6,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "h2「한 번 오고 끝나는 매장에서,다시 오게 만드」 1.07:1 30px",
+     "p「다색컴패니언 Why AX · 기획 의도 (가」 1.06:1 13px",
+     "span「샘플 일러스트」 3.70:1 12px",
+     "th「현재 단계」 2.56:1 12.5px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px"
+    ],
+    "smallAx": [
+     "p「다색냥 · 리얼식단 매장 운영」 12px",
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「」 36×36",
+     "button「」 36×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/",
+   "width": 1440,
+   "texts": 208,
+   "contrast": 57,
+   "tiny": 16,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "a「다색냥 만나기」 3.81:1 16px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/realsicdan",
+   "width": 1440,
+   "texts": 151,
+   "contrast": 38,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「식단 · 샐러드 · 도시락」 1.00:1 13px",
+     "h1「리얼식단」 1.00:1 38px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/menu/m_pie120",
+   "width": 1440,
+   "texts": 78,
+   "contrast": 7,
+   "tiny": 4,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「대표 메뉴」 2.78:1 12px",
+     "p「매장에서 확인된 구매 4건 (DEMO 집계)」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「제공 정보」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek",
+   "width": 1440,
+   "texts": 168,
+   "contrast": 35,
+   "tiny": 16,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "p「고양이카페 · 음료 · 디저트」 1.00:1 13px",
+     "h1「다색냥」 1.00:1 40px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/dasek/cats/cat_5",
+   "width": 1440,
+   "texts": 67,
+   "contrast": 23,
+   "tiny": 8,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「예시 프로필」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/membership",
+   "width": 1440,
+   "texts": 45,
+   "contrast": 4,
+   "tiny": 5,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「혜택 예시 · 운영자 확정 전」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my",
+   "width": 1440,
+   "texts": 55,
+   "contrast": 10,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "a「방문 체크인」 3.81:1 14px",
+     "p「다색컴패니언 스탬프」 4.21:1 13px",
+     "span「/ 10」 3.62:1 16px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/coupons",
+   "width": 1440,
+   "texts": 32,
+   "contrast": 3,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/my/referral",
+   "width": 1440,
+   "texts": 46,
+   "contrast": 5,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "p「친구 추천」 4.04:1 13px",
+     "button「추천 링크 공유하기」 3.81:1 15px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/signup",
+   "width": 1440,
+   "texts": 25,
+   "contrast": 3,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/roadmap",
+   "width": 1440,
+   "texts": 80,
+   "contrast": 4,
+   "tiny": 14,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "span「● 지금 이용 가능: 메뉴·고양이 탐색, 회」 4.04:1 13px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px",
+     "span「개발 예정」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/checkin",
+   "width": 1440,
+   "texts": 29,
+   "contrast": 5,
+   "tiny": 3,
+   "smallAx": 0,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「DASEK COMPANION」 3.81:1 9.5px",
+     "span「10」 2.78:1 11px",
+     "span「하」 3.81:1 12px",
+     "button「다색냥」 3.81:1 14.5px",
+     "p「코드는 매일 바뀌어요. 같은 매장은 하루 한」 3.45:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DASEK COMPANION」 9.5px",
+     "span「10」 11px"
+    ],
+    "smallAx": [],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/content",
+   "width": 1440,
+   "texts": 140,
+   "contrast": 18,
+   "tiny": 25,
+   "smallAx": 76,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객 화면에 보이는 메뉴와 고양이 프로필·사」 4.44:1 13.5px",
+     "button「고양이6」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「미확인」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/rewards",
+   "width": 1440,
+   "texts": 62,
+   "contrast": 12,
+   "tiny": 7,
+   "smallAx": 33,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「혜택 규칙과 발급·사용·추천 귀속·보상 원장」 4.44:1 13.5px",
+     "button「쿠폰 발급·사용16」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「가정」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/campaigns",
+   "width": 1440,
+   "texts": 76,
+   "contrast": 7,
+   "tiny": 3,
+   "smallAx": 38,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「규칙(세그먼트)이 대상과 문안 초안을 만들고」 4.44:1 13.5px",
+     "p「작성 매장 직원 (데모) · 11. 17. 」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/analytics",
+   "width": 1440,
+   "texts": 163,
+   "contrast": 19,
+   "tiny": 5,
+   "smallAx": 54,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「모든 수치는 집계(ANALYTICS)이며 A」 4.44:1 13.5px",
+     "p「의향 신호 — 실적 아님」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/reorder",
+   "width": 1440,
+   "texts": 49,
+   "contrast": 10,
+   "tiny": 3,
+   "smallAx": 22,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객이 저장한 메뉴 중 14일간 확인 구매가」 4.44:1 13.5px",
+     "span「/ 0」 2.56:1 15px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/evidence",
+   "width": 1440,
+   "texts": 243,
+   "contrast": 25,
+   "tiny": 3,
+   "smallAx": 206,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「로그인 수나 화면 캡처가 아니라 'Trigg」 4.44:1 13.5px",
+     "th「구분」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/settings",
+   "width": 1440,
+   "texts": 54,
+   "contrast": 11,
+   "tiny": 3,
+   "smallAx": 17,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「테마와 글자 크기, 역할별 권한, 매장 정보」 4.44:1 13.5px",
+     "button「역할·권한」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/coach",
+   "width": 1440,
+   "texts": 77,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 29,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「AX Coach는 규칙으로 오늘 처리할 일 」 4.44:1 13.5px",
+     "span「남는 실증 기록: VERIFIED_VISIT」 2.45:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/why",
+   "width": 1440,
+   "texts": 278,
+   "contrast": 32,
+   "tiny": 4,
+   "smallAx": 175,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「목차」 2.39:1 12px",
+     "span「샘플 사진」 3.70:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "deep-navy",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "deep-navy",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "deep-navy",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "deep-navy",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "deep-navy",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "deep-navy",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "navy-gold",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "navy-gold",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "navy-gold",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "navy-gold",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "navy-gold",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "navy-gold",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "emerald-gold",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "emerald-gold",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "emerald-gold",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "emerald-gold",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "emerald-gold",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "emerald-gold",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "forest-sage",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "forest-sage",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "forest-sage",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "forest-sage",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "forest-sage",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "forest-sage",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "deep-teal",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "deep-teal",
+   "texts": 40,
+   "contrast": 11,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "span「2」 4.23:1 12px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "deep-teal",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "deep-teal",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "deep-teal",
+   "texts": 59,
+   "contrast": 13,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "span「2」 4.23:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "deep-teal",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "onyx-gold",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "onyx-gold",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "onyx-gold",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "onyx-gold",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "onyx-gold",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "onyx-gold",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 390,
+   "theme": "pure-white",
+   "texts": 195,
+   "contrast": 35,
+   "tiny": 11,
+   "smallAx": 100,
+   "dimmed": 0,
+   "touch": 14,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px",
+     "p「손님이 카운터 앞에서 기다리는 일부터 — 확」 4.44:1 13px",
+     "span「지」 4.15:1 13px",
+     "span「DC-1609」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px",
+     "span「11-05」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "a「지우」 26×21",
+     "a「서윤」 26×21"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 390,
+   "theme": "pure-white",
+   "texts": 40,
+   "contrast": 10,
+   "tiny": 6,
+   "smallAx": 21,
+   "dimmed": 0,
+   "touch": 12,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px",
+     "button「사진·요청·검토1」 4.34:1 13px",
+     "button「처리 완료」 4.34:1 13px",
+     "span「지」 4.15:1 13px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "span「2」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "button「쿠폰 사용 처리」 141×40",
+     "button「카운터 구매 등록」 152×40"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 390,
+   "theme": "pure-white",
+   "texts": 153,
+   "contrast": 25,
+   "tiny": 6,
+   "smallAx": 60,
+   "dimmed": 0,
+   "touch": 11,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "button「직원」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px",
+     "th「회원」 2.56:1 12px",
+     "th「가입」 2.56:1 12px",
+     "th「확인 이용」 2.56:1 12px"
+    ],
+    "tiny": [
+     "span「대시보드」 11px",
+     "span「확인 큐」 11px",
+     "span「4」 11px",
+     "span「오늘 할 일」 11px"
+    ],
+    "smallAx": [
+     "button「DEMO」 12px",
+     "button「책임자」 12px",
+     "button「직원」 12px",
+     "th「회원」 12px"
+    ],
+    "dimmed": [],
+    "touch": [
+     "button「」 40×40",
+     "button「DEMO」 75×36",
+     "button「책임자」 49×28",
+     "button「직원」 38×28",
+     "input「」 334×22",
+     "button「전체」 52×36"
+    ],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax",
+   "width": 1440,
+   "theme": "pure-white",
+   "texts": 214,
+   "contrast": 37,
+   "tiny": 8,
+   "smallAx": 105,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "span「모든 숫자는 DEMO 시드 기반 — 실제 실」 4.44:1 12px",
+     "p「① 지금」 2.39:1 12px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/queue",
+   "width": 1440,
+   "theme": "pure-white",
+   "texts": 59,
+   "contrast": 12,
+   "tiny": 3,
+   "smallAx": 26,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「고객의 체크인과 구매 확인 요청을 직원이 확」 4.44:1 13.5px",
+     "button「구매 확인1」 4.34:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  },
+  {
+   "route": "/ax/members",
+   "width": 1440,
+   "theme": "pure-white",
+   "texts": 172,
+   "contrast": 27,
+   "tiny": 3,
+   "smallAx": 65,
+   "dimmed": 0,
+   "touch": 0,
+   "cardEdge": 0,
+   "clipped": 0,
+   "overflow": 0,
+   "onMedia": 0,
+   "samples": {
+    "contrast": [
+     "span「4」 3.76:1 11px",
+     "button「직원」 4.34:1 12px",
+     "button「Mobile」 4.34:1 12px",
+     "button「PC+Mobile」 4.34:1 12px",
+     "p「회원별 확인 이용, 스탬프, 쿠폰, 마케팅 」 4.44:1 13.5px",
+     "button「전체」 3.81:1 13px"
+    ],
+    "tiny": [
+     "span「BUSINESS AX」 11px",
+     "span「4」 11px",
+     "span「DEMO」 11px"
+    ],
+    "smallAx": [
+     "span「BUSINESS AX」 11px",
+     "p「운영」 12px",
+     "span「4」 11px",
+     "p「고객·매출」 12px"
+    ],
+    "dimmed": [],
+    "touch": [],
+    "cardEdge": []
+   }
+  }
+ ]
+}

@@ -15,7 +15,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
   const cards = [
     {
       kind: 'COST',
-      color: '#5B8DEF',
+      color: '#2F5FC4',
       title: '확인 요청 처리 시간',
       value: k.costMedianMinutes,
       unit: '분',
@@ -25,7 +25,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
     },
     {
       kind: 'REVENUE',
-      color: '#D79A43',
+      color: '#8A5A12',
       title: '30일 재방문·재구매율',
       value: k.revenueRepeatRate == null ? null : k.revenueRepeatRate * 100,
       unit: '%',
@@ -35,7 +35,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
     },
     {
       kind: 'SCALE',
-      color: '#3C9A75',
+      color: '#23704F',
       title: '운영자 1인당 활성 고객',
       value: k.scaleActivePerOperator,
       unit: '명',
@@ -47,22 +47,22 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
   return (
     <div className="grid gap-3 md:grid-cols-3" data-testid="money-kpis">
       {cards.map((c) => (
-        <div key={c.kind} className="lift min-w-0 overflow-hidden rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 md:p-5">
+        <div key={c.kind} className="ax-card lift min-w-0 overflow-hidden p-4 md:p-5">
           <div className="flex items-center justify-between">
-            <span className="text-[12px] font-bold tracking-[0.14em]" style={{ color: c.color }}>
+            <span className="text-[0.8125rem] font-bold tracking-[0.14em]" style={{ color: c.color }}>
               {c.kind} KPI
             </span>
             <StatusBadge status="DEMO" />
           </div>
-          <p className="mt-2 text-[13.5px] font-semibold text-slate-600">{c.title}</p>
-          <p className="mt-1 text-[30px] font-extrabold leading-none tracking-tight text-slate-900 tabular">
+          <p className="mt-2 text-[0.9375rem] font-semibold text-slate-600">{c.title}</p>
+          <p className="mt-1 text-[1.875rem] font-extrabold leading-none tracking-tight text-slate-900 tabular">
             {c.value == null ? '—' : <CountUp value={c.value} format={c.fmt} />}
-            <span className="ml-1 text-[15px] font-bold text-slate-400">{c.value == null ? '측정 대기' : c.unit}</span>
+            <span className="ml-1 text-[1rem] font-bold text-slate-500">{c.value == null ? '측정 대기' : c.unit}</span>
           </p>
-          <p className="mt-2 text-[12px] text-slate-500">{c.note}</p>
-          <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[12px]">
+          <p className="mt-2 text-[0.8125rem] text-slate-500">{c.note}</p>
+          <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[0.8125rem]">
             <Tag tone="amber">Baseline UNKNOWN</Tag>
-            <span className="min-w-0 truncate text-slate-400">{c.measure}</span>
+            <span className="min-w-0 truncate text-slate-500">{c.measure}</span>
           </div>
         </div>
       ))}
@@ -71,20 +71,20 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
 }
 
 export function MissionList({ missions, canManage }: { missions: Mission[]; canManage: boolean }) {
-  if (!missions.length) return <p className="rounded-xl bg-slate-50 p-4 text-[13px] text-slate-500">지금 급한 일이 없어요. 고객 화면에서 체크인·구매 요청을 만들어 흐름을 확인해 보세요.</p>;
+  if (!missions.length) return <p className="rounded-xl bg-slate-50 p-4 text-[0.875rem] text-slate-500">지금 급한 일이 없어요. 고객 화면에서 체크인·구매 요청을 만들어 흐름을 확인해 보세요.</p>;
   return (
     <ol className="space-y-2">
       {missions.map((m, i) => (
         <li key={m.key}>
           <Link href={m.route} className="lift group flex items-start gap-3 rounded-xl bg-slate-50 p-3.5 ring-1 ring-transparent hover:bg-white hover:ring-slate-200">
-            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-ax-primary text-[13px] font-extrabold text-white">{i + 1}</span>
+            <span className="grid h-8 w-8 lg:h-7 lg:w-7 shrink-0 place-items-center rounded-full bg-ax-primary text-[0.875rem] font-extrabold text-white">{i + 1}</span>
             <span className="min-w-0 flex-1">
               <span className="flex flex-wrap items-center gap-1.5">
-                <span className="text-[14.5px] font-bold text-slate-900">{m.title}</span>
+                <span className="text-[0.9688rem] font-bold text-slate-900">{m.title}</span>
                 {m.managerOnly && !canManage && <Tag>책임자 권한</Tag>}
               </span>
-              <span className="mt-0.5 block text-[12.5px] leading-relaxed text-slate-500">{m.detail}</span>
-              <span className="mt-1 block text-[12px] text-slate-400">남는 실증 기록: {m.proof}</span>
+              <span className="mt-0.5 block text-[0.8438rem] leading-relaxed text-slate-500">{m.detail}</span>
+              <span className="mt-1 block text-[0.8125rem] text-slate-500">남는 실증 기록: {m.proof}</span>
             </span>
             <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500" />
           </Link>
@@ -108,18 +108,18 @@ export function DailyChart({ data }: { data: { day: string; visits: number; purc
                 <div className="bg-[#5B8DEF]" style={{ height: total ? `${(d.visits / total) * 100}%` : 0 }} />
               </div>
               {total === 0 && <div className="h-[3px] rounded bg-slate-100" />}
-              <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-1.5 py-0.5 text-[12px] font-semibold text-white group-hover:block">
+              <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-1.5 py-0.5 text-[0.8125rem] font-semibold text-white group-hover:block">
                 방문 {d.visits} · 구매 {d.purchases}
               </span>
             </div>
           );
         })}
       </div>
-      <div className="mt-1.5 flex justify-between text-[11px] text-slate-400 tabular">
+      <div className="mt-1.5 flex justify-between text-[0.8125rem] text-slate-500 tabular">
         <span>{data[0]?.day.slice(5)}</span>
         <span>오늘</span>
       </div>
-      <div className="mt-2 flex gap-3 text-[12px] text-slate-500">
+      <div className="mt-2 flex gap-3 text-[0.8125rem] text-slate-500">
         <span className="flex items-center gap-1">
           <span className="h-2.5 w-2.5 rounded-sm bg-[#5B8DEF]" /> 확인 방문
         </span>
@@ -143,14 +143,14 @@ export function EvidenceBars({ levels }: { levels: Record<'LINK_CLICK' | 'SELF_R
     <ul className="space-y-3" data-testid="evidence-levels">
       {rows.map((r) => (
         <li key={r.k}>
-          <div className="flex items-baseline justify-between text-[12.5px]">
+          <div className="flex items-baseline justify-between text-[0.8438rem]">
             <span className="font-semibold text-slate-700">{r.l}</span>
             <span className="font-bold text-slate-900 tabular">{levels[r.k]}</span>
           </div>
           <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-slate-100">
             <div className="h-full origin-left animate-grow rounded-full" style={{ width: `${(levels[r.k] / max) * 100}%`, background: r.c }} />
           </div>
-          <p className="mt-0.5 text-[12px] text-slate-400">{r.d}</p>
+          <p className="mt-0.5 text-[0.8125rem] text-slate-500">{r.d}</p>
         </li>
       ))}
     </ul>
@@ -177,21 +177,21 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
     else setConfirmBuy(true);
   };
   return (
-    <li className={cx('flex flex-col gap-3 rounded-xl bg-white p-3.5 ring-1 ring-slate-200/70 transition hover:ring-slate-300 sm:flex-row sm:items-center', compact && 'p-3')} data-testid="queue-row">
+    <li className={cx('flex flex-col gap-3 rounded-xl bg-white p-3.5 ring-1 ring-axline transition hover:ring-slate-300 sm:flex-row sm:items-center', compact && 'p-3')} data-testid="queue-row">
       <div className="flex min-w-0 flex-1 items-start gap-3">
-        <span className={cx('grid h-9 w-9 shrink-0 place-items-center rounded-full text-[13px] font-bold', t.type === 'VERIFY_CHECKIN' ? 'bg-[#5B8DEF1F] text-[#3F6FD8]' : 'bg-[#3C9A751F] text-[#2F7F61]')}>{user?.name.slice(0, 1) ?? '·'}</span>
+        <span aria-hidden className={cx('grid h-10 w-10 lg:h-9 lg:w-9 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold', t.type === 'VERIFY_CHECKIN' ? 'bg-[#E6EEFC] text-[#2A55B0]' : 'bg-[#E3F3EC] text-[#1F6648]')}>{user?.name.slice(0, 1) ?? '·'}</span>
         <div className="min-w-0">
-          <p className="flex flex-wrap items-center gap-1.5 text-[14px] font-bold text-slate-900">
-            {user ? <Link href={`/ax/members/${user.id}`} className="hover:underline">{user.name}</Link> : t.title}
-            {user && <span className="text-[12px] font-semibold text-slate-400">{user.memberCode}</span>}
+          <p className="flex flex-wrap items-center gap-1.5 text-[0.9375rem] font-bold text-slate-900">
+            {user ? <Link href={`/ax/members/${user.id}`} className="-mx-1 inline-flex min-h-11 min-w-11 items-center rounded-md px-1 hover:underline lg:min-h-0">{user.name}</Link> : t.title}
+            {user && <span className="text-[0.8125rem] font-semibold text-slate-500">{user.memberCode}</span>}
             <Tag tone={t.type === 'VERIFY_CHECKIN' ? 'blue' : t.type === 'VERIFY_PURCHASE' ? 'green' : 'violet'}>
               {{ VERIFY_CHECKIN: '방문 체크인', VERIFY_PURCHASE: '구매 확인', PHOTO_REVIEW: '사진 승인', CUSTOMER_REQUEST: '고객 요청', REFERRAL_REVIEW: '보상 검토', REORDER_REVIEW: '재구매' }[t.type]}
             </Tag>
           </p>
-          <p className="mt-0.5 text-[13.5px] font-medium text-slate-700">
+          <p className="mt-0.5 text-[0.9375rem] font-medium text-slate-700">
             {store?.name ?? ''} {items ? `· ${items}` : ''} {v?.note ? `· "${v.note}"` : ''} {!isVerify ? t.title : ''}
           </p>
-          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px]">
+          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem]">
             <span className={cx('inline-flex items-center gap-1', wait > 30 ? 'font-bold text-red-600' : 'text-slate-500')}>
               <Clock3 className="h-3.5 w-3.5" /> {relTime(t.createdAt)} 요청 {wait > 30 && '· 지연'}
             </span>
@@ -203,10 +203,10 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
       {isVerify ? (
         canVerify ? (
           <div className="grid shrink-0 grid-cols-[auto_1fr] gap-2 sm:flex">
-            <Button tone="ax" variant="outline" className="h-11 sm:h-9" onClick={() => setReject(true)} data-testid="queue-reject">
+            <Button tone="ax" variant="outline" className="h-11 lg:h-9" onClick={() => setReject(true)} data-testid="queue-reject">
               <X className="h-4 w-4" /> 반려
             </Button>
-            <Button tone="ax" className="h-11 sm:h-9 sm:px-5" onClick={approve} data-testid="queue-approve">
+            <Button tone="ax" className="h-11 lg:h-9 sm:px-5" onClick={approve} data-testid="queue-approve">
               <Check className="h-4 w-4" /> {t.type === 'VERIFY_CHECKIN' ? '방문 확인' : '구매 확인'}
             </Button>
           </div>
@@ -214,7 +214,7 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
           <Locked reason="확인 권한 없음" />
         )
       ) : (
-        <Link href={t.type === 'PHOTO_REVIEW' ? '/ax/content?tab=photos' : t.userId ? `/ax/members/${t.userId}` : '/ax/rewards?tab=referrals'} className="shrink-0 text-[12.5px] font-semibold text-ax-primary hover:underline">
+        <Link href={t.type === 'PHOTO_REVIEW' ? '/ax/content?tab=photos' : t.userId ? `/ax/members/${t.userId}` : '/ax/rewards?tab=referrals'} className="inline-flex min-h-11 shrink-0 items-center text-[0.9375rem] font-semibold text-ax-primary hover:underline lg:min-h-9">
           처리하러 가기 →
         </Link>
       )}
@@ -245,7 +245,7 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
       >
         <div className="flex flex-wrap gap-1.5">
           {['매장 방문 확인 불가', '구매 기록 없음', '중복 요청', '다른 매장 요청'].map((r) => (
-            <button key={r} onClick={() => setReason(r)} className={cx('rounded-full px-3 py-1.5 text-[12.5px] font-semibold ring-1', reason === r ? 'bg-slate-900 text-white ring-slate-900' : 'bg-white text-slate-600 ring-slate-200')}>
+            <button key={r} onClick={() => setReason(r)} className={cx('rounded-full px-3 py-1.5 text-[0.8438rem] font-semibold ring-1', reason === r ? 'bg-slate-900 text-white ring-slate-900' : 'bg-white text-slate-600 ring-slate-200')}>
               {r}
             </button>
           ))}
@@ -278,11 +278,11 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
           </div>
         }
       >
-        <label className="block text-[13px] font-semibold text-slate-600">
+        <label className="block text-[0.875rem] font-semibold text-slate-600">
           결제 금액 (선택)
           <input value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="numeric" placeholder="예: 4500" className="mt-1.5 h-10 w-full rounded-lg border border-slate-200 px-3 text-sm outline-none focus:border-ax-primary" />
         </label>
-        <p className="mt-2 text-[12px] text-slate-500">영수증·카운터 기록으로 확인한 경우에만 확인해 주세요. 금액은 매출 귀속 분석에 쓰이며, 모르면 비워 두세요.</p>
+        <p className="mt-2 text-[0.8125rem] text-slate-500">영수증·카운터 기록으로 확인한 경우에만 확인해 주세요. 금액은 매출 귀속 분석에 쓰이며, 모르면 비워 두세요.</p>
       </Sheet>
     </li>
   );

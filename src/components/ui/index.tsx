@@ -3,6 +3,7 @@ import { AlertCircle, CheckCircle2, Info, X } from 'lucide-react';
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { CapabilityStatus, DataStatus, Evidence } from '@/lib/types';
+import { isTopOverlay, popOverlay, pushOverlay } from '@/lib/overlay';
 import { cx } from '@/lib/util';
 
 /* ── Button ───────────────────────────────────────── */
@@ -18,7 +19,8 @@ export function Button({
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { tone?: Tone; variant?: Variant; size?: 'sm' | 'md' | 'lg'; full?: boolean }) {
   const base =
     'inline-flex select-none items-center justify-center gap-1.5 whitespace-nowrap rounded-xl font-semibold transition duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 active:scale-[.98]';
-  const sizes = { sm: 'h-8 px-3 text-[13px]', md: 'h-10 px-4 text-sm', lg: 'h-12 px-5 text-[15px]' };
+  // 터치 44px — 노트북(lg) 이상에서만 한 단계 낮춘다
+  const sizes = { sm: 'h-11 px-3.5 text-[0.875rem] lg:h-9', md: 'h-11 px-4 text-[0.9375rem] lg:h-10', lg: 'h-12 px-5 text-[1rem]' };
   const brand: Record<Variant, string> = {
     primary: 'bg-brand-600 text-white hover:bg-brand-700 shadow-sm hover:shadow focus-visible:ring-brand-400',
     secondary: 'bg-brand-50 text-brand-700 hover:bg-brand-100 focus-visible:ring-brand-400',
@@ -48,7 +50,7 @@ const STATUS_STYLE: Record<CapabilityStatus | DataStatus, string> = {
 };
 const STATUS_LABEL: Record<CapabilityStatus | DataStatus, string> = { LIVE: 'LIVE', PILOT: 'PILOT', DEMO: 'DEMO', READY: 'READY', NEXT: 'NEXT' };
 export function StatusBadge({ status, label, className }: { status: CapabilityStatus | DataStatus; label?: string; className?: string }) {
-  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-bold tracking-wide ring-1 ring-inset', STATUS_STYLE[status], className)}>{label ?? STATUS_LABEL[status]}</span>;
+  return <span data-badge className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[0.75rem] font-bold tracking-wide ring-1 ring-inset', STATUS_STYLE[status], className)}>{label ?? STATUS_LABEL[status]}</span>;
 }
 
 const EV_STYLE: Record<Evidence, string> = {
@@ -59,7 +61,7 @@ const EV_STYLE: Record<Evidence, string> = {
 };
 export const EV_LABEL: Record<Evidence, string> = { VERIFIED: '운영자 확인', USER_PROVIDED: '제공 정보', ASSUMPTION: '가정', UNKNOWN: '미확인' };
 export function EvidenceBadge({ ev, className }: { ev: Evidence; className?: string }) {
-  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-semibold', EV_STYLE[ev], className)}>{EV_LABEL[ev]}</span>;
+  return <span data-badge className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[0.75rem] font-semibold', EV_STYLE[ev], className)}>{EV_LABEL[ev]}</span>;
 }
 
 export function Chip({ active, className, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement> & { active?: boolean }) {
@@ -67,8 +69,8 @@ export function Chip({ active, className, ...rest }: React.ButtonHTMLAttributes<
     <button
       aria-pressed={active}
       className={cx(
-        'inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 text-[13px] font-semibold transition duration-150 active:scale-[.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400',
-        active ? 'bg-brand-600 text-white shadow-sm' : 'bg-white text-ink-2 ring-1 ring-inset ring-line hover:bg-brand-50 hover:text-brand-700',
+        'inline-flex h-11 shrink-0 items-center gap-1.5 rounded-full px-4 text-[0.9375rem] font-semibold lg:h-10 transition duration-150 active:scale-[.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400',
+        active ? 'bg-brand-600 text-white shadow-sm' : 'bg-white text-ink-2 ring-1 ring-inset ring-cardline hover:bg-brand-50 hover:text-brand-700',
         className,
       )}
       {...rest}
@@ -102,8 +104,8 @@ export function Empty({ icon, title, body, action, className }: { icon?: React.R
   return (
     <div className={cx('flex flex-col items-center justify-center rounded-2xl border border-dashed border-line bg-white px-6 py-10 text-center', className)}>
       {icon && <div className="mb-3 text-ink-4">{icon}</div>}
-      <p className="text-[15px] font-semibold text-ink">{title}</p>
-      {body && <p className="mt-1 max-w-sm text-[13px] leading-relaxed text-ink-3">{body}</p>}
+      <p className="text-[1rem] font-semibold text-ink">{title}</p>
+      {body && <p className="mt-1 max-w-sm text-[0.875rem] leading-relaxed text-ink-3">{body}</p>}
       {action && <div className="mt-4">{action}</div>}
     </div>
   );
@@ -135,7 +137,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             key={t.id}
             role={t.kind === 'error' ? 'alert' : 'status'}
             className={cx(
-              'pointer-events-auto flex max-w-md animate-fade-up items-start gap-2 rounded-2xl px-4 py-3 text-[13.5px] font-medium shadow-lift',
+              'pointer-events-auto flex max-w-md animate-fade-up items-start gap-2 rounded-2xl px-4 py-3 text-[0.9062rem] font-medium shadow-lift',
               t.kind === 'error' ? 'bg-red-600 text-white' : 'bg-ink text-white',
             )}
           >
@@ -167,6 +169,9 @@ export function useRun() {
     [toast],
   );
 }
+
+/* ── 겹친 창 스택 — Esc·뒤로가기는 맨 위 창 하나만 닫는다 (비원미래 0103 useEscapeClose) ── */
+export { isTopOverlay, popOverlay, pushOverlay };
 
 /* ── Sheet / Modal ────────────────────────────────── */
 /**
@@ -212,15 +217,18 @@ export function Sheet({
     document.body.style.overflow = 'hidden';
     // 뒤로가기로 닫기: Next 라우터 state를 보존한 채 한 단계 push
     const marker = `sheet-${Math.random().toString(36).slice(2)}`;
+    pushOverlay(marker);
     window.history.pushState({ ...(window.history.state ?? {}), __sheet: marker }, '', window.location.href);
     let closedByPop = false;
     const onPop = () => {
+      if (!isTopOverlay(marker)) return;
       closedByPop = true;
       closeRef.current();
     };
     window.addEventListener('popstate', onPop);
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (!isTopOverlay(marker)) return;
+      if (e.key === 'Escape' && !e.isComposing) {
         e.stopPropagation();
         closeRef.current();
       }
@@ -241,6 +249,7 @@ export function Sheet({
     document.addEventListener('keydown', onKey);
     setTimeout(() => panel.current?.querySelector<HTMLElement>('[data-autofocus]')?.focus() ?? panel.current?.focus(), 30);
     return () => {
+      popOverlay(marker);
       document.body.style.overflow = prevOverflow;
       window.removeEventListener('popstate', onPop);
       document.removeEventListener('keydown', onKey);
@@ -271,12 +280,12 @@ export function Sheet({
         <div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-slate-200 md:hidden" aria-hidden />
         <div className="flex items-start justify-between gap-3 px-5 pb-2 pt-4 md:px-6 md:pt-5">
           <div className="min-w-0">
-            <h2 id={titleId} className="text-[17px] font-bold leading-snug text-ink">
+            <h2 id={titleId} className="text-[1.125rem] font-bold leading-snug text-ink">
               {title}
             </h2>
-            {description && <p className="mt-1 text-[13px] leading-relaxed text-ink-3">{description}</p>}
+            {description && <p className="mt-1 text-[0.875rem] leading-relaxed text-ink-3">{description}</p>}
           </div>
-          <button onClick={onClose} aria-label="닫기" className={cx('-mr-1 grid h-9 w-9 shrink-0 place-items-center rounded-full text-ink-3 transition hover:bg-canvas hover:text-ink', tone === 'ax' && 'hover:bg-slate-100')}>
+          <button onClick={onClose} aria-label="닫기" className={cx('-mr-2 grid h-11 w-11 shrink-0 place-items-center rounded-full text-ink-3 transition hover:bg-canvas hover:text-ink', tone === 'ax' && 'hover:bg-slate-100')}>
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -292,23 +301,24 @@ export function Sheet({
 export function Field({ label, hint, error, children, required }: { label: string; hint?: string; error?: string; children: React.ReactNode; required?: boolean }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[13px] font-semibold text-ink-2">
+      <span className="mb-1.5 block text-[0.875rem] font-semibold text-ink-2">
         {label}
         {required && <span className="ml-0.5 text-coral-600">*</span>}
       </span>
       {children}
-      {hint && !error && <span className="mt-1 block text-[12px] text-ink-3">{hint}</span>}
-      {error && <span className="mt-1 block text-[12px] font-medium text-red-600">{error}</span>}
+      {hint && !error && <span className="mt-1 block text-[0.8125rem] text-ink-3">{hint}</span>}
+      {error && <span className="mt-1 block text-[0.8125rem] font-medium text-red-600">{error}</span>}
     </label>
   );
 }
 
 export const inputCls =
-  'h-11 w-full rounded-xl border border-line bg-white px-3.5 text-[15px] text-ink placeholder:text-ink-4 transition focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100';
+  'h-12 w-full rounded-xl border border-cardline bg-white px-3.5 text-[1rem] text-ink placeholder:text-ink-3 transition focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-100';
 export const axInputCls =
-  'h-10 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-ax-primary focus:outline-none focus:ring-2 focus:ring-ax-soft';
+  'h-11 w-full rounded-lg border border-axline bg-white px-3 text-[0.9375rem] text-slate-900 placeholder:text-slate-500 transition focus:border-ax-primary focus:outline-none focus:ring-2 focus:ring-ax-soft';
 
 export function Toggle({ checked, onChange, label, tone = 'brand', disabled, testId }: { checked: boolean; onChange: (v: boolean) => void; label: string; tone?: Tone; disabled?: boolean; testId?: string }) {
+  // 보이는 스위치는 28px, 누르는 자리는 44px (비원미래 터치 기준)
   return (
     <button
       type="button"
@@ -318,12 +328,16 @@ export function Toggle({ checked, onChange, label, tone = 'brand', disabled, tes
       disabled={disabled}
       data-testid={testId}
       onClick={() => onChange(!checked)}
-      className={cx(
-        'relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-40',
-        checked ? (tone === 'brand' ? 'bg-brand-600' : 'bg-ax-primary') : 'bg-slate-300',
-      )}
+      className="group -m-1 inline-flex h-11 w-14 shrink-0 items-center justify-center rounded-full focus-visible:outline-none disabled:cursor-not-allowed"
     >
-      <span className={cx('inline-block h-5 w-5 rounded-full bg-white shadow transition duration-200', checked ? 'translate-x-6' : 'translate-x-1')} />
+      <span
+        className={cx(
+          'relative inline-flex h-7 w-12 items-center rounded-full transition duration-200 group-focus-visible:ring-2 group-focus-visible:ring-offset-2 group-disabled:bg-slate-200',
+          checked ? (tone === 'brand' ? 'bg-brand-600 group-focus-visible:ring-brand-400' : 'bg-ax-primary group-focus-visible:ring-ax-primary') : 'bg-slate-400',
+        )}
+      >
+        <span className={cx('inline-block h-5 w-5 rounded-full bg-white shadow transition duration-200', checked ? 'translate-x-6' : 'translate-x-1')} />
+      </span>
     </button>
   );
 }
@@ -339,12 +353,12 @@ export function Segmented<T extends string>({ value, onChange, options, tone = '
           onClick={() => onChange(o.value)}
           className={cx(
             'inline-flex shrink-0 items-center gap-1.5 rounded-lg font-semibold transition duration-150',
-            size === 'sm' ? 'h-7 px-2.5 text-[12.5px]' : 'h-8 px-3 text-[13px]',
+            size === 'sm' ? 'h-11 px-3 text-[0.875rem] lg:h-8' : 'h-11 px-3.5 text-[0.9375rem] lg:h-9',
             value === o.value ? cx('bg-white shadow-sm', tone === 'brand' ? 'text-ink' : 'text-slate-900') : 'text-slate-500 hover:text-slate-800',
           )}
         >
           {o.label}
-          {o.count != null && <span className={cx('rounded-full px-1.5 text-[12px]', value === o.value ? (tone === 'brand' ? 'bg-brand-50 text-brand-700' : 'bg-ax-soft text-ax-primary') : 'bg-white/70 text-slate-500')}>{o.count}</span>}
+          {o.count != null && <span data-badge className={cx('rounded-full px-1.5 text-[0.8125rem] font-bold tabular-nums', value === o.value ? (tone === 'brand' ? 'bg-brand-600 text-white' : 'bg-ax-primary text-white') : 'bg-white text-slate-600')}>{o.count}</span>}
         </button>
       ))}
     </div>

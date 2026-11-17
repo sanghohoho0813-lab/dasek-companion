@@ -10,20 +10,21 @@ import { effectiveCouponStatus, type Recommendation } from '@/lib/rules';
 import { act } from '@/lib/store';
 import type { AppState, CafeCat, CatPhoto, CouponIssue, MenuItem, Profile, Store } from '@/lib/types';
 import { cx, fmtDate, won } from '@/lib/util';
+import { StatusPill, statusOf } from '@/components/ui/Status';
 
 /* ── 섹션 제목 ─────────────────────────────────────── */
 export function SectionHeader({ title, sub, href, linkLabel = '전체 보기', id, eyebrow }: { title: string; sub?: string; href?: string; linkLabel?: string; id?: string; eyebrow?: string }) {
   return (
     <div className="mb-3.5 flex items-end justify-between gap-3 md:mb-4">
       <div className="min-w-0">
-        {eyebrow && <p className="mb-0.5 text-[12px] font-bold tracking-wide text-brand-600">{eyebrow}</p>}
-        <h2 id={id} className="text-[20px] font-extrabold leading-tight tracking-[-0.02em] text-ink md:text-[24px]">
+        {eyebrow && <p className="mb-0.5 text-[0.8125rem] font-bold tracking-wide text-brand-600">{eyebrow}</p>}
+        <h2 id={id} className="text-[1.25rem] font-extrabold leading-tight tracking-[-0.02em] text-ink md:text-[1.5rem]">
           {title}
         </h2>
-        {sub && <p className="mt-1 text-[14px] leading-snug text-ink-3">{sub}</p>}
+        {sub && <p className="mt-1 text-[0.875rem] leading-snug text-ink-3">{sub}</p>}
       </div>
       {href && (
-        <Link href={href} className="inline-flex shrink-0 items-center gap-0.5 rounded-full px-1 py-1.5 text-[14px] font-bold text-brand-700 transition hover:text-brand-800">
+        <Link href={href} className="-mr-2 inline-flex min-h-11 shrink-0 items-center gap-0.5 rounded-full px-2 text-[0.9375rem] font-bold text-brand-700 transition hover:bg-brand-50 hover:text-brand-800">
           {linkLabel}
           <ChevronRight className="h-4 w-4" />
         </Link>
@@ -34,12 +35,12 @@ export function SectionHeader({ title, sub, href, linkLabel = '전체 보기', i
 
 /* ── 가격·주문 채널 ─────────────────────────────────── */
 export function PriceText({ item, className, size = 'md' }: { item: MenuItem; className?: string; size?: 'md' | 'lg' }) {
-  if (item.price == null) return <span className={cx('text-[14px] font-semibold text-ink-3', className)}>가격 매장 확인</span>;
+  if (item.price == null) return <span className={cx('text-[0.875rem] font-semibold text-ink-3', className)}>가격 매장 확인</span>;
   const example = item.priceEvidence === 'ASSUMPTION';
   return (
     <span className={cx('inline-flex items-baseline gap-1.5', className)}>
-      <span className={cx('tabular font-extrabold tracking-[-0.01em] text-ink', size === 'lg' ? 'text-[26px]' : 'text-[16px]')}>{won(item.price)}</span>
-      {example && <span className="text-[12px] font-bold text-amber-700">예시가</span>}
+      <span className={cx('tabular font-extrabold tracking-[-0.01em] text-ink', size === 'lg' ? 'text-[1.625rem]' : 'text-[1rem]')}>{won(item.price)}</span>
+      {example && <span className="text-[0.8125rem] font-bold text-amber-700">예시가</span>}
     </span>
   );
 }
@@ -59,7 +60,7 @@ export function orderChannels(s: AppState, item: MenuItem): Channel[] {
 export function ChannelChip({ s, item }: { s: AppState; item: MenuItem }) {
   const online = orderChannels(s, item).some((c) => (c.key === 'order' || c.key === 'delivery') && c.available);
   return (
-    <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-sage-600">
+    <span className="inline-flex items-center gap-1 text-[0.8125rem] font-semibold text-sage-600">
       <StoreIcon className="h-3.5 w-3.5" />
       {online ? '매장·배달 가능' : '매장 구매'}
     </span>
@@ -73,7 +74,7 @@ function SaveButton({ item, saved, onToggleSave, className }: { item: MenuItem; 
       onClick={onToggleSave}
       aria-pressed={saved}
       aria-label={saved ? `${item.name} 저장 해제` : `${item.name} 저장`}
-      className={cx('grid h-10 w-10 place-items-center rounded-full bg-white/95 shadow-[0_2px_8px_rgba(0,0,0,.12)] transition active:scale-90', saved ? 'text-coral-500' : 'text-ink-2 hover:text-coral-500', className)}
+      className={cx('grid h-11 w-11 place-items-center rounded-full bg-white shadow-[0_2px_8px_rgba(0,0,0,.12)] transition active:scale-90', saved ? 'text-coral-500' : 'text-ink-2 hover:text-coral-500', className)}
     >
       <Heart className="h-[19px] w-[19px]" fill={saved ? 'currentColor' : 'none'} strokeWidth={2.2} />
     </button>
@@ -87,19 +88,19 @@ export function MenuCard({ item, saved, onToggleSave, layout = 'rail', s, rank }
         <div className="zoom-img relative overflow-hidden rounded-[20px] bg-canvas">
           <AssetImage slots={menuSlots(item)} dataUrl={item.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className={layout === 'rail' ? 'aspect-[4/5] w-full' : 'aspect-square w-full'} sampleBadge sizes={layout === 'rail' ? '(min-width: 768px) 214px, 168px' : '(min-width: 1024px) 25vw, 50vw'} />
           <div className="pointer-events-none absolute left-2 top-2 flex flex-wrap gap-1">
-            {rank != null && <span className="rounded-lg bg-ink px-2 py-1 text-[12px] font-extrabold text-white">{rank}</span>}
-            {item.isSignature && <span className="rounded-lg bg-coral-500 px-2 py-1 text-[12px] font-bold text-white">대표</span>}
+            {rank != null && <span className="rounded-lg bg-ink px-2 py-1 text-[0.8125rem] font-extrabold text-white">{rank}</span>}
+            {item.isSignature && <span className="rounded-lg bg-coral-600 px-2 py-1 text-[0.8125rem] font-bold text-white">대표</span>}
           </div>
         </div>
         <div className="px-0.5 pt-2.5">
-          <p className="clamp-1 text-[16px] font-bold leading-snug text-ink">{item.name}</p>
-          <p className="clamp-1 mt-0.5 text-[13.5px] text-ink-3">{item.summary}</p>
+          <p className="clamp-1 text-[1rem] font-bold leading-snug text-ink">{item.name}</p>
+          <p className="clamp-1 mt-0.5 text-[0.875rem] text-ink-3">{item.summary}</p>
           <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-0.5">
             <PriceText item={item} />
           </div>
           <div className="mt-1 flex items-center gap-2">
             {s && <ChannelChip s={s} item={item} />}
-            {item.isDemo && <span className="text-[12px] font-semibold text-amber-700">예시 메뉴</span>}
+            {item.isDemo && <span className="text-[0.8125rem] font-semibold text-amber-700">예시 메뉴</span>}
           </div>
         </div>
       </Link>
@@ -111,13 +112,13 @@ export function MenuCard({ item, saved, onToggleSave, layout = 'rail', s, rank }
 /** 가로형 목록 행 (추천·저장·검색 결과) */
 export function MenuRow({ item, right, sub }: { item: MenuItem; right?: React.ReactNode; sub?: string }) {
   return (
-    <div className="flex items-center gap-3.5 rounded-2xl bg-white p-2.5 pr-3 ring-1 ring-line transition hover:ring-brand-200">
+    <div className="flex items-center gap-3.5 rounded-2xl border border-cardline bg-white p-2.5 pr-3 shadow-[0_1px_2px_rgba(16,40,52,.05)] transition hover:border-brand-300">
       <Link href={`/menu/${item.id}`} className="zoom-img block h-[76px] w-[76px] shrink-0 overflow-hidden rounded-xl">
         <AssetImage slots={menuSlots(item)} dataUrl={item.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className="h-full w-full" sizes="76px" />
       </Link>
       <Link href={`/menu/${item.id}`} className="min-w-0 flex-1">
-        <p className="clamp-1 text-[15.5px] font-bold text-ink">{item.name}</p>
-        <p className="clamp-1 text-[13px] text-ink-3">{sub ?? item.summary}</p>
+        <p className="clamp-1 text-[0.9688rem] font-bold text-ink">{item.name}</p>
+        <p className="clamp-1 text-[0.875rem] text-ink-3">{sub ?? item.summary}</p>
         <PriceText item={item} className="mt-0.5" />
       </Link>
       {right}
@@ -129,24 +130,24 @@ export function MenuRow({ item, right, sub }: { item: MenuItem; right?: React.Re
 export function SignatureCard({ item, s, saved, onToggleSave }: { item: MenuItem; s: AppState; saved?: boolean; onToggleSave?: () => void }) {
   const store = s.stores.find((x) => x.id === item.storeId)!;
   return (
-    <div className="relative overflow-hidden rounded-[28px] bg-ivory-100 md:grid md:grid-cols-[1.15fr_1fr]">
+    <div className="relative overflow-hidden rounded-[24px] border border-cardline bg-ivory-100 md:grid md:grid-cols-[1.15fr_1fr]">
       <Link href={`/menu/${item.id}`} className="zoom-img relative block">
         <AssetImage slots={menuSlots(item)} dataUrl={item.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className="aspect-[16/10] w-full md:aspect-auto md:h-full md:min-h-[300px]" sampleBadge badgePosition="bl" sizes="(min-width: 768px) 55vw, 100vw" />
       </Link>
       {onToggleSave && <SaveButton item={item} saved={saved} onToggleSave={onToggleSave} className="absolute right-3 top-3 md:left-3 md:right-auto" />}
       <div className="flex flex-col justify-center p-5 md:p-8">
-        <p className="text-[13px] font-bold text-coral-600">{store.name} 대표 메뉴</p>
-        <h3 className="mt-1 text-[24px] font-extrabold leading-tight tracking-[-0.02em] text-ink md:text-[30px]">{item.name}</h3>
-        <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{item.summary}</p>
+        <p className="text-[0.8125rem] font-bold text-coral-600">{store.name} 대표 메뉴</p>
+        <h3 className="mt-1 text-[1.5rem] font-extrabold leading-tight tracking-[-0.02em] text-ink md:text-[1.875rem]">{item.name}</h3>
+        <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">{item.summary}</p>
         <div className="mt-3 flex items-center gap-2">
           <PriceText item={item} size="lg" />
-          {item.priceEvidence === 'USER_PROVIDED' && <span className="text-[12px] text-ink-3">공개 메뉴 정보 기준</span>}
+          {item.priceEvidence === 'USER_PROVIDED' && <span className="text-[0.8125rem] text-ink-3">공개 메뉴 정보 기준</span>}
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Link href={`/menu/${item.id}`} className="press inline-flex h-12 items-center gap-1.5 rounded-2xl bg-ink px-5 text-[15px] font-bold text-white transition hover:bg-ink-2">
+          <Link href={`/menu/${item.id}`} className="press inline-flex h-12 items-center gap-1.5 rounded-2xl bg-ink px-5 text-[0.9375rem] font-bold text-white transition hover:bg-ink-2">
             메뉴 자세히 보기
           </Link>
-          <span className="inline-flex h-12 items-center gap-1.5 rounded-2xl bg-white px-4 text-[14px] font-semibold text-ink-2">
+          <span className="inline-flex h-12 items-center gap-1.5 rounded-2xl bg-white px-4 text-[0.875rem] font-semibold text-ink-2 ring-1 ring-inset ring-cardline">
             <StoreIcon className="h-4 w-4 text-sage-600" /> 매장에서 바로 구매
           </span>
         </div>
@@ -165,11 +166,11 @@ export function CatCoverCard({ cat, photo, size = 'md' }: { cat: CafeCat; photo?
     >
       <div className="zoom-img relative overflow-hidden rounded-[22px] bg-canvas shadow-[0_6px_18px_-8px_rgba(16,40,52,.35)]">
         <AssetImage slot={photo?.slot} dataUrl={photo?.dataUrl} fallback={photo?.art ?? cat.coverArt} alt={photo?.alt ?? cat.name} className="aspect-[3/4] w-full" sizes={size === 'lg' ? '(min-width: 768px) 228px, 172px' : '(min-width: 768px) 188px, 148px'} position="center 35%" />
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-3.5 pt-14">
-          <p className="text-[18px] font-extrabold leading-tight text-white">{cat.name}</p>
-          <p className="clamp-1 mt-0.5 text-[13px] font-medium text-white/90">{cat.personality.slice(0, 2).join(' · ') || cat.tagline}</p>
+        <div data-on-media className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-3.5 pt-14">
+          <p className="text-[1.125rem] font-extrabold leading-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,.35)]">{cat.name}</p>
+          <p className="clamp-1 mt-0.5 text-[0.875rem] font-semibold text-white">{cat.personality.slice(0, 2).join(' · ') || cat.tagline}</p>
         </div>
-        {cat.isPlaceholder && <span className="absolute left-2.5 top-2.5 rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-bold text-ink-2">예시 프로필</span>}
+        {cat.isPlaceholder && <span data-on-media data-badge className="absolute left-2.5 top-2.5 rounded-full bg-white px-2 py-0.5 text-[0.75rem] font-bold text-ink-2">예시 프로필</span>}
       </div>
     </Link>
   );
@@ -188,25 +189,25 @@ export function StampCard({ count, required, compact }: { count: number; require
   const inCycle = count % required;
   const left = required - inCycle;
   return (
-    <div className={cx('rounded-[24px] bg-brand-700 text-white', compact ? 'p-4' : 'p-5')}>
+    <div className={cx('rounded-[20px] border border-brand-800 bg-brand-700 text-white', compact ? 'p-4' : 'p-5')}>
       <div className="flex items-start justify-between">
         <div>
-          <p className="text-[13px] font-semibold text-white/80">다색컴패니언 스탬프</p>
-          <p className="mt-0.5 text-[24px] font-extrabold tabular leading-tight">
-            {inCycle} <span className="text-[16px] font-bold text-white/70">/ {required}</span>
+          <p className="text-[0.875rem] font-semibold text-brand-100">다색컴패니언 스탬프</p>
+          <p className="mt-0.5 text-[1.5rem] font-extrabold tabular leading-tight">
+            {inCycle} <span className="text-[1rem] font-bold text-brand-100">/ {required}</span>
           </p>
-          <p className="text-[13px] font-medium text-white/85">보상까지 {left}개 남았어요</p>
+          <p className="text-[0.875rem] font-semibold text-brand-100">보상까지 {left}개 남았어요</p>
         </div>
-        <span className="rounded-full bg-white/15 px-2.5 py-1 text-[12px] font-semibold">누적 {count}개</span>
+        <span data-badge className="rounded-full bg-brand-800 px-2.5 py-1 text-[0.8125rem] font-semibold ring-1 ring-inset ring-brand-500">누적 {count}개</span>
       </div>
       <div className={cx('mt-3 grid grid-cols-5 gap-2', required > 10 && 'grid-cols-6')} aria-label={`스탬프 ${inCycle}개 / ${required}개`}>
         {Array.from({ length: required }).map((_, i) => (
-          <span key={i} className={cx('grid aspect-square place-items-center rounded-full text-[12px] font-bold transition', i < inCycle ? 'bg-white text-brand-700' : 'border border-dashed border-white/40 text-white/50')}>
+          <span key={i} className={cx('grid aspect-square place-items-center rounded-full text-[0.8125rem] font-bold transition', i < inCycle ? 'bg-white text-brand-700' : 'border border-dashed border-brand-300 text-brand-200')}>
             {i < inCycle ? <Check className="h-4 w-4" strokeWidth={3} /> : i + 1}
           </span>
         ))}
       </div>
-      {!compact && <p className="mt-3 text-[13px] leading-relaxed text-white/85">직원이 방문·구매를 확인하면 매장별 하루 1개 적립돼요. 링크 클릭·자가신고만으로는 적립되지 않아요.</p>}
+      {!compact && <p className="mt-3 text-[0.875rem] leading-relaxed text-brand-100">직원이 방문·구매를 확인하면 매장별 하루 1개 적립돼요. 링크 클릭·자가신고만으로는 적립되지 않아요.</p>}
     </div>
   );
 }
@@ -219,23 +220,23 @@ export function CouponCard({ c, onOpen }: { c: CouponIssue; onOpen?: () => void 
   const label = { ISSUED: '사용 가능', REDEEMED: '사용 완료', EXPIRED: '기간 만료', CANCELLED: '취소됨' }[st];
   const d = daysLeft(c.expiresAt);
   return (
-    <button onClick={onOpen} disabled={!onOpen} className={cx('press flex w-full items-stretch overflow-hidden rounded-2xl text-left ring-1 transition', usable ? 'bg-white ring-line hover:ring-brand-200' : 'bg-canvas ring-line/60')}>
-      <div className={cx('grid w-16 shrink-0 place-items-center', usable ? 'bg-promo-100 text-promo-600' : 'bg-line/60 text-ink-4')}>
+    <button onClick={onOpen} disabled={!onOpen} className={cx('press flex w-full items-stretch overflow-hidden rounded-2xl text-left ring-1 transition', usable ? 'bg-white ring-cardline shadow-[0_1px_2px_rgba(16,40,52,.05)] hover:ring-brand-300' : 'bg-canvas ring-cardline')}>
+      <div className={cx('grid w-16 shrink-0 place-items-center', usable ? 'bg-promo-100 text-promo-600' : 'bg-line text-ink-3')}>
         <Ticket className="h-6 w-6" />
       </div>
       <div className="min-w-0 flex-1 border-l border-dashed border-line px-4 py-3.5">
         <div className="flex flex-wrap items-center gap-2">
-          <span className={cx('text-[12.5px] font-bold', usable ? 'text-brand-700' : 'text-ink-3')}>{label}</span>
-          {usable && d <= 7 && <span className="rounded-md bg-coral-50 px-1.5 py-0.5 text-[12px] font-bold text-coral-600">D-{Math.max(0, d)}</span>}
+          <StatusPill kind={statusOf.coupon(st)} label={label} size="sm" />
+          {usable && d <= 7 && <span data-badge className="rounded-md bg-coral-50 px-1.5 py-0.5 text-[0.8125rem] font-bold text-coral-700 ring-1 ring-inset ring-coral-500/30">D-{Math.max(0, d)}</span>}
           {c.isDemo && <StatusBadge status="DEMO" label="예시 혜택" />}
         </div>
-        <p className={cx('mt-0.5 text-[16px] font-bold leading-snug', usable ? 'text-ink' : 'text-ink-3')}>{c.benefit}</p>
-        <p className="mt-0.5 text-[13px] text-ink-3">
+        <p className={cx('mt-0.5 text-[1rem] font-bold leading-snug', usable ? 'text-ink' : 'text-ink-3')}>{c.benefit}</p>
+        <p className="mt-0.5 text-[0.875rem] text-ink-3">
           {c.title} · {usable ? `${fmtDate(c.expiresAt)}까지` : st === 'REDEEMED' ? `${fmtDate(c.redeemedAt)} 사용` : fmtDate(c.expiresAt)}
         </p>
-        {usable && <p className="mt-0.5 text-[12px] text-ink-3">매장 계산 시 직원 확인 · 1회 사용</p>}
+        {usable && <p className="mt-0.5 text-[0.875rem] text-ink-3">매장 계산 시 직원 확인 · 1회 사용</p>}
       </div>
-      {onOpen && usable && <ChevronRight className="mr-3 h-5 w-5 self-center text-ink-4" />}
+      {onOpen && usable && <ChevronRight className="mr-3 h-5 w-5 self-center text-ink-3" />}
     </button>
   );
 }
@@ -245,12 +246,12 @@ export function CouponDetailSheet({ c, onClose }: { c: CouponIssue | null; onClo
     <Sheet open={!!c} onClose={onClose} title={c?.benefit ?? ''} description={c?.title} size="sm">
       {c && (
         <div className="text-center">
-          <p className="text-[14px] text-ink-3">계산할 때 직원에게 이 화면을 보여주세요</p>
+          <p className="text-[0.875rem] text-ink-3">계산할 때 직원에게 이 화면을 보여주세요</p>
           <div className="mx-auto mt-3 rounded-2xl bg-canvas px-4 py-5">
-            <p className="text-[13px] font-semibold text-ink-3">쿠폰 코드</p>
-            <p className="mt-1 font-mono text-[28px] font-extrabold tracking-[0.12em] text-ink">{c.code}</p>
+            <p className="text-[0.8125rem] font-semibold text-ink-3">쿠폰 코드</p>
+            <p className="mt-1 font-mono text-[1.75rem] font-extrabold tracking-[0.12em] text-ink">{c.code}</p>
           </div>
-          <dl className="mt-4 space-y-2 text-left text-[14px]">
+          <dl className="mt-4 space-y-2 text-left text-[0.875rem]">
             <div className="flex justify-between gap-3">
               <dt className="text-ink-3">유효기간</dt>
               <dd className="font-semibold text-ink">{fmtDate(c.expiresAt)}까지 (D-{Math.max(0, daysLeft(c.expiresAt))})</dd>
@@ -268,7 +269,7 @@ export function CouponDetailSheet({ c, onClose }: { c: CouponIssue | null; onClo
               <dd className="text-right font-semibold text-ink">{c.source}</dd>
             </div>
           </dl>
-          <p className="mt-4 rounded-xl bg-amber-50 px-3 py-2.5 text-left text-[13px] leading-relaxed text-amber-900">혜택 내용은 운영자 확정 전 예시입니다. 사용 처리는 매장 직원이 운영 화면에서 진행합니다.</p>
+          <p className="mt-4 rounded-xl bg-amber-50 px-3 py-2.5 text-left text-[0.8125rem] leading-relaxed text-amber-900">혜택 내용은 운영자 확정 전 예시입니다. 사용 처리는 매장 직원이 운영 화면에서 진행합니다.</p>
         </div>
       )}
     </Sheet>
@@ -278,17 +279,17 @@ export function CouponDetailSheet({ c, onClose }: { c: CouponIssue | null; onClo
 export function LoginGate({ title = '로그인이 필요해요', body = '가입하면 웰컴 쿠폰과 스탬프를 받을 수 있어요.', next }: { title?: string; body?: string; next?: string }) {
   const q = next ? `?next=${encodeURIComponent(next)}` : '';
   return (
-    <div className="rounded-[28px] bg-brand-50 p-6 text-center">
+    <div className="rounded-[24px] border border-brand-200 bg-brand-50 p-6 text-center">
       <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-white text-brand-600 shadow-card">
         <Sparkles className="h-6 w-6" />
       </div>
-      <p className="mt-3 text-[18px] font-extrabold text-ink">{title}</p>
-      <p className="mt-1 text-[14px] text-ink-2">{body}</p>
+      <p className="mt-3 text-[1.125rem] font-extrabold text-ink">{title}</p>
+      <p className="mt-1 text-[0.875rem] text-ink-2">{body}</p>
       <div className="mt-5 flex justify-center gap-2">
-        <Link href={`/signup${q}`} className="inline-flex h-12 items-center rounded-2xl bg-brand-600 px-5 text-[15px] font-bold text-white shadow-sm transition hover:bg-brand-700">
+        <Link href={`/signup${q}`} className="inline-flex h-12 items-center rounded-2xl bg-brand-600 px-5 text-[0.9375rem] font-bold text-white shadow-sm transition hover:bg-brand-700">
           가입하고 혜택 받기
         </Link>
-        <Link href={`/login${q}`} className="inline-flex h-12 items-center rounded-2xl bg-white px-5 text-[15px] font-bold text-ink ring-1 ring-line transition hover:bg-canvas">
+        <Link href={`/login${q}`} className="inline-flex h-12 items-center rounded-2xl bg-white px-5 text-[0.9375rem] font-bold text-ink ring-1 ring-cardline transition hover:bg-canvas">
           로그인
         </Link>
       </div>
@@ -308,9 +309,9 @@ export function StoreInfoCard({ store, s, compact }: { store: Store; s: AppState
     { icon: <Truck className="h-[18px] w-[18px]" />, label: '배달·온라인 주문', value: store.deliveryUrl.value ?? store.orderUrl.value ?? null, ev: store.deliveryUrl.value ? store.deliveryUrl.evidence : store.orderUrl.evidence },
   ];
   return (
-    <div className="rounded-[24px] bg-white p-5 ring-1 ring-line">
+    <div className="card p-5">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-[18px] font-extrabold text-ink">{store.name} 방문 안내</p>
+        <p className="text-[1.125rem] font-extrabold text-ink">{store.name} 방문 안내</p>
         <StatusBadge status="DEMO" label="정보 확인 중" />
       </div>
       <dl className="mt-3 divide-y divide-line/70">
@@ -318,10 +319,10 @@ export function StoreInfoCard({ store, s, compact }: { store: Store; s: AppState
           <div key={r.label} className="flex items-start gap-3 py-3">
             <span className="mt-0.5 text-brand-600">{r.icon}</span>
             <div className="min-w-0 flex-1">
-              <dt className="flex items-center gap-1.5 text-[13px] font-semibold text-ink-3">
+              <dt className="flex items-center gap-1.5 text-[0.8125rem] font-semibold text-ink-3">
                 {r.label} <EvidenceBadge ev={r.ev} />
               </dt>
-              <dd className="mt-0.5 text-[15px] font-semibold leading-snug text-ink">{r.value ?? (r.label === '배달·온라인 주문' ? '배달 운영 중 · 채널 링크 확인 중' : '운영자 확인 후 안내 예정')}</dd>
+              <dd className="mt-0.5 text-[0.9375rem] font-semibold leading-snug text-ink">{r.value ?? (r.label === '배달·온라인 주문' ? '배달 운영 중 · 채널 링크 확인 중' : '운영자 확인 후 안내 예정')}</dd>
             </div>
             {r.label === '위치' && r.value && (
               <button
@@ -331,14 +332,14 @@ export function StoreInfoCard({ store, s, compact }: { store: Store; s: AppState
                     () => toast('복사하지 못했어요.', 'error'),
                   )
                 }
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-full text-ink-3 transition hover:bg-canvas"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-ink-3 transition hover:bg-canvas"
                 aria-label="주소 복사"
               >
                 <Copy className="h-4 w-4" />
               </button>
             )}
             {r.label === '전화' && r.value && (
-              <a href={`tel:${r.value.replace(/[^0-9]/g, '')}`} className="shrink-0 rounded-full bg-canvas px-3.5 py-2 text-[13px] font-bold text-ink-2 transition hover:bg-line">
+              <a href={`tel:${r.value.replace(/[^0-9]/g, '')}`} className="inline-flex h-11 shrink-0 items-center rounded-full bg-canvas px-4 text-[0.875rem] font-bold text-ink-2 ring-1 ring-inset ring-cardline transition hover:bg-line">
                 전화
               </a>
             )}
@@ -348,7 +349,7 @@ export function StoreInfoCard({ store, s, compact }: { store: Store; s: AppState
       {!compact && store.amenities.value && (
         <div className="mt-1 flex flex-wrap gap-1.5">
           {store.amenities.value.map((a) => (
-            <span key={a} className="rounded-full bg-canvas px-3 py-1.5 text-[13px] font-medium text-ink-2">
+            <span key={a} className="rounded-full bg-canvas px-3 py-1.5 text-[0.8125rem] font-medium text-ink-2">
               {a}
             </span>
           ))}
@@ -361,18 +362,18 @@ export function StoreInfoCard({ store, s, compact }: { store: Store; s: AppState
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => act((d, c) => D.recordLinkClick(d, c, me, 'reservation', store.id, '네이버 예약 링크 열기'))}
-            className="press inline-flex h-12 items-center justify-center gap-1 rounded-2xl bg-brand-600 text-[15px] font-bold text-white shadow-sm transition hover:bg-brand-700"
+            className="press inline-flex h-12 items-center justify-center gap-1 rounded-2xl bg-brand-600 text-[0.9375rem] font-bold text-white shadow-sm transition hover:bg-brand-700"
           >
             네이버 예약 <ExternalLink className="h-4 w-4" />
           </a>
         ) : (
-          <span className="inline-flex h-12 items-center justify-center rounded-2xl bg-canvas text-[14px] font-semibold text-ink-3">예약 채널 확인 중</span>
+          <span className="inline-flex h-12 items-center justify-center rounded-2xl bg-canvas text-[0.875rem] font-semibold text-ink-3">예약 채널 확인 중</span>
         )}
-        <Link href={`/checkin?store=${store.id}`} className="press inline-flex h-12 items-center justify-center rounded-2xl bg-brand-50 text-[15px] font-bold text-brand-700 transition hover:bg-brand-100">
+        <Link href={`/checkin?store=${store.id}`} className="press inline-flex h-12 items-center justify-center rounded-2xl bg-brand-50 text-[0.9375rem] font-bold text-brand-700 transition hover:bg-brand-100">
           방문 체크인
         </Link>
       </div>
-      {store.reservationUrl.value && <p className="mt-2 text-[12px] text-ink-3">예약은 네이버에서 확정돼요. 이 앱은 예약을 확정하지 않습니다.</p>}
+      {store.reservationUrl.value && <p className="mt-2 text-[0.8125rem] text-ink-3">예약은 네이버에서 확정돼요. 이 앱은 예약을 확정하지 않습니다.</p>}
     </div>
   );
 }
@@ -381,13 +382,13 @@ export function WhySheet({ rec, onClose }: { rec: Recommendation | null; onClose
   return (
     <Sheet open={!!rec} onClose={onClose} title="왜 추천했나요?" description="규칙 기반 추천 — AI 모델을 사용하지 않았어요" size="sm">
       {rec && (
-        <div className="space-y-4 text-[15px]">
+        <div className="space-y-4 text-[0.9375rem]">
           <div>
-            <p className="text-[13px] font-bold text-ink-3">사용한 정보</p>
+            <p className="text-[0.8125rem] font-bold text-ink-3">사용한 정보</p>
             <p className="mt-1 text-ink-2">{rec.used.join(' · ')}</p>
           </div>
           <div>
-            <p className="text-[13px] font-bold text-ink-3">추천 이유</p>
+            <p className="text-[0.8125rem] font-bold text-ink-3">추천 이유</p>
             <ul className="mt-1.5 space-y-1.5">
               {rec.reasons.map((r) => (
                 <li key={r} className="flex gap-2 text-ink">
@@ -397,12 +398,12 @@ export function WhySheet({ rec, onClose }: { rec: Recommendation | null; onClose
               ))}
             </ul>
           </div>
-          <div className="rounded-xl bg-amber-50 p-3 text-[14px] text-amber-900">
+          <div className="rounded-xl bg-amber-50 p-3 text-[0.875rem] text-amber-900">
             <p className="font-bold">주의</p>
             <p className="mt-0.5">{rec.caution}</p>
           </div>
           <div>
-            <p className="text-[13px] font-bold text-ink-3">다음 행동</p>
+            <p className="text-[0.8125rem] font-bold text-ink-3">다음 행동</p>
             <p className="mt-1 text-ink-2">{rec.next}</p>
           </div>
         </div>
@@ -450,7 +451,7 @@ export function PurchaseReportSheet({ open, onClose, s, me, preset }: { open: bo
         )
       }
     >
-      <p className="text-[13px] font-bold text-ink-3">구매한 매장</p>
+      <p className="text-[0.8125rem] font-bold text-ink-3">구매한 매장</p>
       <div className="mt-2 grid grid-cols-2 gap-2">
         {s.stores.map((st) => (
           <button
@@ -460,18 +461,18 @@ export function PurchaseReportSheet({ open, onClose, s, me, preset }: { open: bo
               setItems([]);
             }}
             aria-pressed={storeId === st.id}
-            className={cx('h-12 rounded-xl text-[15px] font-bold ring-1 transition', storeId === st.id ? 'bg-brand-600 text-white ring-brand-600' : 'bg-white text-ink-2 ring-line hover:bg-canvas')}
+            className={cx('h-12 rounded-xl text-[0.9375rem] font-bold ring-1 transition', storeId === st.id ? 'bg-brand-600 text-white ring-brand-600' : 'bg-white text-ink-2 ring-cardline hover:bg-canvas')}
           >
             {st.name}
           </button>
         ))}
       </div>
-      <p className="mt-4 text-[13px] font-bold text-ink-3">구매한 메뉴 (선택)</p>
+      <p className="mt-4 text-[0.8125rem] font-bold text-ink-3">구매한 메뉴 (선택)</p>
       <div className="mt-2 flex flex-wrap gap-1.5">
         {list.map((m) => {
           const on = items.includes(m.id);
           return (
-            <button key={m.id} aria-pressed={on} onClick={() => setItems(on ? items.filter((x) => x !== m.id) : [...items, m.id])} className={cx('min-h-10 rounded-full px-3.5 py-2 text-[14px] font-semibold ring-1 transition', on ? 'bg-brand-50 text-brand-700 ring-brand-200' : 'bg-white text-ink-2 ring-line')}>
+            <button key={m.id} aria-pressed={on} onClick={() => setItems(on ? items.filter((x) => x !== m.id) : [...items, m.id])} className={cx('min-h-11 rounded-full px-4 py-2 text-[0.9375rem] font-semibold ring-1 transition', on ? 'bg-brand-50 text-brand-700 ring-brand-300' : 'bg-white text-ink-2 ring-cardline')}>
               {on && '✓ '}
               {m.name}
             </button>
@@ -479,10 +480,10 @@ export function PurchaseReportSheet({ open, onClose, s, me, preset }: { open: bo
         })}
       </div>
       <label className="mt-4 block">
-        <span className="text-[13px] font-bold text-ink-3">메모 (선택)</span>
-        <input value={note} onChange={(e) => setNote(e.target.value)} maxLength={100} placeholder="예: 포장 구매, 오후 3시쯤" className="mt-2 h-12 w-full rounded-xl border border-line px-3.5 text-[15px] outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-100" />
+        <span className="text-[0.8125rem] font-bold text-ink-3">메모 (선택)</span>
+        <input value={note} onChange={(e) => setNote(e.target.value)} maxLength={100} placeholder="예: 포장 구매, 오후 3시쯤" className="mt-2 h-12 w-full rounded-xl border border-cardline px-3.5 text-[0.9375rem] outline-none focus:border-brand-400 focus:ring-4 focus:ring-brand-100" />
       </label>
-      <p className="mt-3 flex gap-1.5 text-[13px] text-ink-3">
+      <p className="mt-3 flex gap-1.5 text-[0.8125rem] text-ink-3">
         <Info className="mt-0.5 h-4 w-4 shrink-0" />
         매장에서 회원코드를 보여주면 직원이 바로 확인할 수도 있어요.
       </p>
@@ -496,12 +497,12 @@ export function ChannelList({ s, item, me }: { s: AppState; item: MenuItem; me: 
     <ul className="space-y-2" data-testid="order-channels">
       {ch.map((c) => (
         <li key={c.key} className={cx('flex items-center gap-3 rounded-2xl p-3.5', c.available ? 'bg-sage-50' : 'bg-canvas')}>
-          <span className={cx('grid h-10 w-10 shrink-0 place-items-center rounded-xl', c.available ? 'bg-white text-sage-600' : 'bg-white text-ink-4')}>
+          <span className={cx('grid h-11 w-11 shrink-0 place-items-center rounded-xl', c.available ? 'bg-white text-sage-600' : 'bg-white text-ink-3')}>
             {c.key === 'delivery' ? <Truck className="h-5 w-5" /> : c.key === 'order' ? <ShoppingBag className="h-5 w-5" /> : <StoreIcon className="h-5 w-5" />}
           </span>
           <div className="min-w-0 flex-1">
-            <p className={cx('text-[15px] font-bold', c.available ? 'text-ink' : 'text-ink-3')}>{c.label}</p>
-            <p className="clamp-1 text-[13px] text-ink-3">{c.note}</p>
+            <p className={cx('text-[0.9375rem] font-bold', c.available ? 'text-ink' : 'text-ink-3')}>{c.label}</p>
+            <p className="clamp-1 text-[0.8125rem] text-ink-3">{c.note}</p>
           </div>
           {c.url ? (
             <a
@@ -509,12 +510,12 @@ export function ChannelList({ s, item, me }: { s: AppState; item: MenuItem; me: 
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => act((d, ctx) => D.recordLinkClick(d, ctx, me, 'order', item.storeId, `${c.label} 링크 열기`))}
-              className="shrink-0 rounded-full bg-white px-3.5 py-2 text-[13px] font-bold text-ink ring-1 ring-line"
+              className="inline-flex h-11 shrink-0 items-center rounded-full bg-white px-4 text-[0.875rem] font-bold text-ink ring-1 ring-cardline"
             >
               열기
             </a>
           ) : (
-            <span className={cx('shrink-0 rounded-full px-2.5 py-1 text-[12px] font-bold', c.available ? 'bg-white text-sage-600' : 'bg-white text-ink-3')}>{c.available ? '가능' : '확인 중'}</span>
+            <span className={cx('shrink-0 rounded-full px-2.5 py-1 text-[0.8125rem] font-bold', c.available ? 'bg-white text-sage-600' : 'bg-white text-ink-3')}>{c.available ? '가능' : '확인 중'}</span>
           )}
         </li>
       ))}

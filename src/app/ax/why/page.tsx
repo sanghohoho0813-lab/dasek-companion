@@ -31,9 +31,9 @@ function Sec({ id, n, title, children }: { id: string; n: number; title: string;
   return (
     <section id={id} className="scroll-mt-24">
       <Panel>
-        <p className="text-[12px] font-bold tracking-[0.14em] text-ax-accent">{String(n).padStart(2, '0')}</p>
-        <h3 className="mt-0.5 text-[18px] font-extrabold tracking-tight text-slate-900">{title}</h3>
-        <div className="mt-3 text-[13.5px] leading-relaxed text-slate-700">{children}</div>
+        <p className="text-[0.8125rem] font-bold tracking-[0.14em] text-ax-accent">{String(n).padStart(2, '0')}</p>
+        <h3 className="mt-0.5 text-[1.125rem] font-extrabold tracking-tight text-slate-900">{title}</h3>
+        <div className="mt-3 text-[0.9375rem] leading-relaxed text-slate-700">{children}</div>
       </Panel>
     </section>
   );
@@ -48,26 +48,26 @@ export default function WhyPage() {
     <div className="grid gap-5 xl:grid-cols-[220px_1fr]">
       <nav aria-label="Why AX 목차" className="hidden xl:block">
         <div className="sticky top-24 space-y-0.5">
-          <p className="mb-2 px-2 text-[12px] font-bold uppercase tracking-[0.14em] text-slate-400">목차</p>
+          <p className="mb-2 px-2 text-[0.8125rem] font-bold uppercase tracking-[0.14em] text-slate-500">목차</p>
           {TOC.map(([id, l], i) => (
-            <a key={id} href={`#${id}`} className="block rounded-lg px-2 py-1 text-[12.5px] font-medium text-slate-600 transition hover:bg-white hover:text-slate-900">
+            <a key={id} href={`#${id}`} className="block rounded-lg px-2 py-1 text-[0.8438rem] font-medium text-slate-600 transition hover:bg-white hover:text-slate-900">
               {i + 1}. {l}
             </a>
           ))}
         </div>
       </nav>
       <div className="min-w-0 space-y-4">
-        <div className="relative overflow-hidden rounded-2xl ring-1 ring-slate-200/70">
+        <div className="relative overflow-hidden rounded-2xl ring-1 ring-axline">
           <AssetImage slot="ax_cover_main" fallback={{ kind: 'space', variant: 1 }} alt="다색컴패니언 Why AX 표지" className="aspect-[16/7] w-full md:aspect-[16/5]" sampleBadge badgePosition="tr" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-end p-5 text-white md:p-8">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/5 md:bg-gradient-to-r md:from-black/70" />
+          <div data-on-media className="absolute inset-0 flex flex-col justify-end p-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,.3)] md:p-8">
             <StatusBadge status="DEMO" className="self-start" />
-            <h2 className="mt-2 text-[22px] font-extrabold leading-tight md:text-[30px]">
+            <h2 className="mt-2 text-[1.375rem] font-extrabold leading-tight md:text-[1.875rem]">
               한 번 오고 끝나는 매장에서,
               <br />
               다시 오게 만드는 매장으로
             </h2>
-            <p className="mt-1 text-[13px] text-white/85">다색컴패니언 Why AX · 기획 의도 (가설과 확인된 사실을 구분해 적었습니다)</p>
+            <p className="mt-1 text-[0.9375rem] font-medium text-white">다색컴패니언 Why AX · 기획 의도 (가설과 확인된 사실을 구분해 적었습니다)</p>
           </div>
         </div>
 
@@ -87,10 +87,10 @@ export default function WhyPage() {
         </Sec>
 
         <Sec id="s3" n={3} title="가장 큰 병목 (Primary Constraint · 가설)">
-          <blockquote className="rounded-xl bg-ax-soft p-4 text-[14.5px] font-semibold text-slate-900">
+          <blockquote className="rounded-xl bg-ax-soft p-4 text-[0.9688rem] font-semibold text-slate-900">
             매장에서 구매·방문한 고객이 [누구인지·언제 다시 올지] 알 수 없어, 한 번의 이용이 재방문·재구매로 연결되지 못하는 매출 누수(REVENUE LEAK)가 있다. 이번 프로젝트의 핵심은 확인된 이용을 회원에 연결하고, 다시 올 이유(혜택·고양이·저장 메뉴)를 운영자가 관리하게 만드는 것이다.
           </blockquote>
-          <p className="mt-2 text-[12.5px] text-slate-500">근거 데이터가 아직 없으므로 가설입니다. Week 0 Baseline에서 실제 재방문율을 측정해 검증합니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">근거 데이터가 아직 없으므로 가설입니다. Week 0 Baseline에서 실제 재방문율을 측정해 검증합니다.</p>
         </Sec>
 
         <Sec id="s4" n={4} title="왜 지금인가">
@@ -103,8 +103,8 @@ export default function WhyPage() {
 
         <Sec id="s5" n={5} title="업무 재설계 — 나쁜 프로세스를 자동화하지 않기">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[640px] text-left text-[12.5px]">
-              <thead className="text-slate-400">
+            <table className="ax-table w-full min-w-[640px] text-left text-[0.8438rem]">
+              <thead className="text-slate-500">
                 <tr>
                   {['현재 단계', '문제', '바꾸는 방식', 'AI 필요'].map((h) => (
                     <th key={h} className="pb-2 font-semibold">
@@ -142,10 +142,10 @@ export default function WhyPage() {
               ['SCALE', '같은 인력으로 더 많은 단골', '운영자 1인당 활성 고객', `${k.scaleActivePerOperator ?? '—'}명 (DEMO)`],
             ].map(([a, b, c, d]) => (
               <div key={a} className="rounded-xl bg-slate-50 p-4">
-                <p className="text-[12px] font-bold tracking-[0.14em] text-slate-400">{a}</p>
-                <p className="text-[15px] font-extrabold text-slate-900">{b}</p>
-                <p className="mt-1 text-[12.5px] text-slate-600">{c}</p>
-                <p className="mt-1 text-[12.5px] font-semibold">{d}</p>
+                <p className="text-[0.8125rem] font-bold tracking-[0.14em] text-slate-500">{a}</p>
+                <p className="text-[1rem] font-extrabold text-slate-900">{b}</p>
+                <p className="mt-1 text-[0.8438rem] text-slate-600">{c}</p>
+                <p className="mt-1 text-[0.8438rem] font-semibold">{d}</p>
                 <Tag tone="amber">Baseline UNKNOWN</Tag>
               </div>
             ))}
@@ -160,11 +160,11 @@ export default function WhyPage() {
               ['C. 고양이 → 방문', ['고양이 프로필 탐색', '오늘 코드 체크인', '직원 확인', '스탬프 +1', '재방문 세그먼트']],
             ].map(([t, steps]) => (
               <div key={t as string} className="rounded-xl bg-slate-50 p-4">
-                <p className="text-[14px] font-extrabold text-slate-900">{t as string}</p>
+                <p className="text-[0.9375rem] font-extrabold text-slate-900">{t as string}</p>
                 <ol className="mt-2 space-y-1">
                   {(steps as string[]).map((x, i) => (
                     <li key={x} className="flex flex-col items-start">
-                      <span className="rounded-md bg-white px-2 py-1 text-[12.5px] font-semibold text-slate-700 ring-1 ring-slate-200">{x}</span>
+                      <span className="rounded-md bg-white px-2 py-1 text-[0.8438rem] font-semibold text-slate-700 ring-1 ring-slate-200">{x}</span>
                       {i < (steps as string[]).length - 1 && <ArrowDown className="ml-3 h-3.5 w-3.5 text-slate-300" />}
                     </li>
                   ))}
@@ -172,7 +172,7 @@ export default function WhyPage() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[12.5px] text-slate-500">
+          <p className="mt-3 text-[0.8438rem] text-slate-500">
             현재 DEMO 기준: 가입 {f.signedUp} → 첫 확인 이용 {f.firstUse} → 재이용 {f.repeat}. 모든 단계는 실제 화면에서 동작합니다.{' '}
             <Link href="/ax/queue" className="font-semibold text-ax-primary hover:underline">
               확인 큐 열기 <ArrowRight className="inline h-3 w-3" />
@@ -190,8 +190,8 @@ export default function WhyPage() {
 
         <Sec id="s9" n={9} title="AI는 필요한 곳에만">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[620px] text-left text-[12.5px]">
-              <thead className="text-slate-400">
+            <table className="ax-table w-full min-w-[620px] text-left text-[0.8438rem]">
+              <thead className="text-slate-500">
                 <tr>
                   {['기능', '방식', '오류 비용', '승인', '상태'].map((h) => (
                     <th key={h} className="pb-2 font-semibold">
@@ -225,12 +225,12 @@ export default function WhyPage() {
         <Sec id="s10" n={10} title="이번에 일부러 만들지 않은 것">
           <ul className="grid gap-1.5 md:grid-cols-2">
             {['실결제·구독 결제', 'POS·배달 플랫폼 자동 수집', '카카오·푸시 실발송', '자체 ML 학습', '영양·칼로리 자동 계산', '네이티브 앱', '다점포 SaaS·정산', '반려묘 건강 기록'].map((x) => (
-              <li key={x} className="rounded-lg bg-slate-50 px-3 py-2 text-[13px]">
+              <li key={x} className="rounded-lg bg-slate-50 px-3 py-2 text-[0.875rem]">
                 ✕ {x}
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-[12.5px] text-slate-500">이유와 재검토 조건은 DECISIONS.md에 기록했습니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">이유와 재검토 조건은 DECISIONS.md에 기록했습니다.</p>
         </Sec>
 
         <Sec id="s11" n={11} title="12주 실증 계획">
@@ -266,11 +266,11 @@ export default function WhyPage() {
           <div className="grid gap-2 md:grid-cols-3">
             {ROADMAP.map((r) => (
               <div key={r.key} className="rounded-xl bg-slate-50 p-3">
-                <p className="text-[13.5px] font-bold text-slate-900">
+                <p className="text-[0.9375rem] font-bold text-slate-900">
                   {r.emoji} {r.title} <Tag tone="violet">NEXT</Tag>
                 </p>
-                <p className="mt-0.5 text-[12px] text-slate-500">{r.oneLine}</p>
-                <p className="mt-1 text-[12px] text-slate-400">관심 {s.roadmapInterest.filter((x) => x.itemKey === r.key).length}명</p>
+                <p className="mt-0.5 text-[0.8125rem] text-slate-500">{r.oneLine}</p>
+                <p className="mt-1 text-[0.8125rem] text-slate-500">관심 {s.roadmapInterest.filter((x) => x.itemKey === r.key).length}명</p>
               </div>
             ))}
           </div>
@@ -287,7 +287,7 @@ export default function WhyPage() {
               <p className="mt-1">반복 수요 데이터 → 정기픽업 반복매출 → Unit Economics 확인 → 다른 매장 확장. 아직 숫자가 없으므로 주장하지 않습니다.</p>
             </div>
           </div>
-          <p className="mt-2 text-[12.5px] text-slate-500">투자·LIPS·정책금융은 장기 경로이며, 선정·승인을 보장하지 않습니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">투자·LIPS·정책금융은 장기 경로이며, 선정·승인을 보장하지 않습니다.</p>
         </Sec>
 
         <Sec id="s15" n={15} title="스스로 던지는 질문 (Devil Questions)">
@@ -313,7 +313,7 @@ export default function WhyPage() {
         <Sec id="s16" n={16} title="확인이 필요한 것">
           <ul className="grid gap-1.5 md:grid-cols-2">
             {['두 사업의 사업자번호·매출 귀속·데이터 처리 주체', '리얼식단 가맹 여부·상표·메뉴 이미지 사용 범위', '전체 영업시간·휴무일·이용요금', '실제 고양이 수·이름·사진(권리 확인)', '메뉴 가격·원재료·알레르기 정보', '혜택 원가와 확정 혜택 내용', '배달·온라인 주문 채널', 'AX Owner 지정'].map((x) => (
-              <li key={x} className="rounded-lg bg-amber-50 px-3 py-2 text-[13px] text-amber-900">
+              <li key={x} className="rounded-lg bg-amber-50 px-3 py-2 text-[0.875rem] text-amber-900">
                 ? {x}
               </li>
             ))}

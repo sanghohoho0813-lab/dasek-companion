@@ -71,33 +71,33 @@ export default function MenuDetailPage() {
       <div className="mx-auto max-w-6xl md:grid md:grid-cols-[1.05fr_1fr] md:gap-12 md:px-5 md:pt-8">
         <div className="md:sticky md:top-24 md:self-start">
           <AssetImage slots={menuSlots(item)} dataUrl={item.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className="aspect-square w-full md:rounded-[32px]" sampleBadge badgePosition="br" priority sizes="(min-width: 768px) 50vw, 100vw" />
-          {item.isDemo && <p className="mx-4 mt-2 text-[12.5px] text-ink-3 md:mx-0">예시 메뉴의 샘플 사진이에요. 실제 판매 메뉴와 다를 수 있어요.</p>}
+          {item.isDemo && <p className="mx-4 mt-2 text-[0.8438rem] text-ink-3 md:mx-0">예시 메뉴의 샘플 사진이에요. 실제 판매 메뉴와 다를 수 있어요.</p>}
         </div>
         <div className="min-w-0 px-4 pt-5 md:px-0 md:pt-1">
-          <nav className="hidden text-[13px] font-medium text-ink-3 md:block" aria-label="경로">
+          <nav className="hidden text-[0.8125rem] font-medium text-ink-3 md:block" aria-label="경로">
             <Link href={item.brand === 'dasek' ? '/dasek' : '/realsicdan'} className="hover:text-ink">
               {store.name}
             </Link>{' '}
             / {cat?.name}
           </nav>
           <div className="mt-1 flex flex-wrap items-center gap-1.5">
-            {item.isSignature && <span className="rounded-lg bg-coral-500 px-2 py-1 text-[12px] font-bold text-white">대표 메뉴</span>}
+            {item.isSignature && <span className="rounded-lg bg-coral-600 px-2 py-1 text-[0.8125rem] font-bold text-white">대표 메뉴</span>}
             {item.isDemo ? <StatusBadge status="DEMO" label="예시 메뉴" /> : <EvidenceBadge ev={item.evidence} />}
-            <span className="text-[13px] font-semibold text-ink-3">
+            <span className="text-[0.8125rem] font-semibold text-ink-3">
               {store.name} · {cat?.name}
             </span>
           </div>
-          <h1 className="mt-2 text-[28px] font-extrabold leading-tight tracking-[-0.025em] text-ink md:text-[36px]">{item.name}</h1>
-          <p className="mt-1.5 text-[16px] leading-relaxed text-ink-2">{item.summary}</p>
+          <h1 className="mt-2 text-[1.75rem] font-extrabold leading-tight tracking-[-0.025em] text-ink md:text-[2.25rem]">{item.name}</h1>
+          <p className="mt-1.5 text-[1rem] leading-relaxed text-ink-2">{item.summary}</p>
           <div className="mt-4 flex flex-wrap items-baseline gap-x-2 gap-y-1">
             <PriceText item={item} size="lg" />
-            {item.price != null && item.priceEvidence === 'USER_PROVIDED' && <span className="text-[13px] text-ink-3">공개 메뉴 정보 기준 · 매장 사정에 따라 달라질 수 있어요</span>}
-            {item.price == null && <span className="text-[13px] text-ink-3">가격은 매장에서 확인해 주세요</span>}
+            {item.price != null && item.priceEvidence === 'USER_PROVIDED' && <span className="text-[0.8125rem] text-ink-3">공개 메뉴 정보 기준 · 매장 사정에 따라 달라질 수 있어요</span>}
+            {item.price == null && <span className="text-[0.8125rem] text-ink-3">가격은 매장에서 확인해 주세요</span>}
           </div>
-          {pop > 0 && <p className="mt-1 text-[13px] font-semibold text-sage-600">매장에서 확인된 구매 {pop}건 (DEMO 집계)</p>}
+          {pop > 0 && <p className="mt-1 text-[0.8125rem] font-semibold text-sage-600">매장에서 확인된 구매 {pop}건 (DEMO 집계)</p>}
           <div className="mt-4 flex flex-wrap gap-1.5">
             {item.tags.map((t) => (
-              <span key={t} className="rounded-full bg-canvas px-3 py-1.5 text-[13px] font-medium text-ink-2">
+              <span key={t} className="rounded-full bg-canvas px-3 py-1.5 text-[0.8125rem] font-medium text-ink-2">
                 #{t}
               </span>
             ))}
@@ -113,38 +113,38 @@ export default function MenuDetailPage() {
           </div>
 
           <section className="mt-7" aria-labelledby="buy-how">
-            <h2 id="buy-how" className="text-[18px] font-extrabold text-ink">
+            <h2 id="buy-how" className="text-[1.125rem] font-extrabold text-ink">
               어떻게 살 수 있나요?
             </h2>
-            <p className="mb-3 mt-0.5 text-[13.5px] text-ink-3">확인된 채널만 &lsquo;가능&rsquo;으로 표시해요. 이 앱에서 결제·주문 확정은 하지 않아요.</p>
+            <p className="mb-3 mt-0.5 text-[0.8438rem] text-ink-3">확인된 채널만 &lsquo;가능&rsquo;으로 표시해요. 이 앱에서 결제·주문 확정은 하지 않아요.</p>
             <ChannelList s={s} item={item} me={me?.id ?? null} />
           </section>
 
           <section className="mt-7">
-            <h2 className="text-[18px] font-extrabold text-ink">메뉴 정보</h2>
-            <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">{item.description}</p>
+            <h2 className="text-[1.125rem] font-extrabold text-ink">메뉴 정보</h2>
+            <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">{item.description}</p>
             <dl className="mt-3 divide-y divide-line rounded-2xl bg-white ring-1 ring-line">
               <div className="flex items-start justify-between gap-3 p-4">
-                <dt className="text-[14px] font-semibold text-ink-3">영양 정보</dt>
-                <dd className="text-right text-[14.5px] font-semibold text-ink">
+                <dt className="text-[0.875rem] font-semibold text-ink-3">영양 정보</dt>
+                <dd className="text-right text-[0.9062rem] font-semibold text-ink">
                   {item.nutritionStatus === 'VERIFIED' && item.nutrition ? `${item.nutrition.kcal}kcal · 단백질 ${item.nutrition.protein}g` : '영양정보 미확인'}
-                  {item.nutritionStatus !== 'VERIFIED' && <span className="mt-0.5 block text-[12.5px] font-normal text-ink-3">검증된 성분표가 없어 수치를 표시하지 않아요</span>}
+                  {item.nutritionStatus !== 'VERIFIED' && <span className="mt-0.5 block text-[0.8438rem] font-normal text-ink-3">검증된 성분표가 없어 수치를 표시하지 않아요</span>}
                 </dd>
               </div>
               <div className="flex items-start justify-between gap-3 p-4">
-                <dt className="text-[14px] font-semibold text-ink-3">알레르기</dt>
-                <dd className="text-right text-[14.5px] font-semibold text-ink">
+                <dt className="text-[0.875rem] font-semibold text-ink-3">알레르기</dt>
+                <dd className="text-right text-[0.9062rem] font-semibold text-ink">
                   {item.allergenStatus === 'VERIFIED' ? item.allergens.join(', ') || '표시 대상 없음' : '정보 미확인'}
-                  <span className="mt-0.5 block text-[12.5px] font-normal text-ink-3">주문 전 매장에 꼭 확인해 주세요</span>
+                  <span className="mt-0.5 block text-[0.8438rem] font-normal text-ink-3">주문 전 매장에 꼭 확인해 주세요</span>
                 </dd>
               </div>
               <div className="flex items-start justify-between gap-3 p-4">
-                <dt className="text-[14px] font-semibold text-ink-3">정보 출처</dt>
-                <dd className="max-w-[62%] text-right text-[13px] text-ink-2">{item.source}</dd>
+                <dt className="text-[0.875rem] font-semibold text-ink-3">정보 출처</dt>
+                <dd className="max-w-[62%] text-right text-[0.8125rem] text-ink-2">{item.source}</dd>
               </div>
             </dl>
             {item.allergenStatus !== 'VERIFIED' && (
-              <p className="mt-3 flex gap-2 rounded-2xl bg-amber-50 px-4 py-3 text-[13.5px] leading-relaxed text-amber-900">
+              <p className="mt-3 flex gap-2 rounded-2xl bg-amber-50 px-4 py-3 text-[0.8438rem] leading-relaxed text-amber-900">
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
                 알레르기가 있다면 원재료와 교차 접촉 여부를 매장에서 직접 확인해 주세요. 이 앱은 안전을 보장하지 않아요.
               </p>
@@ -161,7 +161,7 @@ export default function MenuDetailPage() {
                     item={r.item}
                     sub={r.reasons[0]}
                     right={
-                      <button onClick={() => setWhy(r)} className="shrink-0 rounded-full bg-canvas px-3.5 py-2 text-[13px] font-bold text-ink-2 hover:bg-line">
+                      <button onClick={() => setWhy(r)} className="inline-flex h-11 shrink-0 items-center rounded-full bg-canvas px-4 text-[0.875rem] font-bold text-ink-2 ring-1 ring-inset ring-cardline hover:bg-line">
                         왜?
                       </button>
                     }
@@ -175,7 +175,7 @@ export default function MenuDetailPage() {
       </div>
 
       {/* Mobile action bar */}
-      <div className="fixed inset-x-0 bottom-[calc(67px+max(12px,env(safe-area-inset-bottom)))] z-20 border-t border-line/70 bg-white/95 px-4 py-2.5 backdrop-blur md:hidden">
+      <div className="fixed inset-x-0 bottom-[calc(67px+max(12px,env(safe-area-inset-bottom)))] z-20 border-t border-line bg-white px-4 py-2.5 md:hidden">
         <div className="mx-auto flex max-w-md gap-2">
           <button onClick={toggleSave} aria-pressed={saved} aria-label={saved ? '저장 해제' : '저장'} data-testid="save-menu-m" className={cx('grid h-[52px] w-[52px] shrink-0 place-items-center rounded-2xl ring-1 transition active:scale-95', saved ? 'bg-coral-50 text-coral-500 ring-coral-50' : 'bg-white text-ink-2 ring-line')}>
             <Heart className="h-[22px] w-[22px]" fill={saved ? 'currentColor' : 'none'} />
@@ -191,7 +191,7 @@ export default function MenuDetailPage() {
 
       <Sheet open={orderOpen} onClose={() => setOrderOpen(false)} title="구매 방법" description={`${item.name} · ${store.name}`}>
         <ChannelList s={s} item={item} me={me?.id ?? null} />
-        <p className="mt-3 text-[13px] text-ink-3">외부 링크를 연 것만으로는 구매로 기록되지 않아요. 구매 후 &lsquo;구매했어요&rsquo;로 적립을 요청하거나 매장에서 회원코드를 보여주세요.</p>
+        <p className="mt-3 text-[0.8125rem] text-ink-3">외부 링크를 연 것만으로는 구매로 기록되지 않아요. 구매 후 &lsquo;구매했어요&rsquo;로 적립을 요청하거나 매장에서 회원코드를 보여주세요.</p>
       </Sheet>
       <PurchaseReportSheet open={reportOpen} onClose={() => setReportOpen(false)} s={s} me={me} preset={item.id} />
       <WhySheet rec={why} onClose={() => setWhy(null)} />

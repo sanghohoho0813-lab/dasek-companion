@@ -17,7 +17,7 @@ export default function SavedPage() {
     <div>
       <BackHeader title="저장한 메뉴" fallback="/my" />
       <div className="mx-auto max-w-4xl px-4 pb-10 pt-4 md:px-5 md:pt-10">
-        <h1 className="hidden text-[24px] font-extrabold text-ink md:block">저장한 메뉴</h1>
+        <h1 className="hidden text-[1.5rem] font-extrabold text-ink md:block">저장한 메뉴</h1>
         <div className="mt-0 md:mt-4">
           {items.length ? (
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">

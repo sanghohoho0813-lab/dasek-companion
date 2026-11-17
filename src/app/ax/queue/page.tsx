@@ -8,6 +8,7 @@ import { QueueRow } from '@/components/ax/widgets';
 import { Button, Empty, PageSkeleton, Segmented } from '@/components/ui';
 import { fmtDate, relTime } from '@/lib/util';
 import { getProfile } from '@/lib/rules';
+import { StatusPill, statusOf } from '@/components/ui/Status';
 
 function Inner() {
   const { s, can } = useOperator();
@@ -47,8 +48,8 @@ function Inner() {
         }
       />
       <label className="mb-3 flex h-11 max-w-md items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 focus-within:border-ax-primary">
-        <Search className="h-4 w-4 text-slate-400" />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="이름 또는 회원코드로 찾기" aria-label="큐 검색" className="w-full text-[15px] outline-none" data-testid="queue-search" />
+        <Search className="h-4 w-4 text-slate-500" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="이름 또는 회원코드로 찾기" aria-label="큐 검색" className="w-full text-[1rem] outline-none" data-testid="queue-search" />
       </label>
       <Segmented
         tone="ax"
@@ -71,13 +72,13 @@ function Inner() {
               ))}
             </ul>
           ) : (
-            <Empty icon={<ClipboardCheck className="h-8 w-8" />} title="대기 중인 요청이 없어요" body="고객 화면에서 체크인하거나 '구매했어요'를 누르면 여기로 들어와요." />
+            <Empty icon={<ClipboardCheck className="h-11 w-11 lg:h-8 lg:w-8" />} title="대기 중인 요청이 없어요" body="고객 화면에서 체크인하거나 '구매했어요'를 누르면 여기로 들어와요." />
           )
         ) : (
           <Panel>
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[560px] text-left text-[13px]">
-                <thead className="text-[12px] text-slate-400">
+              <table className="ax-table w-full min-w-[560px] text-left text-[0.875rem]">
+                <thead className="text-[0.8125rem] text-slate-500">
                   <tr>
                     <th className="pb-2 font-semibold">요청</th>
                     <th className="pb-2 font-semibold">결과</th>
@@ -91,7 +92,7 @@ function Inner() {
                     return (
                       <tr key={t.id} className="hover:bg-slate-50">
                         <td className="py-2.5 font-semibold text-slate-800">{t.title}</td>
-                        <td className="py-2.5">{rec?.status === 'CONFIRMED' ? <Tag tone="green">확인</Tag> : rec?.status === 'REJECTED' ? <Tag>{`반려 · ${rec.rejectReason}`}</Tag> : rec?.status === 'REVERSED' ? <Tag tone="amber">환불·취소됨 (보상 회수)</Tag> : <Tag>대기</Tag>}</td>
+                        <td className="py-2.5">{rec?.status === 'CONFIRMED' ? <StatusPill kind="done" size="sm" /> : rec?.status === 'REJECTED' ? <StatusPill kind="rejected" label={`반려 · ${rec.rejectReason}`} size="sm" /> : rec?.status === 'REVERSED' ? <StatusPill kind="reversed" label="환불·취소됨 (보상 회수)" size="sm" /> : <StatusPill kind="pending" size="sm" />}</td>
                         <td className="py-2.5 text-slate-500">{getProfile(s, t.doneBy)?.name ?? '-'}</td>
                         <td className="py-2.5 text-slate-500">
                           {fmtDate(t.createdAt, { time: true })} → {t.doneAt ? relTime(t.doneAt) : '-'}

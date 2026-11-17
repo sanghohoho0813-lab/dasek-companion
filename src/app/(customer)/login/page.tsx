@@ -27,11 +27,11 @@ function Inner() {
     <div>
       <BackHeader title="로그인" />
       <div className="mx-auto max-w-md px-5 pb-10 pt-6 md:pt-10">
-        <h1 className="text-[24px] font-extrabold tracking-tight text-ink">다시 만나서 반가워요</h1>
+        <h1 className="text-[1.5rem] font-extrabold tracking-tight text-ink">다시 만나서 반가워요</h1>
         {me && (
-          <p className="mt-2 rounded-xl bg-brand-50 p-3 text-[13px] text-brand-800">
+          <p className="mt-2 rounded-xl bg-brand-50 p-3 text-[0.8125rem] text-brand-800">
             현재 {me.name}님으로 로그인되어 있어요.{' '}
-            <button className="font-bold underline" onClick={() => act((d) => D.logout(d))}>
+            <button className="inline-flex min-h-11 items-center font-bold underline" onClick={() => act((d) => D.logout(d))}>
               로그아웃
             </button>
           </p>
@@ -55,18 +55,18 @@ function Inner() {
         </form>
         <div className="mt-8">
           <div className="flex items-center gap-2">
-            <p className="text-[13px] font-bold text-ink-2">시연용 계정으로 둘러보기</p>
+            <p className="text-[0.8125rem] font-bold text-ink-2">시연용 계정으로 둘러보기</p>
             <StatusBadge status="DEMO" />
           </div>
           <div className="mt-2 space-y-2">
             {demo.map((p) => (
               <button key={p.id} onClick={() => go(p.id)} data-testid={`demo-login-${p.memberCode}`} className="press flex w-full items-center gap-3 rounded-2xl bg-white p-3 text-left ring-1 ring-line transition hover:bg-canvas">
-                <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-50 text-brand-700">
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-brand-50 text-brand-700">
                   <UserRound className="h-5 w-5" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[14.5px] font-bold text-ink">{p.name}</span>
-                  <span className="block text-[12px] text-ink-3">
+                  <span className="block text-[0.9062rem] font-bold text-ink">{p.name}</span>
+                  <span className="block text-[0.8125rem] text-ink-3">
                     {p.memberCode} · 스탬프 {stampCount(s, p.id)}개
                   </span>
                 </span>
@@ -74,7 +74,7 @@ function Inner() {
             ))}
           </div>
         </div>
-        <p className="mt-6 text-center text-[13px] text-ink-3">
+        <p className="mt-6 text-center text-[0.8125rem] text-ink-3">
           처음이신가요?{' '}
           <Link href={`/signup?next=${encodeURIComponent(next)}`} className="font-semibold text-brand-700">
             회원가입

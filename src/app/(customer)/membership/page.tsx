@@ -22,11 +22,11 @@ export default function MembershipPage() {
         <div className="overflow-hidden rounded-[28px] bg-brand-50 md:grid md:grid-cols-2">
           <div className="p-6 md:p-10">
             <StatusBadge status="DEMO" label="혜택 예시 · 운영자 확정 전" />
-            <h1 className="mt-3 text-[26px] font-extrabold leading-tight tracking-tight text-ink md:text-[34px]">자주 올수록
+            <h1 className="mt-3 text-[1.625rem] font-extrabold leading-tight tracking-tight text-ink md:text-[2.125rem]">자주 올수록
               <br />더 챙겨주는 멤버십</h1>
-            <p className="mt-2 text-[14px] text-ink-2">리얼식단과 다색냥, 어느 쪽을 이용해도 하나의 스탬프로 모여요.</p>
+            <p className="mt-2 text-[0.875rem] text-ink-2">리얼식단과 다색냥, 어느 쪽을 이용해도 하나의 스탬프로 모여요.</p>
             {!me && (
-              <Link href="/signup" className="mt-5 inline-flex h-12 items-center rounded-2xl bg-brand-600 px-5 text-[15px] font-bold text-white">
+              <Link href="/signup" className="mt-5 inline-flex h-12 items-center rounded-2xl bg-brand-600 px-5 text-[0.9375rem] font-bold text-white">
                 무료로 가입하기
               </Link>
             )}
@@ -37,17 +37,17 @@ export default function MembershipPage() {
           {items.map((x) => (
             <div key={x.t} className="rounded-3xl bg-white p-5 ring-1 ring-line">
               <x.icon className="h-6 w-6 text-brand-600" />
-              <p className="mt-3 text-[13px] font-semibold text-ink-3">{x.t}</p>
-              <p className="text-[17px] font-extrabold text-ink">{x.b}</p>
-              <p className="mt-1 text-[12.5px] text-ink-3">{x.d}</p>
+              <p className="mt-3 text-[0.8125rem] font-semibold text-ink-3">{x.t}</p>
+              <p className="text-[1.0625rem] font-extrabold text-ink">{x.b}</p>
+              <p className="mt-1 text-[0.8438rem] text-ink-3">{x.d}</p>
             </div>
           ))}
         </div>
         <section id="referral" className="mt-8 scroll-mt-20 rounded-3xl bg-canvas p-6">
-          <p className="flex items-center gap-1.5 text-[16px] font-extrabold text-ink">
+          <p className="flex items-center gap-1.5 text-[1rem] font-extrabold text-ink">
             <BadgeCheck className="h-5 w-5 text-brand-600" /> 적립·보상 기준
           </p>
-          <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[13.5px] leading-relaxed text-ink-2">
+          <ul className="mt-3 list-disc space-y-1.5 pl-5 text-[0.8438rem] leading-relaxed text-ink-2">
             <li>적립은 매장 직원이 방문·구매를 확인한 경우에만 이뤄져요. 외부 링크 클릭이나 자가신고만으로는 적립되지 않아요.</li>
             <li>같은 매장은 하루에 스탬프 1개까지 적립돼요.</li>
             <li>친구 추천 보상은 친구의 첫 이용 확인 후 지급되며, 자기 추천·중복 계정은 제외돼요.</li>
@@ -57,11 +57,11 @@ export default function MembershipPage() {
         <section className="mt-4 flex items-start gap-3 rounded-3xl bg-white p-6 ring-1 ring-line">
           <Lock className="mt-0.5 h-5 w-5 shrink-0 text-violet-500" />
           <div>
-            <p className="flex items-center gap-2 text-[15.5px] font-extrabold text-ink">
+            <p className="flex items-center gap-2 text-[0.9688rem] font-extrabold text-ink">
               유료 멤버십·방문 패스 <StatusBadge status="NEXT" label="준비 중" />
             </p>
-            <p className="mt-1 text-[13px] text-ink-3">정기픽업·방문 패스 수요를 확인하고 있어요. 지금은 결제를 받지 않아요.</p>
-            <Link href="/roadmap?item=subscription_pickup" className="mt-2 inline-block text-[13px] font-semibold text-brand-700">
+            <p className="mt-1 text-[0.875rem] text-ink-3">정기픽업·방문 패스 수요를 확인하고 있어요. 지금은 결제를 받지 않아요.</p>
+            <Link href="/roadmap?item=subscription_pickup" className="mt-1 inline-flex min-h-11 items-center text-[0.9375rem] font-semibold text-brand-700">
               관심 남기기 →
             </Link>
           </div>

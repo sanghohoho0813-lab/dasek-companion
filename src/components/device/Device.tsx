@@ -127,8 +127,8 @@ export function DeviceSwitch({ tone = 'ax', className }: { tone?: 'ax' | 'brand'
           data-testid={`device-${o.v}`}
           onClick={() => setMode(o.v)}
           className={cx(
-            'inline-flex h-7 items-center gap-1 rounded-md px-2 text-[12px] font-semibold transition duration-150',
-            mode === o.v ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-800',
+            'inline-flex h-7 items-center gap-1 rounded-md px-2 text-[0.8125rem] font-semibold transition duration-150',
+            mode === o.v ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:text-slate-900',
           )}
         >
           {o.icon}
@@ -185,7 +185,7 @@ function PhoneFrame({ label }: { label: string }) {
       >
         <iframe ref={ref} src={src} title={`${label} — 모바일 390px 실제 화면`} className="h-full w-[390px] rounded-[38px] bg-white" />
       </div>
-      <p className="mt-2 text-[12px] font-medium text-slate-500">390 × {`실제 Viewport`} · 같은 Route · 같은 Data</p>
+      <p className="mt-2 text-[0.8125rem] font-medium text-slate-500">390 × {`실제 Viewport`} · 같은 Route · 같은 Data</p>
     </div>
   );
 }
@@ -207,11 +207,11 @@ function PcPreview({ label }: { label: string }) {
   return (
     <div className="fixed inset-0 z-[60] flex flex-col bg-[#F3F6F8]" data-testid="pc-preview">
       <div className="flex h-[52px] shrink-0 items-center justify-between gap-2 border-b border-slate-200 bg-white px-3">
-        <p className="min-w-0 truncate text-[13px] font-semibold text-slate-700">
+        <p className="min-w-0 truncate text-[0.8125rem] font-semibold text-slate-700">
           <Monitor className="mr-1 inline h-4 w-4 align-[-3px]" />
           PC 화면 미리보기 <span className="font-normal text-slate-500">· {label} · {PC_WIDTH}px 축소</span>
         </p>
-        <button onClick={() => setPcPreview(false)} data-testid="pc-preview-close" className="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg bg-slate-900 px-3 text-[13px] font-bold text-white">
+        <button onClick={() => setPcPreview(false)} data-testid="pc-preview-close" className="inline-flex h-11 shrink-0 items-center gap-1 rounded-lg bg-slate-900 px-3 text-[0.8125rem] font-bold text-white">
           <Smartphone className="h-4 w-4" /> 모바일로
         </button>
       </div>
@@ -236,8 +236,8 @@ export function DeviceStage({ children, label }: { children: React.ReactNode; la
   if (mode === 'mobile')
     return (
       <div className="min-h-dvh bg-[radial-gradient(1200px_600px_at_50%_-10%,#E6F4F8,transparent),#F3F6F8]">
-        <div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200/70 bg-white/80 px-5 backdrop-blur">
-          <p className="text-[13px] font-semibold text-slate-700">
+        <div className="sticky top-0 z-40 flex h-14 items-center justify-between border-b border-slate-200 bg-white px-5">
+          <p className="text-[0.8125rem] font-semibold text-slate-700">
             모바일 미리보기 <span className="ml-1 font-normal text-slate-500">— {label}</span>
           </p>
           <DeviceSwitch />

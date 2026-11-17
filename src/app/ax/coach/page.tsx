@@ -33,39 +33,39 @@ export default function CoachPage() {
               {targets.map((t) => (
                 <li key={t.l} className="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5">
                   <span>
-                    <span className="block text-[13px] font-semibold text-slate-700">{t.l}</span>
-                    <span className="block text-[12px] text-slate-400">목표: {t.goal}</span>
+                    <span className="block text-[0.875rem] font-semibold text-slate-700">{t.l}</span>
+                    <span className="block text-[0.8125rem] text-slate-500">목표: {t.goal}</span>
                   </span>
-                  <span className="text-[18px] font-extrabold text-slate-900 tabular">{t.v}</span>
+                  <span className="text-[1.125rem] font-extrabold text-slate-900 tabular">{t.v}</span>
                 </li>
               ))}
             </ul>
           </Panel>
           <Panel title="AX Owner" sub="KPI·데이터 품질·교육·이슈 책임자">
-            <p className="flex items-center gap-2 text-[13.5px] text-slate-700">
-              <UserCheck className="h-4 w-4 text-slate-400" /> 미지정 <Tag tone="amber">UNKNOWN</Tag>
+            <p className="flex items-center gap-2 text-[0.9375rem] text-slate-700">
+              <UserCheck className="h-4 w-4 text-slate-500" /> 미지정 <Tag tone="amber">UNKNOWN</Tag>
             </p>
-            <p className="mt-1 text-[12px] text-slate-500">실제 운영자 확정 후 설정에서 지정합니다. 개인 이름은 계약·프로필 데이터 확인 전 입력하지 않아요.</p>
+            <p className="mt-1 text-[0.8125rem] text-slate-500">실제 운영자 확정 후 설정에서 지정합니다. 개인 이름은 계약·프로필 데이터 확인 전 입력하지 않아요.</p>
           </Panel>
         </div>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <Panel title={<span className="flex items-center gap-1.5"><Target className="h-4 w-4 text-[#3C9A75]" /> 직원에게 좋은 점</span>}>
-          <ul className="list-disc space-y-1 pl-5 text-[13px] text-slate-600">
+          <ul className="list-disc space-y-1 pl-5 text-[0.875rem] text-slate-600">
             <li>스탬프 종이·도장 관리 대신 확인 버튼 한 번</li>
             <li>쿠폰 진위 확인을 코드로 즉시</li>
             <li>오늘 할 일이 3개 이내로 정리됨</li>
           </ul>
         </Panel>
         <Panel title={<span className="flex items-center gap-1.5"><AlertTriangle className="h-4 w-4 text-amber-500" /> 도입 위험</span>}>
-          <ul className="list-disc space-y-1 pl-5 text-[13px] text-slate-600">
+          <ul className="list-disc space-y-1 pl-5 text-[0.875rem] text-slate-600">
             <li>바쁜 시간대에 확인이 밀리면 고객 불만 → 대기 시간을 KPI로 관리</li>
             <li>직원이 확인을 생략하면 실적이 비어 보임 → 큐 배지·알림</li>
             <li>혜택 원가 미확정 → 운영자 확정 전 예시로만 표시</li>
           </ul>
         </Panel>
         <Panel title={<span className="flex items-center gap-1.5"><CalendarRange className="h-4 w-4 text-[#5B8DEF]" /> 미션 → 화면 연결</span>}>
-          <ul className="space-y-1 text-[13px] text-slate-600">
+          <ul className="space-y-1 text-[0.875rem] text-slate-600">
             <li>확인 대기 → 방문·구매 확인</li>
             <li>재구매 후보 → 추천·재구매</li>
             <li>미방문 세그먼트 → 캠페인</li>

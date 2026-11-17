@@ -9,6 +9,7 @@ import { getProfile, segmentMembers, SEGMENTS } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { Campaign, SegmentKey } from '@/lib/types';
 import { cx, fmtDate } from '@/lib/util';
+import { StatusPill, statusOf } from '@/components/ui/Status';
 
 function Inner() {
   const { s, can } = useOperator();
@@ -29,11 +30,11 @@ function Inner() {
           {segs.map((g) => (
             <div key={g.k} className="flex flex-col rounded-xl bg-slate-50 p-4">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-[14px] font-bold text-slate-900">{g.label}</p>
-                <span className="text-[20px] font-extrabold text-slate-900 tabular">{g.n}명</span>
+                <p className="text-[0.9375rem] font-bold text-slate-900">{g.label}</p>
+                <span className="text-[1.25rem] font-extrabold text-slate-900 tabular">{g.n}명</span>
               </div>
-              <p className="mt-1 text-[12px] text-slate-500">규칙: {g.rule}</p>
-              <ul className="mt-2 flex-1 space-y-0.5 text-[12px] text-slate-600">
+              <p className="mt-1 text-[0.8125rem] text-slate-500">규칙: {g.rule}</p>
+              <ul className="mt-2 flex-1 space-y-0.5 text-[0.8125rem] text-slate-600">
                 {g.why.map((w) => (
                   <li key={w}>· {w}</li>
                 ))}
@@ -50,16 +51,16 @@ function Inner() {
           {s.campaigns.map((c) => (
             <li key={c.id} className="flex flex-col gap-2 py-3 md:flex-row md:items-center">
               <div className="min-w-0 flex-1">
-                <p className="flex flex-wrap items-center gap-1.5 text-[14px] font-bold text-slate-900">
+                <p className="flex flex-wrap items-center gap-1.5 text-[0.9375rem] font-bold text-slate-900">
                   {c.name}
-                  <Tag tone={c.status === 'SENT' ? 'green' : c.status === 'PAUSED' ? 'slate' : 'amber'}>{{ DRAFT: '초안', APPROVED: '승인', SENT: '발송 완료', PAUSED: '중지' }[c.status]}</Tag>
+                  <StatusPill kind={statusOf.campaign(c.status)} label={{ DRAFT: '초안', APPROVED: '승인', SENT: '발송 완료', PAUSED: '중지' }[c.status]} size="sm" />
                   <Tag>{{ IN_APP: '앱 알림', KAKAO: '카카오', PUSH: '푸시' }[c.channel]}</Tag>
                   {c.isDemo && <Tag tone="amber">DEMO</Tag>}
                 </p>
-                <p className="mt-0.5 text-[12.5px] text-slate-500">
+                <p className="mt-0.5 text-[0.8438rem] text-slate-500">
                   “{c.title}” — {c.body}
                 </p>
-                <p className="mt-0.5 text-[12px] text-slate-400">
+                <p className="mt-0.5 text-[0.8125rem] text-slate-500">
                   작성 {getProfile(s, c.createdBy)?.name ?? c.createdBy} · {fmtDate(c.createdAt)} {c.sentAt && `· 승인 ${getProfile(s, c.approvedBy)?.name} · ${fmtDate(c.sentAt, { time: true })} 발송 ${c.recipients}명`} {!c.sentAt && `· 예상 대상 ${segmentMembers(s, c.segment).length}명`}
                 </p>
               </div>
@@ -105,7 +106,7 @@ function Inner() {
         }
       >
         {draft && (
-          <div className="space-y-3 text-[13px]">
+          <div className="space-y-3 text-[0.875rem]">
             <div>
               <p className="font-semibold text-slate-600">채널</p>
               <div className="mt-1.5 grid grid-cols-3 gap-2">
@@ -116,12 +117,12 @@ function Inner() {
                     ['PUSH', '푸시', false],
                   ] as [Campaign['channel'], string, boolean][]
                 ).map(([v, l, ok]) => (
-                  <button key={v} disabled={!ok} onClick={() => setDraft({ ...draft, channel: v })} className={cx('flex h-10 items-center justify-center gap-1 rounded-lg text-[13px] font-bold ring-1 disabled:opacity-50', draft.channel === v ? 'bg-ax-primary text-white ring-ax-primary' : 'bg-white text-slate-600 ring-slate-200')}>
+                  <button key={v} disabled={!ok} onClick={() => setDraft({ ...draft, channel: v })} className={cx('flex h-10 items-center justify-center gap-1 rounded-lg text-[0.875rem] font-bold ring-1 disabled:opacity-50', draft.channel === v ? 'bg-ax-primary text-white ring-ax-primary' : 'bg-white text-slate-600 ring-slate-200')}>
                     {l} {!ok && <StatusBadge status="READY" />}
                   </button>
                 ))}
               </div>
-              <p className="mt-1 text-[12px] text-slate-400">카카오·푸시는 수신동의·발송 인프라·요금 확인 전까지 연결하지 않아요.</p>
+              <p className="mt-1 text-[0.8125rem] text-slate-500">카카오·푸시는 수신동의·발송 인프라·요금 확인 전까지 연결하지 않아요.</p>
             </div>
             <label className="block font-semibold text-slate-600">
               캠페인 이름
@@ -136,12 +137,12 @@ function Inner() {
               <textarea value={draft.body} onChange={(e) => setDraft({ ...draft, body: e.target.value })} rows={3} className={cx(axInputCls, 'mt-1 h-auto py-2')} />
             </label>
             <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2.5">
-              <span className="flex items-center gap-1.5 text-[12.5px] text-slate-600">
-                <Sparkles className="h-4 w-4 text-slate-400" /> AI 문안 다듬기 (LLM)
+              <span className="flex items-center gap-1.5 text-[0.8438rem] text-slate-600">
+                <Sparkles className="h-4 w-4 text-slate-500" /> AI 문안 다듬기 (LLM)
               </span>
               <StatusBadge status="READY" label="API 키 연결 전" />
             </div>
-            <p className="text-[12px] text-slate-400">현재 초안은 세그먼트별 규칙 템플릿(TEMPLATE_RULE)입니다. 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
+            <p className="text-[0.8125rem] text-slate-500">현재 초안은 세그먼트별 규칙 템플릿(TEMPLATE_RULE)입니다. 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
           </div>
         )}
       </Sheet>

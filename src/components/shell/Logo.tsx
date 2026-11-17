@@ -25,8 +25,8 @@ export function Wordmark({ className, compact }: { className?: string; compact?:
     <span className={cx('inline-flex items-center gap-2', className)}>
       <LogoMark className="h-8 w-8" />
       <span className="leading-none">
-        <span className="block text-[16px] font-extrabold tracking-tight text-ink">다색컴패니언</span>
-        {!compact && <span className="mt-0.5 block text-[9.5px] font-bold tracking-[0.18em] text-brand-600">DASEK COMPANION</span>}
+        <span className="block text-[1rem] font-extrabold tracking-tight text-ink">다색컴패니언</span>
+        {!compact && <span className="mt-1 block text-[0.75rem] font-bold tracking-[0.14em] text-brand-700">DASEK COMPANION</span>}
       </span>
     </span>
   );

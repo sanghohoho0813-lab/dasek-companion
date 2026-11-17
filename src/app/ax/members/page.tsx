@@ -39,12 +39,12 @@ export default function MembersPage() {
     <div>
       <PageIntro title="회원·동의" body="회원별 확인 이용, 스탬프, 쿠폰, 마케팅 동의 상태를 봅니다. 원본 전화번호는 저장하지 않으며, 책임자만 뒤 4자리를 볼 수 있어요." />
       <Panel>
-        <div className="flex flex-col gap-3 md:flex-row md:items-center">
-          <label className="flex h-10 flex-1 items-center gap-2 rounded-lg border border-slate-200 px-3 focus-within:border-ax-primary">
-            <Search className="h-4 w-4 text-slate-400" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={can('member.viewContact') ? '이름, 회원코드, 전화 뒤 4자리' : '이름, 회원코드'} className="w-full text-sm outline-none" aria-label="회원 검색" data-testid="member-search" />
+        <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+          <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-lg border border-axline bg-white px-3 focus-within:border-ax-primary focus-within:ring-2 focus-within:ring-ax-primary/20 xl:min-w-[18rem] lg:h-10">
+            <Search className="h-4 w-4 text-slate-500" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={can('member.viewContact') ? '이름, 회원코드, 전화 뒤 4자리' : '이름, 회원코드'} className="h-11 w-full bg-transparent text-[0.9375rem] outline-none placeholder:text-slate-500" aria-label="회원 검색" data-testid="member-search" />
           </label>
-          <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
+          <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 no-scrollbar">
             {(
               [
                 ['all', '전체'],
@@ -55,15 +55,15 @@ export default function MembersPage() {
                 ['request', '삭제 요청'],
               ] as [F, string][]
             ).map(([v, l]) => (
-              <Chip key={v} active={f === v} onClick={() => setF(v)} className="h-8 text-[12.5px]">
+              <Chip key={v} active={f === v} onClick={() => setF(v)} className="text-[0.875rem]">
                 {l}
               </Chip>
             ))}
           </div>
         </div>
         <div className="mt-4 overflow-x-auto">
-          <table className="w-full min-w-[760px] text-left text-[13px]" data-testid="member-table">
-            <thead className="border-b border-slate-100 text-[12px] text-slate-400">
+          <table className="ax-table w-full min-w-[880px] text-left text-[0.875rem]" data-testid="member-table">
+            <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
               <tr>
                 <th className="pb-2 font-semibold">회원</th>
                 <th className="pb-2 font-semibold">가입</th>
@@ -77,20 +77,20 @@ export default function MembersPage() {
             <tbody className="divide-y divide-slate-100">
               {rows.map((r) => (
                 <tr key={r.p.id} className="group cursor-pointer transition hover:bg-slate-50">
-                  <td className="py-2.5">
+                  <td className="whitespace-nowrap py-2.5">
                     <Link href={`/ax/members/${r.p.id}`} className="font-bold text-slate-900 group-hover:underline">
                       {r.p.name}
                     </Link>
-                    <span className="ml-2 text-[12px] text-slate-400">
+                    <span className="ml-2 text-[0.8125rem] text-slate-500">
                       {r.p.memberCode}
                       {can('member.viewContact') && r.p.phoneLast4 ? ` · ****${r.p.phoneLast4}` : ''}
                     </span>
                   </td>
-                  <td className="py-2.5 text-slate-500">{fmtDate(r.p.createdAt)}</td>
+                  <td className="whitespace-nowrap py-2.5 text-slate-500">{fmtDate(r.p.createdAt)}</td>
                   <td className="py-2.5 text-right font-semibold tabular">{r.uses}</td>
                   <td className="py-2.5 text-right tabular">{r.stamps}</td>
                   <td className="py-2.5 text-right tabular">{r.coupons}</td>
-                  <td className="py-2.5 text-slate-500">{r.last ? relTime(r.last) : '-'}</td>
+                  <td className="whitespace-nowrap py-2.5 text-slate-500">{r.last ? relTime(r.last) : '-'}</td>
                   <td className="py-2.5">
                     <span className="flex flex-wrap gap-1">
                       {r.mkt ? <Tag tone="green">알림 동의</Tag> : <Tag>알림 미동의</Tag>}
@@ -103,7 +103,7 @@ export default function MembersPage() {
               ))}
             </tbody>
           </table>
-          {!rows.length && <p className="py-10 text-center text-[13px] text-slate-400">조건에 맞는 회원이 없어요.</p>}
+          {!rows.length && <p className="py-10 text-center text-[0.875rem] text-slate-500">조건에 맞는 회원이 없어요.</p>}
         </div>
       </Panel>
     </div>
