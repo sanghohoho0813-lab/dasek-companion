@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { LoginGate, PurchaseReportSheet, StampCard } from '@/components/customer/parts';
 import { useCustomer } from '@/components/customer/Shell';
-import { Button, PageSkeleton, StatusBadge } from '@/components/ui';
+import { DemoToolsButton } from '@/components/shell/DemoTools';
+import { Button, PageSkeleton } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { couponsFor, stampCount, stampRule, verifiedUses } from '@/lib/rules';
 import { act } from '@/lib/store';
@@ -51,7 +52,7 @@ export default function MyPage() {
     <div className="mx-auto max-w-3xl px-4 pb-10 pt-5 md:px-5 md:pt-10">
       <div className="flex items-center justify-between">
         <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">마이</h1>
-        <StatusBadge status="DEMO" />
+        <DemoToolsButton />
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         <div className="rounded-3xl bg-white p-5 ring-1 ring-line" data-testid="member-card">

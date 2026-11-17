@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { AssetImage } from '@/components/art/AssetImage';
 import { CatCoverCard, MenuCard, MenuRow, Rail, SectionHeader, SignatureCard, StampCard, StoreInfoCard, WhySheet } from '@/components/customer/parts';
 import { useCustomer } from '@/components/customer/Shell';
+import { DemoToolsButton } from '@/components/shell/DemoTools';
 import { LogoMark } from '@/components/shell/Logo';
 import { PageSkeleton, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
@@ -68,7 +69,7 @@ export default function HomePage() {
             </span>
           </Link>
           <div className="flex items-center gap-1">
-            <StatusBadge status="DEMO" />
+            <DemoToolsButton />
             <Link href={me ? '/my/inbox' : '/login'} aria-label={`알림 ${unread}개`} className="relative grid h-11 w-11 place-items-center rounded-full text-ink-2 active:bg-canvas">
               <Bell className="h-[23px] w-[23px]" />
               {unread > 0 && <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-coral-500" />}

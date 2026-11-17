@@ -21,8 +21,12 @@ interface DeviceCtx {
   inFrame: boolean;
   desktop: boolean; // ≥1024px 실제 데스크톱
   compact: boolean; // Dual에서 PC 영역이 좁아진 상태
+  /** 실제 휴대폰·태블릿(＜1024px)에서 PC 화면(1280px)을 축소해 미리보기 */
+  pcPreview: boolean;
+  setPcPreview: (v: boolean) => void;
 }
-const Ctx = createContext<DeviceCtx>({ mode: 'pc', setMode: () => {}, inFrame: false, desktop: false, compact: false });
+const Ctx = createContext<DeviceCtx>({ mode: 'pc', setMode: () => {}, inFrame: false, desktop: false, compact: false, pcPreview: false, setPcPreview: () => {} });
+const MOBILE_KEY = 'dasek:mobile-pc-preview';
 export const useDevice = () => useContext(Ctx);
 
 function currentPath() {
@@ -36,6 +40,7 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = useState<DeviceMode>('pc');
   const [inFrame, setInFrame] = useState(false);
   const [desktop, setDesktop] = useState(false);
+  const [pcPreview, setPcPreviewState] = useState(false);
 
   useEffect(() => {
     const framed = window.self !== window.top;
@@ -44,6 +49,7 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = window.localStorage.getItem(KEY) as DeviceMode | null;
       if (saved === 'pc' || saved === 'mobile' || saved === 'dual') setModeState(saved);
+      if (!framed && window.sessionStorage.getItem(MOBILE_KEY) === '1') setPcPreviewState(true);
     } catch {
       /* noop */
     }
@@ -63,12 +69,23 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const setPcPreview = useCallback((v: boolean) => {
+    setPcPreviewState(v);
+    try {
+      // 휴대폰 미리보기는 탭(세션) 동안만 유지 — 새로 열면 항상 실제 모바일 화면부터
+      if (v) window.sessionStorage.setItem(MOBILE_KEY, '1');
+      else window.sessionStorage.removeItem(MOBILE_KEY);
+    } catch {
+      /* noop */
+    }
+  }, []);
+
   const effective: DeviceMode = inFrame || !desktop ? 'pc' : mode;
   useEffect(() => {
     document.documentElement.dataset.dual = effective === 'dual' ? 'true' : 'false';
   }, [effective]);
 
-  return <Ctx.Provider value={{ mode: effective, setMode, inFrame, desktop, compact: effective === 'dual' }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ mode: effective, setMode, inFrame, desktop, compact: effective === 'dual', pcPreview: pcPreview && !desktop && !inFrame, setPcPreview }}>{children}</Ctx.Provider>;
 }
 
 /** iframe 내부: 자신의 Route를 부모에 알리고, 부모의 이동 지시를 따른다 */
@@ -122,7 +139,8 @@ export function DeviceSwitch({ tone = 'ax', className }: { tone?: 'ax' | 'brand'
   );
 }
 
-function PhoneFrame({ label }: { label: string }) {
+/** 같은 앱·같은 Route를 iframe으로 띄우고 부모 ↔ iframe Route를 양방향 동기화 */
+function useSyncedFrame() {
   const pathname = usePathname();
   const router = useRouter();
   const ref = useRef<HTMLIFrameElement>(null);
@@ -132,7 +150,7 @@ function PhoneFrame({ label }: { label: string }) {
   });
   const lastFromFrame = useRef<string | null>(null);
 
-  // PC → Mobile
+  // 부모 → Frame
   useEffect(() => {
     const path = currentPath();
     if (lastFromFrame.current === path) {
@@ -142,7 +160,7 @@ function PhoneFrame({ label }: { label: string }) {
     ref.current?.contentWindow?.postMessage({ type: MSG_NAV, path }, window.location.origin);
   }, [pathname]);
 
-  // Mobile → PC
+  // Frame → 부모
   useEffect(() => {
     const on = (e: MessageEvent) => {
       if (e.origin !== window.location.origin || e.source !== ref.current?.contentWindow) return;
@@ -153,7 +171,11 @@ function PhoneFrame({ label }: { label: string }) {
     window.addEventListener('message', on);
     return () => window.removeEventListener('message', on);
   }, [router]);
+  return { ref, src };
+}
 
+function PhoneFrame({ label }: { label: string }) {
+  const { ref, src } = useSyncedFrame();
   return (
     <div className="flex flex-col items-center">
       <div
@@ -168,9 +190,48 @@ function PhoneFrame({ label }: { label: string }) {
   );
 }
 
-/** 앱 전체를 감싸는 Stage: PC / Mobile 단독 / PC+Mobile 병렬 */
+const PC_WIDTH = 1280;
+
+/** 휴대폰에서 PC 화면 미리보기: 같은 앱을 1280px iframe으로 렌더링하고 화면 폭에 맞게 축소 */
+function PcPreview({ label }: { label: string }) {
+  const { setPcPreview } = useDevice();
+  const { ref, src } = useSyncedFrame();
+  const [box, setBox] = useState({ w: 390, h: 700 });
+  useEffect(() => {
+    const on = () => setBox({ w: window.innerWidth, h: window.innerHeight - 52 });
+    on();
+    window.addEventListener('resize', on);
+    return () => window.removeEventListener('resize', on);
+  }, []);
+  const scale = box.w / PC_WIDTH;
+  return (
+    <div className="fixed inset-0 z-[60] flex flex-col bg-[#F3F6F8]" data-testid="pc-preview">
+      <div className="flex h-[52px] shrink-0 items-center justify-between gap-2 border-b border-slate-200 bg-white px-3">
+        <p className="min-w-0 truncate text-[13px] font-semibold text-slate-700">
+          <Monitor className="mr-1 inline h-4 w-4 align-[-3px]" />
+          PC 화면 미리보기 <span className="font-normal text-slate-500">· {label} · {PC_WIDTH}px 축소</span>
+        </p>
+        <button onClick={() => setPcPreview(false)} data-testid="pc-preview-close" className="inline-flex h-9 shrink-0 items-center gap-1 rounded-lg bg-slate-900 px-3 text-[13px] font-bold text-white">
+          <Smartphone className="h-4 w-4" /> 모바일로
+        </button>
+      </div>
+      <div className="relative min-h-0 flex-1 overflow-hidden">
+        <iframe
+          ref={ref}
+          src={src}
+          title={`${label} — PC ${PC_WIDTH}px 화면 축소 미리보기`}
+          className="absolute left-0 top-0 origin-top-left border-0 bg-white"
+          style={{ width: PC_WIDTH, height: box.h / scale, transform: `scale(${scale})` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+/** 앱 전체를 감싸는 Stage: PC / Mobile 단독 / PC+Mobile 병렬 / (휴대폰) PC 미리보기 */
 export function DeviceStage({ children, label }: { children: React.ReactNode; label: string }) {
-  const { mode } = useDevice();
+  const { mode, pcPreview } = useDevice();
+  if (pcPreview) return <PcPreview label={label} />;
   if (mode === 'pc') return <>{children}</>;
   if (mode === 'mobile')
     return (

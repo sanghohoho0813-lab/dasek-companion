@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
+import { DemoToolsButton } from '@/components/shell/DemoTools';
 import { LogoMark } from '@/components/shell/Logo';
 import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
 import { can as canFn, type Permission } from '@/lib/permissions';
@@ -263,7 +264,8 @@ export function AxShell({ children }: { children: React.ReactNode }) {
                 <p className="hidden text-[12px] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
                 <h1 className="truncate text-[16px] font-extrabold tracking-tight text-slate-900 md:text-[18px]">{title}</h1>
               </div>
-              <StatusBadge status="DEMO" className="hidden sm:inline-flex" />
+              <StatusBadge status="DEMO" className="hidden lg:inline-flex" />
+              <DemoToolsButton tone="ax" className="lg:hidden" />
               {s && <RoleSwitch s={s} />}
               <div className={cx('hidden items-center gap-2', compact ? '2xl:flex' : 'xl:flex')}>
                 <Link href="/" className="inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[12.5px] font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">

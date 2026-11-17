@@ -112,3 +112,32 @@ test('font scale setting applies to both surfaces', async ({ page }) => {
   await page.getByRole('tab', { name: '보통' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-font', 'md');
 });
+
+test('phone: demo tools switch surfaces and show scaled PC preview with route sync', async ({ page }) => {
+  await page.setViewportSize(MOBILE);
+  await page.goto('/');
+  await page.getByTestId('demo-tools-open').first().click();
+  await expect(page.getByTestId('demo-tools')).toContainText('PC+Mobile 동시 보기는');
+  await page.getByTestId('demo-to-ax').click();
+  await expect(page).toHaveURL(/\/ax$/);
+  await expect(page.getByTestId('demo-tools')).toHaveCount(0);
+  // AX에서 다시 고객 화면으로
+  await page.getByTestId('demo-tools-open').first().click();
+  await page.getByTestId('demo-to-customer').click();
+  await expect(page).toHaveURL(/localhost:\d+\/$/);
+  // PC 미리보기: 1280px iframe, 프레임 안 이동이 부모 주소에 반영
+  await page.getByTestId('demo-tools-open').first().click();
+  await page.getByTestId('demo-pc-preview').click();
+  const frameEl = page.getByTestId('pc-preview').locator('iframe');
+  await expect(frameEl).toBeVisible();
+  expect(await frameEl.evaluate((f: HTMLIFrameElement) => f.clientWidth)).toBe(1280);
+  const frame = page.frameLocator('[data-testid="pc-preview"] iframe');
+  await frame.getByRole('link', { name: '다색냥', exact: true }).first().click();
+  await expect(page).toHaveURL(/\/dasek$/);
+  await expect(frame.getByTestId('demo-tools-open')).toHaveCount(0); // 프레임 안 재귀 없음
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+  await page.getByTestId('pc-preview-close').click();
+  await expect(page.getByTestId('pc-preview')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1, name: '다색냥' })).toBeVisible();
+});

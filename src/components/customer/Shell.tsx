@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
+import { DemoToolsButton } from '@/components/shell/DemoTools';
 import { Wordmark } from '@/components/shell/Logo';
 import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
 import { getProfile } from '@/lib/rules';
@@ -179,7 +180,10 @@ export function BackHeader({ title, right, fallback = '/' }: { title: string; ri
         <ChevronLeft className="h-6 w-6" />
       </button>
       <p className="min-w-0 flex-1 truncate text-[16.5px] font-bold text-ink">{title}</p>
-      <div className="flex items-center gap-1 pr-1">{right}</div>
+      <div className="flex items-center gap-1 pr-1">
+        <DemoToolsButton label="DEMO" className="h-8 px-2" />
+        {right}
+      </div>
     </div>
   );
 }
