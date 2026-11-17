@@ -2,7 +2,7 @@
 import { ArrowDown, ArrowUp, Eye, EyeOff, ImagePlus, Pencil, Plus } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useRef, useState } from 'react';
-import { AssetImage } from '@/components/art/AssetImage';
+import { AssetImage, menuSlots } from '@/components/art/AssetImage';
 import { Locked, PageIntro, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Button, EvidenceBadge, PageSkeleton, Segmented, Sheet, Toggle, axInputCls, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
@@ -33,6 +33,8 @@ async function resizeToDataUrl(file: File, max = 960): Promise<string> {
 
 function MenuEditor({ s, item, onClose }: { s: AppState; item: MenuItem; onClose: () => void }) {
   const run = useRun();
+  const photoRef = useRef<HTMLInputElement>(null);
+  const current = s.menuItems.find((m) => m.id === item.id);
   const [f, setF] = useState({ name: item.name, summary: item.summary, description: item.description, price: item.price?.toString() ?? '', priceEvidence: item.priceEvidence, published: item.published, isSignature: item.isSignature });
   return (
     <Sheet
@@ -75,6 +77,42 @@ function MenuEditor({ s, item, onClose }: { s: AppState; item: MenuItem; onClose
       }
     >
       <div className="space-y-3 text-[13px]">
+        <div className="flex gap-3 rounded-xl bg-slate-50 p-3">
+          <AssetImage slots={menuSlots(item)} dataUrl={current?.photoDataUrl} fallback={item.art} alt={`${item.name} 사진`} className="h-24 w-24 shrink-0 rounded-lg" sizes="96px" sampleBadge badgePosition="bl" />
+          <div className="min-w-0">
+            <p className="font-bold text-slate-800">메뉴 사진</p>
+            <p className="mt-0.5 text-[12px] text-slate-500">{current?.photoDataUrl ? '운영자가 올린 사진이 고객 화면에 보여요.' : '지금은 샘플 사진(또는 일러스트)이 보여요. 권리가 확인된 실제 사진으로 바꿔 주세요.'}</p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <input
+                ref={photoRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                data-testid="menu-photo-input"
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  e.target.value = '';
+                  if (!file) return;
+                  if (file.size > 12 * 1024 * 1024) return run(() => { throw new Error('12MB 이하 사진만 올릴 수 있어요.'); });
+                  try {
+                    const url = await resizeToDataUrl(file, 900);
+                    run(() => opAct((d, c) => D.updateMenuPhoto(d, c, item.id, url)), '사진을 바꿨어요. 고객 화면에 바로 반영돼요.');
+                  } catch (err) {
+                    run(() => { throw err; });
+                  }
+                }}
+              />
+              <Button tone="ax" variant="outline" size="sm" onClick={() => photoRef.current?.click()}>
+                <ImagePlus className="h-3.5 w-3.5" /> 사진 바꾸기
+              </Button>
+              {current?.photoDataUrl && (
+                <Button tone="ax" variant="ghost" size="sm" onClick={() => run(() => opAct((d, c) => D.updateMenuPhoto(d, c, item.id, null)), '기본 사진으로 되돌렸어요.')}>
+                  기본으로
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
         <label className="block font-semibold text-slate-600">
           메뉴명
           <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={cx(axInputCls, 'mt-1')} />
@@ -201,17 +239,39 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
           <ImagePlus className="h-4 w-4" /> 사진 올리기
         </Button>
       </div>
-      <div className="mt-2 grid grid-cols-3 gap-2 md:grid-cols-4">
-        {photos.map((p) => (
-          <div key={p.id} className="relative overflow-hidden rounded-lg ring-1 ring-slate-200">
-            <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? cat.coverArt} alt={p.alt} className="aspect-square w-full" />
-            <span className="absolute left-1 top-1">
-              <Tag tone={p.status === 'PUBLISHED' ? 'green' : p.status === 'PENDING_REVIEW' ? 'amber' : 'slate'}>{{ PUBLISHED: '공개', PENDING_REVIEW: '승인 대기', HIDDEN: '숨김' }[p.status]}</Tag>
-            </span>
+      <div className="mt-2 grid grid-cols-2 gap-2 md:grid-cols-4" data-testid="cat-photo-manager">
+        {photos.map((p, i) => (
+          <div key={p.id} className="overflow-hidden rounded-xl bg-white ring-1 ring-slate-200">
+            <div className="relative">
+              <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? cat.coverArt} alt={p.alt} className="aspect-square w-full" sizes="200px" sampleBadge badgePosition="br" />
+              <span className="absolute left-1.5 top-1.5 flex gap-1">
+                {i === 0 && p.status === 'PUBLISHED' && <Tag tone="blue">대표</Tag>}
+                <Tag tone={p.status === 'PUBLISHED' ? 'green' : p.status === 'PENDING_REVIEW' ? 'amber' : 'slate'}>{{ PUBLISHED: '공개', PENDING_REVIEW: '승인 대기', HIDDEN: '숨김' }[p.status]}</Tag>
+              </span>
+            </div>
+            <div className="flex flex-wrap items-center gap-1 p-1.5">
+              <button disabled={i === 0} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, -1)))} className="grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="앞으로">
+                ←
+              </button>
+              <button disabled={i === photos.length - 1} onClick={() => run(() => opAct((d, c) => D.moveCatPhoto(d, c, p.id, 1)))} className="grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 disabled:opacity-30" aria-label="뒤로">
+                →
+              </button>
+              {p.status === 'PUBLISHED' && i !== 0 && (
+                <button onClick={() => run(() => opAct((d, c) => D.setCatCover(d, c, p.id)), '대표 사진으로 지정했어요.')} className="h-8 rounded-md px-2 text-[12px] font-bold text-ax-primary hover:bg-slate-100" data-testid="set-cover">
+                  대표로
+                </button>
+              )}
+              <button
+                onClick={() => run(() => opAct((d, c) => D.reviewPhoto(d, c, p.id, p.status === 'PUBLISHED' ? 'HIDDEN' : 'PUBLISHED')), p.status === 'PUBLISHED' ? '숨겼어요.' : '공개했어요.')}
+                className="ml-auto h-8 rounded-md px-2 text-[12px] font-bold text-slate-600 hover:bg-slate-100"
+              >
+                {p.status === 'PUBLISHED' ? '숨기기' : '공개'}
+              </button>
+            </div>
           </div>
         ))}
       </div>
-      <p className="mt-2 text-[11.5px] text-slate-400">DEMO: 사진은 이 브라우저에만 저장돼요(960px로 축소). 운영 시 Supabase Storage + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
+      <p className="mt-2 text-[12px] text-slate-400">DEMO: 사진은 이 브라우저에만 저장돼요(960px로 축소). 운영 시 Supabase Storage + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
     </Sheet>
   );
 }
@@ -268,10 +328,10 @@ function Inner() {
                     <tr key={m.id} className="hover:bg-slate-50">
                       <td className="py-2">
                         <div className="flex items-center gap-2.5">
-                          <AssetImage slot={m.photoSlot} fallback={m.art} alt="" className="h-10 w-10 shrink-0 rounded-lg" />
+                          <AssetImage slots={menuSlots(m)} dataUrl={m.photoDataUrl} fallback={m.art} alt="" className="h-11 w-11 shrink-0 rounded-lg" sizes="44px" />
                           <span>
                             <span className="font-bold text-slate-900">{m.name}</span>
-                            {m.isSignature && <span className="ml-1.5 text-[11px] font-bold text-orange-600">대표</span>}
+                            {m.isSignature && <span className="ml-1.5 text-[12px] font-bold text-orange-600">대표</span>}
                             {m.isDemo && <span className="ml-1.5"><Tag tone="amber">예시</Tag></span>}
                           </span>
                         </div>
@@ -310,7 +370,7 @@ function Inner() {
                 const n = s.catPhotos.filter((p) => p.catId === c.id && p.status === 'PUBLISHED').length;
                 return (
                   <div key={c.id} className="flex gap-3 rounded-2xl bg-white p-3 ring-1 ring-slate-200/70">
-                    <AssetImage fallback={c.coverArt} alt={c.name} className="h-24 w-20 shrink-0 rounded-xl" />
+                    <AssetImage slot={D.publishedCatPhotos(s, c.id)[0]?.slot} dataUrl={D.publishedCatPhotos(s, c.id)[0]?.dataUrl} fallback={c.coverArt} alt={c.name} className="h-24 w-20 shrink-0 rounded-xl" sizes="80px" position="center 35%" />
                     <div className="min-w-0 flex-1">
                       <p className="flex items-center gap-1.5 text-[15px] font-bold text-slate-900">
                         {c.name} {c.isPlaceholder && <Tag tone="amber">예시</Tag>}

@@ -57,7 +57,7 @@ export default function ActivityPage() {
                 </div>
                 <div className="text-right">
                   <p className={cx('text-[12px] font-bold', r.state === 'CONFIRMED' ? 'text-emerald-600' : r.state === 'PENDING' ? 'text-brand-600' : 'text-ink-4')}>{label[r.state]}</p>
-                  <p className="text-[11.5px] text-ink-4">{fmtDate(r.at, { time: true })}</p>
+                  <p className="text-[12px] text-ink-4">{fmtDate(r.at, { time: true })}</p>
                 </div>
               </li>
             ))

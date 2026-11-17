@@ -760,6 +760,48 @@ export function reviewPhoto(s: AppState, ctx: Ctx, photoId: string, status: 'PUB
   audit(s, ctx, `photo.${status.toLowerCase()}`, photoId);
 }
 
+/** 메뉴 사진 교체/초기화 — 고객 화면에 즉시 반영 (DEMO: 브라우저 저장) */
+export function updateMenuPhoto(s: AppState, ctx: Ctx, id: string, dataUrl: string | null) {
+  assertCan(ctx.actorRole, 'content.edit');
+  const m = s.menuItems.find((x) => x.id === id);
+  if (!m) throw new DomainError('메뉴를 찾을 수 없습니다.');
+  m.photoDataUrl = dataUrl;
+  audit(s, ctx, dataUrl ? 'menu.photo_replace' : 'menu.photo_reset', id);
+}
+
+function catPhotosSorted(s: AppState, catId: string) {
+  return s.catPhotos.filter((p) => p.catId === catId).sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+/** 대표 사진 지정 — 맨 앞으로 이동 (고객 카드·레일의 대표 이미지) */
+export function setCatCover(s: AppState, ctx: Ctx, photoId: string) {
+  assertCan(ctx.actorRole, 'content.edit');
+  const p = s.catPhotos.find((x) => x.id === photoId);
+  if (!p) throw new DomainError('사진을 찾을 수 없습니다.');
+  if (p.status !== 'PUBLISHED') throw new DomainError('공개된 사진만 대표 사진으로 지정할 수 있어요.');
+  const list = catPhotosSorted(s, p.catId).filter((x) => x.id !== p.id);
+  [p, ...list].forEach((x, i) => (x.sortOrder = i));
+  audit(s, ctx, 'photo.set_cover', photoId, p.catId);
+}
+
+export function moveCatPhoto(s: AppState, ctx: Ctx, photoId: string, dir: -1 | 1) {
+  assertCan(ctx.actorRole, 'content.edit');
+  const p = s.catPhotos.find((x) => x.id === photoId);
+  if (!p) throw new DomainError('사진을 찾을 수 없습니다.');
+  const list = catPhotosSorted(s, p.catId);
+  const i = list.findIndex((x) => x.id === photoId);
+  const j = i + dir;
+  if (j < 0 || j >= list.length) return;
+  [list[i], list[j]] = [list[j], list[i]];
+  list.forEach((x, k) => (x.sortOrder = k));
+  audit(s, ctx, 'photo.reorder', photoId, String(dir));
+}
+
+/** 고객 화면용: 공개 사진만, 순서대로 */
+export function publishedCatPhotos(s: AppState, catId: string) {
+  return catPhotosSorted(s, catId).filter((p) => p.status === 'PUBLISHED');
+}
+
 export function updateStoreFact(s: AppState, ctx: Ctx, storeId: string, field: 'hours' | 'phone' | 'reservationUrl' | 'orderUrl' | 'deliveryUrl' | 'feeInfo', value: string) {
   assertCan(ctx.actorRole, 'settings.store');
   const st = s.stores.find((x) => x.id === storeId);

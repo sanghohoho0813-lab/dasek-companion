@@ -42,12 +42,12 @@ export default function InboxPage() {
                   <span className={cx('grid h-9 w-9 shrink-0 place-items-center rounded-full', n.kind === 'MARKETING' ? 'bg-promo-100 text-promo-600' : 'bg-white text-brand-600')}>{n.kind === 'MARKETING' ? <Megaphone className="h-4 w-4" /> : <Bell className="h-4 w-4" />}</span>
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center gap-1.5">
-                      {n.kind === 'MARKETING' && <span className="text-[11px] font-bold text-promo-600">(광고)</span>}
+                      {n.kind === 'MARKETING' && <span className="text-[12px] font-bold text-promo-600">(광고)</span>}
                       <span className="text-[14.5px] font-bold text-ink">{n.title}</span>
                       {!n.readAt && <span className="h-1.5 w-1.5 rounded-full bg-coral-500" />}
                     </span>
                     <span className="mt-0.5 block text-[13px] leading-relaxed text-ink-2">{n.body}</span>
-                    <span className="mt-1 block text-[11.5px] text-ink-4">{relTime(n.createdAt)}</span>
+                    <span className="mt-1 block text-[12px] text-ink-4">{relTime(n.createdAt)}</span>
                   </span>
                 </button>
               </li>

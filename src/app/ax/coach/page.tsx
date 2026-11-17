@@ -34,7 +34,7 @@ export default function CoachPage() {
                 <li key={t.l} className="flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2.5">
                   <span>
                     <span className="block text-[13px] font-semibold text-slate-700">{t.l}</span>
-                    <span className="block text-[11.5px] text-slate-400">목표: {t.goal}</span>
+                    <span className="block text-[12px] text-slate-400">목표: {t.goal}</span>
                   </span>
                   <span className="text-[18px] font-extrabold text-slate-900 tabular">{t.v}</span>
                 </li>

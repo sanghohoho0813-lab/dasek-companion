@@ -56,32 +56,34 @@ export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string 
         if (e.key === 'ArrowLeft') go(idx - 1);
       }}
     >
-      <div ref={track} className="flex snap-x-mandatory overflow-x-auto no-scrollbar md:rounded-[28px]" data-testid="cat-gallery">
-        {photos.map((p, i) => (
-          <button key={p.id} onClick={() => setFull(true)} className="w-full shrink-0 snap-start" aria-label={`${i + 1}번째 사진 크게 보기: ${p.caption}`}>
-            <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/5] w-full md:aspect-[4/3]" sampleBadge={!p.dataUrl} badgePosition="tr" priority={i === 0} />
-          </button>
-        ))}
+      <div className="relative">
+        <div ref={track} className="flex snap-x-mandatory overflow-x-auto no-scrollbar md:rounded-[28px]" data-testid="cat-gallery">
+          {photos.map((p, i) => (
+            <button key={p.id} onClick={() => setFull(true)} className="w-full shrink-0 snap-start" aria-label={`${i + 1}번째 사진 크게 보기: ${p.caption}`}>
+              <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/5] w-full md:aspect-[4/3]" sampleBadge badgePosition="tr" priority={i === 0} sizes="(min-width: 768px) 55vw, 100vw" position="center 35%" />
+            </button>
+          ))}
+        </div>
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/45 to-transparent p-4 pt-12 md:rounded-b-[28px]">
+          <p className="clamp-1 text-[13.5px] font-semibold text-white drop-shadow">{photos[idx]?.caption}</p>
+          <span className="rounded-full bg-black/40 px-2.5 py-1 text-[12px] font-bold text-white tabular">
+            {idx + 1} / {photos.length}
+          </span>
+        </div>
+        {photos.length > 1 && (
+          <>
+            <button onClick={() => go(idx - 1)} disabled={idx === 0} aria-label="이전 사진" className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button onClick={() => go(idx + 1)} disabled={idx === photos.length - 1} aria-label="다음 사진" data-testid="gallery-next" className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
+        <button onClick={() => setFull(true)} aria-label="전체화면" className="absolute left-3 top-3 hidden h-9 w-9 place-items-center rounded-full bg-white/90 text-ink-2 shadow-sm transition hover:bg-white md:grid">
+          <Maximize2 className="h-4 w-4" />
+        </button>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-black/45 to-transparent p-4 pt-12 md:rounded-b-[28px]">
-        <p className="clamp-1 text-[13.5px] font-semibold text-white drop-shadow">{photos[idx]?.caption}</p>
-        <span className="rounded-full bg-black/40 px-2.5 py-1 text-[12px] font-bold text-white tabular">
-          {idx + 1} / {photos.length}
-        </span>
-      </div>
-      {photos.length > 1 && (
-        <>
-          <button onClick={() => go(idx - 1)} disabled={idx === 0} aria-label="이전 사진" className="absolute left-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button onClick={() => go(idx + 1)} disabled={idx === photos.length - 1} aria-label="다음 사진" data-testid="gallery-next" className="absolute right-3 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-card transition hover:bg-white disabled:opacity-0 md:grid">
-            <ChevronRight className="h-5 w-5" />
-          </button>
-        </>
-      )}
-      <button onClick={() => setFull(true)} aria-label="전체화면" className="absolute right-3 top-3 hidden h-9 w-9 place-items-center rounded-full bg-white/85 text-ink-2 shadow-sm md:grid">
-        <Maximize2 className="h-4 w-4" />
-      </button>
       <div className="mt-3 flex justify-center gap-1.5" aria-hidden>
         {photos.map((p, i) => (
           <span key={p.id} className={cx('h-1.5 rounded-full transition-all duration-200', i === idx ? 'w-5 bg-brand-600' : 'w-1.5 bg-line')} />
@@ -89,8 +91,8 @@ export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string 
       </div>
       <div className="mt-3 hidden gap-2 px-4 md:flex md:px-0">
         {photos.map((p, i) => (
-          <button key={p.id} onClick={() => go(i)} aria-label={`${i + 1}번째 사진`} aria-current={i === idx} className={cx('h-16 w-16 overflow-hidden rounded-xl ring-2 transition', i === idx ? 'ring-brand-500' : 'ring-transparent opacity-70 hover:opacity-100')}>
-            <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt="" className="h-full w-full" />
+          <button key={p.id} onClick={() => go(i)} aria-label={`${i + 1}번째 사진`} aria-current={i === idx} className={cx('relative h-16 w-16 overflow-hidden rounded-xl ring-2 transition', i === idx ? 'ring-brand-500' : 'ring-transparent opacity-70 hover:opacity-100')}>
+            <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt="" className="h-full w-full" sizes="64px" />
           </button>
         ))}
       </div>
@@ -152,7 +154,7 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
           touch.current = null;
         }}
       >
-        <AssetImage key={p.id} slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/3] max-h-full w-full max-w-4xl animate-scale-in rounded-3xl" sampleBadge={!p.dataUrl} />
+        <AssetImage key={p.id} slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/3] max-h-full w-full max-w-4xl animate-scale-in rounded-3xl" sampleBadge sizes="100vw" />
         <button onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} aria-label="이전 사진" className="absolute left-2 grid h-11 w-11 place-items-center rounded-full bg-white text-ink shadow-card disabled:opacity-0 md:left-4">
           <ChevronLeft className="h-5 w-5" />
         </button>

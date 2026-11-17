@@ -117,7 +117,7 @@ function DesktopHeader() {
           {me && (
             <Link href="/my/inbox" aria-label={`알림 ${unread}개`} className="relative grid h-10 w-10 place-items-center rounded-full text-ink-2 transition hover:bg-canvas">
               <Bell className="h-5 w-5" />
-              {unread > 0 && <span className="absolute right-1.5 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[10px] font-bold text-white">{unread}</span>}
+              {unread > 0 && <span className="absolute right-1.5 top-1.5 grid h-4 min-w-4 place-items-center rounded-full bg-coral-500 px-1 text-[11px] font-bold text-white">{unread}</span>}
             </Link>
           )}
           {me ? (
@@ -157,7 +157,7 @@ export function BottomNav() {
                 <Icon className="h-[22px] w-[22px]" strokeWidth={active ? 2.3 : 1.9} />
                 {n.href === '/my' && unread > 0 && <span className="absolute right-2 top-0.5 h-2 w-2 rounded-full bg-coral-500" />}
               </span>
-              <span className={cx('text-[11px] font-semibold', active ? 'text-brand-700' : 'text-ink-3')}>{n.label}</span>
+              <span className={cx('text-[12px] font-semibold', active ? 'text-brand-700' : 'text-ink-3')}>{n.label}</span>
             </Link>
           );
         })}
@@ -198,6 +198,9 @@ function Footer() {
           </Link>
           <Link href="/privacy" className="hover:text-ink">
             개인정보 처리 안내(초안)
+          </Link>
+          <Link href="/credits" className="hover:text-ink">
+            샘플 사진 출처
           </Link>
           <Link href="/ax" className="hover:text-ink">
             매장 운영자

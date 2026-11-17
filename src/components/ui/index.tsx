@@ -48,7 +48,7 @@ const STATUS_STYLE: Record<CapabilityStatus | DataStatus, string> = {
 };
 const STATUS_LABEL: Record<CapabilityStatus | DataStatus, string> = { LIVE: 'LIVE', PILOT: 'PILOT', DEMO: 'DEMO', READY: 'READY', NEXT: 'NEXT' };
 export function StatusBadge({ status, label, className }: { status: CapabilityStatus | DataStatus; label?: string; className?: string }) {
-  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[10.5px] font-bold tracking-wide ring-1 ring-inset', STATUS_STYLE[status], className)}>{label ?? STATUS_LABEL[status]}</span>;
+  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-bold tracking-wide ring-1 ring-inset', STATUS_STYLE[status], className)}>{label ?? STATUS_LABEL[status]}</span>;
 }
 
 const EV_STYLE: Record<Evidence, string> = {
@@ -59,7 +59,7 @@ const EV_STYLE: Record<Evidence, string> = {
 };
 export const EV_LABEL: Record<Evidence, string> = { VERIFIED: '운영자 확인', USER_PROVIDED: '제공 정보', ASSUMPTION: '가정', UNKNOWN: '미확인' };
 export function EvidenceBadge({ ev, className }: { ev: Evidence; className?: string }) {
-  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[10.5px] font-semibold', EV_STYLE[ev], className)}>{EV_LABEL[ev]}</span>;
+  return <span className={cx('inline-flex items-center rounded-md px-1.5 py-0.5 text-[11px] font-semibold', EV_STYLE[ev], className)}>{EV_LABEL[ev]}</span>;
 }
 
 export function Chip({ active, className, ...rest }: React.ButtonHTMLAttributes<HTMLButtonElement> & { active?: boolean }) {
@@ -344,7 +344,7 @@ export function Segmented<T extends string>({ value, onChange, options, tone = '
           )}
         >
           {o.label}
-          {o.count != null && <span className={cx('rounded-full px-1.5 text-[11px]', value === o.value ? (tone === 'brand' ? 'bg-brand-50 text-brand-700' : 'bg-ax-soft text-ax-primary') : 'bg-white/70 text-slate-500')}>{o.count}</span>}
+          {o.count != null && <span className={cx('rounded-full px-1.5 text-[12px]', value === o.value ? (tone === 'brand' ? 'bg-brand-50 text-brand-700' : 'bg-ax-soft text-ax-primary') : 'bg-white/70 text-slate-500')}>{o.count}</span>}
         </button>
       ))}
     </div>

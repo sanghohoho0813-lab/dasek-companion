@@ -206,3 +206,43 @@ describe('deletion', () => {
     expect(couponsFor(s, u.userId).every((c) => c.status !== 'ISSUED')).toBe(true);
   });
 });
+
+describe('content photos (2차)', () => {
+  it('menu photo replace is manager-only and resettable', () => {
+    const s = fresh();
+    expect(() => D.updateMenuPhoto(s, staff(), 'm_pie120', 'data:image/jpeg;base64,xx')).toThrow(/권한/);
+    D.updateMenuPhoto(s, mgr(), 'm_pie120', 'data:image/jpeg;base64,xx');
+    expect(s.menuItems.find((m) => m.id === 'm_pie120')!.photoDataUrl).toContain('data:image');
+    D.updateMenuPhoto(s, mgr(), 'm_pie120', null);
+    expect(s.menuItems.find((m) => m.id === 'm_pie120')!.photoDataUrl).toBeNull();
+  });
+
+  it('set cover moves photo first; hidden photos are excluded from customer list', () => {
+    const s = fresh();
+    const list = D.publishedCatPhotos(s, 'cat_1');
+    expect(list.length).toBe(4);
+    D.setCatCover(s, mgr(), list[2].id);
+    expect(D.publishedCatPhotos(s, 'cat_1')[0].id).toBe(list[2].id);
+    D.reviewPhoto(s, mgr(), list[1].id, 'HIDDEN');
+    expect(D.publishedCatPhotos(s, 'cat_1').some((p) => p.id === list[1].id)).toBe(false);
+    expect(() => D.setCatCover(s, mgr(), list[1].id)).toThrow(/공개된 사진만/);
+    const before = D.publishedCatPhotos(s, 'cat_1').map((p) => p.id);
+    D.moveCatPhoto(s, mgr(), before[0], 1);
+    expect(D.publishedCatPhotos(s, 'cat_1')[1].id).toBe(before[0]);
+    expect(() => D.moveCatPhoto(s, staff(), before[0], 1)).toThrow(/권한/);
+  });
+
+  it('today stats count only staff-verified uses', async () => {
+    const { todayStats } = await import('@/lib/rules');
+    const s = fresh();
+    const before = todayStats(s);
+    D.recordLinkClick(s, cust(), null, 'order', 'store_dasek', 'x');
+    expect(todayStats(s).purchasesToday).toBe(before.purchasesToday);
+    const u = D.signup(s, cust(), { name: 'z', phone: '', consents, preferredBrands: [] });
+    D.staffRecordPurchase(s, staff(), u.userId, 'store_dasek', ['m_pie120'], 4500);
+    const after = todayStats(s);
+    expect(after.purchasesToday).toBe(before.purchasesToday + 1);
+    expect(after.newMembersToday).toBe(before.newMembersToday + 1);
+    expect(after.amountToday).toBe(before.amountToday + 4500);
+  });
+});

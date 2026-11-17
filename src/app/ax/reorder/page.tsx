@@ -62,13 +62,13 @@ export default function ReorderPage() {
                       </Link>{' '}
                       · {m?.name} {hasConsent(s, c.userId, 'marketing_inapp') ? <Tag tone="green">알림 동의</Tag> : <Tag>알림 미동의</Tag>}
                     </p>
-                    <p className="mt-1 text-[11.5px] font-bold text-slate-400">왜? (사용한 정보: 저장 기록 · 확인 구매 기록 · 동의 상태)</p>
+                    <p className="mt-1 text-[12px] font-bold text-slate-400">왜? (사용한 정보: 저장 기록 · 확인 구매 기록 · 동의 상태)</p>
                     <ul className="mt-0.5 space-y-0.5 text-[12.5px] text-slate-600">
                       {c.reasons.map((r) => (
                         <li key={r}>· {r}</li>
                       ))}
                     </ul>
-                    <p className="mt-1 text-[11.5px] text-slate-400">
+                    <p className="mt-1 text-[12px] text-slate-400">
                       생성 {fmtDate(c.createdAt, { time: true })} {c.decidedAt && `· 결정 ${fmtDate(c.decidedAt, { time: true })}`}
                     </p>
                   </div>

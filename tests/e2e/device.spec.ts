@@ -56,7 +56,7 @@ test('real mobile browser hides Device View', async ({ page }) => {
   await expect(page.getByTestId('device-switch')).toHaveCount(0);
 });
 
-const ROUTES = ['/', '/realsicdan', '/menu/m_chicken_salad', '/dasek', '/dasek/cats/cat_3', '/my', '/signup', '/membership', '/roadmap', '/checkin', '/ax', '/ax/queue', '/ax/members', '/ax/content', '/ax/rewards', '/ax/campaigns', '/ax/analytics', '/ax/reorder', '/ax/evidence', '/ax/settings', '/ax/why', '/ax/coach'];
+const ROUTES = ['/', '/credits', '/my/coupons', '/realsicdan', '/menu/m_chicken_salad', '/dasek', '/dasek/cats/cat_3', '/my', '/signup', '/membership', '/roadmap', '/checkin', '/ax', '/ax/queue', '/ax/members', '/ax/content', '/ax/rewards', '/ax/campaigns', '/ax/analytics', '/ax/reorder', '/ax/evidence', '/ax/settings', '/ax/why', '/ax/coach'];
 const WIDTHS = [360, 390, 430, 768, 1024, 1280, 1440, 1920];
 
 test('no horizontal overflow and no runtime errors across widths', async ({ page }) => {

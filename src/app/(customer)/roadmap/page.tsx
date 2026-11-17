@@ -6,7 +6,7 @@ import { BackHeader, useCustomer } from '@/components/customer/Shell';
 import { Button, PageSkeleton, Sheet, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { hasConsent } from '@/lib/rules';
-import { ROADMAP, type RoadmapItem } from '@/lib/roadmap';
+import { ROADMAP, ROADMAP_GROUPS, type RoadmapItem } from '@/lib/roadmap';
 import { act } from '@/lib/store';
 import { cx } from '@/lib/util';
 
@@ -27,34 +27,48 @@ function Inner() {
     <div>
       <BackHeader title="준비 중인 서비스" />
       <div className="mx-auto max-w-5xl px-4 pb-10 pt-4 md:px-5 md:pt-10">
-        <div className="flex items-center gap-2">
-          <h1 className="text-[24px] font-extrabold text-ink">준비 중인 서비스</h1>
-          <StatusBadge status="NEXT" label="향후 개발" />
+        <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">앞으로 준비하는 서비스</h1>
+          <StatusBadge status="NEXT" label="개발 예정" />
         </div>
-        <p className="mt-1 text-[14px] text-ink-3">아직 제공하지 않는 서비스예요. 관심을 남겨 주시면 어떤 서비스를 먼저 만들지 정하는 데 참고해요.</p>
-        <div className="mt-6 grid gap-3 md:grid-cols-2">
-          {ROADMAP.map((r) => (
-            <button key={r.key} onClick={() => setOpen(r)} className="lift flex items-start gap-4 rounded-3xl bg-white p-5 text-left ring-1 ring-line" data-testid={`roadmap-${r.key}`}>
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet-50 text-2xl" aria-hidden>
-                {r.emoji}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="text-[12px] font-bold text-violet-600">{r.group}</span>
-                <span className="block text-[16px] font-extrabold text-ink">{r.title}</span>
-                <span className="mt-0.5 block text-[13px] leading-relaxed text-ink-3">{r.oneLine}</span>
-                <span className="mt-2 flex items-center gap-2 text-[12px] text-ink-4">
-                  관심 {count(r.key)}명 {mine(r.key) && <span className="font-bold text-brand-700">· 관심 남김</span>}
-                </span>
-              </span>
-            </button>
-          ))}
+        <p className="mt-1.5 text-[15px] leading-relaxed text-ink-2">지금은 매장 메뉴·고양이·멤버십에 집중하고 있어요. 아래 서비스는 <b>아직 제공하지 않으며</b>, 관심을 남겨 주시면 어떤 것부터 만들지 정하는 데 참고해요.</p>
+        <div className="mt-4 flex flex-wrap gap-2 rounded-2xl bg-canvas p-3 text-[13px]">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-semibold text-sage-600 ring-1 ring-line">● 지금 이용 가능: 메뉴·고양이 탐색, 회원·스탬프·쿠폰·친구 추천, 체크인</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-semibold text-violet-700 ring-1 ring-line">○ 개발 예정: 아래 서비스</span>
         </div>
+        {ROADMAP_GROUPS.map((g) => (
+          <section key={g.key} id={g.key} className="mt-8 scroll-mt-20" aria-labelledby={`rg-${g.key}`}>
+            <h2 id={`rg-${g.key}`} className="flex items-center gap-2 text-[19px] font-extrabold text-ink">
+              <span aria-hidden>{g.emoji}</span> {g.title}
+            </h2>
+            <p className="mt-0.5 text-[14px] text-ink-3">{g.desc}</p>
+            <div className="mt-3 grid gap-3 md:grid-cols-2">
+              {ROADMAP.filter((r) => r.group === g.key).map((r) => (
+                <button key={r.key} onClick={() => setOpen(r)} className="lift flex items-start gap-4 rounded-[24px] bg-white p-5 text-left ring-1 ring-line" data-testid={`roadmap-${r.key}`}>
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-violet-50 text-2xl" aria-hidden>
+                    {r.emoji}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-center gap-1.5">
+                      <span className="text-[16.5px] font-extrabold text-ink">{r.title}</span>
+                      <StatusBadge status="NEXT" label="개발 예정" />
+                    </span>
+                    <span className="mt-1 block text-[14px] leading-relaxed text-ink-2">{r.oneLine}</span>
+                    <span className="mt-2 flex items-center gap-2 text-[13px] text-ink-3">
+                      관심 {count(r.key)}명 {mine(r.key) && <span className="font-bold text-brand-700">· 관심 남김</span>}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
       <Sheet
         open={!!open}
         onClose={() => setOpen(null)}
         title={open?.title ?? ''}
-        description={open ? `${open.group} · 향후 개발 · 아이디어 검증 중` : ''}
+        description={open ? `${ROADMAP_GROUPS.find((g) => g.key === open.group)?.title} · 개발 예정 · 아이디어 검증 중` : ''}
         testId="roadmap-sheet"
         footer={
           open && (

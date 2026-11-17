@@ -8,7 +8,7 @@ import * as D from './domain';
 import type { AppState, ArtSpec, CafeCat, CatPhoto, FactField, LoyaltyRule, MenuItem, Store } from './types';
 import { addDays, DAY, dailyCheckinCode, dayKey, mulberry32 } from './util';
 
-export const SCHEMA_VERSION = 3;
+export const SCHEMA_VERSION = 4;
 const NAVER_SRC = '사용자 제공 네이버 플레이스 공개정보 (2026-11-17)';
 
 const fact = <T = string>(value: NoInfer<T> | null, evidence: FactField['evidence'], source: string, checkedAt: string | null = null): FactField<T> => ({ value, evidence, source, checkedAt });
@@ -69,6 +69,7 @@ function baseState(nowIso: string): AppState {
     priceEvidence: 'UNKNOWN',
     tags: [],
     photoSlot: null,
+    photoDataUrl: null,
     nutritionStatus: 'UNVERIFIED',
     nutrition: null,
     allergenStatus: 'UNKNOWN',
@@ -85,15 +86,15 @@ function baseState(nowIso: string): AppState {
   const menuItems: MenuItem[] = [
     mi({ id: 'm_chicken_salad', brand: 'realsicdan', categoryId: 'rs_salad', name: '닭가슴살 샐러드', summary: '든든한 단백질 한 그릇', description: '매장에서 판매 중인 것으로 확인된 메뉴입니다. 구성과 가격은 매장에서 확인해 주세요.', tags: ['단백질', '샐러드', '가벼운 한 끼'], art: { kind: 'salad', variant: 0 }, photoSlot: 'offer_01_salad', evidence: 'USER_PROVIDED', source: realReview, isDemo: false }, 0),
     mi({ id: 'm_diet_box', brand: 'realsicdan', categoryId: 'rs_box', name: '다이어트 도시락', summary: '식단 관리용 도시락', description: '매장에서 판매 중인 것으로 확인된 메뉴입니다. 구성과 가격은 매장에서 확인해 주세요.', tags: ['도시락', '식단', '든든한 한 끼'], art: { kind: 'lunchbox', variant: 0 }, evidence: 'USER_PROVIDED', source: realReview, isDemo: false }, 1),
-    mi({ id: 'm_salmon_poke', brand: 'realsicdan', categoryId: 'rs_salad', name: '연어 포케 샐러드', summary: '연어와 곡물, 채소를 한 그릇에', description: 'DEMO 예시 메뉴입니다. 실제 판매 메뉴로 교체해 주세요.', price: 10900, priceEvidence: 'ASSUMPTION', tags: ['샐러드', '곡물', '가벼운 한 끼'], art: { kind: 'salad', variant: 1 } }, 2),
-    mi({ id: 'm_fruit_salad', brand: 'realsicdan', categoryId: 'rs_salad', name: '리코타 과일 샐러드', summary: '상큼한 과일과 부드러운 치즈', description: 'DEMO 예시 메뉴입니다.', price: 8900, priceEvidence: 'ASSUMPTION', tags: ['샐러드', '상큼한'], art: { kind: 'salad', variant: 2 } }, 3),
-    mi({ id: 'm_sweetpotato_box', brand: 'realsicdan', categoryId: 'rs_box', name: '고구마 닭가슴살 도시락', summary: '고구마와 닭가슴살 구성', description: 'DEMO 예시 메뉴입니다.', price: 8500, priceEvidence: 'ASSUMPTION', tags: ['도시락', '단백질', '든든한 한 끼'], art: { kind: 'lunchbox', variant: 1 } }, 4),
-    mi({ id: 'm_greek_bowl', brand: 'realsicdan', categoryId: 'rs_snack', name: '그릭요거트 볼', summary: '그래놀라와 과일 토핑', description: 'DEMO 예시 메뉴입니다.', price: 5500, priceEvidence: 'ASSUMPTION', tags: ['간식', '단백질', '상큼한'], art: { kind: 'snack', variant: 0 } }, 5),
+    mi({ id: 'm_salmon_poke', brand: 'realsicdan', categoryId: 'rs_salad', name: '가든 콘 샐러드', summary: '옥수수·방울토마토·당근을 듬뿍', description: 'DEMO 예시 메뉴입니다. 실제 판매 메뉴로 교체해 주세요.', price: 8900, priceEvidence: 'ASSUMPTION', tags: ['샐러드', '채소 듬뿍', '가벼운 한 끼'], art: { kind: 'salad', variant: 1 } }, 2),
+    mi({ id: 'm_fruit_salad', brand: 'realsicdan', categoryId: 'rs_salad', name: '치즈 그린 샐러드', summary: '부드러운 치즈와 올리브, 잎채소', description: 'DEMO 예시 메뉴입니다.', price: 9500, priceEvidence: 'ASSUMPTION', tags: ['샐러드', '치즈', '상큼한'], art: { kind: 'salad', variant: 2 } }, 3),
+    mi({ id: 'm_sweetpotato_box', brand: 'realsicdan', categoryId: 'rs_box', name: '브레드 샐러드 박스', summary: '잎채소 샐러드와 곡물빵 한 상자', description: 'DEMO 예시 메뉴입니다.', price: 8500, priceEvidence: 'ASSUMPTION', tags: ['도시락', '든든한 한 끼', '포장 가능'], art: { kind: 'lunchbox', variant: 1 } }, 4),
+    mi({ id: 'm_greek_bowl', brand: 'realsicdan', categoryId: 'rs_snack', name: '그릭요거트 볼', summary: '그래놀라·딸기·망고 토핑', description: 'DEMO 예시 메뉴입니다.', price: 5500, priceEvidence: 'ASSUMPTION', tags: ['간식', '단백질', '상큼한'], art: { kind: 'snack', variant: 0 } }, 5),
     mi({ id: 'm_pie120', brand: 'dasek', categoryId: 'dn_dessert', name: '120겹파이', summary: '겹겹이 바삭한 다색냥 대표 디저트', description: '다색냥의 대표 메뉴입니다. 가격은 공개 메뉴 정보 기준이며 매장 사정에 따라 달라질 수 있어요.', price: 4500, priceEvidence: 'USER_PROVIDED', tags: ['디저트', '대표', '포장 가능'], art: { kind: 'pie', variant: 0 }, photoSlot: 'offer_03_dessert', isSignature: true, evidence: 'USER_PROVIDED', source: `${NAVER_SRC} — 대표 메뉴 4,500원`, isDemo: false }, 0),
     mi({ id: 'm_machine_drink', brand: 'dasek', categoryId: 'dn_drink', name: '기본 음료 (머신)', summary: '기계로 제공되는 기본 음료', description: '기본 음료는 기계로 제공된다고 안내되어 있어요. 이용요금 포함 여부는 매장에서 확인해 주세요.', tags: ['음료'], art: { kind: 'drink', variant: 0 }, photoSlot: 'offer_02_drink', evidence: 'USER_PROVIDED', source: realReview, isDemo: false }, 1),
     mi({ id: 'm_lemonade', brand: 'dasek', categoryId: 'dn_drink', name: '수제 레몬에이드', summary: '데스크 주문 음료 예시', description: 'DEMO 예시 메뉴입니다. 데스크 주문 메뉴로 교체해 주세요.', price: 5500, priceEvidence: 'ASSUMPTION', tags: ['음료', '상큼한'], art: { kind: 'drink', variant: 1 } }, 2),
-    mi({ id: 'm_milktea', brand: 'dasek', categoryId: 'dn_drink', name: '밀크티 라떼', summary: '부드러운 홍차 라떼', description: 'DEMO 예시 메뉴입니다.', price: 5000, priceEvidence: 'ASSUMPTION', tags: ['음료', '따뜻한'], art: { kind: 'drink', variant: 2 } }, 3),
-    mi({ id: 'm_cat_cookie', brand: 'dasek', categoryId: 'dn_dessert', name: '고양이 모양 쿠키', summary: '사람이 먹는 버터 쿠키', description: 'DEMO 예시 메뉴입니다. 고양이에게 주지 마세요.', price: 3000, priceEvidence: 'ASSUMPTION', tags: ['디저트', '포장 가능'], art: { kind: 'snack', variant: 1 } }, 4),
+    mi({ id: 'm_milktea', brand: 'dasek', categoryId: 'dn_drink', name: '밀크티 라떼', summary: '부드러운 홍차 라떼 (데스크 주문 예시)', description: 'DEMO 예시 메뉴입니다.', price: 5000, priceEvidence: 'ASSUMPTION', tags: ['음료', '따뜻한'], art: { kind: 'drink', variant: 2 } }, 3),
+    mi({ id: 'm_cat_cookie', brand: 'dasek', categoryId: 'dn_dessert', name: '초코칩 쿠키', summary: '포장해 가기 좋은 간식', description: 'DEMO 예시 메뉴입니다. 사람이 먹는 간식이에요 — 고양이에게 주지 마세요.', price: 3000, priceEvidence: 'ASSUMPTION', tags: ['디저트', '포장 가능'], art: { kind: 'snack', variant: 1 } }, 4),
   ];
 
   const catDefs: [string, string, ArtSpec & { kind: 'cat' }, string[], string[]][] = [
@@ -119,7 +120,7 @@ function baseState(nowIso: string): AppState {
     internalNote: '예시 프로필 — 실제 고양이 이름·사진·건강정보 확인 후 교체',
   }));
   const poses = ['sit', 'loaf', 'peek', 'sleep'] as const;
-  const captions = ['오늘의 프로필 컷', '캣타워 위에서', '빼꼼 인사', '낮잠 시간'];
+  const captions = ['대표 사진', '가까이서 본 얼굴', '오늘의 한 컷', '쉬는 시간'];
   const catPhotos: CatPhoto[] = cats.flatMap((c, ci) =>
     poses.map((pose, pi) => ({
       id: `pho_${c.id}_${pi}`,
@@ -128,7 +129,7 @@ function baseState(nowIso: string): AppState {
       dataUrl: null,
       slot: `cat_${String(ci + 1).padStart(2, '0')}_${String(pi + 1).padStart(2, '0')}`,
       caption: pi === 0 ? c.tagline : captions[pi],
-      alt: `${c.name}(예시 일러스트) — ${captions[pi]}`,
+      alt: `${c.name}(예시 프로필) 샘플 사진 — ${captions[pi]}`,
       status: 'PUBLISHED',
       sortOrder: pi,
       uploadedBy: null,

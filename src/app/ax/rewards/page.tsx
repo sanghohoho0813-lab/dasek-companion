@@ -226,7 +226,7 @@ function Inner() {
                       <td className="py-2 text-slate-500">{fmtDate(r.createdAt)}</td>
                       <td className="py-2 text-slate-500">{r.qualifiedAt ? fmtDate(r.qualifiedAt, { time: true }) : '대기'}</td>
                       <td className="py-2">
-                        <Tag tone={r.status === 'REWARDED' ? 'green' : r.status === 'PENDING' ? 'blue' : r.status === 'REVERSED' ? 'amber' : 'slate'}>{r.status}</Tag> {r.reason && <span className="text-[11.5px] text-slate-400">{r.reason}</span>}
+                        <Tag tone={r.status === 'REWARDED' ? 'green' : r.status === 'PENDING' ? 'blue' : r.status === 'REVERSED' ? 'amber' : 'slate'}>{r.status}</Tag> {r.reason && <span className="text-[12px] text-slate-400">{r.reason}</span>}
                       </td>
                     </tr>
                   ))}
@@ -245,7 +245,7 @@ function Inner() {
                     <span className="font-semibold">{name(l.userId)}</span> · {l.label}
                   </span>
                   <Tag tone={l.status === 'CONFIRMED' ? 'green' : l.status === 'EXPECTED' ? 'amber' : 'slate'}>{l.status}</Tag>
-                  <span className="w-36 truncate text-right font-mono text-[11px] text-slate-400" title={l.idempotencyKey}>
+                  <span className="w-36 truncate text-right font-mono text-[12px] text-slate-400" title={l.idempotencyKey}>
                     {l.idempotencyKey}
                   </span>
                 </li>

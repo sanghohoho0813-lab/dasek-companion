@@ -12,7 +12,7 @@ export default {
       colors: {
         // Customer brand (밝은 다색컴패니언 테마)
         brand: { 50: '#EEF8FB', 100: '#D8F0F7', 200: '#B3E2EF', 400: '#55BEDD', 500: '#36A9C9', 600: '#258EA8', 700: '#1C7186', 800: '#175B6B' },
-        ink: { DEFAULT: '#25333B', 2: '#4A5A63', 3: '#6E7D86', 4: '#9AA7AF' },
+        ink: { DEFAULT: '#1F2B32', 2: '#3F4E57', 3: '#5B6A73', 4: '#7F8C95' },
         canvas: '#F7FAFB',
         line: '#E7EDF0',
         sage: { 50: '#F3FAF8', 100: '#EAF7F4', 300: '#B9DFD4', 600: '#3C8C74' },

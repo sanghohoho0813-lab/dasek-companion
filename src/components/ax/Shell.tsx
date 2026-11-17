@@ -92,7 +92,7 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
     <nav aria-label="운영 메뉴" className="space-y-5">
       {AX_NAV.map((g) => (
         <div key={g.key}>
-          {!collapsed && <p className="mb-1.5 px-3 text-[11px] font-bold uppercase tracking-[0.12em] text-ax-shell-muted">{g.label}</p>}
+          {!collapsed && <p className="mb-1.5 px-3 text-[12px] font-bold uppercase tracking-[0.12em] text-ax-shell-muted">{g.label}</p>}
           <ul className="space-y-0.5">
             {g.items.map((it) => {
               const active = isActive(pathname, it.href);
@@ -116,7 +116,7 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
                     </span>
                     {!collapsed && <span className="min-w-0 flex-1 truncate">{it.label}</span>}
                     {n > 0 && (
-                      <span className={cx('grid h-5 min-w-5 place-items-center rounded-full bg-red-500 px-1 text-[10.5px] font-bold text-white', collapsed && 'absolute right-0.5 top-0.5 h-4 min-w-4')}>{n}</span>
+                      <span className={cx('grid h-5 min-w-5 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white', collapsed && 'absolute right-0.5 top-0.5 h-4 min-w-4')}>{n}</span>
                     )}
                   </Link>
                 </li>
@@ -238,7 +238,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
             {!compact && (
               <span className="leading-none">
                 <span className="block text-[15px] font-extrabold tracking-tight text-ax-shell-fg">다색컴패니언</span>
-                <span className="mt-1 block text-[10px] font-bold tracking-[0.2em] text-ax-shell-muted">BUSINESS AX</span>
+                <span className="mt-1 block text-[11px] font-bold tracking-[0.2em] text-ax-shell-muted">BUSINESS AX</span>
               </span>
             )}
           </Link>
@@ -260,7 +260,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
                 <Menu className="h-5 w-5" />
               </button>
               <div className="min-w-0 flex-1">
-                <p className="hidden text-[11.5px] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
+                <p className="hidden text-[12px] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
                 <h1 className="truncate text-[16px] font-extrabold tracking-tight text-slate-900 md:text-[18px]">{title}</h1>
               </div>
               <StatusBadge status="DEMO" className="hidden sm:inline-flex" />
@@ -304,14 +304,14 @@ export function AxShell({ children }: { children: React.ReactNode }) {
               return (
                 <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined} className="press relative flex flex-col items-center gap-0.5 py-1.5">
                   <n.icon className={cx('h-[22px] w-[22px]', active ? 'text-ax-primary' : 'text-slate-400')} />
-                  <span className={cx('text-[10.5px] font-semibold', active ? 'text-slate-900' : 'text-slate-500')}>{n.label}</span>
-                  {badge > 0 && <span className="absolute right-[22%] top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">{badge}</span>}
+                  <span className={cx('text-[11px] font-semibold', active ? 'text-slate-900' : 'text-slate-500')}>{n.label}</span>
+                  {badge > 0 && <span className="absolute right-[22%] top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white">{badge}</span>}
                 </Link>
               );
             })}
             <button onClick={() => setDrawer(true)} className="press flex flex-col items-center gap-0.5 py-1.5">
               <Menu className="h-[22px] w-[22px] text-slate-400" />
-              <span className="text-[10.5px] font-semibold text-slate-500">더보기</span>
+              <span className="text-[11px] font-semibold text-slate-500">더보기</span>
             </button>
           </div>
         </nav>
@@ -414,7 +414,7 @@ export function Panel({ title, sub, action, children, className, id, testId }: {
 
 export function Locked({ reason }: { reason: string }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-[11.5px] font-semibold text-slate-500" title={reason}>
+    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-[12px] font-semibold text-slate-500" title={reason}>
       <ShieldCheck className="h-3.5 w-3.5" /> {reason}
     </span>
   );
@@ -434,5 +434,5 @@ export function PageIntro({ title, body, right }: { title: string; body: string;
 
 export function Tag({ children, tone = 'slate' }: { children: React.ReactNode; tone?: 'slate' | 'green' | 'blue' | 'amber' | 'red' | 'violet' }) {
   const t = { slate: 'bg-slate-100 text-slate-600', green: 'bg-emerald-50 text-emerald-700', blue: 'bg-sky-50 text-sky-700', amber: 'bg-amber-50 text-amber-800', red: 'bg-red-50 text-red-700', violet: 'bg-violet-50 text-violet-700' }[tone];
-  return <span className={cx('inline-flex items-center whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11.5px] font-semibold', t)}>{children}</span>;
+  return <span className={cx('inline-flex items-center whitespace-nowrap rounded-md px-1.5 py-0.5 text-[12px] font-semibold', t)}>{children}</span>;
 }

@@ -13,7 +13,8 @@ import type { FontScale, Store } from '@/lib/types';
 import { cx, fmtDate } from '@/lib/util';
 
 const INTEGRATIONS: { name: string; status: 'LIVE' | 'DEMO' | 'READY' | 'NEXT'; note: string }[] = [
-  { name: '데이터 저장소', status: 'DEMO', note: '브라우저 localStorage. Supabase 스키마·RLS는 supabase/migrations 에 준비(READY)' },
+  { name: '데이터 저장소', status: 'DEMO', note: '브라우저 localStorage — 같은 브라우저에서만 보이고, 사용자가 조작할 수 있어 운영 사용 불가. 사진 포함 약 5MB 한도' },
+  { name: 'Supabase 운영 전환', status: 'NEXT', note: '스키마·RLS는 초안, 서버 RPC 대부분 미구현(TODO). 키만 입력해서는 동작하지 않음 — docs/LIVE_TRANSITION_CHECKLIST.md' },
   { name: '회원 인증', status: 'DEMO', note: '번호 일치 로그인. 운영 시 Supabase Auth 휴대폰 OTP' },
   { name: '규칙 엔진 (추천·세그먼트·재구매·스탬프)', status: 'LIVE', note: '앱 내에서 실제 계산 — AI 모델 아님' },
   { name: 'LLM 문안 초안·쉬운 설명', status: 'READY', note: 'API 키 미연결. 서버 Route에서만 호출 예정' },
@@ -48,7 +49,7 @@ function StoreFacts({ store, canEdit }: { store: Store; canEdit: boolean }) {
               <span className="w-28 shrink-0 text-[12.5px] font-semibold text-slate-500">{label}</span>
               <span className="min-w-0 flex-1 text-[13px] text-slate-900">
                 {f.value ?? <span className="text-slate-400">미입력</span>}
-                <span className="block text-[11px] text-slate-400">{f.source}</span>
+                <span className="block text-[12px] text-slate-400">{f.source}</span>
               </span>
               <EvidenceBadge ev={f.evidence} />
               {editable && canEdit && (

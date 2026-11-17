@@ -163,7 +163,7 @@ function PhoneFrame({ label }: { label: string }) {
       >
         <iframe ref={ref} src={src} title={`${label} — 모바일 390px 실제 화면`} className="h-full w-[390px] rounded-[38px] bg-white" />
       </div>
-      <p className="mt-2 text-[11.5px] font-medium text-slate-500">390 × {`실제 Viewport`} · 같은 Route · 같은 Data</p>
+      <p className="mt-2 text-[12px] font-medium text-slate-500">390 × {`실제 Viewport`} · 같은 Route · 같은 Data</p>
     </div>
   );
 }

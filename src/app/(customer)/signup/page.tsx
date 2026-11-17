@@ -3,6 +3,7 @@ import { Check, ChevronDown, Gift, PartyPopper } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
+import { AssetImage } from '@/components/art/AssetImage';
 import { BackHeader, useCustomer } from '@/components/customer/Shell';
 import { Button, Field, inputCls, PageSkeleton, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
@@ -34,6 +35,7 @@ function Inner() {
   const [open, setOpen] = useState<string | null>(null);
   const [done, setDone] = useState<{ referral: { status: string; reason?: string } | null } | null>(null);
   const [touched, setTouched] = useState(false);
+  const [refOpen, setRefOpen] = useState(false);
   const next = sp.get('next');
 
   useEffect(() => {
@@ -105,41 +107,52 @@ function Inner() {
     <div>
       <BackHeader title="회원가입" />
       <div className="mx-auto max-w-md px-5 pb-10 pt-6 md:pt-10">
-        <h1 className="text-[24px] font-extrabold tracking-tight text-ink">가입하고 혜택 받기</h1>
-        <p className="mt-1 text-[14px] text-ink-3">30초면 끝나요. 가입 즉시 웰컴 쿠폰이 발급돼요.</p>
+        <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">가입하고 혜택 받기</h1>
+        <p className="mt-1 text-[15px] text-ink-2">이름만 입력하면 30초면 끝나요.</p>
+        <div className="mt-4 flex items-center gap-3 rounded-[20px] bg-promo-50 p-3 pr-4">
+          <AssetImage slot="menu_m_pie120" fallback={{ kind: 'pie', variant: 0 }} alt="" className="h-16 w-16 shrink-0 rounded-2xl" sizes="64px" />
+          <div className="min-w-0">
+            <p className="text-[13px] font-bold text-promo-600">가입 즉시 발급</p>
+            <p className="text-[17px] font-extrabold leading-snug text-ink">{s.loyaltyRules.find((r) => r.kind === 'SIGNUP')?.benefit} 쿠폰</p>
+            <p className="text-[12px] text-amber-800">DEMO 예시 혜택 · 운영자 확정 전</p>
+          </div>
+        </div>
 
         <div className="mt-6 space-y-4">
-          <div>
-            <p className="mb-2 text-[13px] font-semibold text-ink-2">관심 있는 서비스 (복수 선택)</p>
-            <div className="grid grid-cols-2 gap-2">
-              {(
-                [
-                  ['realsicdan', '리얼식단', '식단·샐러드'],
-                  ['dasek', '다색냥', '고양이카페·디저트'],
-                ] as [BrandId, string, string][]
-              ).map(([v, l, d]) => {
-                const on = brands.includes(v);
-                return (
-                  <button key={v} type="button" aria-pressed={on} onClick={() => setBrands(on ? brands.filter((b) => b !== v) : [...brands, v])} className={cx('rounded-2xl p-3.5 text-left ring-1 transition', on ? 'bg-brand-50 ring-brand-300' : 'bg-white ring-line hover:bg-canvas')}>
-                    <span className="flex items-center justify-between">
-                      <span className="text-[15px] font-bold text-ink">{l}</span>
-                      <span className={cx('grid h-5 w-5 place-items-center rounded-full', on ? 'bg-brand-600 text-white' : 'ring-1 ring-line')}>{on && <Check className="h-3.5 w-3.5" strokeWidth={3} />}</span>
-                    </span>
-                    <span className="text-[12px] text-ink-3">{d}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
           <Field label="이름 또는 닉네임" required error={touched && !name.trim() ? '이름을 입력해 주세요.' : undefined}>
             <input value={name} onChange={(e) => setName(e.target.value)} maxLength={20} autoComplete="nickname" placeholder="매장에서 불러드릴 이름" className={inputCls} data-testid="signup-name" />
           </Field>
           <Field label="휴대폰 번호 (선택)" hint="중복 가입 방지용으로만 쓰여요. 원본 번호는 저장하지 않아요.">
             <input value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" autoComplete="tel" placeholder="010-0000-0000" className={inputCls} data-testid="signup-phone" />
           </Field>
-          <Field label="추천 코드 (선택)" hint="친구가 알려준 코드가 있다면 입력하세요.">
-            <input value={ref} onChange={(e) => setRef(e.target.value.toUpperCase())} maxLength={8} placeholder="예: AB3CD" className={cx(inputCls, 'uppercase tracking-widest')} data-testid="signup-ref" />
-          </Field>
+          {refOpen || ref ? (
+            <Field label="추천 코드 (선택)" hint={ref ? '친구가 보낸 링크로 들어와 자동 입력됐어요.' : '친구가 알려준 코드를 입력하세요.'}>
+              <input value={ref} onChange={(e) => setRef(e.target.value.toUpperCase())} maxLength={8} placeholder="예: AB3CD" className={cx(inputCls, 'uppercase tracking-widest')} data-testid="signup-ref" />
+            </Field>
+          ) : (
+            <button type="button" onClick={() => setRefOpen(true)} className="text-[14px] font-bold text-brand-700">
+              + 친구에게 받은 추천 코드가 있어요
+            </button>
+          )}
+          <div>
+            <p className="mb-2 text-[13px] font-semibold text-ink-2">관심 있는 서비스 (선택 · 맞춤 안내에만 사용)</p>
+            <div className="flex gap-2">
+              {(
+                [
+                  ['realsicdan', '리얼식단'],
+                  ['dasek', '다색냥'],
+                ] as [BrandId, string][]
+              ).map(([v, l]) => {
+                const on = brands.includes(v);
+                return (
+                  <button key={v} type="button" aria-pressed={on} onClick={() => setBrands(on ? brands.filter((b) => b !== v) : [...brands, v])} className={cx('inline-flex h-11 items-center gap-1.5 rounded-full px-4 text-[14.5px] font-bold ring-1 transition', on ? 'bg-brand-50 text-brand-800 ring-brand-300' : 'bg-white text-ink-2 ring-line hover:bg-canvas')}>
+                    {on && <Check className="h-4 w-4" strokeWidth={3} />}
+                    {l}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 rounded-2xl ring-1 ring-line">
@@ -152,6 +165,9 @@ function Inner() {
             />
             <span className="text-[15px] font-bold text-ink">전체 동의 (선택 항목 포함)</span>
           </label>
+          <button type="button" onClick={() => setC({ ...c, terms: true, privacy: true, age14: true })} className="w-full border-b border-line px-4 py-3 text-left text-[14px] font-semibold text-brand-700 hover:bg-canvas">
+            필수 항목만 한 번에 동의하기
+          </button>
           <ul className="divide-y divide-line/70">
             {CONSENTS.map((x) => (
               <li key={x.key} className="px-4 py-3">

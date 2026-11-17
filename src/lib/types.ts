@@ -109,6 +109,7 @@ export interface MenuItem {
   tags: string[];
   art: ArtSpec;
   photoSlot: string | null;
+  photoDataUrl: string | null; // 운영자가 AX에서 교체한 사진 (DEMO: 브라우저 저장)
   nutritionStatus: 'UNVERIFIED' | 'VERIFIED';
   nutrition: { kcal: number; protein: number; source: string } | null;
   allergenStatus: 'UNKNOWN' | 'VERIFIED';

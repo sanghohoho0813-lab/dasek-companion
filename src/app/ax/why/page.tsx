@@ -31,7 +31,7 @@ function Sec({ id, n, title, children }: { id: string; n: number; title: string;
   return (
     <section id={id} className="scroll-mt-24">
       <Panel>
-        <p className="text-[11.5px] font-bold tracking-[0.14em] text-ax-accent">{String(n).padStart(2, '0')}</p>
+        <p className="text-[12px] font-bold tracking-[0.14em] text-ax-accent">{String(n).padStart(2, '0')}</p>
         <h3 className="mt-0.5 text-[18px] font-extrabold tracking-tight text-slate-900">{title}</h3>
         <div className="mt-3 text-[13.5px] leading-relaxed text-slate-700">{children}</div>
       </Panel>
@@ -48,7 +48,7 @@ export default function WhyPage() {
     <div className="grid gap-5 xl:grid-cols-[220px_1fr]">
       <nav aria-label="Why AX 목차" className="hidden xl:block">
         <div className="sticky top-24 space-y-0.5">
-          <p className="mb-2 px-2 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">목차</p>
+          <p className="mb-2 px-2 text-[12px] font-bold uppercase tracking-[0.14em] text-slate-400">목차</p>
           {TOC.map(([id, l], i) => (
             <a key={id} href={`#${id}`} className="block rounded-lg px-2 py-1 text-[12.5px] font-medium text-slate-600 transition hover:bg-white hover:text-slate-900">
               {i + 1}. {l}
@@ -142,7 +142,7 @@ export default function WhyPage() {
               ['SCALE', '같은 인력으로 더 많은 단골', '운영자 1인당 활성 고객', `${k.scaleActivePerOperator ?? '—'}명 (DEMO)`],
             ].map(([a, b, c, d]) => (
               <div key={a} className="rounded-xl bg-slate-50 p-4">
-                <p className="text-[11px] font-bold tracking-[0.14em] text-slate-400">{a}</p>
+                <p className="text-[12px] font-bold tracking-[0.14em] text-slate-400">{a}</p>
                 <p className="text-[15px] font-extrabold text-slate-900">{b}</p>
                 <p className="mt-1 text-[12.5px] text-slate-600">{c}</p>
                 <p className="mt-1 text-[12.5px] font-semibold">{d}</p>
@@ -270,7 +270,7 @@ export default function WhyPage() {
                   {r.emoji} {r.title} <Tag tone="violet">NEXT</Tag>
                 </p>
                 <p className="mt-0.5 text-[12px] text-slate-500">{r.oneLine}</p>
-                <p className="mt-1 text-[11.5px] text-slate-400">관심 {s.roadmapInterest.filter((x) => x.itemKey === r.key).length}명</p>
+                <p className="mt-1 text-[12px] text-slate-400">관심 {s.roadmapInterest.filter((x) => x.itemKey === r.key).length}명</p>
               </div>
             ))}
           </div>

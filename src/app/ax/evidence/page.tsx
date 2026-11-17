@@ -63,7 +63,7 @@ export default function EvidencePage() {
                 <tr key={a}>
                   <td className="py-2.5 font-bold">{a}</td>
                   <td className="py-2.5">{b}</td>
-                  <td className="py-2.5 font-mono text-[11.5px] text-slate-500">{c}</td>
+                  <td className="py-2.5 font-mono text-[12px] text-slate-500">{c}</td>
                   <td className="py-2.5 font-semibold tabular">{d}</td>
                   <td className="py-2.5">
                     <Tag tone="amber">REQUIRED / UNKNOWN</Tag>
@@ -79,7 +79,7 @@ export default function EvidencePage() {
         <ol className="grid gap-3 md:grid-cols-4">
           {WEEKS.map((w, i) => (
             <li key={w.w} className="rounded-xl bg-slate-50 p-4">
-              <p className="text-[11.5px] font-bold text-slate-400">{w.w}</p>
+              <p className="text-[12px] font-bold text-slate-400">{w.w}</p>
               <p className="text-[14.5px] font-extrabold text-slate-900">{w.t}</p>
               <p className="mt-1 text-[12.5px] leading-relaxed text-slate-600">{w.d}</p>
               <p className="mt-2">
@@ -102,7 +102,7 @@ export default function EvidencePage() {
       >
         <div className="overflow-x-auto">
           <table className="w-full min-w-[780px] text-left text-[12.5px]" data-testid="proof-table">
-            <thead className="border-b border-slate-100 text-[11.5px] text-slate-400">
+            <thead className="border-b border-slate-100 text-[12px] text-slate-400">
               <tr>
                 <th className="pb-2 font-semibold">유형</th>
                 <th className="pb-2 font-semibold">Trigger</th>

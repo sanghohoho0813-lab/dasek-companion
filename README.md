@@ -39,17 +39,17 @@ src/
   lib/rules.ts         RULE 엔진·세그먼트·KPI·AX Coach (AI 아님)
   lib/store.ts         DEMO 저장 어댑터 (LIVE 전환 경계)
   lib/seed.ts          DEMO 시드 (근거 상태 표기)
-supabase/migrations/   스키마·RLS·RPC (READY — 미적용)
+supabase/migrations/   스키마·RLS·RPC 초안 (미완성·미적용 — docs/LIVE_TRANSITION_CHECKLIST.md)
 tests/unit · tests/e2e
 ```
 
 ## 기술
-Next.js 15 (App Router) · TypeScript · Tailwind CSS · lucide-react · Noto Sans KR(next/font 자체 호스팅) · Vitest · Playwright · (READY) Supabase
+Next.js 15 (App Router) · TypeScript · Tailwind CSS · lucide-react · Noto Sans KR(next/font 자체 호스팅) · Vitest · Playwright · (초안·미연결) Supabase
 
 ## 인수인계 문서
-[PROJECT_SPEC](PROJECT_SPEC.md) · [PROJECT_STATE](PROJECT_STATE.md) · [DECISIONS](DECISIONS.md) · [DATA_DICTIONARY](DATA_DICTIONARY.md) · [EVIDENCE_PLAN](EVIDENCE_PLAN.md) · [AX_COACH_PLAN](AX_COACH_PLAN.md) · [PROOF_EVENT_SCHEMA](PROOF_EVENT_SCHEMA.md) · [QA_REPORT](QA_REPORT.md) · [RECOMMENDATIONS](RECOMMENDATIONS.md) · [사진 자산 안내](public/assets/README.md)
+[PROJECT_SPEC](PROJECT_SPEC.md) · [LIVE 전환 점검표](docs/LIVE_TRANSITION_CHECKLIST.md) · [개선 전후 스크린샷](docs/qa-screens) · [PROJECT_STATE](PROJECT_STATE.md) · [DECISIONS](DECISIONS.md) · [DATA_DICTIONARY](DATA_DICTIONARY.md) · [EVIDENCE_PLAN](EVIDENCE_PLAN.md) · [AX_COACH_PLAN](AX_COACH_PLAN.md) · [PROOF_EVENT_SCHEMA](PROOF_EVENT_SCHEMA.md) · [QA_REPORT](QA_REPORT.md) · [RECOMMENDATIONS](RECOMMENDATIONS.md) · [사진 자산 안내](public/assets/README.md)
 
 ## 권리·데이터 원칙
 - 인스타그램·네이버 리뷰 사진·로고는 권리 확인 전 사용하지 않습니다. 매장 사실정보(주소·종료 시간·대표 메뉴 가격 등)만 출처와 함께 사용합니다.
-- 화면의 음식·고양이·매장 이미지는 자체 제작 SVG 일러스트이며 '샘플 일러스트'로 표시됩니다.
+- 화면의 음식·고양이·매장 사진은 CC0·공개 도메인 **샘플 사진**이며 '샘플 사진'으로 표시됩니다(출처: `/credits`). 실제 매장·고양이 사진이 아닙니다. 사진이 없으면 자체 SVG 일러스트로 대체됩니다.
 - 결제·예약 확정·카카오/푸시 발송·POS 연동은 하지 않습니다.

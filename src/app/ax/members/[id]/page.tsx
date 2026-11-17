@@ -130,7 +130,7 @@ export default function MemberDetail() {
               <li key={c.id} className="flex flex-wrap items-center gap-2 py-2.5 text-[13px]">
                 <span className="min-w-0 flex-1">
                   <span className="font-semibold text-slate-800">{c.benefit}</span>
-                  <span className="block text-[11.5px] text-slate-400">
+                  <span className="block text-[12px] text-slate-400">
                     {c.title} · {c.code} · {fmtDate(c.expiresAt)}까지
                   </span>
                 </span>
@@ -165,7 +165,7 @@ export default function MemberDetail() {
               <li key={e.id} className="flex items-center gap-2 text-[12.5px]">
                 <Tag tone={LEVEL[e.type]?.tone ?? 'slate'}>{LEVEL[e.type]?.l ?? e.type}</Tag>
                 <span className="min-w-0 flex-1 truncate text-slate-600">{e.label}</span>
-                <span className="shrink-0 text-[11.5px] text-slate-400">{fmtDate(e.createdAt, { time: true })}</span>
+                <span className="shrink-0 text-[12px] text-slate-400">{fmtDate(e.createdAt, { time: true })}</span>
               </li>
             ))}
           </ul>

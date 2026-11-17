@@ -1,9 +1,9 @@
 'use client';
-import { ClipboardCheck, PlusCircle, Ticket } from 'lucide-react';
+import { ClipboardCheck, PlusCircle, Search, Ticket } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { CounterPurchase, CouponRedeem } from '@/components/ax/CounterTools';
-import { PageIntro, Panel, useOperator } from '@/components/ax/Shell';
+import { PageIntro, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { QueueRow } from '@/components/ax/widgets';
 import { Button, Empty, PageSkeleton, Segmented } from '@/components/ui';
 import { fmtDate, relTime } from '@/lib/util';
@@ -15,8 +15,15 @@ function Inner() {
   const [tab, setTab] = useState<'checkin' | 'purchase' | 'other' | 'done'>((sp.get('tab') as 'other') ?? 'checkin');
   const [counter, setCounter] = useState(false);
   const [redeem, setRedeem] = useState(false);
+  const [q, setQ] = useState('');
   if (!s) return <PageSkeleton />;
-  const open = s.tasks.filter((t) => t.status === 'OPEN').sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
+  const term = q.trim().toLowerCase();
+  const match = (userId: string | null) => {
+    if (!term) return true;
+    const u = getProfile(s, userId);
+    return !!u && (u.name.toLowerCase().includes(term) || u.memberCode.toLowerCase().includes(term));
+  };
+  const open = s.tasks.filter((t) => t.status === 'OPEN' && match(t.userId)).sort((a, b) => (a.createdAt < b.createdAt ? -1 : 1));
   const by = {
     checkin: open.filter((t) => t.type === 'VERIFY_CHECKIN'),
     purchase: open.filter((t) => t.type === 'VERIFY_PURCHASE'),
@@ -39,6 +46,10 @@ function Inner() {
           </>
         }
       />
+      <label className="mb-3 flex h-11 max-w-md items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 focus-within:border-ax-primary">
+        <Search className="h-4 w-4 text-slate-400" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="이름 또는 회원코드로 찾기" aria-label="큐 검색" className="w-full text-[15px] outline-none" data-testid="queue-search" />
+      </label>
       <Segmented
         tone="ax"
         label="큐 종류"
@@ -80,7 +91,7 @@ function Inner() {
                     return (
                       <tr key={t.id} className="hover:bg-slate-50">
                         <td className="py-2.5 font-semibold text-slate-800">{t.title}</td>
-                        <td className="py-2.5">{rec?.status === 'CONFIRMED' ? '확인' : rec?.status === 'REJECTED' ? `반려 (${rec.rejectReason})` : rec?.status}</td>
+                        <td className="py-2.5">{rec?.status === 'CONFIRMED' ? <Tag tone="green">확인</Tag> : rec?.status === 'REJECTED' ? <Tag>{`반려 · ${rec.rejectReason}`}</Tag> : rec?.status === 'REVERSED' ? <Tag tone="amber">환불·취소됨 (보상 회수)</Tag> : <Tag>대기</Tag>}</td>
                         <td className="py-2.5 text-slate-500">{getProfile(s, t.doneBy)?.name ?? '-'}</td>
                         <td className="py-2.5 text-slate-500">
                           {fmtDate(t.createdAt, { time: true })} → {t.doneAt ? relTime(t.doneAt) : '-'}

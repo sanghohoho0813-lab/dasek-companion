@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button, CountUp, Sheet, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import type { Kpis, Mission } from '@/lib/rules';
-import { getMenuItem, getProfile } from '@/lib/rules';
+import { getMenuItem, getProfile, verifiedUses } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { AdminTask, AppState } from '@/lib/types';
 import { cx, relTime } from '@/lib/util';
@@ -49,7 +49,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
       {cards.map((c) => (
         <div key={c.kind} className="lift min-w-0 overflow-hidden rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 md:p-5">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-bold tracking-[0.14em]" style={{ color: c.color }}>
+            <span className="text-[12px] font-bold tracking-[0.14em]" style={{ color: c.color }}>
               {c.kind} KPI
             </span>
             <StatusBadge status="DEMO" />
@@ -60,7 +60,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
             <span className="ml-1 text-[15px] font-bold text-slate-400">{c.value == null ? '측정 대기' : c.unit}</span>
           </p>
           <p className="mt-2 text-[12px] text-slate-500">{c.note}</p>
-          <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[11.5px]">
+          <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[12px]">
             <Tag tone="amber">Baseline UNKNOWN</Tag>
             <span className="min-w-0 truncate text-slate-400">{c.measure}</span>
           </div>
@@ -84,7 +84,7 @@ export function MissionList({ missions, canManage }: { missions: Mission[]; canM
                 {m.managerOnly && !canManage && <Tag>책임자 권한</Tag>}
               </span>
               <span className="mt-0.5 block text-[12.5px] leading-relaxed text-slate-500">{m.detail}</span>
-              <span className="mt-1 block text-[11.5px] text-slate-400">남는 실증 기록: {m.proof}</span>
+              <span className="mt-1 block text-[12px] text-slate-400">남는 실증 기록: {m.proof}</span>
             </span>
             <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500" />
           </Link>
@@ -108,18 +108,18 @@ export function DailyChart({ data }: { data: { day: string; visits: number; purc
                 <div className="bg-[#5B8DEF]" style={{ height: total ? `${(d.visits / total) * 100}%` : 0 }} />
               </div>
               {total === 0 && <div className="h-[3px] rounded bg-slate-100" />}
-              <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-1.5 py-0.5 text-[11px] font-semibold text-white group-hover:block">
+              <span className="pointer-events-none absolute -top-7 left-1/2 hidden -translate-x-1/2 whitespace-nowrap rounded-md bg-slate-900 px-1.5 py-0.5 text-[12px] font-semibold text-white group-hover:block">
                 방문 {d.visits} · 구매 {d.purchases}
               </span>
             </div>
           );
         })}
       </div>
-      <div className="mt-1.5 flex justify-between text-[10.5px] text-slate-400 tabular">
+      <div className="mt-1.5 flex justify-between text-[11px] text-slate-400 tabular">
         <span>{data[0]?.day.slice(5)}</span>
         <span>오늘</span>
       </div>
-      <div className="mt-2 flex gap-3 text-[11.5px] text-slate-500">
+      <div className="mt-2 flex gap-3 text-[12px] text-slate-500">
         <span className="flex items-center gap-1">
           <span className="h-2.5 w-2.5 rounded-sm bg-[#5B8DEF]" /> 확인 방문
         </span>
@@ -150,7 +150,7 @@ export function EvidenceBars({ levels }: { levels: Record<'LINK_CLICK' | 'SELF_R
           <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-slate-100">
             <div className="h-full origin-left animate-grow rounded-full" style={{ width: `${(levels[r.k] / max) * 100}%`, background: r.c }} />
           </div>
-          <p className="mt-0.5 text-[11px] text-slate-400">{r.d}</p>
+          <p className="mt-0.5 text-[12px] text-slate-400">{r.d}</p>
         </li>
       ))}
     </ul>
@@ -170,6 +170,8 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
   const items = v?.menuItemIds.map((i) => getMenuItem(s, i)?.name).filter(Boolean).join(', ');
   const isVerify = t.type === 'VERIFY_CHECKIN' || t.type === 'VERIFY_PURCHASE';
   const wait = Math.round((Date.now() - new Date(t.createdAt).getTime()) / 60000);
+  const usesBefore = user ? verifiedUses(s, user.id).length : 0;
+  const pendingReferral = user ? s.referrals.find((r) => r.refereeId === user.id && r.status === 'PENDING') : null;
   const approve = () => {
     if (t.type === 'VERIFY_CHECKIN') run(() => opAct((d, c) => D.decideCheckin(d, c, t.refId, true)), '방문을 확인했어요. 스탬프·추천 보상이 반영됐어요.');
     else setConfirmBuy(true);
@@ -186,22 +188,26 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
               {{ VERIFY_CHECKIN: '방문 체크인', VERIFY_PURCHASE: '구매 확인', PHOTO_REVIEW: '사진 승인', CUSTOMER_REQUEST: '고객 요청', REFERRAL_REVIEW: '보상 검토', REORDER_REVIEW: '재구매' }[t.type]}
             </Tag>
           </p>
-          <p className="mt-0.5 text-[12.5px] text-slate-500">
+          <p className="mt-0.5 text-[13.5px] font-medium text-slate-700">
             {store?.name ?? ''} {items ? `· ${items}` : ''} {v?.note ? `· "${v.note}"` : ''} {!isVerify ? t.title : ''}
           </p>
-          <p className={cx('mt-0.5 flex items-center gap-1 text-[11.5px]', wait > 30 ? 'font-semibold text-red-600' : 'text-slate-400')}>
-            <Clock3 className="h-3 w-3" /> {relTime(t.createdAt)} 요청 {wait > 30 && '· 대기 길어짐'}
+          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px]">
+            <span className={cx('inline-flex items-center gap-1', wait > 30 ? 'font-bold text-red-600' : 'text-slate-500')}>
+              <Clock3 className="h-3.5 w-3.5" /> {relTime(t.createdAt)} 요청 {wait > 30 && '· 지연'}
+            </span>
+            {isVerify && user && <span className="text-slate-500">{usesBefore === 0 ? '첫 이용' : `확인 이용 ${usesBefore}회`}</span>}
+            {isVerify && pendingReferral && <Tag tone="violet">추천 가입 · 확인 시 추천인 보상</Tag>}
           </p>
         </div>
       </div>
       {isVerify ? (
         canVerify ? (
-          <div className="flex shrink-0 gap-2">
-            <Button tone="ax" variant="outline" size="sm" onClick={() => setReject(true)} data-testid="queue-reject">
-              <X className="h-3.5 w-3.5" /> 반려
+          <div className="grid shrink-0 grid-cols-[auto_1fr] gap-2 sm:flex">
+            <Button tone="ax" variant="outline" className="h-11 sm:h-9" onClick={() => setReject(true)} data-testid="queue-reject">
+              <X className="h-4 w-4" /> 반려
             </Button>
-            <Button tone="ax" size="sm" onClick={approve} data-testid="queue-approve">
-              <Check className="h-3.5 w-3.5" /> 확인
+            <Button tone="ax" className="h-11 sm:h-9 sm:px-5" onClick={approve} data-testid="queue-approve">
+              <Check className="h-4 w-4" /> {t.type === 'VERIFY_CHECKIN' ? '방문 확인' : '구매 확인'}
             </Button>
           </div>
         ) : (

@@ -8,6 +8,7 @@ import { Button, PageSkeleton, StatusBadge } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { couponsFor, stampCount, stampRule, verifiedUses } from '@/lib/rules';
 import { act } from '@/lib/store';
+import { cx } from '@/lib/util';
 
 export default function MyPage() {
   const { s, me } = useCustomer();
@@ -33,20 +34,23 @@ export default function MyPage() {
   const saved = s.favorites.filter((f) => f.userId === me.id).length;
   const refs = s.referrals.filter((r) => r.referrerId === me.id);
 
+  const tiles = [
+    { href: '/my/coupons', icon: Ticket, label: '쿠폰', value: `${usable}장`, tone: 'bg-promo-50 text-promo-600' },
+    { href: '/my/referral', icon: Users, label: '친구 추천', value: refs.length ? `${refs.length}명` : '공유', tone: 'bg-sage-50 text-sage-600' },
+    { href: '/my/saved', icon: Heart, label: '저장 메뉴', value: `${saved}개`, tone: 'bg-coral-50 text-coral-600' },
+    { href: '/my/inbox', icon: Bell, label: '알림', value: unread ? `새 ${unread}` : '0', tone: 'bg-brand-50 text-brand-700' },
+  ];
   const links = [
-    { href: '/my/coupons', icon: Ticket, label: '쿠폰함', meta: `${usable}장 사용 가능` },
-    { href: '/my/referral', icon: Users, label: '친구 추천', meta: refs.length ? `${refs.length}명 추천` : '코드 공유하기' },
     { href: '/my/activity', icon: Receipt, label: '이용 내역', meta: pending ? `확인 대기 ${pending}건` : `확인된 이용 ${uses.length}회` },
-    { href: '/my/saved', icon: Heart, label: '저장한 메뉴', meta: `${saved}개` },
-    { href: '/my/inbox', icon: Bell, label: '알림함', meta: unread ? `새 알림 ${unread}개` : '모두 읽음' },
+    { href: '/membership', icon: Sparkles, label: '멤버십 혜택 안내', meta: '' },
+    { href: '/roadmap?item=paid_membership', icon: Sparkles, label: '유료 멤버십 · 정기픽업', meta: '개발 예정' },
     { href: '/my/settings', icon: Settings2, label: '동의·개인정보 설정', meta: '' },
-    { href: '/roadmap', icon: Sparkles, label: '준비 중인 서비스', meta: '관심 남기기' },
   ];
 
   return (
     <div className="mx-auto max-w-3xl px-4 pb-10 pt-5 md:px-5 md:pt-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-[24px] font-extrabold text-ink">마이</h1>
+        <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-ink">마이</h1>
         <StatusBadge status="DEMO" />
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-2">
@@ -70,6 +74,17 @@ export default function MyPage() {
         </div>
         <StampCard count={stampCount(s, me.id)} required={rule.stampsRequired ?? 10} />
       </div>
+      <div className="mt-3 grid grid-cols-4 gap-2" data-testid="my-tiles">
+        {tiles.map((t) => (
+          <Link key={t.href} href={t.href} className="press flex flex-col items-center gap-1.5 rounded-[20px] bg-white py-3.5 ring-1 ring-line transition hover:ring-brand-200">
+            <span className={cx('grid h-10 w-10 place-items-center rounded-full', t.tone)}>
+              <t.icon className="h-5 w-5" />
+            </span>
+            <span className="text-[12.5px] font-semibold text-ink-3">{t.label}</span>
+            <span className="text-[15px] font-extrabold text-ink tabular">{t.value}</span>
+          </Link>
+        ))}
+      </div>
       {pending > 0 && (
         <Link href="/my/activity" className="mt-3 flex items-center gap-2 rounded-2xl bg-brand-50 px-4 py-3 text-[13.5px] font-semibold text-brand-800">
           <Clock3 className="h-4 w-4" /> 직원 확인을 기다리는 요청이 {pending}건 있어요
@@ -82,7 +97,7 @@ export default function MyPage() {
             <Link href={l.href} className="flex items-center gap-3 px-4 py-4 transition hover:bg-canvas">
               <l.icon className="h-5 w-5 text-ink-3" />
               <span className="flex-1 text-[15px] font-semibold text-ink">{l.label}</span>
-              <span className="text-[12.5px] text-ink-3">{l.meta}</span>
+              <span className={cx('text-[13px]', l.meta === '개발 예정' ? 'font-bold text-violet-700' : 'text-ink-3')}>{l.meta}</span>
               <ChevronRight className="h-4 w-4 text-ink-4" />
             </Link>
           </li>

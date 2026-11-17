@@ -390,3 +390,61 @@ export function evidenceSummary(s: AppState) {
   for (const b of s.businessEntities) facts.push({ area: b.name, item: '사업자번호·데이터 처리 주체', evidence: b.evidence, source: b.note });
   return facts;
 }
+
+/* ── 오늘 매장 현황 (AX 홈 2순위) ─────────────────── */
+export function todayStats(s: AppState, now = new Date()) {
+  const today = dayKey(now);
+  const since7 = now.getTime() - 7 * DAY;
+  const uses = verifiedUses(s);
+  const todayUses = uses.filter((u) => dayKey(u.at) === today);
+  const todayUsers = new Set(todayUses.map((u) => s.checkins.find((c) => c.id === u.id)?.userId ?? s.verifications.find((v) => v.id === u.id)?.userId));
+  const returning = [...todayUsers].filter((uid) => uid && verifiedUses(s, uid).length >= 2).length;
+  const amountToday = todayUses.reduce((n, u) => n + (u.amount ?? 0), 0);
+  const amount7 = uses.filter((u) => new Date(u.at).getTime() > since7).reduce((n, u) => n + (u.amount ?? 0), 0);
+  const purchases7 = uses.filter((u) => u.kind === 'PURCHASE' && new Date(u.at).getTime() > since7).length;
+  const purchasesWithAmount7 = uses.filter((u) => u.kind === 'PURCHASE' && u.amount != null && new Date(u.at).getTime() > since7).length;
+  return {
+    purchasesToday: todayUses.filter((u) => u.kind === 'PURCHASE').length,
+    visitsToday: todayUses.filter((u) => u.kind === 'VISIT').length,
+    newMembersToday: customers(s).filter((p) => dayKey(p.createdAt) === today).length,
+    returningToday: returning,
+    amountToday,
+    amount7,
+    purchases7,
+    purchasesWithAmount7,
+    couponsRedeemedToday: s.coupons.filter((c) => c.redeemedAt && dayKey(c.redeemedAt) === today).length,
+  };
+}
+
+/** 지연 기준(분) — 운영 정책 확정 전 가정값 */
+export const DELAY_MINUTES = 30;
+
+export function urgentWork(s: AppState, now = new Date()) {
+  const open = s.tasks.filter((t) => t.status === 'OPEN');
+  const verify = open.filter((t) => t.type === 'VERIFY_CHECKIN' || t.type === 'VERIFY_PURCHASE');
+  const delayed = verify.filter((t) => (now.getTime() - new Date(t.createdAt).getTime()) / 60000 > DELAY_MINUTES);
+  return {
+    verify,
+    delayed,
+    requests: open.filter((t) => t.type === 'CUSTOMER_REQUEST'),
+    rewardReview: open.filter((t) => t.type === 'REFERRAL_REVIEW'),
+    photos: open.filter((t) => t.type === 'PHOTO_REVIEW'),
+    expiringCoupons: s.coupons.filter((c) => c.status === 'ISSUED' && new Date(c.expiresAt).getTime() > now.getTime() && new Date(c.expiresAt).getTime() - now.getTime() < 3 * DAY).length,
+  };
+}
+
+/** 고객 화면 품질을 위해 운영자가 채워야 할 콘텐츠 */
+export function contentFixes(s: AppState) {
+  const out: { key: string; label: string; count: number; route: string }[] = [];
+  const priceUnknown = s.menuItems.filter((m) => m.published && m.price == null).length;
+  const demoMenus = s.menuItems.filter((m) => m.published && m.isDemo).length;
+  const placeholderCats = s.cats.filter((c) => c.isPlaceholder).length;
+  const unknownFacts = s.stores.reduce((n, st) => n + [st.hours, st.feeInfo, st.orderUrl, st.deliveryUrl].filter((f) => f.evidence === 'UNKNOWN').length, 0);
+  const assumedRules = s.loyaltyRules.filter((r) => r.evidence === 'ASSUMPTION').length;
+  if (priceUnknown) out.push({ key: 'price', label: `가격 미확인 메뉴 ${priceUnknown}개`, count: priceUnknown, route: '/ax/content' });
+  if (demoMenus) out.push({ key: 'demo', label: `예시 메뉴 ${demoMenus}개 → 실제 메뉴로 교체`, count: demoMenus, route: '/ax/content' });
+  if (placeholderCats) out.push({ key: 'cats', label: `예시 고양이 프로필 ${placeholderCats}개 → 실제 정보·사진`, count: placeholderCats, route: '/ax/content?tab=cats' });
+  if (unknownFacts) out.push({ key: 'facts', label: `미확인 매장 정보 ${unknownFacts}건 (영업시간·요금·주문 링크)`, count: unknownFacts, route: '/ax/settings?tab=store' });
+  if (assumedRules) out.push({ key: 'rules', label: `예시 혜택 규칙 ${assumedRules}개 → 원가 확인 후 확정`, count: assumedRules, route: '/ax/rewards' });
+  return out;
+}

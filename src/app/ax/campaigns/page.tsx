@@ -32,7 +32,7 @@ function Inner() {
                 <p className="text-[14px] font-bold text-slate-900">{g.label}</p>
                 <span className="text-[20px] font-extrabold text-slate-900 tabular">{g.n}명</span>
               </div>
-              <p className="mt-1 text-[11.5px] text-slate-500">규칙: {g.rule}</p>
+              <p className="mt-1 text-[12px] text-slate-500">규칙: {g.rule}</p>
               <ul className="mt-2 flex-1 space-y-0.5 text-[12px] text-slate-600">
                 {g.why.map((w) => (
                   <li key={w}>· {w}</li>
@@ -59,7 +59,7 @@ function Inner() {
                 <p className="mt-0.5 text-[12.5px] text-slate-500">
                   “{c.title}” — {c.body}
                 </p>
-                <p className="mt-0.5 text-[11.5px] text-slate-400">
+                <p className="mt-0.5 text-[12px] text-slate-400">
                   작성 {getProfile(s, c.createdBy)?.name ?? c.createdBy} · {fmtDate(c.createdAt)} {c.sentAt && `· 승인 ${getProfile(s, c.approvedBy)?.name} · ${fmtDate(c.sentAt, { time: true })} 발송 ${c.recipients}명`} {!c.sentAt && `· 예상 대상 ${segmentMembers(s, c.segment).length}명`}
                 </p>
               </div>
@@ -121,7 +121,7 @@ function Inner() {
                   </button>
                 ))}
               </div>
-              <p className="mt-1 text-[11.5px] text-slate-400">카카오·푸시는 수신동의·발송 인프라·요금 확인 전까지 연결하지 않아요.</p>
+              <p className="mt-1 text-[12px] text-slate-400">카카오·푸시는 수신동의·발송 인프라·요금 확인 전까지 연결하지 않아요.</p>
             </div>
             <label className="block font-semibold text-slate-600">
               캠페인 이름
@@ -141,7 +141,7 @@ function Inner() {
               </span>
               <StatusBadge status="READY" label="API 키 연결 전" />
             </div>
-            <p className="text-[11.5px] text-slate-400">현재 초안은 세그먼트별 규칙 템플릿(TEMPLATE_RULE)입니다. 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
+            <p className="text-[12px] text-slate-400">현재 초안은 세그먼트별 규칙 템플릿(TEMPLATE_RULE)입니다. 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
           </div>
         )}
       </Sheet>
