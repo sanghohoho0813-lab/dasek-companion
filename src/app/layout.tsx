@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from 'next';
+import { Noto_Sans_KR } from 'next/font/google';
 import { DeviceProvider, FrameSync } from '@/components/device/Device';
 import { Prefs } from '@/components/shell/Prefs';
 import { RootStage } from '@/components/shell/RootStage';
 import { ToastProvider } from '@/components/ui';
 import './globals.css';
+
+// 전체 글꼴: Noto Sans KR (빌드 시 자체 호스팅 — 런타임 외부 CDN 요청 없음)
+const noto = Noto_Sans_KR({ weight: ['400', '500', '600', '700', '800'], display: 'swap', preload: false, variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: { default: '다색컴패니언 | DASEK COMPANION', template: '%s · 다색컴패니언' },
@@ -20,10 +24,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ko" data-ax-theme="pure-white" data-font="md" suppressHydrationWarning>
-      <head>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-      </head>
+    <html lang="ko" data-ax-theme="pure-white" data-font="md" className={noto.variable} suppressHydrationWarning>
       <body className="font-sans">
         <ToastProvider>
           <DeviceProvider>

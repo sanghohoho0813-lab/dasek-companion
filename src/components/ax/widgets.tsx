@@ -47,7 +47,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
   return (
     <div className="grid gap-3 md:grid-cols-3" data-testid="money-kpis">
       {cards.map((c) => (
-        <div key={c.kind} className="lift rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 md:p-5">
+        <div key={c.kind} className="lift min-w-0 overflow-hidden rounded-2xl bg-white p-4 ring-1 ring-slate-200/70 md:p-5">
           <div className="flex items-center justify-between">
             <span className="text-[11px] font-bold tracking-[0.14em]" style={{ color: c.color }}>
               {c.kind} KPI

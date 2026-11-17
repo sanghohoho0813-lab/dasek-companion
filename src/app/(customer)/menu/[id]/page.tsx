@@ -71,7 +71,7 @@ export default function MenuDetailPage() {
         <div className="md:sticky md:top-24 md:self-start">
           <AssetImage slot={item.photoSlot} fallback={item.art} alt={`${item.name} 이미지`} className="aspect-square w-full md:rounded-[28px]" sampleBadge priority />
         </div>
-        <div className="px-4 pt-5 md:px-0 md:pt-0">
+        <div className="min-w-0 px-4 pt-5 md:px-0 md:pt-0">
           <nav className="hidden text-[12.5px] text-ink-3 md:block" aria-label="경로">
             <Link href={item.brand === 'dasek' ? '/dasek' : '/realsicdan'} className="hover:text-ink">
               {store.name}
@@ -125,7 +125,7 @@ export default function MenuDetailPage() {
             </p>
           )}
 
-          <div className="mt-6 hidden gap-2 md:flex">
+          <div className="mt-6 hidden flex-wrap gap-2 md:flex">
             <Button size="lg" variant="outline" onClick={toggleSave} aria-pressed={saved} data-testid="save-menu">
               <Heart className={cx('h-5 w-5', saved && 'text-coral-500')} fill={saved ? 'currentColor' : 'none'} /> {saved ? '저장됨' : '저장'}
             </Button>

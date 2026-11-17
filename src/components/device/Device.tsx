@@ -161,7 +161,6 @@ function PhoneFrame({ label }: { label: string }) {
         className="relative rounded-[46px] bg-[#111418] p-[9px] shadow-[0_30px_60px_-20px_rgba(15,30,40,.45)] ring-1 ring-black/40"
         style={{ height: 'min(862px, calc(100dvh - 92px))' }}
       >
-        <div className="absolute left-1/2 top-[14px] z-10 h-[22px] w-[96px] -translate-x-1/2 rounded-full bg-black" aria-hidden />
         <iframe ref={ref} src={src} title={`${label} — 모바일 390px 실제 화면`} className="h-full w-[390px] rounded-[38px] bg-white" />
       </div>
       <p className="mt-2 text-[11.5px] font-medium text-slate-500">390 × {`실제 Viewport`} · 같은 Route · 같은 Data</p>

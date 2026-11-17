@@ -252,7 +252,8 @@ export function Sheet({
   if (!open || !mounted) return null;
   const widths = { sm: 'md:max-w-sm', md: 'md:max-w-lg', lg: 'md:max-w-2xl', xl: 'md:max-w-4xl' };
   return createPortal(
-    <div className="fixed inset-0 z-[80]" data-testid={testId}>
+    // 위치는 flex 컨테이너가 잡고, 패널의 transform은 애니메이션 전용으로 둔다(translate 충돌 방지)
+    <div className={cx('fixed inset-0 z-[80] flex items-end', side === 'center' ? 'md:items-center md:justify-center md:p-6' : 'md:items-stretch md:justify-end')} data-testid={testId}>
       <div className="absolute inset-0 animate-fade-in bg-[#0B1A20]/45" onClick={onClose} aria-hidden />
       <div
         ref={panel}
@@ -261,10 +262,10 @@ export function Sheet({
         aria-labelledby={titleId}
         tabIndex={-1}
         className={cx(
-          'absolute flex max-h-[92dvh] flex-col bg-white outline-none',
-          'inset-x-0 bottom-0 animate-sheet-up rounded-t-[28px] shadow-sheet',
-          side === 'center' && cx('md:inset-x-auto md:bottom-auto md:left-1/2 md:top-1/2 md:w-full md:-translate-x-1/2 md:-translate-y-1/2 md:animate-scale-in md:rounded-3xl md:shadow-lift', widths[size]),
-          side === 'right' && cx('md:inset-y-0 md:left-auto md:right-0 md:max-h-none md:w-full md:rounded-none md:rounded-l-3xl md:animate-fade-in', widths[size]),
+          'relative flex max-h-[92dvh] w-full flex-col bg-white outline-none',
+          'animate-sheet-up rounded-t-[28px] shadow-sheet',
+          side === 'center' && cx('md:max-h-[88dvh] md:animate-scale-in md:rounded-3xl md:shadow-lift', widths[size]),
+          side === 'right' && cx('md:h-full md:max-h-none md:animate-fade-in md:rounded-none md:rounded-l-3xl', widths[size]),
         )}
       >
         <div className="mx-auto mt-2.5 h-1.5 w-10 shrink-0 rounded-full bg-slate-200 md:hidden" aria-hidden />

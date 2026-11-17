@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-sans)', 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Noto Sans KR', 'Noto Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', 'system-ui', 'sans-serif'],
       },
       colors: {
         // Customer brand (밝은 다색컴패니언 테마)

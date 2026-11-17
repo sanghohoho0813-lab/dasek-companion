@@ -56,7 +56,7 @@ export default function WhyPage() {
           ))}
         </div>
       </nav>
-      <div className="space-y-4">
+      <div className="min-w-0 space-y-4">
         <div className="relative overflow-hidden rounded-2xl ring-1 ring-slate-200/70">
           <AssetImage slot="ax_cover_main" fallback={{ kind: 'space', variant: 1 }} alt="다색컴패니언 Why AX 표지" className="aspect-[16/7] w-full md:aspect-[16/5]" sampleBadge badgePosition="tr" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-transparent" />

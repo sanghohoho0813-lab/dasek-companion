@@ -1,6 +1,7 @@
 'use client';
 import { ArrowRight, Bell, CalendarCheck2, ChevronRight, Gift, MapPin, QrCode, Sparkles, Users } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { AssetImage } from '@/components/art/AssetImage';
 import { LogoMark } from '@/components/shell/Logo';
@@ -26,6 +27,7 @@ const TILES: { label: string; href: string; art: ArtSpec }[] = [
 export default function HomePage() {
   const { s, me } = useCustomer();
   const run = useRun();
+  const router = useRouter();
   const [why, setWhy] = useState<Recommendation | null>(null);
   if (!s) return <PageSkeleton />;
 
@@ -42,9 +44,7 @@ export default function HomePage() {
   const signupRule = s.loyaltyRules.find((r) => r.kind === 'SIGNUP');
   const refRule = s.loyaltyRules.find((r) => r.kind === 'REFERRAL_REFERRER');
   const save = (id: string) => {
-    if (!me) return run(() => {
-      throw new Error('저장하려면 로그인해 주세요.');
-    });
+    if (!me) return router.push('/login?next=/');
     run(() => act((d, c) => D.toggleFavorite(d, c, me.id, id)), (on) => (on ? '메뉴를 저장했어요.' : '저장을 해제했어요.'));
   };
 

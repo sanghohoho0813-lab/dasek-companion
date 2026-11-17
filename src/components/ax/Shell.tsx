@@ -397,7 +397,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
 /* ── AX 공통 UI ───────────────────────────────────── */
 export function Panel({ title, sub, action, children, className, id, testId }: { title?: React.ReactNode; sub?: React.ReactNode; action?: React.ReactNode; children: React.ReactNode; className?: string; id?: string; testId?: string }) {
   return (
-    <section id={id} data-testid={testId} className={cx('rounded-2xl bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,.04)] ring-1 ring-slate-200/70 md:p-5', className)}>
+    <section id={id} data-testid={testId} className={cx('min-w-0 rounded-2xl bg-white p-4 shadow-[0_1px_2px_rgba(15,23,42,.04)] ring-1 ring-slate-200/70 md:p-5', className)}>
       {(title || action) && (
         <div className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0">

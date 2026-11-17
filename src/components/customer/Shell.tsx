@@ -178,7 +178,7 @@ export function BackHeader({ title, right, fallback = '/' }: { title: string; ri
       >
         <ChevronLeft className="h-6 w-6" />
       </button>
-      <h1 className="min-w-0 flex-1 truncate text-[16.5px] font-bold text-ink">{title}</h1>
+      <p className="min-w-0 flex-1 truncate text-[16.5px] font-bold text-ink">{title}</p>
       <div className="flex items-center gap-1 pr-1">{right}</div>
     </div>
   );
