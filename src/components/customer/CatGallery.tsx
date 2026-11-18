@@ -11,6 +11,11 @@ import { cx } from '@/lib/util';
  * 고양이별 사진 슬라이드 — 스와이프(스크롤 스냅)·화살표·키보드(←/→)·점 인디케이터·전체화면 보기.
  * 사진 미등록 시 빈 상태를 보여준다.
  */
+/** 매장 카드에서 잘라 낸 저해상도 실제 사진 (원본을 받으면 같은 파일명으로 교체 → 자동으로 크게 표시하도록 목록에서 빼면 됨) */
+const LOWRES_SLOT = /^cat_r\d{2}_01$/;
+export const isLowResSlot = (slot?: string | null) => !!slot && LOWRES_SLOT.test(slot);
+const isLowRes = (p: CatPhoto) => !p.dataUrl && !!p.slot && LOWRES_SLOT.test(p.slot);
+
 export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string }) {
   const track = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
@@ -61,7 +66,17 @@ export function CatGallery({ photos, name }: { photos: CatPhoto[]; name: string 
         <div ref={track} className="flex snap-x-mandatory overflow-x-auto no-scrollbar md:rounded-[28px]" data-testid="cat-gallery">
           {photos.map((p, i) => (
             <button key={p.id} onClick={() => setFull(true)} className="w-full shrink-0 snap-start" aria-label={`${i + 1}번째 사진 크게 보기: ${p.caption}`}>
-              <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/5] w-full md:aspect-[4/3]" sampleBadge badgePosition="tr" priority={i === 0} sizes="(min-width: 768px) 55vw, 100vw" position="center 35%" />
+              {isLowRes(p) ? (
+                /* 저해상도 실제 사진(매장 카드 촬영본): 억지로 키우지 않고 작은 카드 크기로, 뒤는 같은 사진을 흐리게 깐다 (사진 내용은 바꾸지 않음) */
+                <span className="relative block aspect-[4/5] w-full overflow-hidden bg-slate-200 md:aspect-[4/3]" data-lowres>
+                  <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt="" className="absolute inset-0" imgClassName="scale-110 blur-2xl opacity-70" sizes="200px" />
+                  <span className="absolute inset-0 grid place-items-center p-6">
+                    <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-square w-full max-w-[300px] rounded-[22px] shadow-[0_16px_32px_-16px_rgba(0,0,0,.5)] ring-4 ring-white" priority={i === 0} sizes="300px" />
+                  </span>
+                </span>
+              ) : (
+                <AssetImage slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/5] w-full md:aspect-[4/3]" sampleBadge badgePosition="tr" priority={i === 0} sizes="(min-width: 768px) 55vw, 100vw" position="center 35%" />
+              )}
             </button>
           ))}
         </div>
@@ -158,7 +173,7 @@ function Lightbox({ photos, start, onClose, name }: { photos: CatPhoto[]; start:
           touch.current = null;
         }}
       >
-        <AssetImage key={p.id} slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className="aspect-[4/3] max-h-full w-full max-w-4xl animate-scale-in rounded-3xl" sampleBadge sizes="100vw" />
+        <AssetImage key={p.id} slot={p.slot} dataUrl={p.dataUrl} fallback={p.art ?? { kind: 'cat', coat: 'gray', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 0 }} alt={p.alt} className={cx('max-h-full w-full animate-scale-in rounded-3xl', isLowRes(p) ? 'aspect-square max-w-[420px]' : 'aspect-[4/3] max-w-4xl')} sampleBadge sizes="100vw" />
         <button onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} aria-label="이전 사진" className="absolute left-2 grid h-11 w-11 place-items-center rounded-full bg-white text-ink shadow-card disabled:opacity-0 md:left-4">
           <ChevronLeft className="h-5 w-5" />
         </button>

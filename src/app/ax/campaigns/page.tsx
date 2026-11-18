@@ -5,11 +5,32 @@ import { Suspense, useEffect, useState } from 'react';
 import { Locked, PageIntro, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Button, PageSkeleton, Sheet, StatusBadge, axInputCls, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
-import { getProfile, segmentMembers, SEGMENTS } from '@/lib/rules';
+import { campaignResults, getProfile, segmentMembers, SEGMENTS } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { Campaign, SegmentKey } from '@/lib/types';
 import { cx, fmtDate } from '@/lib/util';
 import { StatusPill, statusOf } from '@/components/ui/Status';
+
+/** 발송 결과 — 신호(확인·후속 행동)와 실적(직원 확인 이용)을 나눠 보여준다 */
+function CampaignResult({ s, id }: { s: NonNullable<ReturnType<typeof useOperator>['s']>; id: string }) {
+  const r = campaignResults(s, id);
+  return (
+    <dl className="grid shrink-0 grid-cols-4 gap-1.5 text-center md:w-[360px]" data-testid="campaign-result">
+      {[
+        { l: '발송', v: r.sent, t: '' },
+        { l: '알림 확인', v: r.opened, t: '신호' },
+        { l: '후속 행동', v: r.followUps, t: '신호' },
+        { l: '확인 이용', v: r.confirmedUses, t: '실적' },
+      ].map((x) => (
+        <div key={x.l} className={cx('rounded-lg border px-1.5 py-1.5', x.t === '실적' ? 'border-emerald-200 bg-emerald-50' : 'border-slate-200 bg-slate-50')}>
+          <dt className="text-[0.8125rem] font-semibold text-slate-600">{x.l}</dt>
+          <dd className="text-[1.125rem] font-extrabold tabular text-slate-900">{x.v}</dd>
+        </div>
+      ))}
+      {r.excluded > 0 && <p className="col-span-4 text-left text-[0.8125rem] text-slate-500">최근 7일 같은 알림을 받은 {r.excluded}명은 중복 발송에서 제외</p>}
+    </dl>
+  );
+}
 
 function Inner() {
   const { s, can } = useOperator();
@@ -21,7 +42,8 @@ function Inner() {
     if (seg && SEGMENTS[seg]) setDraft({ segment: seg, name: SEGMENTS[seg].label, channel: 'IN_APP', ...D.campaignTemplate(seg) });
   }, [sp]);
   if (!s) return <PageSkeleton />;
-  const segs = (Object.keys(SEGMENTS) as SegmentKey[]).map((k) => ({ k, ...SEGMENTS[k], n: segmentMembers(s, k).length }));
+  const order: SegmentKey[] = ['RECENT_INTEREST', 'NEW_NO_VISIT', 'LAPSED_30', 'FAVORITE_NO_PURCHASE', 'STAMP_NEAR', 'ALL_CONSENTED'];
+  const segs = order.map((k) => ({ k, ...SEGMENTS[k], n: segmentMembers(s, k).length }));
   return (
     <div className="space-y-4">
       <PageIntro title="고객 알림 보내기" body="대상을 고르면 문안 초안이 만들어지고, 책임자가 승인해야 발송돼요." more="규칙(세그먼트)이 대상과 문안 초안을 만들고, 운영 책임자가 승인한 것만 마케팅 수신 동의 고객에게 앱 알림으로 보냅니다(캠페인). 성과는 발송 수가 아니라 이후 '직원확인 이용'으로만 측정해요." />
@@ -64,6 +86,7 @@ function Inner() {
                   작성 {getProfile(s, c.createdBy)?.name ?? c.createdBy} · {fmtDate(c.createdAt)} {c.sentAt && `· 승인 ${getProfile(s, c.approvedBy)?.name} · ${fmtDate(c.sentAt, { time: true })} 발송 ${c.recipients}명`} {!c.sentAt && `· 예상 대상 ${segmentMembers(s, c.segment).length}명`}
                 </p>
               </div>
+              {c.status === 'SENT' && <CampaignResult s={s} id={c.id} />}
               {c.status !== 'SENT' &&
                 (can('campaign.approve') ? (
                   <div className="flex gap-2">

@@ -102,7 +102,7 @@ export default function AxDashboard() {
           <p className="text-[0.8125rem] font-bold tracking-[0.04em] text-ax-primary">
             다색컴패니언 BUSINESS AX<span className="font-semibold text-slate-500 md:hidden"> · DEMO 데이터</span>
           </p>
-          <p className="mt-0.5 text-[0.9375rem] font-semibold leading-snug text-slate-800 md:text-[1rem]">리얼식단·다색냥의 고객 방문·구매·회원 혜택을 한곳에서 관리합니다.</p>
+          <p className="mt-0.5 text-[0.9375rem] font-semibold leading-snug text-slate-800 md:text-[1rem]">리얼식단·다색냥 손님의 방문·구매·혜택·재방문을 한곳에서 관리합니다.</p>
         </div>
         <p className="hidden text-[0.8125rem] text-slate-500 md:block" data-testid="data-basis">
           <b className="font-semibold text-slate-700">DEMO 시연 데이터</b> · 실제 매출 아님

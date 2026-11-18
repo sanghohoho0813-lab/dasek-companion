@@ -89,6 +89,11 @@ export const SEGMENTS: Record<SegmentKey, { label: string; rule: string; why: st
     rule: '저장 메뉴 존재 AND 해당 메뉴 확인 구매 14일 없음 AND 인앱 마케팅 동의',
     why: ['저장 = 명시적 관심 신호', '구매 확인이 되면 재구매 성과로 측정 가능'],
   },
+  RECENT_INTEREST: {
+    label: '최근 7일 메뉴 저장·서비스 관심 회원',
+    rule: '최근 7일 메뉴 저장 또는 준비 중 서비스 관심 등록 AND 인앱 마케팅 동의',
+    why: ['고객이 직접 남긴 관심 신호(저장·관심 등록)', '관심 메뉴·서비스 안내로 다음 방문을 유도', '성과는 이후 직원이 확인한 방문·구매로만 측정'],
+  },
   STAMP_NEAR: {
     label: '스탬프 보상까지 2개 이하 남음',
     rule: '현재 주기 스탬프 ≥ (필요 개수 − 2) AND 인앱 마케팅 동의',
@@ -114,6 +119,10 @@ export function segmentMembers(s: AppState, key: SegmentKey, now = new Date()): 
         return uses.length > 0 && daysBetween(uses[0].at, nowIso) >= 30;
       case 'FAVORITE_NO_PURCHASE':
         return favoriteWithoutPurchase(s, p.id, now).length > 0;
+      case 'RECENT_INTEREST': {
+        const r = recentInterests(s, p.id, now);
+        return r.menus.length + r.services.length > 0;
+      }
       case 'STAMP_NEAR': {
         const req = rule.stampsRequired ?? 10;
         const inCycle = stampCount(s, p.id) % req;
@@ -123,6 +132,49 @@ export function segmentMembers(s: AppState, key: SegmentKey, now = new Date()): 
         return true;
     }
   });
+}
+
+/** 최근 7일 고객이 직접 남긴 관심 — 저장한 메뉴(최신순)·관심 등록한 준비 중 서비스 */
+export function recentInterests(s: AppState, userId: string, now = new Date()) {
+  const within = (iso: string) => (now.getTime() - new Date(iso).getTime()) / DAY <= 7;
+  const menus = s.favorites
+    .filter((f) => f.userId === userId && within(f.createdAt))
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+    .map((f) => getMenuItem(s, f.menuItemId))
+    .filter((m): m is MenuItem => !!m && m.published);
+  const services = s.roadmapInterest.filter((r) => r.userId === userId && within(r.createdAt)).map((r) => r.itemKey);
+  return { menus, services };
+}
+
+/** 회원별 알림 이동 경로 — 관심을 남긴 메뉴로 바로 (규칙 기반 개인화, AI 아님) */
+export function campaignLinkFor(s: AppState, segment: SegmentKey, userId: string, now = new Date()): string {
+  if (segment === 'RECENT_INTEREST') {
+    const r = recentInterests(s, userId, now);
+    if (r.menus[0]) return `/menu/${r.menus[0].id}`;
+    if (r.services.length) return '/roadmap';
+  }
+  if (segment === 'FAVORITE_NO_PURCHASE') {
+    const m = favoriteWithoutPurchase(s, userId, now)[0];
+    if (m) return `/menu/${m.id}`;
+  }
+  if (segment === 'NEW_NO_VISIT' || segment === 'STAMP_NEAR') return '/my';
+  return '/';
+}
+
+/**
+ * 캠페인 결과 — 발송·확인·후속 행동(신호)과 직원 확인 방문·구매(실적)를 섞지 않는다.
+ *  · 후속 행동: 알림을 연 뒤 같은 회원이 남긴 메뉴 조회·저장·관심 등록
+ *  · 확인 이용: 발송 이후 그 회원의 직원 확인 방문·구매 (알림 때문이라고 단정하지 않음)
+ */
+export function campaignResults(s: AppState, campaignId: string) {
+  const c = s.campaigns.find((x) => x.id === campaignId);
+  const notes = s.notifications.filter((n) => n.campaignId === campaignId);
+  const opened = notes.filter((n) => n.readAt);
+  const followUps = opened.filter((n) =>
+    s.events.some((e) => e.userId === n.userId && e.createdAt >= n.readAt! && (e.type === 'view_menu' || e.type === 'favorite_add' || e.type === 'roadmap_interest')),
+  ).length;
+  const confirmedUses = c?.sentAt ? notes.filter((n) => verifiedUses(s, n.userId).some((u) => u.at >= c.sentAt!)).length : 0;
+  return { sent: notes.length, opened: opened.length, followUps, confirmedUses, excluded: c?.excludedDuplicates ?? 0 };
 }
 
 export function favoriteWithoutPurchase(s: AppState, userId: string, now = new Date()): MenuItem[] {

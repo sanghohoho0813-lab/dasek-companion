@@ -4,7 +4,7 @@
  * 중복지급 방지: idempotencyKey 유니크 / referee 유니크 / (user, store, day) 체크인 유니크.
  */
 import { assertCan } from './permissions';
-import { computeReorderCandidates, getMenuItem, getProfile, hasConsent, segmentMembers, SEGMENTS, stampCount, stampRule, verifiedUses } from './rules';
+import { campaignLinkFor, computeReorderCandidates, getMenuItem, getProfile, hasConsent, segmentMembers, SEGMENTS, stampCount, stampRule, verifiedUses } from './rules';
 import type {
   AdminTask,
   AppState,
@@ -561,6 +561,8 @@ export function campaignTemplate(segment: SegmentKey): { title: string; body: st
       return { title: '오랜만이에요, 다시 만나요', body: '향동천 산책길에 들러 쉬어가세요. 방문 확인 시 스탬프가 적립됩니다.' };
     case 'FAVORITE_NO_PURCHASE':
       return { title: '저장한 메뉴, 오늘 어떠세요?', body: '저장해 두신 메뉴를 매장에서 만나보세요. 구매 확인 시 스탬프가 적립됩니다.' };
+    case 'RECENT_INTEREST':
+      return { title: '관심 있는 메뉴, 매장에서 만나보세요', body: '최근 저장하거나 관심을 남긴 메뉴·서비스 소식이에요. 매장에서 회원코드를 보여주시면 확인 후 스탬프가 적립돼요.' };
     case 'STAMP_NEAR':
       return { title: '보상까지 거의 다 왔어요', body: '스탬프 몇 개만 더 모으면 보상 쿠폰이 발급됩니다.' };
     case 'ALL_CONSENTED':
@@ -599,10 +601,15 @@ export function approveAndSendCampaign(s: AppState, ctx: Ctx, id: string) {
   if (!c) throw new DomainError('캠페인을 찾을 수 없습니다.');
   if (c.status === 'SENT') throw new DomainError('이미 발송된 캠페인입니다.');
   if (c.channel !== 'IN_APP') throw new DomainError('카카오·푸시 발송은 수신동의·발송 인프라·요금 확인 전까지 연결되지 않았습니다(READY).');
-  const members = segmentMembers(s, c.segment, new Date(ctx.now));
-  for (const m of members) notify(s, ctx, m.id, 'MARKETING', c.title, c.body, '/', c.id);
-  Object.assign(c, { status: 'SENT', approvedBy: ctx.actorId, sentAt: ctx.now, recipients: members.length });
-  audit(s, ctx, 'campaign.send', c.id, `recipients=${members.length}`);
+  const now = new Date(ctx.now);
+  // 중복 발송 방지: 최근 7일 같은 대상(세그먼트) 알림을 이미 받은 회원은 제외
+  const sameSeg = new Set(s.campaigns.filter((x) => x.id !== c.id && x.segment === c.segment && x.status === 'SENT' && x.sentAt && (now.getTime() - new Date(x.sentAt).getTime()) / 86_400_000 < 7).map((x) => x.id));
+  const already = new Set(s.notifications.filter((n) => n.campaignId && sameSeg.has(n.campaignId)).map((n) => n.userId));
+  const all = segmentMembers(s, c.segment, now);
+  const members = all.filter((m) => !already.has(m.id));
+  for (const m of members) notify(s, ctx, m.id, 'MARKETING', c.title, c.body, campaignLinkFor(s, c.segment, m.id, now), c.id);
+  Object.assign(c, { status: 'SENT', approvedBy: ctx.actorId, sentAt: ctx.now, recipients: members.length, excludedDuplicates: all.length - members.length });
+  audit(s, ctx, 'campaign.send', c.id, `recipients=${members.length} excluded_dup=${all.length - members.length}`);
   proof(s, ctx, {
     event_type: 'CAMPAIGN_SENT',
     trigger: `세그먼트: ${SEGMENTS[c.segment].label}`,
@@ -610,7 +617,7 @@ export function approveAndSendCampaign(s: AppState, ctx: Ctx, id: string) {
     decision_method: 'RULE+HUMAN',
     why: c.why.join(' / '),
     human_approval: ctx.actorId,
-    action: `인앱 알림 ${members.length}명 (수신동의자만)`,
+    action: `인앱 알림 ${members.length}명 (수신동의자만${all.length - members.length ? ` · 최근 7일 중복 ${all.length - members.length}명 제외` : ''})`,
     result: '발송 완료 — 성과는 이후 확인 이용으로만 측정',
     kpi_before: null,
     kpi_after: null,

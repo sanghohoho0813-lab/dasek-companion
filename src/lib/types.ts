@@ -286,7 +286,7 @@ export interface RewardLedgerEntry {
 }
 
 /* ── 캠페인·알림·재구매 ────────────────────────────── */
-export type SegmentKey = 'NEW_NO_VISIT' | 'LAPSED_30' | 'FAVORITE_NO_PURCHASE' | 'STAMP_NEAR' | 'ALL_CONSENTED';
+export type SegmentKey = 'NEW_NO_VISIT' | 'LAPSED_30' | 'FAVORITE_NO_PURCHASE' | 'RECENT_INTEREST' | 'STAMP_NEAR' | 'ALL_CONSENTED';
 export interface Campaign {
   id: string;
   name: string;
@@ -302,6 +302,8 @@ export interface Campaign {
   createdAt: string;
   sentAt: string | null;
   recipients: number;
+  /** 최근 7일 같은 대상 알림을 이미 받아 이번 발송에서 뺀 인원 (중복 발송 방지) */
+  excludedDuplicates?: number;
   isDemo: boolean;
 }
 

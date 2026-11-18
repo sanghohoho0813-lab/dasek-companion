@@ -131,3 +131,8 @@ html[data-frame='mobile'] ::-webkit-scrollbar { display: none; }
 html[data-frame='mobile'] { scrollbar-width: none; }
 
 :focus-visible { outline-offset: 2px; }
+
+/* 시연: 실제 상태 값이 바뀌었을 때 잠깐 강조 (값 자체는 상태에서 읽음) */
+@keyframes flash-change { 0% { background-color: rgb(167 243 208); } 100% { background-color: transparent; } }
+.flash-change { animation: flash-change 1.4s ease-out 1; }
+@media (prefers-reduced-motion: reduce) { .flash-change { animation: none; } }

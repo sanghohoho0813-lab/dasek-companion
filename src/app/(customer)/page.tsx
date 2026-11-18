@@ -3,6 +3,7 @@ import { ArrowRight, Bell, CalendarCheck2, ChevronRight, Gift, MapPin, QrCode, S
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AssetImage } from '@/components/art/AssetImage';
+import { isLowResSlot } from '@/components/customer/CatGallery';
 import { CatCoverCard, MenuCard, Rail, SectionHeader } from '@/components/customer/parts';
 import { useCustomer } from '@/components/customer/Shell';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
@@ -19,7 +20,7 @@ const TILES: { label: string; href: string; slot: string; art: ArtSpec }[] = [
   { label: '도시락', href: '/realsicdan?cat=rs_box', slot: 'menu_m_diet_box', art: { kind: 'lunchbox', variant: 0 } },
   { label: '디저트', href: '/dasek#menu', slot: 'menu_m_pie120', art: { kind: 'pie', variant: 1 } },
   { label: '음료', href: '/dasek#menu', slot: 'menu_m_machine_drink', art: { kind: 'drink', variant: 1 } },
-  { label: '고양이', href: '/dasek#cats', slot: 'cat_05_01', art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 2 } },
+  { label: '고양이', href: '/dasek#cats', slot: 'cat_r02_01', art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 2 } },
   { label: '간식', href: '/realsicdan?cat=rs_snack', slot: 'menu_m_greek_bowl', art: { kind: 'snack', variant: 0 } },
   { label: '매장 이용', href: '/dasek#visit', slot: 'brand_story_space', art: { kind: 'space', variant: 0 } },
 ];
@@ -101,10 +102,20 @@ export default function HomePage() {
         <div className="mt-4 grid grid-cols-2 gap-3 md:gap-4">
           {[
             { href: '/realsicdan', id: 'hero-realsicdan', title: '리얼식단', sub: '샐러드·도시락', slot: 'service_01_food', art: { kind: 'salad', variant: 1 } as ArtSpec },
-            { href: '/dasek', id: 'hero-dasek', title: '다색냥', sub: '고양이카페', slot: 'cat_05_01', art: { kind: 'space', variant: 0 } as ArtSpec },
+            { href: '/dasek', id: 'hero-dasek', title: '다색냥', sub: '고양이카페', slot: 'cat_r01_01', art: { kind: 'space', variant: 0 } as ArtSpec },
           ].map((x) => (
             <Link key={x.href} href={x.href} data-testid={x.id} className="lift card group block overflow-hidden">
-              <AssetImage slot={x.slot} fallback={x.art} alt={`${x.title} 대표 이미지 (샘플 사진)`} className="zoom-img aspect-[4/3] w-full md:aspect-[16/7]" sizes="50vw" sampleBadge badgePosition="tr" priority />
+              {isLowResSlot(x.slot) ? (
+                /* 실제 고양이 사진(저해상도 카드 촬영본): 넓게 늘리지 않고 흐린 배경 위 정사각형으로 */
+                <span className="relative block aspect-[4/3] w-full overflow-hidden bg-slate-200 md:aspect-[16/7]">
+                  <AssetImage slot={x.slot} fallback={x.art} alt="" className="absolute inset-0" imgClassName="scale-110 blur-2xl opacity-70" sizes="200px" />
+                  <span className="absolute inset-0 grid place-items-center p-3 md:p-4">
+                    <AssetImage slot={x.slot} fallback={x.art} alt="다색냥 고양이 망고" className="aspect-square h-full max-h-[220px] rounded-2xl ring-4 ring-white" sizes="220px" priority />
+                  </span>
+                </span>
+              ) : (
+                <AssetImage slot={x.slot} fallback={x.art} alt={`${x.title} 대표 이미지 (샘플 사진)`} className="zoom-img aspect-[4/3] w-full md:aspect-[16/7]" sizes="50vw" sampleBadge badgePosition="tr" priority />
+              )}
               <span className="flex items-center justify-between gap-2 px-3.5 py-3 md:px-5 md:py-4">
                 <span className="min-w-0">
                   <span className="block text-[1.125rem] font-extrabold text-ink md:text-[1.375rem]">{x.title}</span>

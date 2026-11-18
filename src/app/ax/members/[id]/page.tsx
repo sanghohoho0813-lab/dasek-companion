@@ -7,11 +7,12 @@ import { CounterPurchase } from '@/components/ax/CounterTools';
 import { Locked, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Button, Empty, PageSkeleton, Sheet, axInputCls, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
-import { couponsFor, getMenuItem, getProfile, hasConsent, stampCount, verifiedUses } from '@/lib/rules';
+import { couponsFor, getMenuItem, getProfile, hasConsent, recentInterests, stampCount, verifiedUses } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { CouponIssue } from '@/lib/types';
 import { cx, fmtDate } from '@/lib/util';
 import { StatusPill, statusOf } from '@/components/ui/Status';
+import { ROADMAP } from '@/lib/roadmap';
 
 const LEVEL: Record<string, { l: string; tone: 'slate' | 'blue' | 'green' | 'amber' }> = {
   order_link_click: { l: '링크 클릭', tone: 'slate' },
@@ -172,6 +173,38 @@ export default function MemberDetail() {
           </ul>
         </Panel>
         <div className="space-y-4">
+          <Panel title="최근 관심 (고객이 직접 남긴 신호)" sub="7일 이내 저장한 메뉴·관심 서비스 · 실적이 아닌 후속 안내 근거" testId="member-interest">
+            {(() => {
+              const r = recentInterests(s, p.id);
+              const notes = s.notifications.filter((n) => n.userId === p.id && n.kind === 'MARKETING').slice(0, 3);
+              return (
+                <div className="space-y-2 text-[0.9375rem]">
+                  <p>
+                    <span className="font-semibold text-slate-600">저장한 메뉴 </span>
+                    {r.menus.length ? r.menus.map((m) => m.name).join(', ') : <span className="text-slate-500">없음</span>}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-slate-600">관심 서비스 </span>
+                    {r.services.length ? r.services.map((k) => ROADMAP.find((x) => x.key === k)?.title ?? k).join(', ') : <span className="text-slate-500">없음</span>}
+                  </p>
+                  {r.menus.length + r.services.length > 0 && (
+                    <p className="rounded-lg border border-violet-200 bg-violet-50 px-3 py-2 text-[0.875rem] text-violet-900">
+                      제안: 최근 관심을 보인 회원이에요. &lsquo;관심 메뉴 안내&rsquo; 알림을 검토해 보세요. (규칙 기반 · {hasConsent(s, p.id, 'marketing_inapp') ? '알림 수신 동의' : '수신 비동의 — 발송 대상 아님'})
+                    </p>
+                  )}
+                  {notes.length > 0 && (
+                    <ul className="space-y-1 text-[0.875rem] text-slate-600">
+                      {notes.map((n) => (
+                        <li key={n.id}>
+                          받은 알림: {n.title} · {n.readAt ? '확인함' : '아직 안 봄'}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })()}
+          </Panel>
           <Panel title="추천 관계">
             <ul className="space-y-1.5 text-[0.875rem] text-slate-600">
               {refAsReferee && (

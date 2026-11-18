@@ -101,7 +101,7 @@ test('발표용 시연 모드: 가입 → 체크인 → 직원 확인이 실제 
   await expect(page.getByTestId('demo-stamps')).toHaveText('—');
   await page.keyboard.press('ArrowRight');
   await page.keyboard.press('ArrowRight');
-  await expect(page.getByTestId('demo-step')).toContainText('친구 추천 코드로 가입');
+  await expect(page.getByTestId('demo-step')).toContainText('친구 추천으로 가입'); // 6차 문구
   await page.getByTestId('demo-action').click();
   await expect(page.getByTestId('demo-referral')).toHaveText('대기');
   await page.getByTestId('demo-next').click();
@@ -124,7 +124,7 @@ test('발표용 시연 모드: 가입 → 체크인 → 직원 확인이 실제 
   await page.getByTestId('demo-next').click();
   await page.getByTestId('demo-next').click();
   await page.getByTestId('demo-next').click();
-  await expect(page.getByTestId('demo-step')).toContainText('AI 푸드 웰니스');
+  await expect(page.getByTestId('demo-step')).toContainText('AI 개인 맞춤 식단'); // 6차: 지금·다음·이후 비교
   // 처음부터
   await page.getByTestId('demo-restart').click();
   await page.getByTestId('demo-restart-confirm').click();

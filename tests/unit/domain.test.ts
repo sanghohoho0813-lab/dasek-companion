@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import * as D from '@/lib/domain';
-import { computeKpis, couponsFor, segmentMembers, stampCount, verifiedUses } from '@/lib/rules';
+import { campaignResults, computeKpis, couponsFor, segmentMembers, stampCount, verifiedUses } from '@/lib/rules';
 import { createSeed } from '@/lib/seed';
 import type { AppState } from '@/lib/types';
 import { dailyCheckinCode, dayKey } from '@/lib/util';
@@ -244,5 +244,57 @@ describe('content photos (2차)', () => {
     expect(after.purchasesToday).toBe(before.purchasesToday + 1);
     expect(after.newMembersToday).toBe(before.newMembersToday + 1);
     expect(after.amountToday).toBe(before.amountToday + 4500);
+  });
+});
+
+describe('6차 Flow B — 관심 → 후속 안내 → 승인 → 알림 → 반응 (규칙 기반)', () => {
+  it('방금 저장한 메뉴가 있는 동의 회원만 대상, 알림은 그 메뉴로 연결', () => {
+    const s = fresh();
+    const a = D.signup(s, cust(), { name: '관심고객', phone: '', consents, preferredBrands: [] });
+    const b = D.signup(s, cust(), { name: '비동의고객', phone: '', consents: { ...consents, marketing_inapp: false }, preferredBrands: [] });
+    D.toggleFavorite(s, cust(), a.userId, 'm_chicken_salad');
+    D.toggleFavorite(s, cust(), b.userId, 'm_chicken_salad');
+    const ids = segmentMembers(s, 'RECENT_INTEREST').map((p) => p.id);
+    expect(ids).toContain(a.userId);
+    expect(ids).not.toContain(b.userId); // 수신 비동의 제외
+    const c = D.createCampaign(s, mgr(), { name: '관심 안내', segment: 'RECENT_INTEREST', channel: 'IN_APP', ...D.campaignTemplate('RECENT_INTEREST') });
+    D.approveAndSendCampaign(s, mgr(), c.id);
+    const n = s.notifications.find((x) => x.campaignId === c.id && x.userId === a.userId)!;
+    expect(n.link).toBe('/menu/m_chicken_salad');
+    expect(s.notifications.some((x) => x.campaignId === c.id && x.userId === b.userId)).toBe(false);
+    expect(() => D.approveAndSendCampaign(s, mgr(), c.id)).toThrow(/이미 발송/);
+  });
+
+  it('7일 안에 같은 대상 알림을 받은 회원은 새 캠페인에서 제외', () => {
+    const s = fresh();
+    const a = D.signup(s, cust(), { name: '중복확인', phone: '', consents, preferredBrands: [] });
+    D.toggleFavorite(s, cust(), a.userId, 'm_chicken_salad');
+    const c1 = D.createCampaign(s, mgr(), { name: '1차', segment: 'RECENT_INTEREST', channel: 'IN_APP', title: 't', body: 'b' });
+    D.approveAndSendCampaign(s, mgr(), c1.id);
+    const c2 = D.createCampaign(s, mgr(), { name: '2차', segment: 'RECENT_INTEREST', channel: 'IN_APP', title: 't', body: 'b' });
+    D.approveAndSendCampaign(s, mgr(), c2.id);
+    expect(s.notifications.filter((n) => n.userId === a.userId && n.kind === 'MARKETING').length).toBe(1);
+    expect(s.campaigns.find((x) => x.id === c2.id)!.excludedDuplicates).toBeGreaterThanOrEqual(1);
+  });
+
+  it('결과: 알림 확인·후속 조회는 신호, 확인 방문은 직원 확인이 있어야만 늘어난다', () => {
+    const s = fresh();
+    const a = D.signup(s, cust(), { name: '반응고객', phone: '', consents, preferredBrands: [] });
+    D.toggleFavorite(s, cust(), a.userId, 'm_chicken_salad');
+    const c = D.createCampaign(s, mgr(), { name: '결과', segment: 'RECENT_INTEREST', channel: 'IN_APP', title: 't', body: 'b' });
+    D.approveAndSendCampaign(s, mgr(), c.id);
+    const n = s.notifications.find((x) => x.campaignId === c.id && x.userId === a.userId)!;
+    const later = (ms: number): D.Ctx => ({ ...cust(), now: new Date(Date.now() + ms).toISOString() });
+    D.markNotificationRead(s, later(1000), n.id);
+    D.recordMenuView(s, later(2000), a.userId, 'm_chicken_salad');
+    let r = campaignResults(s, c.id);
+    expect(r.opened).toBe(1);
+    expect(r.followUps).toBe(1);
+    expect(r.confirmedUses).toBe(0); // 클릭·조회는 방문 실적이 아님
+    const ck = D.submitCheckin(s, later(3000), a.userId, 'store_dasek', dailyCheckinCode('store_dasek', dayKey()));
+    expect(campaignResults(s, c.id).confirmedUses).toBe(0); // 확인 대기 상태는 실적 아님
+    D.decideCheckin(s, { ...staff(), now: new Date(Date.now() + 4000).toISOString() }, ck.id, true);
+    r = campaignResults(s, c.id);
+    expect(r.confirmedUses).toBe(1);
   });
 });
