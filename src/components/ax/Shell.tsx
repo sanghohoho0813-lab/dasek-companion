@@ -365,7 +365,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
               <LiveClock variant="pill" className="hidden lg:inline-flex" />
               <ToCustomerButton className="hidden md:inline-flex" label="고객 화면 보기" />
               <ToCustomerButton className="md:hidden" label="고객 화면" short="고객" />
-              <DemoToolsButton tone="ax" className="lg:hidden" />
+              <DemoToolsButton tone="ax" short className="lg:hidden" />
               {roleInHeader && s && <RoleSwitch s={s} />}
               <DeviceSwitch className="hidden lg:inline-flex" iconOnly={!compact ? 'below-2xl' : 'always'} />
               <button onClick={() => setTutorial(true)} aria-label="둘러보기 다시 보기" className="hidden h-10 w-10 place-items-center rounded-xl text-slate-600 hover:bg-slate-100 lg:grid">
