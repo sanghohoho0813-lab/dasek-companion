@@ -86,20 +86,20 @@ test.describe('visual quality gate', () => {
   test('stacked overlay: Esc closes only the top layer (lightbox → page stays)', async ({ page }) => {
     await prime(page);
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.goto('/dasek/cats/cat_1');
+    await page.goto('/dasek/cats/cat_r01');
     await settle(page);
     await page.getByRole('button', { name: /크게 보기/ }).first().click();
     const lightbox = page.getByTestId('cat-lightbox');
     await expect(lightbox).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(lightbox).toBeHidden();
-    await expect(page).toHaveURL(/\/dasek\/cats\/cat_1$/);
+    await expect(page).toHaveURL(/\/dasek\/cats\/cat_r01$/);
     // 시트 → Esc 로 닫힘, 아래 화면 유지
     await page.getByTestId('demo-tools-open').first().click();
     await expect(page.getByTestId('demo-tools')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(page.getByTestId('demo-tools')).toBeHidden();
-    await expect(page).toHaveURL(/\/dasek\/cats\/cat_1$/);
+    await expect(page).toHaveURL(/\/dasek\/cats\/cat_r01$/);
   });
 
   test('reduced motion turns off entrance animations', async ({ page }) => {

@@ -59,6 +59,31 @@ export function migrate(prev: AppState): AppState | null {
     const addIds = new Set(addCats.map((c) => c.id));
     s = { ...s, schemaVersion: 6, cats: [...s.cats, ...addCats], catPhotos: [...s.catPhotos, ...seed.catPhotos.filter((p) => addIds.has(p.catId))] } as AppState;
   }
+  if (s.schemaVersion === 6) {
+    // v7: 실제 고양이 14마리(매장 소개 카드) 추가. 예시 프로필은 고객 화면에서 내림.
+    //  · 운영자가 손대지 않은 예시 12~25번(v6 에서 추가)과 그 샘플 사진은 정리
+    //  · 예시 1~11번은 '프로필 준비 중'으로 비공개 (운영 AX 에서 채워 공개)
+    //  · 운영자가 이름을 바꿨거나 사진을 올린 고양이는 지우지 않고 그대로 둔다
+    const seed = createSeed();
+    const V6_EXTRA = ['호두', '도토리', '깨비', '쿠키', '솜이', '치즈', '망고', '귤이', '루이', '호박', '두부', '설기', '찹쌀', '산책이', '카푸', '마루', '연유', '꾸벅이'];
+    const uploaded = new Set(s.catPhotos.filter((p) => p.dataUrl).map((p) => p.catId));
+    const num = (id: string) => Number(/^cat_(\d+)$/.exec(id)?.[1] ?? 0);
+    const drop = new Set(s.cats.filter((c) => c.isPlaceholder && num(c.id) >= 12 && V6_EXTRA.includes(c.name) && !uploaded.has(c.id)).map((c) => c.id));
+    const have = new Set(s.cats.map((c) => c.id));
+    const realAdd = seed.cats.filter((c) => !c.isPlaceholder && !have.has(c.id));
+    const realIds = new Set(realAdd.map((c) => c.id));
+    const kept = s.cats
+      .filter((c) => !drop.has(c.id))
+      .map((c) => (c.isPlaceholder ? { ...c, published: false, name: c.id === 'cat_6' && c.name === '라떼' ? '코코' : c.name, sortOrder: 100 + c.sortOrder } : c));
+    const pending = s.catPhotos.find((p) => p.id === 'pho_pending_1');
+    s = {
+      ...s,
+      schemaVersion: 7,
+      cats: [...realAdd, ...kept],
+      catPhotos: [...seed.catPhotos.filter((p) => realIds.has(p.catId) && p.id !== 'pho_pending_1'), ...s.catPhotos.filter((p) => !drop.has(p.catId) && p.id !== 'pho_pending_1'), ...(pending ? [pending.status === 'PENDING_REVIEW' ? seed.catPhotos.find((p) => p.id === 'pho_pending_1')! : pending] : [])],
+      tasks: s.tasks.map((t) => (t.id === 'tsk_photo_seed' && t.title === '보리 사진 공개 승인' ? { ...t, title: '망고 사진 공개 승인' } : t)),
+    } as AppState;
+  }
   return s.schemaVersion === SCHEMA_VERSION ? s : null;
 }
 

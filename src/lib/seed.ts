@@ -8,7 +8,7 @@ import * as D from './domain';
 import type { AppState, ArtSpec, CafeCat, CatPhoto, FactField, LoyaltyRule, MenuItem, Store } from './types';
 import { addDays, DAY, dailyCheckinCode, dayKey, mulberry32 } from './util';
 
-export const SCHEMA_VERSION = 6;
+export const SCHEMA_VERSION = 7;
 const NAVER_SRC = '사용자 제공 네이버 플레이스 공개정보 (2026-11-17)';
 
 const fact = <T = string>(value: NoInfer<T> | null, evidence: FactField['evidence'], source: string, checkedAt: string | null = null): FactField<T> => ({ value, evidence, source, checkedAt });
@@ -103,11 +103,28 @@ function baseState(nowIso: string): AppState {
     ['cat_3', '구름', { kind: 'cat', coat: 'white', pattern: 'solid', eyes: 'blue', pose: 'sit', bg: 2 }, ['조용함', '관찰형'], ['높은 곳', '낚싯대 장난감']],
     ['cat_4', '콩떡', { kind: 'cat', coat: 'black', pattern: 'tuxedo', eyes: 'amber', pose: 'peek', bg: 3 }, ['호기심 왕', '장난꾸러기'], ['상자 탐험', '레이저 놀이 대신 깃털']],
     ['cat_5', '단풍', { kind: 'cat', coat: 'white', pattern: 'calico', eyes: 'copper', pose: 'loaf', bg: 4 }, ['도도함', '낮잠 장인'], ['담요', '조용한 손님']],
-    ['cat_6', '라떼', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'sleep', bg: 0 }, ['순둥이', '무릎 고양이'], ['쓰다듬기', '간식 시간']],
+    ['cat_6', '코코', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'sleep', bg: 0 }, ['순둥이', '무릎 고양이'], ['쓰다듬기', '간식 시간']],
     ...EXTRA_CATS,
   ];
   const tips = ['자고 있을 때는 깨우지 않아요', '억지로 안아 올리지 않아요', '간식은 직원 안내에 따라 주세요', '플래시 없이 촬영해 주세요'];
-  const cats: CafeCat[] = catDefs.map(([id, name, art, personality, likes], i) => ({
+  const realCats: CafeCat[] = REAL_CATS.map((r, i) => ({
+    id: r.id,
+    name: r.name,
+    isPlaceholder: false,
+    tagline: r.tags.map((t) => `#${t}`).join(' '),
+    personality: r.tags,
+    likes: [],
+    interactionTips: r.tip ? [r.tip, ...tips] : tips,
+    coverArt: r.art,
+    published: true,
+    sortOrder: i,
+    internalNote: `${REAL_CAT_SOURCE}(사진 촬영본)에서 옮김 — 원본 사진·좋아하는 것·건강정보는 매장 확인 필요`,
+    breed: r.breed,
+    sex: r.sex,
+    source: REAL_CAT_SOURCE,
+  }));
+  // 정보 확인 전 11마리 — 고객 화면 비공개(프로필 준비 중), 운영 AX 에서 채워 공개
+  const placeholderCats: CafeCat[] = catDefs.map(([id, name, art, personality, likes], i) => ({
     id,
     name,
     isPlaceholder: true,
@@ -116,14 +133,28 @@ function baseState(nowIso: string): AppState {
     likes,
     interactionTips: tips,
     coverArt: art,
-    published: true,
-    sortOrder: i,
-    internalNote: '예시 프로필 — 실제 고양이 이름·사진·건강정보 확인 후 교체',
+    published: false,
+    sortOrder: REAL_CATS.length + i,
+    internalNote: '예시 프로필(비공개) — 실제 고양이 이름·사진 확인 후 채워서 공개',
   }));
+  const cats: CafeCat[] = [...realCats, ...placeholderCats];
   const poses = ['sit', 'loaf', 'peek', 'sleep'] as const;
   const captions = ['대표 사진', '가까이서 본 얼굴', '오늘의 한 컷', '쉬는 시간'];
-  const catPhotos: CatPhoto[] = cats.flatMap((c, ci) =>
-    // 기존 6마리: 사진 4장 · 추가 19마리: 대표 사진 1장 (샘플 사진 풀에서 서로 다른 고양이)
+  const realPhotos: CatPhoto[] = realCats.map((c, ci) => ({
+    id: `pho_${c.id}_0`,
+    catId: c.id,
+    art: c.coverArt,
+    dataUrl: null,
+    slot: `cat_r${String(ci + 1).padStart(2, '0')}_01`,
+    caption: `${c.breed} · ${c.sex === 'F' ? '여아' : '남아'}`,
+    alt: `${c.name} — ${c.breed}`,
+    status: 'PUBLISHED',
+    sortOrder: 0,
+    uploadedBy: null,
+    createdAt: nowIso,
+  }));
+  const placeholderPhotos: CatPhoto[] = placeholderCats.flatMap((c, ci) =>
+    // 예시 6마리: 사진 4장 · 예시 7~11: 1장 (CC0 샘플)
     (ci < 6 ? poses : poses.slice(0, 1)).map((pose, pi) => ({
       id: `pho_${c.id}_${pi}`,
       catId: c.id,
@@ -138,6 +169,7 @@ function baseState(nowIso: string): AppState {
       createdAt: nowIso,
     })),
   );
+  const catPhotos: CatPhoto[] = [...realPhotos, ...placeholderPhotos];
 
   return {
     schemaVersion: SCHEMA_VERSION,
@@ -187,9 +219,28 @@ function baseState(nowIso: string): AppState {
 /** 데모 이력 재생 */
 /**
  * 다색냥 고양이 수: 25마리 (운영자 전달 정보 · 매장 확인 전).
- * 7~25번은 예시 이름·성향이며 사진은 CC0 샘플 사진 — 실제 이름·사진은 AX '메뉴·고양이 사진'에서 교체한다.
+ * 실제 프로필 14마리: 매장 소개 카드(사진 촬영본)에서 이름·성별·품종·해시태그를 옮김 (2026-11-18 전달) — 사진은 public/assets/cat_rNN_01.jpg
+ * 나머지 11마리: 정보 확인 전 → 고객 화면 비공개 '프로필 준비 중'(운영 AX 에서 채워 공개)
  */
 export const DASEK_CAT_COUNT = 25;
+export const REAL_CAT_SOURCE = '다색냥 매장 소개 카드';
+type RealCatDef = { id: string; name: string; sex: 'F' | 'M'; breed: string; tags: string[]; art: ArtSpec & { kind: 'cat' }; tip?: string };
+export const REAL_CATS: RealCatDef[] = [
+  { id: 'cat_r01', name: '망고', sex: 'M', breed: '먼치킨 숏헤어', tags: ['인기1위', '먹보냥', '숏다리', '미디어중독'], art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'loaf', bg: 0 } },
+  { id: 'cat_r02', name: '살구', sex: 'F', breed: '브리티쉬 숏헤어', tags: ['무릎냥이', '겁쟁이', '백치미'], art: { kind: 'cat', coat: 'white', pattern: 'calico', eyes: 'amber', pose: 'sit', bg: 1 } },
+  { id: 'cat_r03', name: '바니', sex: 'F', breed: '데본 렉스', tags: ['등반천재', '개냥이', '수다쟁이', '무릎냥이'], art: { kind: 'cat', coat: 'cream', pattern: 'solid', eyes: 'green', pose: 'sit', bg: 2 } },
+  { id: 'cat_r04', name: '소금이', sex: 'F', breed: '먼치킨 롱헤어', tags: ['용맹', '위협감제로', '짧은다리', '미모폭발'], art: { kind: 'cat', coat: 'cream', pattern: 'solid', eyes: 'copper', pose: 'peek', bg: 3 } },
+  { id: 'cat_r05', name: '젤리', sex: 'F', breed: '브리티쉬 숏헤어', tags: ['입질주의', '기분파', '수다쟁이'], art: { kind: 'cat', coat: 'black', pattern: 'tuxedo', eyes: 'amber', pose: 'sit', bg: 4 }, tip: '입질 주의 — 손을 먼저 내밀지 말고, 다가올 때까지 기다려 주세요' },
+  { id: 'cat_r06', name: '점박이', sex: 'F', breed: '코리안 숏헤어', tags: ['무릎냥이', '개냥이', '사랑둥이', '순둥이'], art: { kind: 'cat', coat: 'white', pattern: 'calico', eyes: 'amber', pose: 'sit', bg: 0 } },
+  { id: 'cat_r07', name: '라떼', sex: 'F', breed: '스코티쉬 폴드', tags: ['개구쟁이', '장화신은고양이', '저질체력'], art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'loaf', bg: 1 } },
+  { id: 'cat_r08', name: '밤비', sex: 'F', breed: '아비시니안', tags: ['장난꾸러기', '에너지폭발', '사고뭉치'], art: { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 2 } },
+  { id: 'cat_r09', name: '샤인', sex: 'M', breed: '랙돌 숏헤어', tags: ['엉뚱매력', '앞머리요정', '츤데레'], art: { kind: 'cat', coat: 'white', pattern: 'point', eyes: 'blue', pose: 'sit', bg: 3 } },
+  { id: 'cat_r10', name: '루카', sex: 'M', breed: '랙돌 롱헤어', tags: ['미남', '활발냥', '뽀뽀쟁이', '순둥이'], art: { kind: 'cat', coat: 'white', pattern: 'point', eyes: 'blue', pose: 'loaf', bg: 4 } },
+  { id: 'cat_r11', name: '푸딩', sex: 'F', breed: '브리티쉬 숏헤어', tags: ['겁쟁이', '무릎냥이', '발바닥까망'], art: { kind: 'cat', coat: 'cream', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 0 } },
+  { id: 'cat_r12', name: '렐라', sex: 'F', breed: '코리안 숏헤어', tags: ['남매냥이', '쫄보미', '깨발랄'], art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 1 } },
+  { id: 'cat_r13', name: '체다', sex: 'M', breed: '코리안 숏헤어', tags: ['남매냥이', '탄탄몸매', '유산소집착', '겁쟁이'], art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 2 } },
+  { id: 'cat_r14', name: '리코', sex: 'F', breed: '코리안 숏헤어', tags: ['남매냥이', '먹튀', '겁쟁이', '수다쟁이'], art: { kind: 'cat', coat: 'white', pattern: 'calico', eyes: 'amber', pose: 'loaf', bg: 3 } },
+];
 type CatDef = [string, string, ArtSpec & { kind: 'cat' }, string[], string[]];
 export const EXTRA_CATS: CatDef[] = [
   ['cat_7', '율무', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'loaf', bg: 1 }, ['느긋함', '바닥 담당'], ['햇볕', '담요']],
@@ -197,20 +248,6 @@ export const EXTRA_CATS: CatDef[] = [
   ['cat_9', '도토리', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 3 }, ['정면 응시', '차분함'], ['눈 맞춤', '조용한 손님']],
   ['cat_10', '깨비', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'peek', bg: 4 }, ['관찰형', '도도함'], ['높은 곳', '깃털']],
   ['cat_11', '쿠키', { kind: 'cat', coat: 'gray', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 0 }, ['손 냄새 확인', '애교'], ['턱 쓰다듬기', '간식 시간']],
-  ['cat_12', '솜이', { kind: 'cat', coat: 'gray', pattern: 'tabby', eyes: 'blue', pose: 'sleep', bg: 1 }, ['막내', '잠꾸러기'], ['낮잠', '부드러운 쿠션']],
-  ['cat_13', '치즈', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 2 }, ['문지기', '사람 좋아함'], ['입구 자리', '인사']],
-  ['cat_14', '망고', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'blue', pose: 'loaf', bg: 3 }, ['뒹굴기', '장난꾸러기'], ['배 보이기', '공 굴리기']],
-  ['cat_15', '귤이', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 4 }, ['활발함', '사냥 놀이'], ['낚싯대 장난감', '달리기']],
-  ['cat_16', '루이', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 0 }, ['창가 담당', '사색가'], ['창밖 새 구경', '화분 옆']],
-  ['cat_17', '호박', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 1 }, ['꽃 좋아함', '순함'], ['화분 옆 자리', '햇살']],
-  ['cat_18', '두부', { kind: 'cat', coat: 'white', pattern: 'tuxedo', eyes: 'green', pose: 'peek', bg: 2 }, ['조심성', '관찰형'], ['숨숨집', '조용한 곳']],
-  ['cat_19', '설기', { kind: 'cat', coat: 'white', pattern: 'tuxedo', eyes: 'green', pose: 'loaf', bg: 3 }, ['느긋함', '무릎 고양이'], ['담요', '쓰다듬기']],
-  ['cat_20', '찹쌀', { kind: 'cat', coat: 'white', pattern: 'tabby', eyes: 'amber', pose: 'sleep', bg: 4 }, ['배 보이기', '엉뚱함'], ['벤치', '뒹굴기']],
-  ['cat_21', '산책이', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 0 }, ['산책길 담당', '자신감'], ['순찰', '손님 마중']],
-  ['cat_22', '카푸', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'loaf', bg: 1 }, ['우아함', '수다쟁이'], ['대화', '따뜻한 자리']],
-  ['cat_23', '마루', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'sit', bg: 2 }, ['포근함', '사람 좋아함'], ['빗질', '무릎']],
-  ['cat_24', '연유', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'peek', bg: 3 }, ['수줍음', '천천히 친해짐'], ['풀밭', '조용한 손님']],
-  ['cat_25', '꾸벅이', { kind: 'cat', coat: 'brown', pattern: 'tuxedo', eyes: 'green', pose: 'sleep', bg: 4 }, ['낮잠 장인', '순둥이'], ['쿠션', '담요']],
 ];
 const EXTRA_TAGLINES = [
   '바닥에 길게 누워 손님을 맞아요', '풀 냄새를 좋아하는 산책파', '빤히 바라보다 천천히 다가와요', '높은 곳에서 가게를 지켜봐요', '손 냄새부터 확인하는 신중파',
@@ -325,9 +362,9 @@ export function createSeed(now: Date = new Date()): AppState {
   D.createCampaign(s, staff(at(1, 16)), { name: '주말 디저트 안내 (초안)', segment: 'ALL_CONSENTED', channel: 'IN_APP', title: '주말엔 120겹파이', body: '산책길에 들러 바삭한 120겹파이와 쉬어가세요.' });
 
   // 사진 공개 승인 대기 1건 (예시)
-  const pending: CatPhoto = { id: 'pho_pending_1', catId: 'cat_2', art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 2 }, dataUrl: null, slot: null, caption: '새로 올라온 사진 (검토 대기)', alt: '보리(예시 일러스트) 새 사진', status: 'PENDING_REVIEW', sortOrder: 9, uploadedBy: 'op_staff', createdAt: at(0, 9) };
+  const pending: CatPhoto = { id: 'pho_pending_1', catId: 'cat_r01', art: { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 2 }, dataUrl: null, slot: null, caption: '새로 올라온 사진 (검토 대기 · 예시 일러스트)', alt: '망고 새 사진 (예시 일러스트)', status: 'PENDING_REVIEW', sortOrder: 9, uploadedBy: 'op_staff', createdAt: at(0, 9) };
   s.catPhotos.push(pending);
-  s.tasks.unshift({ id: 'tsk_photo_seed', type: 'PHOTO_REVIEW', refId: pending.id, userId: null, storeId: 'store_dasek', title: '보리 사진 공개 승인', status: 'OPEN', createdAt: at(0, 9), doneAt: null, doneBy: null });
+  s.tasks.unshift({ id: 'tsk_photo_seed', type: 'PHOTO_REVIEW', refId: pending.id, userId: null, storeId: 'store_dasek', title: '망고 사진 공개 승인', status: 'OPEN', createdAt: at(0, 9), doneAt: null, doneBy: null });
 
   // 로드맵 관심 (예시)
   const rm = ['subscription_pickup', 'food_wellness', 'cat_companion', 'subscription_pickup', 'b2b_office', 'subscription_pickup'];

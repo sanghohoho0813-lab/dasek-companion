@@ -687,7 +687,7 @@ export function updateMenuItem(s: AppState, ctx: Ctx, id: string, patch: Partial
   audit(s, ctx, 'menu.update', id, JSON.stringify(patch));
 }
 
-export function updateCat(s: AppState, ctx: Ctx, id: string, patch: Partial<Pick<import('./types').CafeCat, 'name' | 'tagline' | 'personality' | 'likes' | 'interactionTips' | 'published' | 'internalNote' | 'isPlaceholder'>>) {
+export function updateCat(s: AppState, ctx: Ctx, id: string, patch: Partial<Pick<import('./types').CafeCat, 'name' | 'tagline' | 'personality' | 'likes' | 'interactionTips' | 'published' | 'internalNote' | 'isPlaceholder' | 'breed' | 'sex'>>) {
   assertCan(ctx.actorRole, 'content.edit');
   const c = s.cats.find((x) => x.id === id);
   if (!c) throw new DomainError('고양이를 찾을 수 없습니다.');

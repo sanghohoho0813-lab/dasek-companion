@@ -8,6 +8,7 @@ import { CatGallery } from '@/components/customer/CatGallery';
 import { CatCoverCard, Rail, SectionHeader } from '@/components/customer/parts';
 import { BackHeader, useCustomer } from '@/components/customer/Shell';
 import { Empty, PageSkeleton } from '@/components/ui';
+import { cx } from '@/lib/util';
 import * as D from '@/lib/domain';
 import { act } from '@/lib/store';
 
@@ -51,7 +52,17 @@ export default function CatProfilePage() {
             {cat.isPlaceholder && <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[0.8125rem] font-bold text-amber-800">예시 프로필 · 샘플 사진</span>}
           </div>
           <h1 className="mt-1.5 text-[2rem] font-extrabold leading-tight tracking-[-0.025em] text-ink md:text-[2.625rem]">{cat.name}</h1>
-          <p className="mt-1 text-[1.0625rem] font-medium leading-snug text-ink-2">{cat.tagline}</p>
+          {(cat.breed || cat.sex) && (
+            <p className="mt-1 flex flex-wrap items-center gap-2 text-[1rem] font-semibold text-ink-2" data-testid="cat-facts">
+              {cat.breed && <span>{cat.breed}</span>}
+              {cat.sex && (
+                <span className={cx('rounded-full px-2.5 py-0.5 text-[0.875rem] font-bold ring-1 ring-inset', cat.sex === 'F' ? 'bg-rose-50 text-rose-800 ring-rose-200' : 'bg-sky-50 text-sky-800 ring-sky-200')}>
+                  {cat.sex === 'F' ? '♀ 여아' : '♂ 남아'}
+                </span>
+              )}
+            </p>
+          )}
+          {!cat.breed && <p className="mt-1 text-[1.0625rem] font-medium leading-snug text-ink-2">{cat.tagline}</p>}
 
           <div className="mt-6 grid gap-4">
             <div>
@@ -59,17 +70,23 @@ export default function CatProfilePage() {
                 <Sparkles className="h-4 w-4" /> 성격
               </p>
               <div className="mt-2 flex flex-wrap gap-2">
-                {cat.personality.length ? cat.personality.map((p) => <span key={p} className="rounded-full bg-brand-50 px-3.5 py-2 text-[0.875rem] font-semibold text-brand-800">{p}</span>) : <span className="text-[0.875rem] text-ink-3">소개 준비 중</span>}
+                {cat.personality.length ? cat.personality.map((p) => <span key={p} className={cx('rounded-full px-3.5 py-2 text-[0.875rem] font-semibold', /입질/.test(p) ? 'bg-red-50 text-red-800 ring-1 ring-inset ring-red-200' : 'bg-brand-50 text-brand-800')}>{cat.breed ? `#${p}` : p}</span>) : <span className="text-[0.875rem] text-ink-3">소개 준비 중</span>}
               </div>
             </div>
-            <div>
-              <p className="flex items-center gap-1.5 text-[0.875rem] font-bold text-ink-3">
-                <Heart className="h-4 w-4" /> 좋아하는 것
-              </p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {cat.likes.length ? cat.likes.map((p) => <span key={p} className="rounded-full bg-promo-50 px-3.5 py-2 text-[0.875rem] font-semibold text-promo-600">{p}</span>) : <span className="text-[0.875rem] text-ink-3">소개 준비 중</span>}
+            {cat.likes.length > 0 && (
+              <div>
+                <p className="flex items-center gap-1.5 text-[0.875rem] font-bold text-ink-3">
+                  <Heart className="h-4 w-4" /> 좋아하는 것
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {cat.likes.map((p) => (
+                    <span key={p} className="rounded-full bg-promo-50 px-3.5 py-2 text-[0.875rem] font-semibold text-promo-600">
+                      {p}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
             <div className="rounded-[20px] bg-sage-50 p-5">
               <p className="flex items-center gap-1.5 text-[0.9375rem] font-bold text-sage-600">
                 <HandHeart className="h-5 w-5" /> {cat.name}와(과) 친해지는 법
@@ -83,6 +100,7 @@ export default function CatProfilePage() {
                 ))}
               </ul>
             </div>
+            {cat.source && !cat.isPlaceholder && <p className="text-[0.875rem] text-ink-3">정보 출처: {cat.source} · 건강 상태나 치유 효과에 대한 정보는 제공하지 않아요.</p>}
             {cat.isPlaceholder && (
               <p className="flex gap-2 rounded-2xl bg-canvas px-4 py-3 text-[0.8125rem] leading-relaxed text-ink-2">
                 <Info className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />이 프로필과 사진은 실제 다색냥 고양이가 아니라 시연용 예시예요. 건강 상태나 치유 효과에 대한 정보는 제공하지 않아요.

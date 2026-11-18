@@ -146,7 +146,7 @@ export default function HomePage() {
       {/* ── 4. 고양이 4마리 ─────────────────── */}
       <section className="mt-8 bg-[#F4F8F9] py-7 md:mt-12 md:py-10" aria-labelledby="sec-cats">
         <div className="mx-auto max-w-6xl px-4 md:px-5">
-          <SectionHeader id="sec-cats" eyebrow="다색냥" title="고양이 친구들" sub="눌러서 성격·좋아하는 것을 확인해요" href="/dasek#cats" linkLabel={`전체 ${cats.length}마리`} />
+          <SectionHeader id="sec-cats" eyebrow="다색냥" title="고양이 친구들" sub="눌러서 품종·성격을 확인해요" href="/dasek#cats" linkLabel="전체 보기" />
           <Rail label="고양이 목록">
             {cats.slice(0, 4).map((c) => (
               <CatCoverCard key={c.id} cat={c} photo={D.publishedCatPhotos(s, c.id)[0]} />

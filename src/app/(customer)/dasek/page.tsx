@@ -9,6 +9,7 @@ import { BackHeader, useCustomer } from '@/components/customer/Shell';
 import { Button, Disclosure, EvidenceBadge, PageSkeleton, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { storeOfBrand } from '@/lib/rules';
+import { DASEK_CAT_COUNT } from '@/lib/seed';
 import { act } from '@/lib/store';
 
 const RULES = [
@@ -26,6 +27,7 @@ export default function DasekPage() {
   if (!s) return <PageSkeleton />;
   const store = storeOfBrand(s, 'dasek');
   const cats = s.cats.filter((c) => c.published).sort((a, b) => a.sortOrder - b.sortOrder);
+  const pendingCats = Math.max(0, DASEK_CAT_COUNT - cats.length);
   const covers = new Map(cats.map((c) => [c.id, D.publishedCatPhotos(s, c.id)]));
   // 오늘의 순간: 고양이별 대표 외 사진을 번갈아 배치
   const moments = cats.flatMap((c) => (covers.get(c.id) ?? []).slice(1, 3).map((p) => ({ p, c }))).sort((a, b) => a.p.sortOrder - b.p.sortOrder);
@@ -86,7 +88,7 @@ export default function DasekPage() {
       {/* 고양이 — Netflix식 사진 레일 (밝은 톤) */}
       <section id="cats" className="mt-8 scroll-mt-20 bg-[#F4F8F9] py-8 md:py-10" aria-labelledby="sec-friends">
         <div className="mx-auto max-w-6xl px-4 md:px-5">
-          <SectionHeader id="sec-friends" eyebrow={`다색냥 친구들 ${cats.length}마리`} title="우리 고양이들을 만나보세요" sub="사진을 누르면 성격·좋아하는 것을 볼 수 있어요" />
+          <SectionHeader id="sec-friends" eyebrow={`다색냥 친구들 ${Math.max(DASEK_CAT_COUNT, cats.length)}마리`} title="우리 고양이들을 만나보세요" sub="사진을 누르면 품종·성격을 볼 수 있어요" />
           {allCats ? (
             /* 전체 보기: 25마리를 한눈에 — 격자 */
             <ul className="grid grid-cols-2 gap-3 min-[480px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" data-testid="cats-grid" aria-label={`고양이 ${cats.length}마리 전체`}>
@@ -95,6 +97,16 @@ export default function DasekPage() {
                   <CatCoverCard cat={c} photo={covers.get(c.id)?.[0]} fluid />
                 </li>
               ))}
+              {pendingCats > 0 && (
+                <li data-testid="cats-pending">
+                  <div className="grid aspect-[3/4] place-items-center rounded-[22px] border-2 border-dashed border-cardline bg-white p-3 text-center">
+                    <span>
+                      <span className="block text-[1.5rem] font-extrabold text-ink">+{pendingCats}마리</span>
+                      <span className="mt-1 block text-[0.875rem] font-semibold text-ink-3">프로필 준비 중</span>
+                    </span>
+                  </div>
+                </li>
+              )}
             </ul>
           ) : (
             <Rail label="고양이 프로필 카드">
@@ -105,7 +117,7 @@ export default function DasekPage() {
           )}
           {cats.length > 4 && (
             <button type="button" aria-expanded={allCats} onClick={() => setAllCats((v) => !v)} data-testid="cats-show-all" className="mt-3 flex h-11 w-full items-center justify-center rounded-2xl bg-white text-[0.9375rem] font-bold text-ink ring-1 ring-inset ring-cardline hover:bg-canvas md:w-auto md:px-6">
-              {allCats ? '대표 고양이만 보기' : `전체 ${cats.length}마리 보기`}
+              {allCats ? '대표 고양이만 보기' : `소개된 ${cats.length}마리 모두 보기`}
             </button>
           )}
           {moments.length > 0 && (
@@ -126,6 +138,7 @@ export default function DasekPage() {
               </Rail>
             </div>
           )}
+          {pendingCats > 0 && <p className="mt-3 text-[0.875rem] text-ink-3" data-testid="cats-pending-note">총 {DASEK_CAT_COUNT}마리 중 {cats.length}마리를 소개하고 있어요. 나머지 {pendingCats}마리는 매장 확인 후 소개할게요.</p>}
           {cats.some((c) => c.isPlaceholder) && (
             <p className="mt-3 rounded-2xl bg-white px-4 py-3 text-[0.875rem] leading-relaxed text-ink-2">
               지금은 <b>예시 프로필과 샘플 사진</b>이에요. 실제 다색냥 고양이 수·이름·사진은 매장 확인 후 공개됩니다.

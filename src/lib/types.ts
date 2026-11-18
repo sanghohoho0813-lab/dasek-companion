@@ -136,6 +136,11 @@ export interface CafeCat {
   published: boolean;
   sortOrder: number;
   internalNote: string; // 직원 전용 — 고객에게 노출 금지
+  /** 품종 (매장 소개 카드 기준) */
+  breed?: string | null;
+  sex?: 'F' | 'M' | null;
+  /** 정보 출처 — 고객 화면 하단에 작게 표시 */
+  source?: string | null;
 }
 
 export interface CatPhoto {

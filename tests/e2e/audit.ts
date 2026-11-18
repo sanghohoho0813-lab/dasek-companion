@@ -141,7 +141,7 @@ export async function audit(page: Page, opts: { touch: boolean }): Promise<Audit
   }, opts);
 }
 
-export const CUSTOMER_ROUTES = ['/', '/realsicdan', '/menu/m_pie120', '/dasek', '/dasek/cats/cat_5', '/membership', '/my', '/my/coupons', '/my/referral', '/signup', '/roadmap', '/checkin'];
+export const CUSTOMER_ROUTES = ['/', '/realsicdan', '/menu/m_pie120', '/dasek', '/dasek/cats/cat_r05', '/membership', '/my', '/my/coupons', '/my/referral', '/signup', '/roadmap', '/checkin'];
 export const AX_ROUTES = ['/ax', '/ax/queue', '/ax/members', '/ax/content', '/ax/rewards', '/ax/campaigns', '/ax/analytics', '/ax/reorder', '/ax/evidence', '/ax/settings', '/ax/coach', '/ax/why'];
 export const THEMES = ['deep-navy', 'navy-gold', 'emerald-gold', 'forest-sage', 'deep-teal', 'onyx-gold', 'pure-white'];
 

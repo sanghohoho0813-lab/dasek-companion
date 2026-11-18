@@ -27,18 +27,46 @@ describe('저장 데이터 이전 v4 → v5 (시연 기록을 지우지 않는�
   });
 });
 
-describe('저장 데이터 이전 v5 → v6 (고양이 25마리)', () => {
-  it('없는 고양이만 추가하고, 운영자가 고친 기존 고양이·사진은 그대로', () => {
+describe('저장 데이터 이전 v5 → v7 (고양이: 실제 14 + 준비 중 11)', () => {
+  it('v5 에서 올리면 실제 고양이 14마리가 공개되고, 예시는 이름을 지키며 비공개가 된다', () => {
     const v5 = JSON.parse(JSON.stringify(createSeed())) as AppState;
     v5.schemaVersion = 5;
-    v5.cats = v5.cats.slice(0, 6).map((c) => (c.id === 'cat_1' ? { ...c, name: '실제이름' } : c));
-    v5.catPhotos = v5.catPhotos.filter((p) => ['cat_1', 'cat_2', 'cat_3', 'cat_4', 'cat_5', 'cat_6'].includes(p.catId));
+    v5.cats = v5.cats.filter((c) => /^cat_[1-6]$/.test(c.id)).map((c) => ({ ...c, published: true, name: c.id === 'cat_1' ? '실제이름' : c.name }));
+    v5.catPhotos = v5.catPhotos.filter((p) => /^cat_[1-6]$/.test(p.catId));
     const out = migrate(v5)!;
     expect(out.schemaVersion).toBe(SCHEMA_VERSION);
     expect(out.cats).toHaveLength(25);
-    expect(out.cats.find((c) => c.id === 'cat_1')!.name).toBe('실제이름');
+    expect(out.cats.filter((c) => c.published && !c.isPlaceholder)).toHaveLength(14);
+    expect(out.cats.find((c) => c.id === 'cat_1')).toMatchObject({ name: '실제이름', published: false });
     expect(new Set(out.cats.map((c) => c.id)).size).toBe(25);
-    expect(out.catPhotos.filter((p) => p.catId === 'cat_25')).toHaveLength(1);
-    expect(out.cats.every((c) => c.isPlaceholder)).toBe(true);
+  });
+});
+
+describe('저장 데이터 이전 v6 → v7', () => {
+  const v6 = () => {
+    const s = JSON.parse(JSON.stringify(createSeed())) as AppState;
+    s.schemaVersion = 6;
+    const ph = s.cats.filter((c) => c.isPlaceholder).map((c) => ({ ...c, published: true, name: c.id === 'cat_6' ? '라떼' : c.name }));
+    const extra = ['망고', '귤이', '루이', '호박', '두부', '설기', '찹쌀', '산책이', '카푸', '마루', '연유', '꾸벅이', '호두', '도토리'].map((name, k) => ({ ...ph[0], id: `cat_${12 + k}`, name, sortOrder: 11 + k }));
+    s.cats = [...ph, ...extra];
+    s.catPhotos = s.catPhotos.filter((p) => /^cat_\d+$/.test(p.catId)).concat(extra.map((c) => ({ ...s.catPhotos[0], id: `pho_${c.id}_0`, catId: c.id, slot: 'x' })));
+    return s;
+  };
+  it('손대지 않은 예시 12~25번은 정리, 실제 14마리 추가, 같은 이름(라떼) 예시는 코코로', () => {
+    const out = migrate(v6())!;
+    expect(out.cats.filter((c) => /^cat_(1[2-9]|2\d)$/.test(c.id))).toHaveLength(0);
+    expect(out.catPhotos.filter((p) => p.catId === 'cat_20')).toHaveLength(0);
+    expect(out.cats.filter((c) => !c.isPlaceholder && c.published).map((c) => c.name)).toContain('망고');
+    expect(out.cats.find((c) => c.id === 'cat_6')).toMatchObject({ name: '코코', published: false });
+    expect(out.cats.filter((c) => c.published).every((c) => !c.isPlaceholder)).toBe(true);
+  });
+  it('운영자가 이름을 바꿨거나 사진을 올린 예시 고양이는 지우지 않는다', () => {
+    const s = v6();
+    s.cats = s.cats.map((c) => (c.id === 'cat_13' ? { ...c, name: '실제냥' } : c));
+    s.catPhotos.push({ ...s.catPhotos[0], id: 'pho_up', catId: 'cat_14', dataUrl: 'data:image/jpeg;base64,AA', slot: null });
+    const out = migrate(s)!;
+    expect(out.cats.find((c) => c.id === 'cat_13')).toMatchObject({ name: '실제냥', published: false });
+    expect(out.cats.find((c) => c.id === 'cat_14')).toBeTruthy();
+    expect(out.catPhotos.find((p) => p.id === 'pho_up')).toBeTruthy();
   });
 });

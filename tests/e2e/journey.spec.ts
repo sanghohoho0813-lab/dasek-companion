@@ -20,13 +20,13 @@ test('primary journey: explore → signup(referral) → check-in & purchase → 
   await noOverflow(page);
   await page.getByTestId('hero-dasek').click();
   await expect(page).toHaveURL(/\/dasek$/);
-  await page.getByRole('link', { name: '보리 프로필 보기' }).first().click();
-  await expect(page.getByRole('heading', { name: '보리', level: 1 })).toBeVisible();
+  // 6차: 실제 매장 고양이(카드 정보) — 사진 1장. 여러 장 넘기기는 v5.spec 의 '업로드 → 승인 → 갤러리'에서 검증
+  await page.getByRole('link', { name: '망고 프로필 보기' }).first().click();
+  await expect(page.getByRole('heading', { name: '망고', level: 1 })).toBeVisible();
   await expect(page.getByTestId('cat-gallery')).toBeVisible();
   await page.getByRole('button', { name: /1번째 사진 크게 보기/ }).click();
   await expect(page.getByTestId('cat-lightbox')).toBeVisible();
-  await page.keyboard.press('ArrowRight');
-  await expect(page.getByTestId('cat-lightbox')).toContainText('2/4');
+  await expect(page.getByTestId('cat-lightbox')).toContainText('1/1');
   await page.keyboard.press('Escape');
   await expect(page.getByTestId('cat-lightbox')).toBeHidden();
 

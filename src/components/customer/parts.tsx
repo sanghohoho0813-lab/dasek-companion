@@ -168,7 +168,10 @@ export function CatCoverCard({ cat, photo, size = 'md', fluid }: { cat: CafeCat;
         <AssetImage slot={photo?.slot} dataUrl={photo?.dataUrl} fallback={photo?.art ?? cat.coverArt} alt={photo?.alt ?? cat.name} className="aspect-[3/4] w-full" sizes={size === 'lg' ? '(min-width: 768px) 228px, 172px' : '(min-width: 768px) 188px, 148px'} position="center 35%" />
         <div data-on-media className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-3.5 pt-14">
           <p className="text-[1.125rem] font-extrabold leading-tight text-white [text-shadow:0_1px_2px_rgba(0,0,0,.35)]">{cat.name}</p>
-          <p className="clamp-1 mt-0.5 text-[0.875rem] font-semibold text-white">{cat.personality.slice(0, 2).join(' · ') || cat.tagline}</p>
+          <p className="clamp-1 mt-0.5 text-[0.875rem] font-semibold text-white">
+            {cat.sex && <span aria-label={cat.sex === 'F' ? '여아' : '남아'}>{cat.sex === 'F' ? '♀' : '♂'} </span>}
+            {cat.breed ?? (cat.personality.slice(0, 2).join(' · ') || cat.tagline)}
+          </p>
         </div>
         {cat.isPlaceholder && <span data-on-media data-badge className="absolute left-2.5 top-2.5 rounded-full bg-white px-2 py-0.5 text-[0.75rem] font-bold text-ink-2">예시 프로필</span>}
       </div>

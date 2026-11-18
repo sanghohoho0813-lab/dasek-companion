@@ -52,21 +52,25 @@ test('AX content edits reflect on customer screens (menu photo, cat cover)', asy
   await page.goto('/menu/m_pie120');
   const img = page.locator('img[alt="120겹파이 사진"]').first();
   await expect(img).toHaveAttribute('src', /^data:image\/jpeg/);
-  // 고양이 대표 사진 변경
+  // 고양이 대표 사진 변경 (6차: 실제 고양이는 사진 1장 → 직원이 올리고 공개한 뒤 대표로)
   await page.goto('/ax/content?tab=cats');
   await page.getByRole('button', { name: /편집/ }).first().click();
   const manager = page.getByTestId('cat-photo-manager');
   await expect(manager).toBeVisible();
+  await page.getByTestId('cat-photo-input').setInputFiles({ name: 'mango2.png', mimeType: 'image/png', buffer: PNG });
+  await expect(page.getByText('사진을 올렸어요. 공개 승인 후 고객에게 보여요.')).toBeVisible();
+  await manager.locator('div.overflow-hidden', { has: page.locator('img[alt="망고 사진 — mango2"]') }).getByTestId('photo-publish-toggle').click();
+  await expect(page.getByText('공개했어요.')).toBeVisible();
   await manager.getByTestId('set-cover').first().click();
   await expect(page.getByText('대표 사진으로 지정했어요.')).toBeVisible();
-  const state = await page.evaluate(() => {
+  const cover = await page.evaluate(() => {
     const s = JSON.parse(localStorage.getItem('dasek-companion:state')!);
-    const p = s.catPhotos.filter((x: { catId: string; status: string }) => x.catId === 'cat_1' && x.status === 'PUBLISHED').sort((a: { sortOrder: number }, b: { sortOrder: number }) => a.sortOrder - b.sortOrder)[0];
-    return p.slot as string;
+    const p = s.catPhotos.filter((x: { catId: string; status: string }) => x.catId === 'cat_r01' && x.status === 'PUBLISHED').sort((a: { sortOrder: number }, b: { sortOrder: number }) => a.sortOrder - b.sortOrder)[0];
+    return { slot: p.slot as string | null, data: !!p.dataUrl };
   });
-  expect(state).not.toBe('cat_01_01');
+  expect(cover).toEqual({ slot: null, data: true });
   await page.goto('/dasek');
-  await expect(page.getByRole('link', { name: '모카 프로필 보기' }).locator('img')).toHaveAttribute('src', new RegExp(state));
+  await expect(page.getByRole('link', { name: '망고 프로필 보기' }).locator('img')).toHaveAttribute('src', /^data:image\/jpeg/);
 });
 
 test('roadmap interest is counted in AX analytics', async ({ page }) => {

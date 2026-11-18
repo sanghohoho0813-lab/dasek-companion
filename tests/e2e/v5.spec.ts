@@ -4,19 +4,50 @@
 import { expect, test } from '@playwright/test';
 import { audit, prime, settle } from './audit';
 
-test('다색냥: 25마리 — 처음 4마리, 전체 보기에서 25마리 격자, 모두 예시 프로필 표시', async ({ page }) => {
+test('다색냥: 실제 고양이 14마리(매장 카드) + 11마리 준비 중 = 25마리', async ({ page }) => {
   await prime(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/dasek');
   await expect(page.locator('#sec-friends').locator('..')).toContainText('다색냥 친구들 25마리');
   await expect(page.getByRole('region', { name: '고양이 프로필 카드' }).getByRole('link')).toHaveCount(4);
+  await expect(page.getByTestId('cats-pending-note')).toContainText('25마리 중 14마리');
   await page.getByTestId('cats-show-all').click();
-  await expect(page.getByTestId('cats-show-all')).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.getByTestId('cats-grid').getByRole('link')).toHaveCount(25);
-  await page.getByRole('link', { name: '꾸벅이 프로필 보기' }).click();
-  await expect(page.getByRole('heading', { level: 1, name: '꾸벅이' })).toBeVisible();
-  await expect(page.locator('main')).toContainText('예시');
+  await expect(page.getByTestId('cats-grid').getByRole('link')).toHaveCount(14);
+  await expect(page.getByTestId('cats-pending')).toContainText('+11마리');
+  // 예시 프로필(샘플 사진)은 고객 화면에 나오지 않는다
+  await expect(page.getByTestId('cats-grid')).not.toContainText('예시 프로필');
+  await page.getByRole('link', { name: '젤리 프로필 보기' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: '젤리' })).toBeVisible();
+  await expect(page.getByTestId('cat-facts')).toContainText('브리티쉬 숏헤어');
+  await expect(page.getByTestId('cat-facts')).toContainText('♀ 여아');
+  await expect(page.locator('main')).toContainText('#입질주의');
+  await expect(page.locator('main')).toContainText('입질 주의 — 손을 먼저 내밀지 말고');
+  await expect(page.locator('main')).not.toContainText('샘플 사진');
   expect(await page.evaluate(() => [...document.images].filter((i) => i.complete && i.naturalWidth === 0).length)).toBe(0);
+});
+
+test('고양이 사진: 직원 업로드 → 책임자 공개 → 고객 갤러리에서 넘겨 보기', async ({ page }) => {
+  const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==', 'base64');
+  await prime(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/ax/content?tab=cats');
+  await page.getByRole('button', { name: '편집' }).nth(1).click(); // 2번째 = 살구
+  await expect(page.getByRole('dialog')).toContainText('살구');
+  await page.getByTestId('cat-photo-input').setInputFiles({ name: 'salgu2.png', mimeType: 'image/png', buffer: PNG });
+  await expect(page.getByText('사진을 올렸어요. 공개 승인 후 고객에게 보여요.')).toBeVisible();
+  // 공개 전에는 고객에게 1장
+  await page.goto('/dasek/cats/cat_r02');
+  await page.getByRole('button', { name: /1번째 사진 크게 보기/ }).click();
+  await expect(page.getByTestId('cat-lightbox')).toContainText('1/1');
+  await page.keyboard.press('Escape');
+  // 사진 승인 탭에서 공개
+  await page.goto('/ax/content?tab=photos');
+  await page.locator('div.p-3', { hasText: 'salgu2' }).getByTestId('photo-approve').click();
+  await expect(page.getByText('공개했어요.')).toBeVisible();
+  await page.goto('/dasek/cats/cat_r02');
+  await page.getByRole('button', { name: /1번째 사진 크게 보기/ }).click();
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByTestId('cat-lightbox')).toContainText('2/2');
 });
 
 test('AX 사이드바: 추가 확장 예정은 평소 접혀 있고, 펼쳐서 항목을 누르면 짧은 소개가 열린다', async ({ page }) => {

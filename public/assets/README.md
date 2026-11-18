@@ -21,7 +21,8 @@
 | brand_story_space | 다색냥 매장 소개 |
 | customer_experience | 홈 이용 안내 |
 | booking_or_order_scene | 방문·예약 안내 |
-| cat_01_01 … cat_NN_MM | 고양이 N번의 M번째 사진 (실제 고양이 수·이름 확인 후) |
+| cat_r01_01 … cat_r14_01 | **실제 고양이 14마리** 대표 사진 (망고·살구·바니·소금이·젤리·점박이·라떼·밤비·샤인·루카·푸딩·렐라·체다·리코 순) — 현재는 매장 소개 카드를 찍은 사진에서 잘라 낸 저해상도본. 원본을 같은 파일명으로 덮어쓰면 교체됨 |
+| cat_01_01 … cat_NN_MM | 예시(비공개) 고양이 N번의 M번째 사진 |
 | ax_cover_main, ax_signature_operation, ax_signature_output, ax_workspace_bg, ax_staff_action, ax_manager_tablet, ax_report_evidence | 운영 AX / Why AX |
 | why_ax_01_current, why_ax_02_improved, why_ax_03_growth | Why AX 스토리 |
 

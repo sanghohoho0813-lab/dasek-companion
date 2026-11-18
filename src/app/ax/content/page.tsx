@@ -157,7 +157,7 @@ function MenuEditor({ s, item, onClose }: { s: AppState; item: MenuItem; onClose
 function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: () => void }) {
   const run = useRun();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [f, setF] = useState({ name: cat.name, tagline: cat.tagline, personality: cat.personality.join(', '), likes: cat.likes.join(', '), tips: cat.interactionTips.join('\n'), internalNote: cat.internalNote, isPlaceholder: cat.isPlaceholder });
+  const [f, setF] = useState({ breed: cat.breed ?? '', sex: (cat.sex ?? '') as '' | 'F' | 'M', name: cat.name, tagline: cat.tagline, personality: cat.personality.join(', '), likes: cat.likes.join(', '), tips: cat.interactionTips.join('\n'), internalNote: cat.internalNote, isPlaceholder: cat.isPlaceholder });
   const photos = s.catPhotos.filter((p) => p.catId === cat.id).sort((a, b) => a.sortOrder - b.sortOrder);
   const split = (v: string, sep: RegExp) => v.split(sep).map((x) => x.trim()).filter(Boolean);
   return (
@@ -177,7 +177,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
           <Button
             tone="ax"
             onClick={() => {
-              const ok = run(() => opAct((d, c) => D.updateCat(d, c, cat.id, { name: f.name.trim(), tagline: f.tagline.trim(), personality: split(f.personality, /,/), likes: split(f.likes, /,/), interactionTips: split(f.tips, /\n/), internalNote: f.internalNote, isPlaceholder: f.isPlaceholder })), '프로필을 저장했어요.');
+              const ok = run(() => opAct((d, c) => D.updateCat(d, c, cat.id, { breed: f.breed.trim() || null, sex: f.sex || null, name: f.name.trim(), tagline: f.tagline.trim(), personality: split(f.personality, /,/), likes: split(f.likes, /,/), interactionTips: split(f.tips, /\n/), internalNote: f.internalNote, isPlaceholder: f.isPlaceholder })), '프로필을 저장했어요.');
               if (ok !== undefined) onClose();
             }}
           >
@@ -190,6 +190,18 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
         <label className="block font-semibold text-slate-600">
           이름
           <input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} className={cx(axInputCls, 'mt-1')} />
+        </label>
+        <label className="block font-semibold text-slate-600">
+          품종
+          <input value={f.breed} onChange={(e) => setF({ ...f, breed: e.target.value })} placeholder="예: 코리안 숏헤어" className={cx(axInputCls, 'mt-1')} />
+        </label>
+        <label className="block font-semibold text-slate-600">
+          성별
+          <select value={f.sex} onChange={(e) => setF({ ...f, sex: e.target.value as '' | 'F' | 'M' })} className={cx(axInputCls, 'mt-1')}>
+            <option value="">미확인</option>
+            <option value="F">여아 ♀</option>
+            <option value="M">남아 ♂</option>
+          </select>
         </label>
         <label className="block font-semibold text-slate-600">
           한 줄 소개
@@ -220,6 +232,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
         <p className="text-[0.9375rem] font-bold text-slate-900">사진 {photos.length}장</p>
         <input
           ref={fileRef}
+          data-testid="cat-photo-input"
           type="file"
           accept="image/*"
           className="hidden"
@@ -264,7 +277,8 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
               )}
               <button
                 onClick={() => run(() => opAct((d, c) => D.reviewPhoto(d, c, p.id, p.status === 'PUBLISHED' ? 'HIDDEN' : 'PUBLISHED')), p.status === 'PUBLISHED' ? '숨겼어요.' : '공개했어요.')}
-                className="ml-auto h-8 rounded-md px-2 text-[0.8125rem] font-bold text-slate-600 hover:bg-slate-100"
+                className="ml-auto h-11 rounded-md px-2.5 text-[0.875rem] font-bold text-slate-700 hover:bg-slate-100 lg:h-8"
+                data-testid="photo-publish-toggle"
               >
                 {p.status === 'PUBLISHED' ? '숨기기' : '공개'}
               </button>
