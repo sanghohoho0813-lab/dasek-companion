@@ -15,13 +15,18 @@ const KEY = 'dasek-companion:state';
 let state: AppState | null = null;
 const listeners = new Set<() => void>();
 let storageBound = false;
+/** 마지막으로 읽거나 쓴 저장 문자열 — 다른 창(PC·모바일 iframe)이 먼저 쓴 값을 놓치지 않기 위해 */
+let lastRaw: string | null = null;
 
 function load(): AppState {
   try {
     const raw = window.localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as AppState;
-      if (parsed.schemaVersion === SCHEMA_VERSION) return parsed;
+      if (parsed.schemaVersion === SCHEMA_VERSION) {
+        lastRaw = raw;
+        return parsed;
+      }
       const migrated = migrate(parsed);
       if (migrated) {
         persist(migrated);
@@ -97,7 +102,9 @@ export function migrate(prev: AppState): AppState | null {
 
 function persist(s: AppState) {
   try {
-    window.localStorage.setItem(KEY, JSON.stringify(s));
+    const raw = JSON.stringify(s);
+    window.localStorage.setItem(KEY, raw);
+    lastRaw = raw;
     return true;
   } catch {
     return false;
@@ -118,6 +125,7 @@ function bindStorage() {
     } else {
       try {
         state = JSON.parse(e.newValue) as AppState;
+        lastRaw = e.newValue;
       } catch {
         return;
       }
@@ -148,7 +156,28 @@ export function useAppState(): AppState | null {
 export class StorageFullError extends Error {}
 
 /** 모든 변경의 단일 입구. 실패하면(예외) 상태는 바뀌지 않는다. */
+/**
+ * 쓰기 직전에 저장소를 다시 읽는다. 다른 창(발표 시연의 고객·AX iframe)이 방금 쓴 값을
+ * storage 이벤트가 오기 전에 덮어쓰지 않게 하기 위함 (읽기-수정-쓰기).
+ */
+function syncBeforeWrite() {
+  try {
+    const raw = window.localStorage.getItem(KEY);
+    if (raw && raw !== lastRaw) {
+      const parsed = JSON.parse(raw) as AppState;
+      if (parsed.schemaVersion === SCHEMA_VERSION) {
+        state = parsed;
+        lastRaw = raw;
+      }
+    }
+  } catch {
+    /* 읽기 실패 시 메모리 상태로 진행 */
+  }
+}
+
 export function dispatch<R>(fn: (draft: AppState) => R): R {
+  getState();
+  syncBeforeWrite();
   const draft = structuredClone(getState());
   const result = fn(draft);
   if (!persist(draft)) throw new StorageFullError('브라우저 저장 공간이 부족합니다. 사진 크기를 줄이거나 데모를 초기화해 주세요.');

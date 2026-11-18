@@ -548,7 +548,7 @@ export function decideReorder(s: AppState, ctx: Ctx, id: string, approve: boolea
   audit(s, ctx, approve ? 'reorder.approve' : 'reorder.dismiss', c.id);
   if (approve && hasConsent(s, c.userId, 'marketing_inapp')) {
     const item = getMenuItem(s, c.menuItemId);
-    const n = notify(s, ctx, c.userId, 'MARKETING', `저장하신 '${item?.name}' 어떠세요?`, '저장해 두신 메뉴예요. 매장에서 주문 후 회원코드를 보여주시면 스탬프가 적립됩니다.', `/menu/${c.menuItemId}`);
+    const n = notify(s, ctx, c.userId, 'MARKETING', `저장하신 '${item?.name}' 어떠세요?`, '저장해 두신 메뉴예요. 매장에서 주문 후 회원번호를 보여주시면 스탬프가 적립됩니다.', `/menu/${c.menuItemId}`);
     c.notificationId = n.id;
   }
 }
@@ -557,13 +557,13 @@ export function decideReorder(s: AppState, ctx: Ctx, id: string, approve: boolea
 export function campaignTemplate(segment: SegmentKey): { title: string; body: string } {
   switch (segment) {
     case 'NEW_NO_VISIT':
-      return { title: '첫 방문을 기다리고 있어요', body: '가입 혜택 쿠폰이 마이 > 쿠폰함에 있어요. 매장에서 회원코드를 보여주시면 첫 스탬프가 적립됩니다.' };
+      return { title: '첫 방문을 기다리고 있어요', body: '가입 혜택 쿠폰이 내 정보 > 쿠폰함에 있어요. 매장에서 회원번호를 보여주시면 첫 스탬프가 적립됩니다.' };
     case 'LAPSED_30':
       return { title: '오랜만이에요, 다시 만나요', body: '향동천 산책길에 들러 쉬어가세요. 방문 확인 시 스탬프가 적립됩니다.' };
     case 'FAVORITE_NO_PURCHASE':
       return { title: '저장한 메뉴, 오늘 어떠세요?', body: '저장해 두신 메뉴를 매장에서 만나보세요. 구매 확인 시 스탬프가 적립됩니다.' };
     case 'RECENT_INTEREST':
-      return { title: '관심 있는 메뉴, 매장에서 만나보세요', body: '최근 저장하거나 관심을 남긴 메뉴·서비스 소식이에요. 매장에서 회원코드를 보여주시면 확인 후 스탬프가 적립돼요.' };
+      return { title: '관심 있는 메뉴, 매장에서 만나보세요', body: '최근 저장하거나 관심을 남긴 메뉴·서비스 소식이에요. 매장에서 회원번호를 보여주시면 확인 후 스탬프가 적립돼요.' };
     case 'STAMP_NEAR':
       return { title: '보상까지 거의 다 왔어요', body: '스탬프 몇 개만 더 모으면 보상 쿠폰이 발급됩니다.' };
     case 'ALL_CONSENTED':
