@@ -7,6 +7,7 @@ import { CounterPurchase } from '@/components/ax/CounterTools';
 import { Locked, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Button, Empty, PageSkeleton, Sheet, axInputCls, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
+import { CONSENT_LABEL, memberNo, REFERRAL_STATUS } from '@/lib/labels';
 import { couponsFor, getMenuItem, getProfile, hasConsent, recentInterests, stampCount, verifiedUses } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { CouponIssue } from '@/lib/types';
@@ -65,7 +66,7 @@ export default function MemberDetail() {
                 {p.name} {p.isDemo && <Tag tone="amber">DEMO</Tag>} {p.status !== 'active' && <Tag tone="red">{p.status === 'deletion_requested' ? '삭제 요청' : '익명화됨'}</Tag>}
               </p>
               <p className="text-[0.8438rem] text-slate-500">
-                {p.memberCode} · {fmtDate(p.createdAt)} 가입 · 관심: {p.preferredBrands.map((b) => (b === 'dasek' ? '다색냥' : '리얼식단')).join(', ') || '-'}
+                회원번호 {memberNo(p.memberCode)} · {fmtDate(p.createdAt)} 가입 · 관심: {p.preferredBrands.map((b) => (b === 'dasek' ? '다색냥' : '리얼식단')).join(', ') || '-'}
                 {can('member.viewContact') && p.phoneLast4 ? ` · 전화 ****${p.phoneLast4}` : ''}
               </p>
             </div>
@@ -133,7 +134,7 @@ export default function MemberDetail() {
                 <span className="min-w-0 flex-1">
                   <span className="font-semibold text-slate-800">{c.benefit}</span>
                   <span className="block text-[0.8125rem] text-slate-500">
-                    {c.title} · {c.code} · {fmtDate(c.expiresAt)}까지
+                    {c.title} · 쿠폰번호 {c.code.replace(/^DC-/, '')} · {fmtDate(c.expiresAt)}까지
                   </span>
                 </span>
                 <StatusPill kind={statusOf.coupon(c.status)} size="sm" />
@@ -165,8 +166,8 @@ export default function MemberDetail() {
           <ul className="max-h-80 space-y-1.5 overflow-y-auto pr-1">
             {events.map((e) => (
               <li key={e.id} className="flex items-center gap-2 text-[0.8438rem]">
-                <Tag tone={LEVEL[e.type]?.tone ?? 'slate'}>{LEVEL[e.type]?.l ?? e.type}</Tag>
-                <span className="min-w-0 flex-1 truncate text-slate-600">{e.label}</span>
+                <Tag tone={LEVEL[e.type]?.tone ?? 'slate'}>{LEVEL[e.type]?.l ?? '기타 행동'}</Tag>
+                <span className="min-w-0 flex-1 truncate text-slate-600">{e.type === 'roadmap_interest' ? `향후 서비스 관심: ${ROADMAP.find((r) => r.key === e.ref)?.title ?? '준비 중인 서비스'}` : e.label}</span>
                 <span className="shrink-0 text-[0.8125rem] text-slate-500">{fmtDate(e.createdAt, { time: true })}</span>
               </li>
             ))}
@@ -209,23 +210,23 @@ export default function MemberDetail() {
             <ul className="space-y-1.5 text-[0.875rem] text-slate-600">
               {refAsReferee && (
                 <li>
-                  <Tag tone="violet">추천받음</Tag> {getProfile(s, refAsReferee.referrerId)?.name}님 코드 · {refAsReferee.status}
+                  <Tag tone="violet">추천받음</Tag> {getProfile(s, refAsReferee.referrerId)?.name}님 추천 코드 · {REFERRAL_STATUS[refAsReferee.status] ?? '기타'}
                 </li>
               )}
               {refAsReferrer.map((r) => (
                 <li key={r.id}>
-                  <Tag tone="blue">추천함</Tag> {getProfile(s, r.refereeId)?.name} · {r.status}
+                  <Tag tone="blue">추천함</Tag> {getProfile(s, r.refereeId)?.name} · {REFERRAL_STATUS[r.status] ?? '기타'}
                 </li>
               ))}
               {!refAsReferee && !refAsReferrer.length && <li className="text-slate-500">추천 관계 없음</li>}
             </ul>
           </Panel>
-          <Panel title="동의 이력" sub={`목적·버전·시각 기록 · 현재 버전 ${D.CONSENT_VERSION}`}>
+          <Panel title="동의 이력" sub="항목·약관 버전·시각 기록 · 현재 약관은 초안(정식 약관 확정 전)">
             <ul className="max-h-44 space-y-1 overflow-y-auto text-[0.8438rem]">
               {consents.map((c) => (
                 <li key={c.id} className={cx('flex justify-between gap-2', c.withdrawnAt ? 'text-slate-500 line-through' : 'text-slate-600')}>
                   <span>
-                    {c.purpose} · {c.granted ? '동의' : '미동의'}
+                    {CONSENT_LABEL[c.purpose] ?? '기타 동의'} · {c.granted ? '동의' : '미동의'}{c.withdrawnAt ? ' (철회)' : ''}
                   </span>
                   <span>{fmtDate(c.at, { time: true })}</span>
                 </li>

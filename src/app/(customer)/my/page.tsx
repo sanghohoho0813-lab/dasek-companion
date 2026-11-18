@@ -10,6 +10,7 @@ import { Button, PageSkeleton } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { couponsFor, stampCount, stampRule, verifiedUses } from '@/lib/rules';
 import { act } from '@/lib/store';
+import { memberNo } from '@/lib/labels';
 import { cx } from '@/lib/util';
 
 export default function MyPage() {
@@ -19,7 +20,7 @@ export default function MyPage() {
   if (!me)
     return (
       <div className="mx-auto max-w-md px-5 pt-8">
-        <h1 className="mb-5 text-[1.5rem] font-extrabold text-ink">마이</h1>
+        <h1 className="mb-5 text-[1.5rem] font-extrabold text-ink">내 정보</h1>
         <LoginGate next="/my" />
         <Link href="/membership" className="mt-4 flex items-center justify-between rounded-2xl bg-white p-4 ring-1 ring-line">
           <span className="text-[0.9062rem] font-semibold text-ink">멤버십 혜택 알아보기</span>
@@ -36,7 +37,7 @@ export default function MyPage() {
   const saved = s.favorites.filter((f) => f.userId === me.id).length;
   const refs = s.referrals.filter((r) => r.referrerId === me.id);
 
-  // 마이의 중심 4가지: 스탬프(아래 카드) · 내 쿠폰 · 이용 내역 · 친구 추천
+  // 내 정보의 중심 4가지: 스탬프(아래 카드) · 내 쿠폰 · 이용 내역 · 친구 추천
   const tiles = [
     { href: '/my/coupons', icon: Ticket, label: '내 쿠폰', value: `${usable}장`, tone: 'bg-promo-50 text-promo-600' },
     { href: '/my/activity', icon: Receipt, label: '이용 내역', value: pending ? `대기 ${pending}` : `${uses.length}회`, tone: 'bg-brand-50 text-brand-700' },
@@ -53,17 +54,18 @@ export default function MyPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 pb-10 pt-5 md:px-5 md:pt-10">
       <div className="flex items-center justify-between">
-        <h1 className="text-[1.625rem] font-extrabold tracking-[-0.02em] text-ink">마이</h1>
+        <h1 className="text-[1.625rem] font-extrabold tracking-[-0.02em] text-ink">내 정보</h1>
         <DemoToolsButton />
       </div>
       <div className="mt-4 grid gap-3 md:grid-cols-2">
         <div className="card p-4 md:p-5" data-testid="member-card">
           <p className="text-[1.25rem] font-extrabold text-ink">{me.name}님</p>
           <div className="mt-3 rounded-2xl bg-canvas p-3.5 text-center ring-1 ring-inset ring-line">
-            <p className="text-[0.875rem] font-semibold text-ink-3">매장에서 보여주세요 · 회원코드</p>
+            <p className="text-[0.875rem] font-semibold text-ink-3">매장에서 보여주세요 · 회원번호</p>
             <p className="mt-1 font-mono text-[1.875rem] font-extrabold tracking-[0.14em] text-ink" data-testid="member-code">
-              {me.memberCode}
+              {memberNo(me.memberCode)}
             </p>
+            <p className="mt-0.5 text-[0.8125rem] text-ink-3">직원이 이 번호로 회원님을 찾아 방문·구매를 확인해요</p>
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2">
             <Link href="/checkin" className="inline-flex h-11 items-center justify-center rounded-xl bg-brand-600 text-[0.9375rem] font-bold text-white">

@@ -1,11 +1,12 @@
 'use client';
-import { Bell, Cat, ChevronLeft, Home, LayoutDashboard, RotateCcw, Salad, Search, UserRound } from 'lucide-react';
+import { Bell, Cat, ChevronLeft, ChevronRight, Heart, Home, LayoutDashboard, MapPinCheck, Menu, Receipt, RotateCcw, Salad, Search, ShieldCheck, Sparkles, Ticket, UserRound, Users, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
-import { Wordmark } from '@/components/shell/Logo';
+import { ExpansionNav } from '@/components/shell/Expansion';
+import { LogoMark, Wordmark } from '@/components/shell/Logo';
 import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
 import { getProfile } from '@/lib/rules';
 import { dispatch, resetDemo, useAppState } from '@/lib/store';
@@ -23,7 +24,7 @@ const NAV = [
   { href: '/', label: '홈', icon: Home, match: (p: string) => p === '/' },
   { href: '/realsicdan', label: '리얼식단', icon: Salad, match: (p: string) => p.startsWith('/realsicdan') || p.startsWith('/menu') },
   { href: '/dasek', label: '다색냥', icon: Cat, match: (p: string) => p.startsWith('/dasek') },
-  { href: '/my', label: '마이', icon: UserRound, match: (p: string) => p.startsWith('/my') || p === '/login' || p === '/signup' },
+  { href: '/my', label: '내 정보', icon: UserRound, match: (p: string) => p.startsWith('/my') || p === '/login' || p === '/signup' },
 ];
 
 function DemoBar() {
@@ -132,7 +133,7 @@ function DesktopHeader() {
           {me ? (
             <Link href="/my" className="inline-flex h-11 items-center gap-2 rounded-full bg-canvas pl-1.5 pr-3.5 text-[0.9375rem] font-semibold text-ink ring-1 ring-inset ring-cardline transition hover:bg-line">
               <span className="grid h-8 w-8 place-items-center rounded-full bg-brand-600 text-[0.875rem] font-bold text-white">{me.name.slice(0, 1)}</span>
-              마이
+              내 정보
             </Link>
           ) : (
             <div className="flex items-center gap-1.5">
@@ -144,9 +145,125 @@ function DesktopHeader() {
               </Link>
             </div>
           )}
+          <MoreMenuButton variant="desktop" />
         </div>
       </div>
     </header>
+  );
+}
+
+/* ── 더보기(전체 메뉴) — 옆에서 밀려 나오는 고객 메뉴 ──────────── */
+const DrawerCtx = createContext<() => void>(() => {});
+export const useOpenMore = () => useContext(DrawerCtx);
+
+export function MoreMenuButton({ variant }: { variant: 'desktop' | 'icon' }) {
+  const open = useOpenMore();
+  if (variant === 'icon')
+    return (
+      <button onClick={open} aria-label="더보기 (전체 메뉴)" aria-haspopup="dialog" data-testid="more-open-icon" className="grid h-11 w-11 place-items-center rounded-full text-ink-2 active:bg-canvas">
+        <Menu className="h-[22px] w-[22px]" />
+      </button>
+    );
+  return (
+    <button onClick={open} aria-haspopup="dialog" data-testid="more-open-desktop" className="inline-flex h-11 items-center gap-1.5 rounded-full px-3 text-[0.9375rem] font-semibold text-ink-2 transition hover:bg-canvas hover:text-ink">
+      <Menu className="h-5 w-5" /> 더보기
+    </button>
+  );
+}
+
+function CustomerDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const pathname = usePathname();
+  const { s, me } = useCustomer();
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+  useEffect(() => closeRef.current(), [pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && closeRef.current();
+    window.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+  if (!open) return null;
+  const unread = me && s ? s.notifications.filter((n) => n.userId === me.id && !n.readAt).length : 0;
+  const row = 'flex min-h-12 items-center gap-3 rounded-xl px-3 text-[0.9688rem] font-semibold text-ink transition hover:bg-canvas';
+  const groups: { title: string; items: { href: string; label: string; icon: typeof Home; meta?: string }[] }[] = [
+    {
+      title: '둘러보기',
+      items: [
+        { href: '/', label: '홈', icon: Home },
+        { href: '/realsicdan', label: '리얼식단 메뉴', icon: Salad },
+        { href: '/dasek', label: '다색냥 고양이', icon: Cat },
+        { href: '/membership', label: '멤버십 혜택 안내', icon: Sparkles },
+      ],
+    },
+    {
+      title: '내 정보',
+      items: [
+        { href: '/my', label: me ? `${me.name}님의 내 정보` : '로그인 · 회원가입', icon: UserRound },
+        { href: '/checkin', label: '방문 체크인', icon: MapPinCheck },
+        { href: '/my/coupons', label: '내 쿠폰', icon: Ticket },
+        { href: '/my/activity', label: '이용 내역', icon: Receipt },
+        { href: '/my/referral', label: '친구 추천', icon: Users },
+        { href: '/my/inbox', label: '알림함', icon: Bell, meta: unread ? `새 알림 ${unread}` : undefined },
+        { href: '/my/saved', label: '저장한 메뉴', icon: Heart },
+      ],
+    },
+  ];
+  return (
+    <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label="전체 메뉴">
+      <div className="absolute inset-0 animate-fade-in bg-black/40" onClick={onClose} />
+      <div className="absolute inset-y-0 right-0 flex w-[86%] max-w-[360px] animate-drawer-in-right flex-col bg-white shadow-2xl" data-testid="customer-drawer">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-4">
+          <span className="flex items-center gap-2.5">
+            <LogoMark className="h-9 w-9" />
+            <span className="text-[1rem] font-extrabold text-ink">전체 메뉴</span>
+          </span>
+          <button onClick={onClose} aria-label="메뉴 닫기" className="grid h-11 w-11 place-items-center rounded-full text-ink-2 hover:bg-canvas">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-6 pt-2">
+          {groups.map((g) => (
+            <nav key={g.title} aria-label={g.title} className="mt-3">
+              <p className="px-3 pb-1 text-[0.8125rem] font-bold text-ink-3">{g.title}</p>
+              {g.items.map((i) => (
+                <Link key={i.href + i.label} href={i.href} aria-current={pathname === i.href ? 'page' : undefined} className={cx(row, pathname === i.href && 'bg-brand-50 text-brand-800')}>
+                  <i.icon className="h-5 w-5 shrink-0 text-ink-3" />
+                  <span className="flex-1">{i.label}</span>
+                  {i.meta && <span className="text-[0.8125rem] font-bold text-coral-700">{i.meta}</span>}
+                  <ChevronRight className="h-4 w-4 text-ink-3" />
+                </Link>
+              ))}
+            </nav>
+          ))}
+          <div className="mt-5">
+            <p className="px-3 pb-1.5 text-[0.8125rem] font-bold text-ink-3">앞으로 생길 서비스</p>
+            <ExpansionNav tone="brand" onNavigate={onClose} />
+          </div>
+          <div className="mt-5 border-t border-line pt-3">
+            <Link href="/privacy" className={row}>
+              <ShieldCheck className="h-5 w-5 shrink-0 text-ink-3" />
+              <span className="flex-1">개인정보 처리 안내(초안)</span>
+            </Link>
+            <Link href="/credits" className={row}>
+              <Search className="h-5 w-5 shrink-0 text-ink-3" />
+              <span className="flex-1">샘플 사진 출처</span>
+            </Link>
+            {SHOW_DEMO_AX_ENTRY && (
+              <Link href="/ax" className={row} data-testid="drawer-to-ax">
+                <LayoutDashboard className="h-5 w-5 shrink-0 text-ink-3" />
+                <span className="flex-1">매장 운영 AX (시연용)</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -154,9 +271,10 @@ export function BottomNav() {
   const pathname = usePathname();
   const { s, me } = useCustomer();
   const unread = me && s ? s.notifications.filter((n) => n.userId === me.id && !n.readAt).length : 0;
+  const openMore = useOpenMore();
   return (
     <nav aria-label="하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-cardline bg-white md:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-4 pb-safe pt-1.5">
+      <div className="mx-auto grid max-w-md grid-cols-5 pb-safe pt-1.5">
         {NAV.map((n) => {
           const active = n.match(pathname);
           const Icon = n.icon;
@@ -170,6 +288,12 @@ export function BottomNav() {
             </Link>
           );
         })}
+        <button onClick={openMore} aria-haspopup="dialog" data-testid="more-open" className="group flex flex-col items-center gap-0.5 py-1 press">
+          <span className="grid h-8 w-14 place-items-center rounded-full text-ink-3 transition duration-150 group-active:bg-canvas">
+            <Menu className="h-[22px] w-[22px]" strokeWidth={1.9} />
+          </span>
+          <span className="text-[0.8125rem] font-semibold text-ink-3">더보기</span>
+        </button>
       </div>
     </nav>
   );
@@ -189,7 +313,7 @@ export function BackHeader({ title, right, fallback = '/' }: { title: string; ri
       </button>
       <p className="min-w-0 flex-1 truncate text-[1.0625rem] font-bold text-ink">{title}</p>
       <div className="flex items-center gap-1 pr-1">
-        <DemoToolsButton label="DEMO" className="px-2" />
+        <DemoToolsButton short />
         {right}
       </div>
     </div>
@@ -245,7 +369,7 @@ function Onboarding() {
   const steps = [
     { t: '리얼식단 메뉴를 둘러보고 저장해요', b: '샐러드·도시락·간식을 사진으로 보고, 마음에 드는 메뉴는 저장해 두세요.' },
     { t: '다색냥 친구들을 미리 만나요', b: '고양이별 사진을 넘겨 보고, 성격과 교감 수칙을 확인한 뒤 방문하세요.' },
-    { t: '방문·구매가 확인되면 혜택이 쌓여요', b: '매장에서 체크인하거나 회원코드를 보여주면 직원 확인 후 스탬프가 적립됩니다.' },
+    { t: '방문·구매가 확인되면 혜택이 쌓여요', b: '매장에서 체크인하거나 회원번호를 보여주면 직원 확인 후 스탬프가 적립됩니다.' },
   ];
   return (
     <Sheet
@@ -276,7 +400,10 @@ function Onboarding() {
 
 export function CustomerShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [more, setMore] = useState(false);
+  const openMore = useCallback(() => setMore(true), []);
   return (
+    <DrawerCtx.Provider value={openMore}>
     <div className="min-h-dvh bg-white">
       <DemoBar />
       <DesktopHeader />
@@ -286,6 +413,8 @@ export function CustomerShell({ children }: { children: React.ReactNode }) {
       <Footer />
       <BottomNav />
       <Onboarding />
+      <CustomerDrawer open={more} onClose={() => setMore(false)} />
     </div>
+    </DrawerCtx.Provider>
   );
 }

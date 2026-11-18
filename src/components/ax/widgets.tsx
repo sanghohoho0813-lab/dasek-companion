@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Button, CountUp, Sheet, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import type { Kpis, Mission } from '@/lib/rules';
+import { memberNo } from '@/lib/labels';
 import { getMenuItem, getProfile, verifiedUses } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { AdminTask, AppState } from '@/lib/types';
@@ -15,16 +16,18 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
   const cards = [
     {
       kind: 'COST',
+      label: '비용 절감 지표',
       color: '#2F5FC4',
       title: '확인 요청 처리 시간',
       value: k.costMedianMinutes,
       unit: '분',
       fmt: (n: number) => Math.round(n).toString(),
       note: `중앙값 · 최근 30일 ${k.costSample}건`,
-      measure: '체크인/구매 확인 요청 → 직원 처리 시각',
+      measure: '방문/구매 확인 요청 → 직원 처리 시각',
     },
     {
       kind: 'REVENUE',
+      label: '매출(재방문) 지표',
       color: '#8A5A12',
       title: '30일 재방문·재구매율',
       value: k.revenueRepeatRate == null ? null : k.revenueRepeatRate * 100,
@@ -35,6 +38,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
     },
     {
       kind: 'SCALE',
+      label: '확장 지표',
       color: '#23704F',
       title: '운영자 1인당 활성 고객',
       value: k.scaleActivePerOperator,
@@ -50,7 +54,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
         <div key={c.kind} className="ax-card lift min-w-0 overflow-hidden p-4 md:p-5">
           <div className="flex items-center justify-between">
             <span className="text-[0.8125rem] font-bold tracking-[0.14em]" style={{ color: c.color }}>
-              {c.kind} KPI
+              {c.label}
             </span>
             <StatusBadge status="DEMO" />
           </div>
@@ -61,7 +65,7 @@ export function MoneyKpiCards({ k }: { k: Kpis }) {
           </p>
           <p className="mt-2 text-[0.8125rem] text-slate-500">{c.note}</p>
           <div className="mt-3 flex items-center gap-1.5 border-t border-slate-100 pt-3 text-[0.8125rem]">
-            <Tag tone="amber">Baseline UNKNOWN</Tag>
+            <Tag tone="amber">기준값 측정 전</Tag>
             <span className="min-w-0 truncate text-slate-500">{c.measure}</span>
           </div>
         </div>
@@ -135,8 +139,8 @@ export function EvidenceBars({ levels }: { levels: Record<'LINK_CLICK' | 'SELF_R
   const rows = [
     { k: 'LINK_CLICK', l: '링크 클릭', d: '의향 신호 — 실적 아님', c: '#CBD5E1' },
     { k: 'SELF_REPORT', l: '자가신고·체크인 요청', d: '확인 전 — 실적 아님', c: '#94A3B8' },
-    { k: 'STAFF_CONFIRMED', l: '직원 확인', d: 'KPI 집계 기준', c: '#3C9A75' },
-    { k: 'POS_VERIFIED', l: 'POS 검증', d: '연동권 확인 전 — 미연결', c: '#0E7663' },
+    { k: 'STAFF_CONFIRMED', l: '직원 확인', d: '핵심 지표 집계 기준', c: '#3C9A75' },
+    { k: 'POS_VERIFIED', l: '계산대(POS) 기록', d: '계산대 연동 전 — 미연결', c: '#0E7663' },
   ] as const;
   const max = Math.max(1, ...Object.values(levels));
   return (
@@ -214,7 +218,7 @@ export function QueueRow({ s, t, canVerify, compact, mini }: { s: AppState; t: A
         <div className="min-w-0">
           <p className="flex flex-wrap items-center gap-1.5 text-[0.9375rem] font-bold text-slate-900">
             {user ? <Link href={`/ax/members/${user.id}`} className="-mx-1 inline-flex min-h-11 min-w-11 items-center rounded-md px-1 hover:underline lg:min-h-0">{user.name}</Link> : t.title}
-            {user && <span className="text-[0.8125rem] font-semibold text-slate-500">{user.memberCode}</span>}
+            {user && <span className="text-[0.8125rem] font-semibold text-slate-500">회원번호 {memberNo(user.memberCode)}</span>}
             <Tag tone={t.type === 'VERIFY_CHECKIN' ? 'blue' : t.type === 'VERIFY_PURCHASE' ? 'green' : 'violet'}>
               {{ VERIFY_CHECKIN: '방문 체크인', VERIFY_PURCHASE: '구매 확인', PHOTO_REVIEW: '사진 승인', CUSTOMER_REQUEST: '고객 요청', REFERRAL_REVIEW: '보상 검토', REORDER_REVIEW: '재구매' }[t.type]}
             </Tag>

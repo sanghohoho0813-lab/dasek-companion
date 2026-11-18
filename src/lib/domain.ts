@@ -4,6 +4,7 @@
  * 중복지급 방지: idempotencyKey 유니크 / referee 유니크 / (user, store, day) 체크인 유니크.
  */
 import { assertCan } from './permissions';
+import { ROADMAP } from './roadmap';
 import { campaignLinkFor, computeReorderCandidates, getMenuItem, getProfile, hasConsent, segmentMembers, SEGMENTS, stampCount, stampRule, verifiedUses } from './rules';
 import type {
   AdminTask,
@@ -656,7 +657,7 @@ export function toggleRoadmapInterest(s: AppState, ctx: Ctx, userId: string | nu
     return false;
   }
   s.roadmapInterest.unshift({ id: uid('rmi'), userId, itemKey, notifyConsent: !!userId && notifyConsent, createdAt: ctx.now });
-  track(s, ctx, userId, 'roadmap_interest', itemKey, `향후 서비스 관심: ${itemKey}`);
+  track(s, ctx, userId, 'roadmap_interest', itemKey, `향후 서비스 관심: ${ROADMAP.find((r) => r.key === itemKey)?.title ?? '준비 중인 서비스'}`);
   return true;
 }
 

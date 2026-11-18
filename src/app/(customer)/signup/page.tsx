@@ -11,12 +11,13 @@ import { couponsFor } from '@/lib/rules';
 import { act } from '@/lib/store';
 import type { BrandId } from '@/lib/types';
 import { cx } from '@/lib/util';
+import { memberNo } from '@/lib/labels';
 
 const CONSENTS = [
   { key: 'terms', label: '[필수] 서비스 이용약관 동의', required: true, desc: '회원 혜택·스탬프·쿠폰 제공을 위한 기본 약관입니다. (초안 — 운영자 법률 검토 전)' },
   { key: 'privacy', label: '[필수] 개인정보 수집·이용 동의', required: true, desc: '수집: 이름(닉네임), 휴대폰 번호(선택·중복가입 방지용 해시와 뒤 4자리만 저장), 이용 기록. 목적: 회원 식별·혜택 지급·부정 이용 방지. 보관: 탈퇴 시까지(법정 보관 항목 제외).' },
   { key: 'age14', label: '[필수] 만 14세 이상입니다', required: true, desc: '만 14세 미만은 법정대리인 동의 절차가 준비되기 전까지 가입할 수 없어요.' },
-  { key: 'marketing_inapp', label: '[선택] 앱 안 혜택 알림 받기', required: false, desc: '저장한 메뉴·재방문 혜택 등을 앱 알림함으로 받아요. 언제든 마이 > 동의 설정에서 끌 수 있어요.' },
+  { key: 'marketing_inapp', label: '[선택] 앱 안 혜택 알림 받기', required: false, desc: '저장한 메뉴·재방문 혜택 등을 앱 알림함으로 받아요. 언제든 내 정보 > 동의 설정에서 끌 수 있어요.' },
   { key: 'marketing_push', label: '[선택] 푸시 알림 받기 (준비 중)', required: false, desc: '푸시 발송 인프라가 준비되기 전까지 실제로 발송하지 않아요.' },
   { key: 'marketing_kakao', label: '[선택] 카카오 알림 받기 (준비 중)', required: false, desc: '채널·요금·정책 확인 전까지 실제로 발송하지 않아요.' },
 ] as const;
@@ -61,7 +62,7 @@ function Inner() {
           <PartyPopper className="h-8 w-8" />
         </div>
         <h1 className="mt-4 text-[1.5rem] font-extrabold text-ink">{me.name}님, 환영해요!</h1>
-        <p className="mt-1 text-[0.875rem] text-ink-3">회원코드 {me.memberCode} — 매장에서 보여주면 적립돼요.</p>
+        <p className="mt-1 text-[0.875rem] text-ink-3">회원번호 {memberNo(me.memberCode)} — 매장에서 보여주면 적립돼요.</p>
         <div className="mt-6 space-y-2 text-left">
           {coupons.map((x) => (
             <div key={x.id} className="flex items-center gap-3 rounded-2xl bg-promo-50 p-4">

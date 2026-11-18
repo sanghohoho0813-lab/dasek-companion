@@ -40,6 +40,11 @@
 html { -webkit-text-size-adjust: 100%; font-size: 16px; }
 html[data-font='sm'] { font-size: 15px; }
 html[data-font='lg'] { font-size: 17.6px; }
+/* 운영 AX 는 고객 화면보다 한 단계 크게 (7차: '보통'이 작다는 피드백) — 보통 17px · 작게 16px · 크게 18.7px.
+   :has() 로 서버 렌더 첫 화면부터 적용되어 글자가 튀지 않는다. */
+html:has([data-surface='ax']) { font-size: 17px; }
+html[data-font='sm']:has([data-surface='ax']) { font-size: 16px; }
+html[data-font='lg']:has([data-surface='ax']) { font-size: 18.7px; }
 body {
   @apply bg-white text-ink antialiased;
   font-feature-settings: 'tnum' 0;

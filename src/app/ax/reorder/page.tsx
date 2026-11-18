@@ -23,7 +23,7 @@ export default function ReorderPage() {
       <PageIntro
         title="다시 올 고객 찾기"
         body="메뉴를 저장했지만 14일간 사지 않은 고객을 찾아 안내 후보로 보여줘요."
-        more="규칙으로 후보를 만들고, 운영 책임자가 승인한 후보만 알림 동의 고객에게 앱 알림으로 안내합니다. 이후 해당 메뉴의 직원확인 구매가 생기면 '전환'으로 기록돼요(재구매 후보 · REORDER)."
+        more="규칙으로 후보를 만들고, 운영 책임자가 승인한 후보만 알림 동의 고객에게 앱 알림으로 안내합니다. 이후 해당 메뉴의 직원확인 구매가 생기면 '재구매 전환'으로 기록돼요."
         right={
           <Button tone="ax" onClick={() => run(() => opAct((d, c) => D.refreshReorderCandidates(d, c)), (n) => (n ? `새 후보 ${n}건을 만들었어요.` : '새 후보가 없어요.'))} data-testid="reorder-refresh">
             <RefreshCw className="h-4 w-4" /> 후보 갱신 {fresh > 0 && `(${fresh})`}
@@ -43,8 +43,8 @@ export default function ReorderPage() {
         </Panel>
         <Panel>
           <p className="text-[0.8125rem] font-semibold text-slate-500">방식</p>
-          <p className="mt-1 text-[0.9375rem] font-bold">RULE + 사람 승인 (L3)</p>
-          <p className="text-[0.8125rem] text-slate-500">자동 발송(L4)은 하지 않아요</p>
+          <p className="mt-1 text-[0.9375rem] font-bold">규칙 + 책임자 승인</p>
+          <p className="text-[0.8125rem] text-slate-500">승인 없이 자동으로 보내지 않아요</p>
         </Panel>
       </div>
       <Segmented tone="ax" label="상태" value={tab} onChange={setTab} options={[{ value: 'SUGGESTED', label: '검토 대기', count: count('SUGGESTED') }, { value: 'APPROVED', label: '안내함', count: count('APPROVED') }, { value: 'CONVERTED', label: '구매 전환', count: count('CONVERTED') }, { value: 'DISMISSED', label: '보류', count: count('DISMISSED') }]} />
@@ -86,7 +86,7 @@ export default function ReorderPage() {
                     ) : (
                       <Locked reason="승인은 책임자" />
                     ))}
-                  {c.status === 'CONVERTED' && <Tag tone="green">전환 확인 · Proof 기록됨</Tag>}
+                  {c.status === 'CONVERTED' && <Tag tone="green">전환 확인 · 성과 기록됨</Tag>}
                 </li>
               );
             })}

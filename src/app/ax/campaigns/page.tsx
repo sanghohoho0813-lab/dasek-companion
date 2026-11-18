@@ -46,8 +46,8 @@ function Inner() {
   const segs = order.map((k) => ({ k, ...SEGMENTS[k], n: segmentMembers(s, k).length }));
   return (
     <div className="space-y-4">
-      <PageIntro title="고객 알림 보내기" body="대상을 고르면 문안 초안이 만들어지고, 책임자가 승인해야 발송돼요." more="규칙(세그먼트)이 대상과 문안 초안을 만들고, 운영 책임자가 승인한 것만 마케팅 수신 동의 고객에게 앱 알림으로 보냅니다(캠페인). 성과는 발송 수가 아니라 이후 '직원확인 이용'으로만 측정해요." />
-      <Panel title="대상 세그먼트 (RULE)" sub="앱 알림 수신 동의자만 포함">
+      <PageIntro title="고객 알림 보내기" body="대상을 고르면 문안 초안이 만들어지고, 책임자가 승인해야 발송돼요." more="규칙이 알림 대상과 문안 초안을 만들고, 운영 책임자가 승인한 것만 마케팅 수신 동의 고객에게 앱 알림으로 보냅니다(캠페인). 성과는 발송 수가 아니라 이후 '직원확인 이용'으로만 측정해요." />
+      <Panel title="알림 대상 (규칙)" sub="앱 알림 수신 동의자만 포함">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {segs.map((g) => (
             <div key={g.k} className="flex flex-col rounded-xl bg-slate-50 p-4">
@@ -141,7 +141,7 @@ function Inner() {
                   ] as [Campaign['channel'], string, boolean][]
                 ).map(([v, l, ok]) => (
                   <button key={v} disabled={!ok} onClick={() => setDraft({ ...draft, channel: v })} className={cx('flex h-10 items-center justify-center gap-1 rounded-lg text-[0.875rem] font-bold ring-1 disabled:opacity-50', draft.channel === v ? 'bg-ax-primary text-white ring-ax-primary' : 'bg-white text-slate-600 ring-slate-200')}>
-                    {l} {!ok && <StatusBadge status="READY" />}
+                    {l} {!ok && <StatusBadge status="READY" label="준비됨" />}
                   </button>
                 ))}
               </div>
@@ -161,11 +161,11 @@ function Inner() {
             </label>
             <div className="flex items-center justify-between rounded-lg bg-slate-50 px-3 py-2.5">
               <span className="flex items-center gap-1.5 text-[0.8438rem] text-slate-600">
-                <Sparkles className="h-4 w-4 text-slate-500" /> AI 문안 다듬기 (LLM)
+                <Sparkles className="h-4 w-4 text-slate-500" /> AI 문안 다듬기
               </span>
-              <StatusBadge status="READY" label="API 키 연결 전" />
+              <StatusBadge status="READY" label="연결 전" />
             </div>
-            <p className="text-[0.8125rem] text-slate-500">현재 초안은 세그먼트별 규칙 템플릿(TEMPLATE_RULE)입니다. 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
+            <p className="text-[0.8125rem] text-slate-500">현재 초안은 알림 대상별 규칙 문안입니다(AI 아님). 실제 메뉴·공개 콘텐츠에 없는 혜택·효능을 쓰지 마세요.</p>
           </div>
         )}
       </Sheet>

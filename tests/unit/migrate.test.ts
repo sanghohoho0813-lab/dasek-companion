@@ -70,3 +70,21 @@ describe('저장 데이터 이전 v6 → v7', () => {
     expect(out.catPhotos.find((p) => p.id === 'pho_up')).toBeTruthy();
   });
 });
+
+describe('저장 데이터 이전 v7 → v8 (회원 이름에 성)', () => {
+  it('손대지 않은 DEMO 회원 이름에만 성을 붙이고, 고친 이름은 그대로 둔다', () => {
+    const s = JSON.parse(JSON.stringify(createSeed())) as AppState;
+    s.schemaVersion = 7;
+    const cust = s.profiles.filter((p) => p.role === 'customer');
+    const old = ['하늘 (데모 고객)', '서윤', '도현', '지우', '민준', '하린', '예준', '수아', '시우', '유나', '건우', '채원', '은호', '다인'];
+    cust.forEach((p, i) => (p.name = old[i]));
+    cust[2].name = '직접고친이름';
+    const out = migrate(s)!;
+    expect(out.schemaVersion).toBe(SCHEMA_VERSION);
+    const names = out.profiles.filter((p) => p.role === 'customer').map((p) => p.name);
+    expect(names).toContain('정하늘 (데모 고객)');
+    expect(names).toContain('이서윤');
+    expect(names).toContain('직접고친이름');
+    expect(out.profiles.find((p) => p.id === 'op_manager')!.name).toBe('김서윤');
+  });
+});

@@ -76,32 +76,32 @@ export function lastVerifiedAt(s: AppState, userId: string): string | null {
 export const SEGMENTS: Record<SegmentKey, { label: string; rule: string; why: string[] }> = {
   NEW_NO_VISIT: {
     label: '가입 후 확인된 첫 이용 없음 (3일+)',
-    rule: '가입 3일 경과 AND 직원확인 방문·구매 0건 AND 인앱 마케팅 동의',
+    rule: '가입 3일 경과 그리고 직원확인 방문·구매 0건 그리고 앱 안 혜택 알림 동의',
     why: ['가입만 하고 매장 경험이 없으면 이탈 가능성이 큼', '첫 이용 전환은 추천 보상·스탬프의 출발점'],
   },
   LAPSED_30: {
     label: '30일 이상 미방문 재방문 대상',
-    rule: '최근 확인 이용이 30일 이전 AND 확인 이용 1회 이상 AND 인앱 마케팅 동의',
+    rule: '최근 확인 이용이 30일 이전 그리고 확인 이용 1회 이상 그리고 앱 안 혜택 알림 동의',
     why: ['한 번 이상 이용한 고객은 재방문 비용이 신규보다 낮음', '30일은 운영자가 바꿀 수 있는 기준값(가정)'],
   },
   FAVORITE_NO_PURCHASE: {
     label: '저장한 메뉴를 14일간 구매 확인 없음',
-    rule: '저장 메뉴 존재 AND 해당 메뉴 확인 구매 14일 없음 AND 인앱 마케팅 동의',
+    rule: '저장 메뉴 존재 그리고 해당 메뉴 확인 구매 14일 없음 그리고 앱 안 혜택 알림 동의',
     why: ['저장 = 명시적 관심 신호', '구매 확인이 되면 재구매 성과로 측정 가능'],
   },
   RECENT_INTEREST: {
     label: '최근 7일 메뉴 저장·서비스 관심 회원',
-    rule: '최근 7일 메뉴 저장 또는 준비 중 서비스 관심 등록 AND 인앱 마케팅 동의',
+    rule: '최근 7일 메뉴 저장 또는 준비 중 서비스 관심 등록 그리고 앱 안 혜택 알림 동의',
     why: ['고객이 직접 남긴 관심 신호(저장·관심 등록)', '관심 메뉴·서비스 안내로 다음 방문을 유도', '성과는 이후 직원이 확인한 방문·구매로만 측정'],
   },
   STAMP_NEAR: {
     label: '스탬프 보상까지 2개 이하 남음',
-    rule: '현재 주기 스탬프 ≥ (필요 개수 − 2) AND 인앱 마케팅 동의',
+    rule: '현재 주기 스탬프 ≥ (필요 개수 − 2) 그리고 앱 안 혜택 알림 동의',
     why: ['보상 직전 고객은 방문 동기가 가장 큼'],
   },
   ALL_CONSENTED: {
-    label: '인앱 혜택 알림 동의 회원 전체',
-    rule: '인앱 마케팅 동의 = 예',
+    label: '앱 안 혜택 알림 동의 회원 전체',
+    rule: '앱 안 혜택 알림 동의 = 예',
     why: ['전체 공지형 혜택 안내'],
   },
 };
@@ -388,7 +388,7 @@ export function coachMissions(s: AppState, now = new Date()): Mission[] {
       title: `방문·구매 확인 ${verify.length}건 처리`,
       detail: `가장 오래된 요청이 ${waitMin < 60 ? `${waitMin}분` : `${Math.round(waitMin / 60)}시간`}째 대기 중입니다. 확인해야 스탬프·추천 보상이 지급됩니다.`,
       route: '/ax/queue',
-      proof: 'VERIFIED_VISIT / VERIFIED_PURCHASE',
+      proof: '방문 확인 / 구매 확인',
       priority: 100 + verify.length,
       managerOnly: false,
     });
@@ -398,9 +398,9 @@ export function coachMissions(s: AppState, now = new Date()): Mission[] {
     out.push({
       key: 'reorder',
       title: `재구매 안내 후보 ${reorder}건 검토`,
-      detail: '저장했지만 구매 확인이 없는 고객입니다. 승인한 건만 인앱 알림으로 안내됩니다.',
+      detail: '저장했지만 구매 확인이 없는 고객입니다. 승인한 건만 앱 안 알림으로 안내됩니다.',
       route: '/ax/reorder',
-      proof: 'REORDER_CONVERTED (구매 확인 시)',
+      proof: '재구매 전환 (구매 확인 시)',
       priority: 60 + reorder,
       managerOnly: true,
     });
@@ -411,21 +411,21 @@ export function coachMissions(s: AppState, now = new Date()): Mission[] {
     const key: SegmentKey = lapsed >= newNo ? 'LAPSED_30' : 'NEW_NO_VISIT';
     out.push({
       key: 'campaign',
-      title: key === 'LAPSED_30' ? `30일 미방문 ${lapsed}명 재방문 캠페인` : `첫 이용 전 가입자 ${newNo}명 안내`,
-      detail: '규칙 기반 문안 초안을 만들고, 운영 책임자가 승인한 뒤 인앱 알림으로만 보냅니다.',
+      title: key === 'LAPSED_30' ? `30일 미방문 ${lapsed}명 재방문 알림` : `첫 이용 전 가입자 ${newNo}명 안내`,
+      detail: '규칙 기반 문안 초안을 만들고, 운영 책임자가 승인한 뒤 앱 안 알림으로만 보냅니다.',
       route: `/ax/campaigns?segment=${key}`,
-      proof: 'CAMPAIGN_SENT → 이후 확인 이용으로 성과 측정',
+      proof: '고객 알림 발송 → 이후 확인 이용으로 성과 측정',
       priority: 40 + lapsed + newNo,
       managerOnly: true,
     });
   }
   const photos = open.filter((t) => t.type === 'PHOTO_REVIEW').length;
   if (photos) {
-    out.push({ key: 'photo', title: `고양이 사진 공개 승인 ${photos}건`, detail: '승인 전 사진은 고객 화면에 보이지 않습니다.', route: '/ax/content?tab=cats', proof: '-', priority: 30, managerOnly: true });
+    out.push({ key: 'photo', title: `고양이 사진 공개 승인 ${photos}건`, detail: '승인 전 사진은 고객 화면에 보이지 않습니다.', route: '/ax/content?tab=cats', proof: '없음', priority: 30, managerOnly: true });
   }
   const requests = open.filter((t) => t.type === 'CUSTOMER_REQUEST' || t.type === 'REFERRAL_REVIEW').length;
   if (requests) {
-    out.push({ key: 'request', title: `고객 요청·검토 ${requests}건`, detail: '탈퇴·삭제 요청 또는 보상 검토가 필요합니다.', route: '/ax/queue?tab=other', proof: '-', priority: 80, managerOnly: true });
+    out.push({ key: 'request', title: `고객 요청·검토 ${requests}건`, detail: '탈퇴·삭제 요청 또는 보상 검토가 필요합니다.', route: '/ax/queue?tab=other', proof: '없음', priority: 80, managerOnly: true });
   }
   return out.sort((a, b) => b.priority - a.priority).slice(0, 3);
 }

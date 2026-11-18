@@ -14,6 +14,7 @@ import { DailyChart, EvidenceBars, MissionList, MoneyKpiCards, QueueRow } from '
 import { useDevice } from '@/components/device/Device';
 import { Disclosure, PageSkeleton, Sheet } from '@/components/ui';
 import { coachMissions, computeKpis, computeReorderCandidates, contentFixes, dailyVerified, DELAY_MINUTES, evidenceLevels, funnel, segmentMembers, todayStats, urgentWork } from '@/lib/rules';
+import { methodLabel, proofLabel } from '@/lib/labels';
 import { cx, dailyCheckinCode, fmtDate } from '@/lib/util';
 
 function SectionTitle({ n, title, right }: { n: number; title: string; right?: React.ReactNode }) {
@@ -45,6 +46,9 @@ function Stat({ label, value, sub, icon, tone }: { label: string; value: React.R
     </div>
   );
 }
+
+/** 자동 생성 문장 안의 영문 표기를 화면용 한글로 */
+const ko = (t: string) => t.replace(/\(RULE\)/g, '(규칙)').replace(/\(HUMAN\)/g, '(직원 확인)').replace(/POS/g, '계산대(POS)').replace(/^세그먼트:/, '알림 대상:');
 
 type QA = { key: string; label: string; icon: React.ComponentType<{ className?: string }>; href?: string; onClick?: () => void; tone: string; disabled?: boolean };
 
@@ -326,17 +330,17 @@ export default function AxDashboard() {
                   <EvidenceBars levels={evidenceLevels(s)} />
                 </Panel>
               </div>
-              <Panel title="최근 성과 기록" sub="요청 → 결정 → 승인 → 조치 → 결과 (Proof Event)">
+              <Panel title="최근 성과 기록" sub="요청 → 결정 → 승인 → 조치 → 결과">
                 <ul className="divide-y divide-slate-100">
                   {s.proofEvents.slice(0, 5).map((p) => (
                     <li key={p.proof_event_id} className="flex flex-col gap-1 py-2.5 sm:flex-row sm:items-center sm:gap-3">
                       <ShieldCheck className="hidden h-4 w-4 shrink-0 text-[#23704F] sm:block" />
-                      <Tag tone="green">{p.event_type}</Tag>
+                      <Tag tone="green">{proofLabel(p.event_type)}</Tag>
                       <span className="min-w-0 flex-1 truncate text-[0.9375rem] text-slate-700">
-                        {p.trigger} → {p.result}
+                        {ko(p.trigger)} → {ko(p.result)}
                       </span>
                       <span className="shrink-0 text-[0.875rem] text-slate-500">
-                        {p.decision_method} · {fmtDate(p.created_at, { time: true })}
+                        {methodLabel(p.decision_method)} · {fmtDate(p.created_at, { time: true })}
                       </span>
                     </li>
                   ))}

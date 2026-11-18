@@ -6,6 +6,7 @@ import { Suspense, useState } from 'react';
 import { Locked, PageIntro, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Button, EvidenceBadge, PageSkeleton, Segmented, Sheet, Toggle, axInputCls, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
+import { LEDGER_KIND, LEDGER_STATUS, REFERRAL_STATUS } from '@/lib/labels';
 import { effectiveCouponStatus, getProfile } from '@/lib/rules';
 import { opAct } from '@/lib/store';
 import type { LoyaltyRule } from '@/lib/types';
@@ -107,7 +108,7 @@ function Inner() {
   const sum = (st: string) => s.coupons.filter((c) => effectiveCouponStatus(c) === st).length;
   return (
     <div>
-      <PageIntro title="쿠폰·혜택" body="스탬프·쿠폰 규칙과 발급·사용 내역, 친구 추천 보상을 관리해요." more="보상은 모두 멱등 키로 중복 지급을 막고, 추천 보상은 추천받은 친구의 첫 이용을 직원이 확인한 뒤에만 확정돼요. 환불·취소 시 회수됩니다." />
+      <PageIntro title="쿠폰·혜택" body="스탬프·쿠폰 규칙과 발급·사용 내역, 친구 추천 보상을 관리해요." more="보상은 모두 고유 처리 번호로 중복 지급을 막고, 추천 보상은 추천받은 친구의 첫 이용을 직원이 확인한 뒤에만 확정돼요. 환불·취소 시 회수됩니다." />
       <Segmented
         tone="ax"
         label="보기"
@@ -181,7 +182,7 @@ function Inner() {
                     <StatusPill kind={statusOf.coupon(c.status)} size="sm" />
                   </div>
                   <p className="text-[0.875rem] text-slate-600">
-                    {c.source} · {fmtDate(c.expiresAt)}까지 · <span className="font-mono">{c.code}</span>
+                    {c.source} · {fmtDate(c.expiresAt)}까지 · 쿠폰번호 <span className="font-mono">{c.code.replace(/^DC-/, '')}</span>
                   </p>
                 </li>
               ))}
@@ -193,7 +194,7 @@ function Inner() {
                     <th className="pb-2 font-semibold">회원</th>
                     <th className="pb-2 font-semibold">쿠폰</th>
                     <th className="pb-2 font-semibold">발급 사유</th>
-                    <th className="pb-2 font-semibold">코드</th>
+                    <th className="pb-2 font-semibold">쿠폰번호</th>
                     <th className="pb-2 font-semibold">발급 / 만료</th>
                     <th className="pb-2 font-semibold">상태</th>
                   </tr>
@@ -208,7 +209,7 @@ function Inner() {
                       </td>
                       <td className="py-2">{c.benefit}</td>
                       <td className="py-2 text-slate-500">{c.source}</td>
-                      <td className="py-2 font-mono text-[0.8125rem]">{c.code}</td>
+                      <td className="py-2 font-mono text-[0.8125rem]">{c.code.replace(/^DC-/, '')}</td>
                       <td className="py-2 text-slate-500">
                         {fmtDate(c.issuedAt)} / {fmtDate(c.expiresAt)}
                       </td>
@@ -223,14 +224,14 @@ function Inner() {
           </Panel>
         )}
         {tab === 'referrals' && (
-          <Panel sub="한 회원은 한 번만 추천 귀속(유니크) · 자기추천·중복번호 차단 · 환불 시 회수">
+          <Panel sub="한 회원은 한 번만 추천 연결 · 자기추천·중복번호 차단 · 환불 시 회수">
             <div className="overflow-x-auto">
               <table className="ax-table w-full min-w-[640px] text-left text-[0.875rem]">
                 <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
                   <tr>
                     <th className="pb-2 font-semibold">추천인</th>
                     <th className="pb-2 font-semibold">피추천인</th>
-                    <th className="pb-2 font-semibold">코드</th>
+                    <th className="pb-2 font-semibold">추천 코드</th>
                     <th className="pb-2 font-semibold">가입</th>
                     <th className="pb-2 font-semibold">자격 확인</th>
                     <th className="pb-2 font-semibold">상태</th>
@@ -245,7 +246,7 @@ function Inner() {
                       <td className="py-2 text-slate-500">{fmtDate(r.createdAt)}</td>
                       <td className="py-2 text-slate-500">{r.qualifiedAt ? fmtDate(r.qualifiedAt, { time: true }) : '대기'}</td>
                       <td className="py-2">
-                        <StatusPill kind={({ PENDING: 'pending', QUALIFIED: 'expected', REWARDED: 'done', REJECTED: 'rejected', REVERSED: 'reversed' } as const)[r.status]} label={{ PENDING: '첫 이용 대기', QUALIFIED: '보상 검토', REWARDED: '보상 확정', REJECTED: '반려', REVERSED: '보상 회수' }[r.status]} size="sm" /> {r.reason && <span className="text-[0.8125rem] text-slate-500">{r.reason}</span>}
+                        <StatusPill kind={({ PENDING: 'pending', QUALIFIED: 'expected', REWARDED: 'done', REJECTED: 'rejected', REVERSED: 'reversed' } as const)[r.status]} label={REFERRAL_STATUS[r.status] ?? '기타'} size="sm" /> {r.reason && <span className="text-[0.8125rem] text-slate-500">{r.reason}</span>}
                       </td>
                     </tr>
                   ))}
@@ -255,18 +256,16 @@ function Inner() {
           </Panel>
         )}
         {tab === 'ledger' && (
-          <Panel sub="EXPECTED(예정) → CONFIRMED(확정) / REVERSED(취소) · 멱등 키로 중복 방지">
+          <Panel sub="확정 예정 → 확정 / 회수 · 같은 보상은 한 번만 기록(중복 방지)">
             <ul className="divide-y divide-slate-100">
               {s.ledger.slice(0, 80).map((l) => (
                 <li key={l.id} className="flex flex-wrap items-center gap-2 py-2 text-[0.875rem]">
-                  <Tag tone={l.kind === 'STAMP' ? 'blue' : l.kind === 'COUPON' ? 'green' : 'violet'}>{l.kind}</Tag>
+                  <Tag tone={l.kind === 'STAMP' ? 'blue' : l.kind === 'COUPON' ? 'green' : 'violet'}>{LEDGER_KIND[l.kind] ?? '기타'}</Tag>
                   <span className="min-w-0 flex-1 truncate">
                     <span className="font-semibold">{name(l.userId)}</span> · {l.label}
                   </span>
-                  <StatusPill kind={statusOf.ledger(l.status)} label={{ EXPECTED: '확정 예정', CONFIRMED: '확정', REVERSED: '회수됨' }[l.status]} size="sm" />
-                  <span className="w-36 truncate text-right font-mono text-[0.8125rem] text-slate-500" title={l.idempotencyKey}>
-                    {l.idempotencyKey}
-                  </span>
+                  <StatusPill kind={statusOf.ledger(l.status)} label={LEDGER_STATUS[l.status] ?? '기타'} size="sm" />
+                  <span className="w-36 truncate text-right text-[0.8125rem] text-slate-500">{fmtDate(l.createdAt, { time: true })}</span>
                 </li>
               ))}
             </ul>

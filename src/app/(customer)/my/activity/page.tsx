@@ -63,7 +63,7 @@ export default function ActivityPage() {
               </li>
             ))
           ) : (
-            <Empty title="아직 내역이 없어요" body="매장에서 체크인하거나 회원코드를 보여주세요." action={<Link href="/checkin" className="font-semibold text-brand-700">방문 체크인</Link>} />
+            <Empty title="아직 내역이 없어요" body="매장에서 체크인하거나 회원번호를 보여주세요." action={<Link href="/checkin" className="font-semibold text-brand-700">방문 체크인</Link>} />
           )}
         </ul>
       </div>

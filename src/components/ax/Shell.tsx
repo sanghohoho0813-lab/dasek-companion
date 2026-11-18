@@ -317,7 +317,7 @@ export function AxShell({ children }: { children: React.ReactNode }) {
 
   return (
     <TutorialCtx.Provider value={() => setTutorial(true)}>
-      <div className="min-h-dvh bg-[#F4F6F8] text-slate-900">
+      <div className="min-h-dvh bg-[#F4F6F8] text-slate-900" data-surface="ax">
         {/* PC 사이드바: 위 로고 · 가운데 메뉴(따로 스크롤) · 아래 고객 화면·프로필·제작 표기(항상 보임) */}
         <aside className={cx('fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-black/10 bg-ax-shell lg:flex', compact ? 'w-[76px]' : 'w-[264px]')} data-testid="ax-sidebar">
           <Link href="/ax" className={cx('flex h-16 shrink-0 items-center gap-2.5', compact ? 'justify-center' : 'px-5')} aria-label="다색컴패니언 BUSINESS AX — 오늘의 매장">

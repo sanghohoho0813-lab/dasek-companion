@@ -59,7 +59,7 @@ test('시나리오 A: 가입 → 체크인 → 직원 확인이 같은 손님에
   // 손님 화면 (새 탭 = 같은 브라우저 저장소)
   const customer = await context.newPage();
   await customer.goto('/my');
-  await expect(customer.getByTestId('member-code')).toHaveText(u.memberCode);
+  await expect(customer.getByTestId('member-code')).toHaveText(u.memberCode.replace(/^DC-/, ''));
   await expect(customer.locator('main')).toContainText('1 / 10');
   await customer.goto('/my/activity');
   await expect(customer.getByTestId('activity-list')).toContainText('직원 확인');
@@ -70,7 +70,7 @@ test('시나리오 A: 가입 → 체크인 → 직원 확인이 같은 손님에
   await expect(customer.locator('main')).toContainText('시연 고객');
   await expect(customer.locator('main')).toContainText('1회');
   await customer.goto('/ax/evidence');
-  await expect(customer.getByTestId('proof-table')).toContainText('VERIFIED_VISIT');
+  await expect(customer.getByTestId('proof-table')).toContainText('방문 확인');
   expect(errors).toEqual([]);
 });
 

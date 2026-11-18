@@ -33,7 +33,7 @@ test('primary journey: explore → signup(referral) → check-in & purchase → 
   // 2) 추천인(데모 고객) 코드 확보
   const referrerCode = await page.evaluate(() => {
     const s = JSON.parse(localStorage.getItem('dasek-companion:state')!);
-    return s.profiles.find((p: { name: string }) => p.name === '하늘 (데모 고객)').referralCode as string;
+    return s.profiles.find((p: { name: string }) => p.name === '정하늘 (데모 고객)').referralCode as string;
   });
 
   // 3) 추천 링크로 가입
@@ -99,8 +99,8 @@ test('primary journey: explore → signup(referral) → check-in & purchase → 
 
   // 9) Proof 생성 확인
   await page.goto('/ax/evidence');
-  await expect(page.getByTestId('proof-table')).toContainText('REFERRAL_CONVERTED');
-  await expect(page.getByTestId('proof-table')).toContainText('VERIFIED_PURCHASE');
+  await expect(page.getByTestId('proof-table')).toContainText('친구 추천 성공');
+  await expect(page.getByTestId('proof-table')).toContainText('구매 확인');
 
   // 10) 고객 화면으로 복귀 → 스탬프·알림 반영
   await page.setViewportSize(MOBILE);

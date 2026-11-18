@@ -286,7 +286,7 @@ function CatEditor({ s, cat, onClose }: { s: AppState; cat: CafeCat; onClose: ()
           </div>
         ))}
       </div>
-      <p className="mt-2 text-[0.8125rem] text-slate-500">DEMO: 사진은 이 브라우저에만 저장돼요(960px로 축소). 운영 시 Supabase Storage + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
+      <p className="mt-2 text-[0.8125rem] text-slate-500">시연(DEMO): 사진은 이 브라우저에만 저장돼요(작은 크기로 줄여 저장). 운영 시 서버 사진 저장소(Supabase) + 공개 승인 정책으로 전환합니다. 권리가 확인된 사진만 올려 주세요.</p>
     </Sheet>
   );
 }
@@ -371,7 +371,7 @@ function Inner() {
                 </tbody>
               </table>
             </div>
-            <p className="mt-3 text-[0.8125rem] text-slate-500">메뉴 일괄 등록(CSV 가져오기)은 READY — 메뉴 권리·가맹 정책 확인 후 열어요.</p>
+            <p className="mt-3 text-[0.8125rem] text-slate-500">메뉴 일괄 등록(CSV 파일 가져오기)은 준비됨 — 메뉴 권리·가맹 정책 확인 후 열어요.</p>
           </Panel>
         )}
         {tab === 'cats' && (

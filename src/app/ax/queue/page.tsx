@@ -36,7 +36,7 @@ function Inner() {
       <PageIntro
         title="방문·구매 확인"
         body="오래 기다린 요청부터 보여요. 확인해야 스탬프·추천 보상이 지급돼요."
-        more="고객의 체크인과 구매 확인 요청을 직원이 확인하는 곳입니다. 확인된 건만 스탬프·추천 보상·운영 수치(KPI)·성과 기록(Proof)에 반영돼요."
+        more="고객의 체크인과 구매 확인 요청을 직원이 확인하는 곳입니다. 확인된 건만 스탬프·추천 보상·핵심 지표·성과 기록에 반영돼요."
         right={
           <>
             <Button tone="ax" variant="outline" onClick={() => setRedeem(true)} data-testid="open-redeem">
@@ -50,11 +50,11 @@ function Inner() {
       />
       <label className="mb-3 flex h-11 max-w-md items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 focus-within:border-ax-primary">
         <Search className="h-4 w-4 text-slate-500" />
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="이름 또는 회원코드로 찾기" aria-label="큐 검색" className="w-full text-[1rem] outline-none" data-testid="queue-search" />
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="이름 또는 회원번호로 찾기" aria-label="확인 요청 검색" className="w-full text-[1rem] outline-none" data-testid="queue-search" />
       </label>
       <Segmented
         tone="ax"
-        label="큐 종류"
+        label="요청 종류"
         value={tab}
         onChange={setTab}
         options={[

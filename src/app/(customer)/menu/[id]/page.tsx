@@ -46,7 +46,7 @@ export default function MenuDetailPage() {
   const pop = s.verifications.filter((v) => v.status === 'CONFIRMED' && v.menuItemIds.includes(item.id)).length;
   const toggleSave = () => {
     if (!me) return router.push(`/login?next=/menu/${item.id}`);
-    run(() => act((d, c) => D.toggleFavorite(d, c, me.id, item.id)), (on) => (on ? '저장했어요. 마이 > 저장한 메뉴에서 볼 수 있어요.' : '저장을 해제했어요.'));
+    run(() => act((d, c) => D.toggleFavorite(d, c, me.id, item.id)), (on) => (on ? '저장했어요. 내 정보 > 저장한 메뉴에서 볼 수 있어요.' : '저장을 해제했어요.'));
   };
 
   return (
@@ -191,7 +191,7 @@ export default function MenuDetailPage() {
 
       <Sheet open={orderOpen} onClose={() => setOrderOpen(false)} title="구매 방법" description={`${item.name} · ${store.name}`}>
         <ChannelList s={s} item={item} me={me?.id ?? null} />
-        <p className="mt-3 text-[0.8125rem] text-ink-3">외부 링크를 연 것만으로는 구매로 기록되지 않아요. 구매 후 &lsquo;구매했어요&rsquo;로 적립을 요청하거나 매장에서 회원코드를 보여주세요.</p>
+        <p className="mt-3 text-[0.8125rem] text-ink-3">외부 링크를 연 것만으로는 구매로 기록되지 않아요. 구매 후 &lsquo;구매했어요&rsquo;로 적립을 요청하거나 매장에서 회원번호를 보여주세요.</p>
       </Sheet>
       <PurchaseReportSheet open={reportOpen} onClose={() => setReportOpen(false)} s={s} me={me} preset={item.id} />
       <WhySheet rec={why} onClose={() => setWhy(null)} />

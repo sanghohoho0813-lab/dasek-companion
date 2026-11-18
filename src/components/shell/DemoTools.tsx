@@ -3,7 +3,7 @@
  * 시연 도구 (DEMO) — 휴대폰에서도 고객 ↔ 운영 AX 전환, PC 화면 미리보기, 데모 초기화를 할 수 있게 한다.
  * 데스크톱(≥1024px)에서는 같은 기능이 상단 바(Device Switch·운영 AX·초기화)에 있다.
  */
-import { Columns2, LayoutDashboard, Monitor, Presentation, RotateCcw, Smartphone, Wrench } from 'lucide-react';
+import { ChevronDown, Columns2, LayoutDashboard, Monitor, Presentation, RotateCcw, Smartphone } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +15,7 @@ import { cx } from '@/lib/util';
 
 export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolean; onClose: () => void; tone?: 'brand' | 'ax' }) {
   const pathname = usePathname();
-  const { desktop, pcPreview, setPcPreview } = useDevice();
+  const { desktop, phoneView, setPhoneView } = useDevice();
   const toast = useToast();
   const [confirmReset, setConfirmReset] = useState(false);
   const onAx = pathname.startsWith('/ax');
@@ -35,7 +35,7 @@ export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolea
   const off = 'bg-white text-slate-800 ring-slate-200 hover:bg-slate-50';
 
   return (
-    <Sheet open={open} onClose={onClose} tone={tone} title="시연 도구" description="DEMO 전용 · 실제 운영 화면에는 나타나지 않아요" size="sm" testId="demo-tools">
+    <Sheet open={open} onClose={onClose} tone={tone} title="시연 메뉴" description="시연(DEMO)용 · 실제 매장 운영 화면에는 나타나지 않아요" size="sm" testId="demo-tools">
       <div className="space-y-5">
         <section>
           <p className="mb-2 text-[0.875rem] font-bold text-slate-500">화면 전환</p>
@@ -74,24 +74,32 @@ export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolea
             <DeviceSwitch />
           ) : (
             <>
-              <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => { setPcPreview(false); onClose(); }} aria-pressed={!pcPreview} className={cx(btn, !pcPreview ? on : off)} data-testid="demo-mobile">
-                  <span className="flex items-center gap-1.5 text-[1rem] font-bold">
-                    <Smartphone className="h-4 w-4" /> 모바일 화면
-                  </span>
-                  <span className={cx('text-[0.8125rem]', !pcPreview ? 'text-slate-200' : 'text-slate-500')}>지금 보는 실제 화면</span>
-                </button>
-                <button onClick={() => { setPcPreview(true); onClose(); }} aria-pressed={pcPreview} className={cx(btn, pcPreview ? on : off)} data-testid="demo-pc-preview">
-                  <span className="flex items-center gap-1.5 text-[1rem] font-bold">
-                    <Monitor className="h-4 w-4" /> PC 화면
-                  </span>
-                  <span className={cx('text-[0.8125rem]', pcPreview ? 'text-slate-200' : 'text-slate-500')}>1280px를 축소해 보기</span>
-                </button>
+              <div className="grid grid-cols-3 gap-2">
+                {(
+                  [
+                    { v: 'mobile', id: 'demo-mobile', icon: Smartphone, t: '모바일', d: '지금 화면' },
+                    { v: 'pc', id: 'demo-pc-preview', icon: Monitor, t: 'PC', d: '축소해 보기' },
+                    { v: 'dual', id: 'demo-phone-dual', icon: Columns2, t: 'PC+모바일', d: '동시에 보기' },
+                  ] as const
+                ).map((o) => (
+                  <button
+                    key={o.v}
+                    onClick={() => {
+                      setPhoneView(o.v);
+                      onClose();
+                    }}
+                    aria-pressed={phoneView === o.v}
+                    className={cx(btn, 'px-3', phoneView === o.v ? on : off)}
+                    data-testid={o.id}
+                  >
+                    <span className="flex items-center gap-1 text-[0.9375rem] font-bold">
+                      <o.icon className="h-4 w-4 shrink-0" /> {o.t}
+                    </span>
+                    <span className={cx('text-[0.8125rem]', phoneView === o.v ? 'text-slate-200' : 'text-slate-500')}>{o.d}</span>
+                  </button>
+                ))}
               </div>
-              <p className="mt-2 flex items-start gap-1.5 rounded-xl bg-slate-50 px-3 py-2.5 text-[0.8438rem] leading-relaxed text-slate-600">
-                <Columns2 className="mt-0.5 h-4 w-4 shrink-0" />
-                PC+Mobile 동시 보기는 두 화면을 나란히 놓아야 해서 PC나 가로로 둔 태블릿(폭 1024px 이상)에서 사용할 수 있어요.
-              </p>
+              <p className="mt-2 rounded-xl bg-slate-50 px-3 py-2.5 text-[0.8438rem] leading-relaxed text-slate-600">PC+모바일은 두 화면을 한 화면에 줄여서 보여줘요. 두 손가락으로 벌리거나 ＋ 버튼으로 크게 볼 수 있어요.</p>
             </>
           )}
         </section>
@@ -131,8 +139,8 @@ export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolea
   );
 }
 
-/** 'DEMO' 배지 모양의 시연 도구 열기 버튼 */
-export function DemoToolsButton({ tone = 'brand', className, label = 'DEMO' }: { tone?: 'brand' | 'ax'; className?: string; label?: string }) {
+/** 시연 메뉴 열기 버튼 — 글자만 있는 배지로 오해하지 않게 버튼 모양(테두리·▼)으로 */
+export function DemoToolsButton({ tone = 'brand', className, short }: { tone?: 'brand' | 'ax'; className?: string; /** 좁은 상단 바: 360px 대에서는 '시연' 만 */ short?: boolean }) {
   const [open, setOpen] = useState(false);
   const { inFrame } = useDevice();
   if (inFrame) return null;
@@ -140,11 +148,20 @@ export function DemoToolsButton({ tone = 'brand', className, label = 'DEMO' }: {
     <>
       <button
         onClick={() => setOpen(true)}
-        aria-label="시연 도구 열기 (화면 전환·PC 보기·초기화)"
+        aria-label="시연 메뉴 열기 (화면 전환·PC 보기·초기화)"
+        aria-haspopup="dialog"
         data-testid="demo-tools-open"
-        className={cx('inline-flex h-11 items-center gap-1 rounded-lg bg-amber-50 px-2.5 text-[0.8125rem] font-bold tracking-wide text-amber-900 ring-1 ring-inset ring-amber-200 transition active:scale-95', className)}
+        className={cx('inline-flex h-11 shrink-0 items-center gap-0.5 whitespace-nowrap rounded-xl border border-amber-300 bg-amber-50 pl-2.5 pr-1.5 text-[0.8125rem] font-bold text-amber-900 shadow-sm transition hover:bg-amber-100 active:scale-95', className)}
       >
-        <Wrench className="h-3.5 w-3.5" /> {label}
+        {short ? (
+          <>
+            <span className="min-[400px]:hidden">시연</span>
+            <span className="hidden min-[400px]:inline">시연 메뉴</span>
+          </>
+        ) : (
+          '시연 메뉴'
+        )}
+        <ChevronDown className="h-4 w-4" aria-hidden />
       </button>
       <DemoToolsSheet open={open} onClose={() => setOpen(false)} tone={tone} />
     </>

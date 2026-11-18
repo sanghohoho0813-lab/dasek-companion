@@ -223,7 +223,7 @@ function Inner() {
             </li>
             <li className="flex gap-2.5">
               <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-600 text-[0.8125rem] font-bold text-white">2</span>
-              <span className="text-ink-2">계산할 때 마이 &gt; 회원코드를 보여주면 직원 확인 후 스탬프가 적립돼요.</span>
+              <span className="text-ink-2">계산할 때 내 정보 &gt; 회원번호를 보여주면 직원 확인 후 스탬프가 적립돼요.</span>
             </li>
             <li className="flex gap-2.5">
               <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-line text-[0.8125rem] font-bold text-ink-3">3</span>

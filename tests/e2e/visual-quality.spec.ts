@@ -73,9 +73,15 @@ test.describe('visual quality gate', () => {
         zoom: getComputedStyle(document.body).zoom || '1',
       }));
     }
-    expect(sizes.sm.root).toBe(15);
-    expect(sizes.md.root).toBe(16);
-    expect(sizes.lg.root).toBeCloseTo(17.6, 1);
+    // 운영 AX 는 고객 화면보다 한 단계 크게 (보통 17px)
+    expect(sizes.sm.root).toBe(16);
+    expect(sizes.md.root).toBe(17);
+    expect(sizes.lg.root).toBeCloseTo(18.7, 1);
+    // 고객 화면 '보통'은 그대로 16px
+    await prime(page, { font: 'md' });
+    await page.goto('/');
+    await settle(page);
+    expect(await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).fontSize))).toBe(16);
     for (const f of ['sm', 'md', 'lg'] as const) expect(['1', 'normal']).toContain(sizes[f].zoom);
     // 글자는 설정 비율만큼 커진다 (폭과 무관)
     expect(sizes.lg.title / sizes.md.title).toBeCloseTo(1.1, 1);

@@ -24,8 +24,12 @@ interface DeviceCtx {
   /** 실제 휴대폰·태블릿(＜1024px)에서 PC 화면(1280px)을 축소해 미리보기 */
   pcPreview: boolean;
   setPcPreview: (v: boolean) => void;
+  /** 휴대폰에서 보는 방식: 실제 모바일 / PC 축소 / PC+모바일 동시 (확대·축소해서 보기) */
+  phoneView: PhoneView;
+  setPhoneView: (v: PhoneView) => void;
 }
-const Ctx = createContext<DeviceCtx>({ mode: 'pc', setMode: () => {}, inFrame: false, desktop: false, compact: false, pcPreview: false, setPcPreview: () => {} });
+export type PhoneView = 'mobile' | 'pc' | 'dual';
+const Ctx = createContext<DeviceCtx>({ mode: 'pc', setMode: () => {}, inFrame: false, desktop: false, compact: false, pcPreview: false, setPcPreview: () => {}, phoneView: 'mobile', setPhoneView: () => {} });
 const MOBILE_KEY = 'dasek:mobile-pc-preview';
 export const useDevice = () => useContext(Ctx);
 
@@ -40,7 +44,7 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
   const [mode, setModeState] = useState<DeviceMode>('pc');
   const [inFrame, setInFrame] = useState(false);
   const [desktop, setDesktop] = useState(false);
-  const [pcPreview, setPcPreviewState] = useState(false);
+  const [phoneView, setPhoneViewState] = useState<PhoneView>('mobile');
 
   useEffect(() => {
     const framed = window.self !== window.top;
@@ -49,7 +53,9 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     try {
       const saved = window.localStorage.getItem(KEY) as DeviceMode | null;
       if (saved === 'pc' || saved === 'mobile' || saved === 'dual') setModeState(saved);
-      if (!framed && window.sessionStorage.getItem(MOBILE_KEY) === '1') setPcPreviewState(true);
+      const pv = window.sessionStorage.getItem(MOBILE_KEY);
+      if (!framed && (pv === 'pc' || pv === 'dual')) setPhoneViewState(pv);
+      else if (!framed && pv === '1') setPhoneViewState('pc');
     } catch {
       /* noop */
     }
@@ -69,23 +75,27 @@ export function DeviceProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const setPcPreview = useCallback((v: boolean) => {
-    setPcPreviewState(v);
+  const setPhoneView = useCallback((v: PhoneView) => {
+    setPhoneViewState(v);
     try {
       // 휴대폰 미리보기는 탭(세션) 동안만 유지 — 새로 열면 항상 실제 모바일 화면부터
-      if (v) window.sessionStorage.setItem(MOBILE_KEY, '1');
+      if (v !== 'mobile') window.sessionStorage.setItem(MOBILE_KEY, v);
       else window.sessionStorage.removeItem(MOBILE_KEY);
     } catch {
       /* noop */
     }
   }, []);
+  const setPcPreview = useCallback((v: boolean) => setPhoneView(v ? 'pc' : 'mobile'), [setPhoneView]);
 
   const effective: DeviceMode = inFrame || !desktop ? 'pc' : mode;
   useEffect(() => {
     document.documentElement.dataset.dual = effective === 'dual' ? 'true' : 'false';
   }, [effective]);
 
-  return <Ctx.Provider value={{ mode: effective, setMode, inFrame, desktop, compact: effective === 'dual', pcPreview: pcPreview && !desktop && !inFrame, setPcPreview }}>{children}</Ctx.Provider>;
+  const pv: PhoneView = desktop || inFrame ? 'mobile' : phoneView;
+  return (
+    <Ctx.Provider value={{ mode: effective, setMode, inFrame, desktop, compact: effective === 'dual', pcPreview: pv === 'pc', setPcPreview, phoneView: pv, setPhoneView }}>{children}</Ctx.Provider>
+  );
 }
 
 /** iframe 내부: 자신의 Route를 부모에 알리고, 부모의 이동 지시를 따른다 */
@@ -167,8 +177,9 @@ function useSyncedFrame() {
     const on = (e: MessageEvent) => {
       if (e.origin !== window.location.origin || e.source !== ref.current?.contentWindow) return;
       if (e.data?.type !== MSG_ROUTE || typeof e.data.path !== 'string') return;
+      if (e.data.path === currentPath()) return;
       lastFromFrame.current = e.data.path;
-      if (e.data.path !== currentPath()) router.push(e.data.path);
+      router.push(e.data.path);
     };
     window.addEventListener('message', on);
     return () => window.removeEventListener('message', on);
@@ -230,10 +241,98 @@ function PcPreview({ label }: { label: string }) {
   );
 }
 
+const PHONE_W = 390;
+const PHONE_H = 844;
+
+/**
+ * 휴대폰에서 PC+모바일 동시 보기 — 같은 앱을 PC(1280px)·모바일(390px) 두 iframe 으로 띄우고 화면에 맞게 축소.
+ * 세로: 위 PC · 아래 모바일 / 가로: 왼쪽 PC · 오른쪽 모바일. 두 손가락 확대 또는 [＋] 로 키워서 보고, 끌어서 이동.
+ */
+function PhoneDual({ label }: { label: string }) {
+  const { setPhoneView } = useDevice();
+  const pc = useSyncedFrame();
+  const mo = useSyncedFrame();
+  const [box, setBox] = useState({ w: 390, h: 740 });
+  const [zoom, setZoom] = useState(1);
+  useEffect(() => {
+    const on = () => setBox({ w: window.innerWidth, h: window.innerHeight - 52 });
+    on();
+    window.addEventListener('resize', on);
+    return () => window.removeEventListener('resize', on);
+  }, []);
+  const gap = 8;
+  const portrait = box.h >= box.w;
+  // 기본(100%) 배치: 두 화면이 한 화면에 모두 들어오게
+  let pcW: number, pcH: number, moS: number;
+  if (portrait) {
+    pcW = box.w - gap * 2;
+    pcH = Math.round((box.h - gap * 3) * 0.46);
+    moS = Math.min((box.h - gap * 3 - pcH - 22) / PHONE_H, (box.w - gap * 2) / PHONE_W);
+  } else {
+    moS = (box.h - gap * 2 - 22) / PHONE_H;
+    pcW = box.w - gap * 3 - PHONE_W * moS;
+    pcH = box.h - gap * 2 - 22;
+  }
+  const pcS = (pcW / PC_WIDTH) * zoom;
+  const ms = moS * zoom;
+  const pcBox = { w: pcW * zoom, h: pcH * zoom };
+  const moBox = { w: PHONE_W * ms, h: PHONE_H * ms };
+  const pane = (title: string, w: number, h: number, node: React.ReactNode) => (
+    <div className="shrink-0">
+      <p className="mb-1 h-[18px] text-[0.75rem] font-bold text-slate-600">{title}</p>
+      <div className="relative overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-slate-300" style={{ width: w, height: h }}>
+        {node}
+      </div>
+    </div>
+  );
+  return (
+    <div className="fixed inset-0 z-[60] flex flex-col bg-[#E9EEF2]" data-testid="phone-dual">
+      <div className="flex h-[52px] shrink-0 items-center justify-between gap-1.5 border-b border-slate-200 bg-white px-2">
+        <p className="min-w-0 truncate pl-1 text-[0.8125rem] font-semibold text-slate-700">
+          <Columns2 className="mr-1 inline h-4 w-4 align-[-3px]" />
+          PC+모바일 <span className="font-normal text-slate-500">· {label}</span>
+        </p>
+        <div className="flex shrink-0 items-center gap-1">
+          <button onClick={() => setZoom((z) => Math.max(1, +(z - 0.5).toFixed(1)))} disabled={zoom <= 1} aria-label="축소" className="grid h-11 w-11 place-items-center rounded-lg text-[1.25rem] font-bold text-slate-700 ring-1 ring-slate-200 disabled:opacity-40">
+            −
+          </button>
+          <span className="w-11 text-center text-[0.8125rem] font-bold tabular-nums text-slate-700" data-testid="phone-dual-zoom">
+            {Math.round(zoom * 100)}%
+          </span>
+          <button onClick={() => setZoom((z) => Math.min(3, z + 0.5))} disabled={zoom >= 3} aria-label="확대" className="grid h-11 w-11 place-items-center rounded-lg text-[1.25rem] font-bold text-slate-700 ring-1 ring-slate-200 disabled:opacity-40">
+            ＋
+          </button>
+          <button onClick={() => setPhoneView('mobile')} data-testid="phone-dual-close" className="ml-1 inline-flex h-11 items-center gap-1 rounded-lg bg-slate-900 px-2.5 text-[0.8125rem] font-bold text-white">
+            <Smartphone className="h-4 w-4" /> 닫기
+          </button>
+        </div>
+      </div>
+      <div className="min-h-0 flex-1 overflow-auto overscroll-contain" data-testid="phone-dual-canvas">
+        <div className={cx('flex w-max p-2', portrait ? 'flex-col gap-2' : 'flex-row items-start gap-2')}>
+          {pane(
+            'PC 화면 (1280px)',
+            pcBox.w,
+            pcBox.h,
+            <iframe ref={pc.ref} src={pc.src} title={`${label} — PC ${PC_WIDTH}px 화면`} data-testid="phone-dual-pc" className="absolute left-0 top-0 origin-top-left border-0 bg-white" style={{ width: PC_WIDTH, height: pcBox.h / pcS, transform: `scale(${pcS})` }} />,
+          )}
+          {pane(
+            '모바일 화면 (390px)',
+            moBox.w,
+            moBox.h,
+            <iframe ref={mo.ref} src={mo.src} title={`${label} — 모바일 390px 화면`} data-testid="phone-dual-mobile" className="absolute left-0 top-0 origin-top-left border-0 bg-white" style={{ width: PHONE_W, height: PHONE_H, transform: `scale(${ms})` }} />,
+          )}
+        </div>
+        <p className="px-3 pb-4 text-[0.8125rem] leading-relaxed text-slate-600">두 손가락으로 벌리거나 ＋ 를 눌러 크게 보고, 끌어서 옮겨 보세요. 한쪽에서 화면을 옮기면 다른 쪽도 같은 화면으로 따라가요.</p>
+      </div>
+    </div>
+  );
+}
+
 /** 앱 전체를 감싸는 Stage: PC / Mobile 단독 / PC+Mobile 병렬 / (휴대폰) PC 미리보기 */
 export function DeviceStage({ children, label }: { children: React.ReactNode; label: string }) {
-  const { mode, pcPreview } = useDevice();
-  if (pcPreview) return <PcPreview label={label} />;
+  const { mode, phoneView } = useDevice();
+  if (phoneView === 'pc') return <PcPreview label={label} />;
+  if (phoneView === 'dual') return <PhoneDual label={label} />;
   if (mode === 'pc') return <>{children}</>;
   if (mode === 'mobile')
     return (

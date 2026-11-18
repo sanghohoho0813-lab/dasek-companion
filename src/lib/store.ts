@@ -7,7 +7,7 @@
 import { useSyncExternalStore } from 'react';
 import type { Ctx } from './domain';
 import { getProfile } from './rules';
-import { createSeed, SCHEMA_VERSION } from './seed';
+import { createSeed, LEGACY_CUSTOMER_NAMES, SCHEMA_VERSION } from './seed';
 import type { AppState } from './types';
 import { nowIso } from './util';
 
@@ -82,6 +82,14 @@ export function migrate(prev: AppState): AppState | null {
       cats: [...realAdd, ...kept],
       catPhotos: [...seed.catPhotos.filter((p) => realIds.has(p.catId) && p.id !== 'pho_pending_1'), ...s.catPhotos.filter((p) => !drop.has(p.catId) && p.id !== 'pho_pending_1'), ...(pending ? [pending.status === 'PENDING_REVIEW' ? seed.catPhotos.find((p) => p.id === 'pho_pending_1')! : pending] : [])],
       tasks: s.tasks.map((t) => (t.id === 'tsk_photo_seed' && t.title === '보리 사진 공개 승인' ? { ...t, title: '망고 사진 공개 승인' } : t)),
+    } as AppState;
+  }
+  if (s.schemaVersion === 7) {
+    // v8: DEMO 회원 이름에 성을 붙인다 (가상 인물). 운영자가 고친 이름·새로 가입한 회원은 그대로
+    s = {
+      ...s,
+      schemaVersion: 8,
+      profiles: s.profiles.map((p) => (p.role === 'customer' && LEGACY_CUSTOMER_NAMES[p.name] && p.isDemo ? { ...p, name: LEGACY_CUSTOMER_NAMES[p.name] } : p)),
     } as AppState;
   }
   return s.schemaVersion === SCHEMA_VERSION ? s : null;

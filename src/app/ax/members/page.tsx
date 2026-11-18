@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { PageIntro, Panel, Tag, useOperator } from '@/components/ax/Shell';
 import { Chip, PageSkeleton } from '@/components/ui';
+import { memberNo } from '@/lib/labels';
 import { couponsFor, customers, hasConsent, lastVerifiedAt, stampCount, verifiedUses } from '@/lib/rules';
 import { fmtDate, relTime } from '@/lib/util';
 
@@ -42,12 +43,12 @@ export default function MembersPage() {
   if (!s) return <PageSkeleton />;
   return (
     <div>
-      <PageIntro title="회원 관리" body="이름·회원코드로 찾고, 눌러서 이용 내역·쿠폰·동의 상태를 확인해요." more="전화번호 원본은 저장하지 않아요. 책임자만 뒤 4자리로 찾을 수 있어요." />
+      <PageIntro title="회원 관리" body="이름·회원번호로 찾고, 눌러서 이용 내역·쿠폰·동의 상태를 확인해요." more="전화번호 원본은 저장하지 않아요. 책임자만 뒤 4자리로 찾을 수 있어요." />
       <Panel>
         <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
           <label className="flex h-11 min-w-0 flex-1 items-center gap-2 rounded-lg border border-axline bg-white px-3 focus-within:border-ax-primary focus-within:ring-2 focus-within:ring-ax-primary/20 xl:min-w-[18rem] lg:h-10">
             <Search className="h-4 w-4 text-slate-500" />
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={can('member.viewContact') ? '이름, 회원코드, 전화 뒤 4자리' : '이름, 회원코드'} className="h-11 w-full bg-transparent text-[0.9375rem] outline-none placeholder:text-slate-500" aria-label="회원 검색" data-testid="member-search" ref={searchRef} enterKeyHint="search" />
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={can('member.viewContact') ? '이름, 회원번호, 전화 뒤 4자리' : '이름, 회원번호'} className="h-11 w-full bg-transparent text-[0.9375rem] outline-none placeholder:text-slate-500" aria-label="회원 검색" data-testid="member-search" ref={searchRef} enterKeyHint="search" />
           </label>
           <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-0.5 no-scrollbar">
             {(
@@ -75,7 +76,7 @@ export default function MembersPage() {
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-baseline gap-x-2">
                     <span className="text-[1.0625rem] font-bold text-slate-900">{r.p.name}</span>
-                    <span className="text-[0.875rem] font-semibold text-slate-500">{r.p.memberCode}</span>
+                    <span className="text-[0.875rem] font-semibold text-slate-500">회원번호 {memberNo(r.p.memberCode)}</span>
                   </span>
                   <span className="mt-0.5 block text-[0.9375rem] text-slate-700">
                     {r.last ? `최근 이용 ${relTime(r.last)}` : '아직 이용 없음'} · 총 {r.uses}회
@@ -116,7 +117,7 @@ export default function MembersPage() {
                       {r.p.name}
                     </Link>
                     <span className="ml-2 text-[0.8125rem] text-slate-500">
-                      {r.p.memberCode}
+                      회원번호 {memberNo(r.p.memberCode)}
                       {can('member.viewContact') && r.p.phoneLast4 ? ` · ****${r.p.phoneLast4}` : ''}
                     </span>
                   </td>

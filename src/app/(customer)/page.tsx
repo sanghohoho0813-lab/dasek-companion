@@ -169,7 +169,7 @@ export default function HomePage() {
 
       {/* ── 5. 회원 혜택 (한 장으로) ───────────── */}
       <section className="mx-auto mt-8 max-w-6xl px-4 md:mt-12 md:px-5" aria-labelledby="sec-mem">
-        <SectionHeader id="sec-mem" title={me ? `${firstName}님의 혜택` : '가입하면 받는 혜택'} href={me ? '/my' : '/membership'} linkLabel={me ? '마이' : '멤버십 안내'} />
+        <SectionHeader id="sec-mem" title={me ? `${firstName}님의 혜택` : '가입하면 받는 혜택'} href={me ? '/my' : '/membership'} linkLabel={me ? '내 정보' : '멤버십 안내'} />
         {me ? (
           <div className="grid grid-cols-3 gap-2 md:gap-3" data-testid="home-benefits">
             {[

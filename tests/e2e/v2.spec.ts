@@ -121,7 +121,8 @@ test('phone: demo tools switch surfaces and show scaled PC preview with route sy
   await page.setViewportSize(MOBILE);
   await page.goto('/');
   await page.getByTestId('demo-tools-open').first().click();
-  await expect(page.getByTestId('demo-tools')).toContainText('PC+Mobile 동시 보기는');
+  await expect(page.getByTestId('demo-phone-dual')).toBeVisible(); // 휴대폰에서도 PC+모바일 동시 보기 제공
+  await expect(page.getByTestId('demo-tools')).not.toContainText('태블릿');
   await page.getByTestId('demo-to-ax').click();
   await expect(page).toHaveURL(/\/ax$/);
   await expect(page.getByTestId('demo-tools')).toHaveCount(0);
@@ -143,5 +144,39 @@ test('phone: demo tools switch surfaces and show scaled PC preview with route sy
   expect(overflow).toBeLessThanOrEqual(0);
   await page.getByTestId('pc-preview-close').click();
   await expect(page.getByTestId('pc-preview')).toHaveCount(0);
+  await expect(page.getByRole('heading', { level: 1, name: '다색냥' })).toBeVisible();
+});
+
+test('phone: PC+모바일 동시 보기 — 두 화면이 같은 주소로 따라가고, 확대해서 볼 수 있다', async ({ page }) => {
+  await page.setViewportSize(MOBILE);
+  await page.goto('/');
+  await page.getByTestId('demo-tools-open').first().click();
+  await page.getByTestId('demo-phone-dual').click();
+  const dual = page.getByTestId('phone-dual');
+  await expect(dual).toBeVisible();
+  const pcEl = page.getByTestId('phone-dual-pc');
+  const moEl = page.getByTestId('phone-dual-mobile');
+  expect(await pcEl.evaluate((f: HTMLIFrameElement) => f.clientWidth)).toBe(1280);
+  expect(await moEl.evaluate((f: HTMLIFrameElement) => f.clientWidth)).toBe(390);
+  // 기본(100%)에서는 두 화면이 모두 화면 안에 들어온다
+  for (const el of [pcEl, moEl]) {
+    const b = (await el.locator('xpath=..').boundingBox())!;
+    expect(b.x).toBeGreaterThanOrEqual(0);
+    expect(b.x + b.width).toBeLessThanOrEqual(MOBILE.width + 1);
+    expect(b.y + b.height).toBeLessThanOrEqual(MOBILE.height + 1);
+  }
+  // PC 쪽에서 이동 → 부모 주소와 모바일 쪽이 함께 따라간다
+  const pc = page.frameLocator('[data-testid="phone-dual-pc"]');
+  const mo = page.frameLocator('[data-testid="phone-dual-mobile"]');
+  await pc.getByRole('link', { name: '다색냥', exact: true }).first().click();
+  await expect(page).toHaveURL(/\/dasek$/);
+  await expect(mo.getByRole('heading', { level: 1, name: '다색냥' })).toBeVisible();
+  // 확대
+  await page.getByRole('button', { name: '확대' }).click();
+  await expect(page.getByTestId('phone-dual-zoom')).toHaveText('150%');
+  expect(await page.getByTestId('phone-dual-canvas').evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)).toBeLessThanOrEqual(0);
+  await page.getByTestId('phone-dual-close').click();
+  await expect(dual).toHaveCount(0);
   await expect(page.getByRole('heading', { level: 1, name: '다색냥' })).toBeVisible();
 });

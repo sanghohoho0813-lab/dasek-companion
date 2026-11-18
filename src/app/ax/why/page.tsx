@@ -15,8 +15,8 @@ const TOC = [
   ['s3', '가장 큰 병목(가설)'],
   ['s4', '왜 지금인가'],
   ['s5', '업무 재설계'],
-  ['s6', '핵심 가치·Money KPI'],
-  ['s7', '고객 ↔ AX 순환'],
+  ['s6', '핵심 가치·돈이 되는 지표'],
+  ['s7', '고객 ↔ 운영 순환'],
   ['s8', '쌓이는 데이터'],
   ['s9', 'AI는 어디에만'],
   ['s10', '이번에 만들지 않은 것'],
@@ -48,7 +48,7 @@ export default function WhyPage() {
   const f = funnel(s);
   return (
     <div className="grid gap-5 xl:grid-cols-[220px_1fr]">
-      <nav aria-label="Why AX 목차" className="hidden xl:block">
+      <nav aria-label="서비스 소개 목차" className="hidden xl:block">
         <div className="sticky top-24 space-y-0.5">
           <p className="mb-2 px-2 text-[0.8125rem] font-bold uppercase tracking-[0.14em] text-slate-500">목차</p>
           {TOC.map(([id, l], i) => (
@@ -60,7 +60,7 @@ export default function WhyPage() {
       </nav>
       <div className="min-w-0 space-y-4">
         <div className="relative overflow-hidden rounded-2xl ring-1 ring-axline">
-          <AssetImage slot="ax_cover_main" fallback={{ kind: 'space', variant: 1 }} alt="다색컴패니언 Why AX 표지" className="aspect-[16/7] w-full md:aspect-[16/5]" sampleBadge badgePosition="tr" />
+          <AssetImage slot="ax_cover_main" fallback={{ kind: 'space', variant: 1 }} alt="다색컴패니언 서비스 소개 표지" className="aspect-[16/7] w-full md:aspect-[16/5]" sampleBadge badgePosition="tr" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/5 md:bg-gradient-to-r md:from-black/70" />
           <div data-on-media className="absolute inset-0 flex flex-col justify-end p-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,.3)] md:p-8">
             <StatusBadge status="DEMO" className="self-start" />
@@ -69,7 +69,7 @@ export default function WhyPage() {
               <br />
               다시 오게 만드는 매장으로
             </h2>
-            <p className="mt-1 text-[0.9375rem] font-medium text-white">다색컴패니언 Why AX · 기획 의도 (가설과 확인된 사실을 구분해 적었습니다)</p>
+            <p className="mt-1 text-[0.9375rem] font-medium text-white">다색컴패니언 서비스 소개(Why AX) · 기획 의도 (가설과 확인된 사실을 구분해 적었습니다)</p>
           </div>
         </div>
 
@@ -88,11 +88,11 @@ export default function WhyPage() {
           </div>
         </Sec>
 
-        <Sec id="s3" n={3} title="가장 큰 병목 (Primary Constraint · 가설)">
+        <Sec id="s3" n={3} title="가장 큰 병목 (가설)">
           <blockquote className="rounded-xl bg-ax-soft p-4 text-[0.9688rem] font-semibold text-slate-900">
-            매장에서 구매·방문한 고객이 [누구인지·언제 다시 올지] 알 수 없어, 한 번의 이용이 재방문·재구매로 연결되지 못하는 매출 누수(REVENUE LEAK)가 있다. 이번 프로젝트의 핵심은 확인된 이용을 회원에 연결하고, 다시 올 이유(혜택·고양이·저장 메뉴)를 운영자가 관리하게 만드는 것이다.
+            매장에서 구매·방문한 고객이 [누구인지·언제 다시 올지] 알 수 없어, 한 번의 이용이 재방문·재구매로 연결되지 못하는 새는 매출이 있다. 이번 프로젝트의 핵심은 확인된 이용을 회원에 연결하고, 다시 올 이유(혜택·고양이·저장 메뉴)를 운영자가 관리하게 만드는 것이다.
           </blockquote>
-          <p className="mt-2 text-[0.8438rem] text-slate-500">근거 데이터가 아직 없으므로 가설입니다. Week 0 Baseline에서 실제 재방문율을 측정해 검증합니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">근거 데이터가 아직 없으므로 가설입니다. 0주차 기준값 측정에서 실제 재방문율을 측정해 검증합니다.</p>
         </Sec>
 
         <Sec id="s4" n={4} title="왜 지금인가">
@@ -117,11 +117,11 @@ export default function WhyPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {[
-                  ['종이 스탬프·구두 혜택', '분실·중복·기록 없음', '제거 → 회원코드 + 직원 확인 버튼(표준화·디지털화)', '아니오'],
+                  ['종이 스탬프·구두 혜택', '분실·중복·기록 없음', '제거 → 회원번호 + 직원 확인 버튼(표준화·디지털화)', '아니오'],
                   ['단골 기억은 직원 머릿속', '사람마다 다름', '확인 이용 이력이 회원에 자동 축적', '아니오'],
-                  ['재방문 안내 없음', '이탈 고객 방치', '규칙 세그먼트 → 사람 승인 → 앱 알림', '아니오(RULE)'],
-                  ['추천은 입소문뿐', '성과 측정 불가', '추천 코드 → 첫 확인 이용 후 보상(멱등)', '아니오'],
-                  ['문안 작성', '시간 소요', '규칙 템플릿 → (선택) LLM 초안 + 승인', 'LLM 선택'],
+                  ['재방문 안내 없음', '이탈 고객 방치', '규칙으로 알림 대상 선정 → 사람 승인 → 앱 알림', '아니오(규칙)'],
+                  ['추천은 입소문뿐', '성과 측정 불가', '추천 코드 → 첫 확인 이용 후 보상(중복 지급 방지)', '아니오'],
+                  ['문안 작성', '시간 소요', '규칙 문안 → (선택) AI 문장 초안 + 승인', 'AI 문장 선택'],
                 ].map((r) => (
                   <tr key={r[0]}>
                     {r.map((c, i) => (
@@ -136,30 +136,30 @@ export default function WhyPage() {
           </div>
         </Sec>
 
-        <Sec id="s6" n={6} title="핵심 가치 3 · Money KPI 3">
+        <Sec id="s6" n={6} title="핵심 가치 3 · 돈이 되는 지표 3">
           <div className="grid gap-3 md:grid-cols-3">
             {[
-              ['COST', '확인·응대 시간 감소', '확인 요청 처리 시간', k.costMedianMinutes == null ? '—' : `${k.costMedianMinutes}분 (DEMO)`],
-              ['REVENUE', '재방문·재구매', '30일 확인 재이용률', k.revenueRepeatRate == null ? '—' : `${Math.round(k.revenueRepeatRate * 100)}% (DEMO)`],
-              ['SCALE', '같은 인력으로 더 많은 단골', '운영자 1인당 활성 고객', `${k.scaleActivePerOperator ?? '—'}명 (DEMO)`],
+              ['비용 절감', '확인·응대 시간 감소', '확인 요청 처리 시간', k.costMedianMinutes == null ? '—' : `${k.costMedianMinutes}분 (DEMO)`],
+              ['매출(재방문)', '재방문·재구매', '30일 확인 재이용률', k.revenueRepeatRate == null ? '—' : `${Math.round(k.revenueRepeatRate * 100)}% (DEMO)`],
+              ['확장', '같은 인력으로 더 많은 단골', '운영자 1인당 활성 고객', `${k.scaleActivePerOperator ?? '—'}명 (DEMO)`],
             ].map(([a, b, c, d]) => (
               <div key={a} className="rounded-xl bg-slate-50 p-4">
                 <p className="text-[0.8125rem] font-bold tracking-[0.14em] text-slate-500">{a}</p>
                 <p className="text-[1rem] font-extrabold text-slate-900">{b}</p>
                 <p className="mt-1 text-[0.8438rem] text-slate-600">{c}</p>
                 <p className="mt-1 text-[0.8438rem] font-semibold">{d}</p>
-                <Tag tone="amber">Baseline UNKNOWN</Tag>
+                <Tag tone="amber">기준값 측정 전</Tag>
               </div>
             ))}
           </div>
         </Sec>
 
-        <Sec id="s7" n={7} title="고객 ↔ AX 순환 (Closed Loop)">
+        <Sec id="s7" n={7} title="고객 ↔ 운영 순환">
           <div className="grid gap-3 md:grid-cols-3">
             {[
               ['A. 친구 추천', ['추천 코드 가입', '첫 이용 요청', '직원 확인', '추천인 보상 확정', '고객 마이에 반영']],
-              ['B. 저장 → 재구매', ['메뉴 저장', 'RULE 후보 생성', '책임자 승인·앱 알림', '확인 구매', '전환 Proof']],
-              ['C. 고양이 → 방문', ['고양이 프로필 탐색', '오늘 코드 체크인', '직원 확인', '스탬프 +1', '재방문 세그먼트']],
+              ['B. 저장 → 재구매', ['메뉴 저장', '규칙으로 후보 생성', '책임자 승인·앱 알림', '확인 구매', '재구매 전환 기록']],
+              ['C. 고양이 → 방문', ['고양이 프로필 탐색', '오늘 코드 체크인', '직원 확인', '스탬프 +1', '재방문 알림 대상']],
             ].map(([t, steps]) => (
               <div key={t as string} className="rounded-xl bg-slate-50 p-4">
                 <p className="text-[0.9375rem] font-extrabold text-slate-900">{t as string}</p>
@@ -177,16 +177,16 @@ export default function WhyPage() {
           <p className="mt-3 text-[0.8438rem] text-slate-500">
             현재 DEMO 기준: 가입 {f.signedUp} → 첫 확인 이용 {f.firstUse} → 재이용 {f.repeat}. 모든 단계는 실제 화면에서 동작합니다.{' '}
             <Link href="/ax/queue" className="font-semibold text-ax-primary hover:underline">
-              확인 큐 열기 <ArrowRight className="inline h-3 w-3" />
+              확인 요청 열기 <ArrowRight className="inline h-3 w-3" />
             </Link>
           </p>
         </Sec>
 
-        <Sec id="s8" n={8} title="쌓이는 데이터 (단일 기준 · Data Moat 정직 평가)">
-          <p>회원·동의·메뉴·고양이·확인 방문·확인 구매·쿠폰·추천·보상 원장·캠페인·Proof를 한 곳(SSOT)에 저장합니다.</p>
+        <Sec id="s8" n={8} title="쌓이는 데이터 (하나의 기준 데이터 · 정직한 자체 평가)">
+          <p>회원·동의·메뉴·고양이·확인 방문·확인 구매·쿠폰·추천·보상 원장·고객 알림·성과 기록을 한 곳(하나의 기준 데이터)에 저장합니다.</p>
           <p className="mt-2 font-semibold text-slate-900">12개월 뒤 가능해지는 것: 메뉴별 재구매 주기, 브랜드 교차 이용, 정기픽업 수요 규모, 혜택별 실제 공헌이익.</p>
           <p className="mt-2">
-            Data Moat 자체 평가: <b>5 / 12 (중간)</b> — 반복성·Outcome 연결은 높지만, 아직 데이터 양이 없고 독점성은 매장 규모에 묶여 있습니다. 기술스택(Next.js·Supabase)은 해자가 아닙니다.
+            쌓이는 데이터의 경쟁력 자체 평가: <b>5 / 12 (중간)</b> — 반복성·성과 연결은 높지만, 아직 데이터 양이 없고 독점성은 매장 규모에 묶여 있습니다. 사용한 개발 기술 자체는 경쟁력이 아닙니다.
           </p>
         </Sec>
 
@@ -204,17 +204,17 @@ export default function WhyPage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {[
-                  ['메뉴 추천(왜? 포함)', 'RULE', 'LOW', '불필요', 'LIVE'],
-                  ['재구매 후보·세그먼트', 'RULE', 'MID', '책임자 승인(L3)', 'LIVE'],
-                  ['스탬프·추천 보상', 'RULE', 'MID', '직원 확인 후 자동', 'LIVE'],
-                  ['KPI·전환 집계', 'ANALYTICS', 'LOW', '-', 'LIVE'],
-                  ['캠페인 문안 초안', 'LLM(선택)', 'MID', '책임자 승인', 'READY'],
-                  ['영양·알레르기·건강', 'HUMAN', 'HIGH', '검증 자료 전 표시 안 함', 'NEXT'],
+                  ['메뉴 추천(왜? 포함)', '규칙', '낮음', '불필요', '운영 중'],
+                  ['재구매 후보·알림 대상', '규칙', '중간', '책임자 승인', '운영 중'],
+                  ['스탬프·추천 보상', '규칙', '중간', '직원 확인 후 자동', '운영 중'],
+                  ['핵심 지표·전환 집계', '집계', '낮음', '-', '운영 중'],
+                  ['고객 알림 문안 초안', 'AI 문장(선택)', '중간', '책임자 승인', '준비됨'],
+                  ['영양·알레르기·건강', '사람 판단', '높음', '검증 자료 전 표시 안 함', '개발 예정'],
                 ].map((r) => (
                   <tr key={r[0]}>
                     {r.map((c, i) => (
                       <td key={i} className="py-2">
-                        {i === 4 ? <Tag tone={c === 'LIVE' ? 'green' : c === 'READY' ? 'slate' : 'violet'}>{c}</Tag> : c}
+                        {i === 4 ? <Tag tone={c === '운영 중' ? 'green' : c === '준비됨' ? 'slate' : 'violet'}>{c}</Tag> : c}
                       </td>
                     ))}
                   </tr>
@@ -226,17 +226,17 @@ export default function WhyPage() {
 
         <Sec id="s10" n={10} title="이번에 일부러 만들지 않은 것">
           <ul className="grid gap-1.5 md:grid-cols-2">
-            {['실결제·구독 결제', 'POS·배달 플랫폼 자동 수집', '카카오·푸시 실발송', '자체 ML 학습', '영양·칼로리 자동 계산', '네이티브 앱', '다점포 SaaS·정산', '반려묘 건강 기록'].map((x) => (
+            {['실결제·구독 결제', '계산대(POS)·배달 플랫폼 자동 수집', '카카오·푸시 실발송', '자체 기계학습 모델', '영양·칼로리 자동 계산', '스토어 설치형 앱', '여러 매장용 구독형 서비스(SaaS)·정산', '반려묘 건강 기록'].map((x) => (
               <li key={x} className="rounded-lg bg-slate-50 px-3 py-2 text-[0.875rem]">
                 ✕ {x}
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-[0.8438rem] text-slate-500">이유와 재검토 조건은 DECISIONS.md에 기록했습니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">이유와 재검토 조건은 별도 결정 기록 문서에 남겼습니다.</p>
         </Sec>
 
         <Sec id="s11" n={11} title="12주 실증 계획">
-          Week 0 실제 Baseline 측정 → Week 1~4 직원 확인 습관화·첫 Proof → Week 5~8 재방문·재구매 캠페인 성과 → Week 9~12 Evidence Pack 정리.{' '}
+          0주차 실제 기준값 측정 → 1~4주차 직원 확인 습관화·첫 성과 기록 → 5~8주차 재방문·재구매 알림 성과 → 9~12주차 실증 자료 묶음 정리.{' '}
           <Link href="/ax/evidence" className="font-semibold text-ax-primary hover:underline">
             실증 화면 보기
           </Link>
@@ -269,7 +269,7 @@ export default function WhyPage() {
             {ROADMAP.map((r) => (
               <div key={r.key} className="rounded-xl bg-slate-50 p-3">
                 <p className="text-[0.9375rem] font-bold text-slate-900">
-                  {r.emoji} {r.title} <Tag tone="violet">NEXT</Tag>
+                  {r.emoji} {r.title} <Tag tone="violet">개발 예정</Tag>
                 </p>
                 <p className="mt-0.5 text-[0.8125rem] text-slate-500">{r.oneLine}</p>
                 <p className="mt-1 text-[0.8125rem] text-slate-500">관심 {s.roadmapInterest.filter((x) => x.itemKey === r.key).length}명</p>
@@ -292,22 +292,22 @@ export default function WhyPage() {
             </div>
             <div className="rounded-xl bg-slate-50 p-4">
               <p className="font-bold text-slate-900">투자·성장 관점</p>
-              <p className="mt-1">반복 수요 데이터 → 정기픽업 반복매출 → Unit Economics 확인 → 다른 매장 확장. 아직 숫자가 없으므로 주장하지 않습니다.</p>
+              <p className="mt-1">반복 수요 데이터 → 정기픽업 반복매출 → 단위 수익성(고객 1명당 수익·비용) 확인 → 다른 매장 확장. 아직 숫자가 없으므로 주장하지 않습니다.</p>
             </div>
           </div>
-          <p className="mt-2 text-[0.8438rem] text-slate-500">투자·LIPS·정책금융은 장기 경로이며, 선정·승인을 보장하지 않습니다.</p>
+          <p className="mt-2 text-[0.8438rem] text-slate-500">투자·민간투자 연계 지원(LIPS)·정책금융은 장기 경로이며, 선정·승인을 보장하지 않습니다.</p>
         </Sec>
 
-        <Sec id="s15" n={15} title="스스로 던지는 질문 (Devil Questions)">
+        <Sec id="s15" n={15} title="스스로 던지는 질문">
           <ul className="space-y-1.5">
             <li>
               <b>정책자금이 없어도 만들 이유가 있나?</b> 예 — 종이 스탬프 대체와 재방문 관리만으로도 매장 운영 가치가 있습니다(단, 실제 효과는 미검증).
             </li>
             <li>
-              <b>누가 반복적으로 쓰나?</b> 직원(확인 버튼)과 회원(체크인·쿠폰). 실제 사용률은 Week 1~4에 측정합니다.
+              <b>누가 반복적으로 쓰나?</b> 직원(확인 버튼)과 회원(체크인·쿠폰). 실제 사용률은 1~4주차에 측정합니다.
             </li>
             <li>
-              <b>변화가 AX 때문이라는 근거는?</b> 승인된 캠페인 → 해당 고객의 확인 이용을 Proof로 연결해 추적합니다.
+              <b>변화가 이 서비스 때문이라는 근거는?</b> 승인된 고객 알림 → 해당 고객의 확인 이용을 성과 기록으로 연결해 추적합니다.
             </li>
             <li>
               <b>12개월 뒤 남는 것은?</b> 회원별 확인 이용 이력과 메뉴별 재구매 주기 데이터, 표준 운영 절차.
@@ -320,7 +320,7 @@ export default function WhyPage() {
 
         <Sec id="s16" n={16} title="확인이 필요한 것">
           <ul className="grid gap-1.5 md:grid-cols-2">
-            {['두 사업의 사업자번호·매출 귀속·데이터 처리 주체', '리얼식단 가맹 여부·상표·메뉴 이미지 사용 범위', '전체 영업시간·휴무일·이용요금', '실제 고양이 수·이름·사진(권리 확인)', '메뉴 가격·원재료·알레르기 정보', '혜택 원가와 확정 혜택 내용', '배달·온라인 주문 채널', 'AX Owner 지정'].map((x) => (
+            {['두 사업의 사업자번호·매출 귀속·데이터 처리 주체', '리얼식단 가맹 여부·상표·메뉴 이미지 사용 범위', '전체 영업시간·휴무일·이용요금', '실제 고양이 수·이름·사진(권리 확인)', '메뉴 가격·원재료·알레르기 정보', '혜택 원가와 확정 혜택 내용', '배달·온라인 주문 채널', '운영 책임자 지정'].map((x) => (
               <li key={x} className="rounded-lg bg-amber-50 px-3 py-2 text-[0.875rem] text-amber-900">
                 ? {x}
               </li>

@@ -20,7 +20,7 @@ import type { AppState } from '@/lib/types';
 import { cx, dailyCheckinCode, nowIso } from '@/lib/util';
 
 const DEMO_NAME = '시연 고객';
-const REFERRER = '하늘';
+const REFERRER = '정하늘';
 const STORE = 'store_dasek';
 const MENU = 'm_chicken_salad';
 const CAMPAIGN = '시연 관심 안내';
@@ -54,7 +54,7 @@ const A_SIGNUP: Action = {
   run: once(
     (s) => !!demoUser(s),
     (d) => {
-      const ref = d.profiles.find((p) => p.name.startsWith(REFERRER) && p.role === 'customer')?.referralCode ?? undefined;
+      const ref = d.profiles.find((p) => p.name.includes(REFERRER) && p.role === 'customer')?.referralCode ?? undefined;
       D.signup(d, ctxOf(null, 'customer'), { name: DEMO_NAME, phone: '', consents: { terms: true, privacy: true, age14: true, marketing_inapp: true, marketing_push: false, marketing_kakao: false }, referralCode: ref, preferredBrands: ['dasek', 'realsicdan'] });
       return '가입 완료 — 가입 쿠폰 발급, 추천 보상은 대기 중';
     },
@@ -173,7 +173,7 @@ const STEPS: Step[] = [
     title: '친구 추천으로 가입',
     say: `기존 회원(${REFERRER})의 추천 코드로 가입하면 바로 가입 쿠폰이 들어오고, 운영 AX 회원 목록에 새 회원이 생깁니다.`,
     point: '추천 보상은 실제 방문 확인 뒤에만 → 허수 가입 방지',
-    customer: (s) => (demoUser(s) ? '/my/coupons' : `/signup?ref=${s.profiles.find((p) => p.name.startsWith(REFERRER))?.referralCode ?? ''}`),
+    customer: (s) => (demoUser(s) ? '/my/coupons' : `/signup?ref=${s.profiles.find((p) => p.name.includes(REFERRER))?.referralCode ?? ''}`),
     ax: () => '/ax/members',
     actions: [A_SIGNUP],
   },

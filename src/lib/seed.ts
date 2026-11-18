@@ -8,7 +8,15 @@ import * as D from './domain';
 import type { AppState, ArtSpec, CafeCat, CatPhoto, FactField, LoyaltyRule, MenuItem, Store } from './types';
 import { addDays, DAY, dailyCheckinCode, dayKey, mulberry32 } from './util';
 
-export const SCHEMA_VERSION = 7;
+export const SCHEMA_VERSION = 8;
+
+/** DEMO 회원 이름 (가상 인물 — 실제 고객 정보 아님). 성은 무작위로 붙였고, 대표님(김서윤)과 헷갈리지 않게 '이서윤'. */
+export const CUSTOMER_NAMES = ['정하늘', '이서윤', '박도현', '최지우', '강민준', '윤하린', '장예준', '임수아', '한시우', '오유나', '신건우', '서채원', '권은호', '황다인'];
+/** v7 까지의 이름(성 없음) → v8 이름. 운영자가 이름을 고치지 않았을 때만 바꾼다 */
+export const LEGACY_CUSTOMER_NAMES: Record<string, string> = Object.fromEntries(
+  ['하늘 (데모 고객)', '서윤', '도현', '지우', '민준', '하린', '예준', '수아', '시우', '유나', '건우', '채원', '은호', '다인'].map((n, i) => [n, i === 0 ? '정하늘 (데모 고객)' : CUSTOMER_NAMES[i]]),
+);
+export const DEMO_CUSTOMER_NAME = '정하늘 (데모 고객)';
 const NAVER_SRC = '사용자 제공 네이버 플레이스 공개정보 (2026-11-17)';
 
 const fact = <T = string>(value: NoInfer<T> | null, evidence: FactField['evidence'], source: string, checkedAt: string | null = null): FactField<T> => ({ value, evidence, source, checkedAt });
@@ -269,7 +277,7 @@ export function createSeed(now: Date = new Date()): AppState {
   const staff = (t: string): D.Ctx => ({ now: t, actorId: 'op_staff', actorRole: 'staff', isDemo: true });
   const mgr = (t: string): D.Ctx => ({ now: t, actorId: 'op_manager', actorRole: 'manager', isDemo: true });
 
-  const names = ['하늘', '서윤', '도현', '지우', '민준', '하린', '예준', '수아', '시우', '유나', '건우', '채원', '은호', '다인'];
+  const names = CUSTOMER_NAMES;
   const ids: string[] = [];
   names.forEach((n, i) => {
     const joined = i === 0 ? 40 : 6 + Math.floor(rnd() * 32);
@@ -286,7 +294,7 @@ export function createSeed(now: Date = new Date()): AppState {
     ids.push(r.userId);
   });
   // 데모 계정 표시용 이름 정리
-  s.profiles.find((p) => p.id === ids[0])!.name = '하늘 (데모 고객)';
+  s.profiles.find((p) => p.id === ids[0])!.name = DEMO_CUSTOMER_NAME;
 
   const rsItems = s.menuItems.filter((m) => m.brand === 'realsicdan').map((m) => m.id);
   const dnItems = s.menuItems.filter((m) => m.brand === 'dasek').map((m) => m.id);
@@ -376,4 +384,4 @@ export function createSeed(now: Date = new Date()): AppState {
   return s;
 }
 
-export const DEMO_CUSTOMER_NAME = '하늘 (데모 고객)';
+

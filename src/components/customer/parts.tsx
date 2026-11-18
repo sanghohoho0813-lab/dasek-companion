@@ -488,7 +488,7 @@ export function PurchaseReportSheet({ open, onClose, s, me, preset }: { open: bo
       </label>
       <p className="mt-3 flex gap-1.5 text-[0.8125rem] text-ink-3">
         <Info className="mt-0.5 h-4 w-4 shrink-0" />
-        매장에서 회원코드를 보여주면 직원이 바로 확인할 수도 있어요.
+        매장에서 회원번호를 보여주면 직원이 바로 확인할 수도 있어요.
       </p>
     </Sheet>
   );
