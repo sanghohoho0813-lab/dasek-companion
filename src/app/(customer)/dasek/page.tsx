@@ -87,11 +87,22 @@ export default function DasekPage() {
       <section id="cats" className="mt-8 scroll-mt-20 bg-[#F4F8F9] py-8 md:py-10" aria-labelledby="sec-friends">
         <div className="mx-auto max-w-6xl px-4 md:px-5">
           <SectionHeader id="sec-friends" eyebrow={`다색냥 친구들 ${cats.length}마리`} title="우리 고양이들을 만나보세요" sub="사진을 누르면 성격·좋아하는 것을 볼 수 있어요" />
-          <Rail label="고양이 프로필 카드">
-            {(allCats ? cats : cats.slice(0, 4)).map((c) => (
-              <CatCoverCard key={c.id} cat={c} photo={covers.get(c.id)?.[0]} size="lg" />
-            ))}
-          </Rail>
+          {allCats ? (
+            /* 전체 보기: 25마리를 한눈에 — 격자 */
+            <ul className="grid grid-cols-2 gap-3 min-[480px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" data-testid="cats-grid" aria-label={`고양이 ${cats.length}마리 전체`}>
+              {cats.map((c) => (
+                <li key={c.id}>
+                  <CatCoverCard cat={c} photo={covers.get(c.id)?.[0]} fluid />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <Rail label="고양이 프로필 카드">
+              {cats.slice(0, 4).map((c) => (
+                <CatCoverCard key={c.id} cat={c} photo={covers.get(c.id)?.[0]} size="lg" />
+              ))}
+            </Rail>
+          )}
           {cats.length > 4 && (
             <button type="button" aria-expanded={allCats} onClick={() => setAllCats((v) => !v)} data-testid="cats-show-all" className="mt-3 flex h-11 w-full items-center justify-center rounded-2xl bg-white text-[0.9375rem] font-bold text-ink ring-1 ring-inset ring-cardline hover:bg-canvas md:w-auto md:px-6">
               {allCats ? '대표 고양이만 보기' : `전체 ${cats.length}마리 보기`}

@@ -3,6 +3,7 @@ import { Check, X } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { BackHeader, useCustomer } from '@/components/customer/Shell';
+import { ExpansionOverview } from '@/components/shell/Expansion';
 import { Button, PageSkeleton, Sheet, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { hasConsent } from '@/lib/rules';
@@ -36,6 +37,13 @@ function Inner() {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-semibold text-sage-600 ring-1 ring-line">● 지금 이용 가능: 메뉴·고양이 탐색, 회원·스탬프·쿠폰·친구 추천, 체크인</span>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 font-semibold text-violet-700 ring-1 ring-line">○ 개발 예정: 아래 서비스</span>
         </div>
+        <section id="expansion" className="mt-6 scroll-mt-20" aria-labelledby="rg-expansion">
+          <h2 id="rg-expansion" className="text-[1.1875rem] font-extrabold text-ink">확장 계획 한눈에 보기</h2>
+          <p className="mt-0.5 text-[0.875rem] text-ink-3">다색컴패니언이 앞으로 연결하려는 서비스예요. 아래 항목별로 관심을 남길 수 있어요.</p>
+          <div className="mt-3">
+            <ExpansionOverview dense />
+          </div>
+        </section>
         {ROADMAP_GROUPS.map((g) => (
           <section key={g.key} id={g.key} className="mt-8 scroll-mt-20" aria-labelledby={`rg-${g.key}`}>
             <h2 id={`rg-${g.key}`} className="flex items-center gap-2 text-[1.1875rem] font-extrabold text-ink">

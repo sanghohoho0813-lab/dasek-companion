@@ -26,3 +26,19 @@ describe('저장 데이터 이전 v4 → v5 (시연 기록을 지우지 않는�
     expect(migrate({ ...v4, schemaVersion: 2 } as AppState)).toBeNull();
   });
 });
+
+describe('저장 데이터 이전 v5 → v6 (고양이 25마리)', () => {
+  it('없는 고양이만 추가하고, 운영자가 고친 기존 고양이·사진은 그대로', () => {
+    const v5 = JSON.parse(JSON.stringify(createSeed())) as AppState;
+    v5.schemaVersion = 5;
+    v5.cats = v5.cats.slice(0, 6).map((c) => (c.id === 'cat_1' ? { ...c, name: '실제이름' } : c));
+    v5.catPhotos = v5.catPhotos.filter((p) => ['cat_1', 'cat_2', 'cat_3', 'cat_4', 'cat_5', 'cat_6'].includes(p.catId));
+    const out = migrate(v5)!;
+    expect(out.schemaVersion).toBe(SCHEMA_VERSION);
+    expect(out.cats).toHaveLength(25);
+    expect(out.cats.find((c) => c.id === 'cat_1')!.name).toBe('실제이름');
+    expect(new Set(out.cats.map((c) => c.id)).size).toBe(25);
+    expect(out.catPhotos.filter((p) => p.catId === 'cat_25')).toHaveLength(1);
+    expect(out.cats.every((c) => c.isPlaceholder)).toBe(true);
+  });
+});

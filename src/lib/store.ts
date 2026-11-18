@@ -38,17 +38,28 @@ function load(): AppState {
 
 /** 이전 버전 저장 데이터를 지우지 않고 올린다 (시연 기록 보존). 모르는 버전이면 null → 새 시드 */
 export function migrate(prev: AppState): AppState | null {
-  if (prev.schemaVersion === 4) {
-    const s = { ...prev, schemaVersion: SCHEMA_VERSION } as AppState;
+  let s: AppState = prev;
+  if (s.schemaVersion === 4) {
     // v5: 운영자 기본 프로필(DEMO) — 이름을 바꾼 적이 없을 때만 새 기본값으로
-    s.profiles = prev.profiles.map((p) => {
-      if (p.id === 'op_manager' && p.name === '운영 책임자 (데모)') return { ...p, name: '김서윤', title: '대표' };
-      if (p.id === 'op_staff' && p.name === '매장 직원 (데모)') return { ...p, name: '매장 직원', title: null };
-      return p;
-    });
-    return s;
+    s = {
+      ...s,
+      schemaVersion: 5,
+      profiles: s.profiles.map((p) => {
+        if (p.id === 'op_manager' && p.name === '운영 책임자 (데모)') return { ...p, name: '김서윤', title: '대표' };
+        if (p.id === 'op_staff' && p.name === '매장 직원 (데모)') return { ...p, name: '매장 직원', title: null };
+        return p;
+      }),
+    } as AppState;
   }
-  return null;
+  if (s.schemaVersion === 5) {
+    // v6: 다색냥 고양이 25마리 — 없는 고양이·사진만 추가 (운영자가 고친 기존 고양이는 그대로)
+    const seed = createSeed();
+    const have = new Set(s.cats.map((c) => c.id));
+    const addCats = seed.cats.filter((c) => !have.has(c.id)).map((c) => ({ ...c, sortOrder: c.sortOrder + Math.max(0, s.cats.length - 6) }));
+    const addIds = new Set(addCats.map((c) => c.id));
+    s = { ...s, schemaVersion: 6, cats: [...s.cats, ...addCats], catPhotos: [...s.catPhotos, ...seed.catPhotos.filter((p) => addIds.has(p.catId))] } as AppState;
+  }
+  return s.schemaVersion === SCHEMA_VERSION ? s : null;
 }
 
 function persist(s: AppState) {

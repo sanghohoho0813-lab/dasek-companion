@@ -3,7 +3,7 @@
  * 시연 도구 (DEMO) — 휴대폰에서도 고객 ↔ 운영 AX 전환, PC 화면 미리보기, 데모 초기화를 할 수 있게 한다.
  * 데스크톱(≥1024px)에서는 같은 기능이 상단 바(Device Switch·운영 AX·초기화)에 있다.
  */
-import { Columns2, LayoutDashboard, Monitor, RotateCcw, Smartphone, Wrench } from 'lucide-react';
+import { Columns2, LayoutDashboard, Monitor, Presentation, RotateCcw, Smartphone, Wrench } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -55,6 +55,17 @@ export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolea
               </Link>
             )}
           </div>
+          {SHOW_DEMO_AX_ENTRY && (
+            <Link href="/demo" data-testid="demo-to-presentation" className="mt-2 flex min-h-[56px] items-center justify-between gap-2 rounded-2xl bg-violet-50 px-4 py-3 text-left ring-1 ring-violet-200 hover:bg-violet-100">
+              <span>
+                <span className="flex items-center gap-1.5 text-[1rem] font-bold text-violet-900">
+                  <Presentation className="h-4 w-4" /> 발표용 시연 모드
+                </span>
+                <span className="text-[0.875rem] text-violet-800">고객 → 직원 확인 → 보상 → 성과를 순서대로</span>
+              </span>
+              <span aria-hidden className="text-violet-800">›</span>
+            </Link>
+          )}
         </section>
 
         <section>

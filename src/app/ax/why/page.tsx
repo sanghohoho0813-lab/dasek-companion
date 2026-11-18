@@ -7,6 +7,7 @@ import { PageSkeleton, StatusBadge } from '@/components/ui';
 import { ROADMAP } from '@/lib/roadmap';
 import { computeKpis, funnel } from '@/lib/rules';
 import { cx } from '@/lib/util';
+import { ExpansionOverview } from '@/components/shell/Expansion';
 
 const TOC = [
   ['s1', '한 줄 요약'],
@@ -22,6 +23,7 @@ const TOC = [
   ['s11', '12주 실증'],
   ['s12', '직원·도입 위험'],
   ['s13', '성장 로드맵'],
+  ['s13b', '추가 확장 예정(대표 기획안)'],
   ['s14', '정부·투자 스토리'],
   ['s15', '스스로 던지는 질문'],
   ['s16', '확인이 필요한 것'],
@@ -275,6 +277,12 @@ export default function WhyPage() {
             ))}
           </div>
         </Sec>
+
+        <section id="expansion" className="scroll-mt-24">
+          <Sec id="s13b" n={13} title="추가 확장 예정 — 대표 기획안 (아직 개발 전)">
+            <ExpansionOverview />
+          </Sec>
+        </section>
 
         <Sec id="s14" n={14} title="정부 스토리와 투자 스토리는 따로">
           <div className="grid gap-3 md:grid-cols-2">

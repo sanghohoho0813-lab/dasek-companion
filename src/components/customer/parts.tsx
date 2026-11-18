@@ -157,11 +157,11 @@ export function SignatureCard({ item, s, saved, onToggleSave }: { item: MenuItem
 }
 
 /* ── 고양이 카드 (Netflix식 세로 카드, 밝은 톤) ──────── */
-export function CatCoverCard({ cat, photo, size = 'md' }: { cat: CafeCat; photo?: CatPhoto; size?: 'md' | 'lg' }) {
+export function CatCoverCard({ cat, photo, size = 'md', fluid }: { cat: CafeCat; photo?: CatPhoto; size?: 'md' | 'lg'; fluid?: boolean }) {
   return (
     <Link
       href={`/dasek/cats/${cat.id}`}
-      className={cx('group block shrink-0 snap-start rounded-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400', size === 'lg' ? 'w-[172px] md:w-[228px]' : 'w-[148px] md:w-[188px]')}
+      className={cx('group block shrink-0 snap-start rounded-[22px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-400', fluid ? 'w-full' : size === 'lg' ? 'w-[172px] md:w-[228px]' : 'w-[148px] md:w-[188px]')}
       aria-label={`${cat.name} 프로필 보기`}
     >
       <div className="zoom-img relative overflow-hidden rounded-[22px] bg-canvas shadow-[0_6px_18px_-8px_rgba(16,40,52,.35)]">

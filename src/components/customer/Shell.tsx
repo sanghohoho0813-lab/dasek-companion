@@ -45,6 +45,11 @@ function DemoBar() {
               <LayoutDashboard className="h-4 w-4" /> 시연용 AX 보기
             </Link>
           )}
+          {SHOW_DEMO_AX_ENTRY && (
+            <Link href="/demo" data-testid="surface-to-demo" className="inline-flex h-8 items-center gap-1 rounded-lg bg-violet-700 px-3 font-bold text-white hover:bg-violet-800">
+              발표용 시연
+            </Link>
+          )}
           <button onClick={() => setConfirm(true)} className="inline-flex h-8 items-center gap-1 rounded-md px-2 font-semibold text-amber-900 transition hover:bg-amber-100">
             <RotateCcw className="h-3.5 w-3.5" /> 데모 초기화
           </button>

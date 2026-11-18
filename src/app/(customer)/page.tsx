@@ -6,6 +6,7 @@ import { AssetImage } from '@/components/art/AssetImage';
 import { CatCoverCard, MenuCard, Rail, SectionHeader } from '@/components/customer/parts';
 import { useCustomer } from '@/components/customer/Shell';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
+import { ExpansionNav } from '@/components/shell/Expansion';
 import { LogoMark } from '@/components/shell/Logo';
 import { Disclosure, PageSkeleton, StatusBadge, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
@@ -226,12 +227,10 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-        <Link href="/roadmap" className="mt-3 flex min-h-11 items-center justify-between gap-2 rounded-2xl border border-dashed border-violet-300 bg-white px-4 py-3 text-[0.9375rem] font-semibold text-ink-2 hover:bg-violet-50">
-          <span className="flex min-w-0 items-center gap-2">
-            앞으로 준비하는 서비스 <StatusBadge status="NEXT" label="개발 예정" />
-          </span>
-          <ChevronRight className="h-5 w-5 shrink-0 text-violet-700" />
-        </Link>
+        {/* 추가 확장 예정 (대표 기획안) — 접어 둔 한 줄 */}
+        <div className="mt-3">
+          <ExpansionNav tone="brand" />
+        </div>
       </section>
     </div>
   );

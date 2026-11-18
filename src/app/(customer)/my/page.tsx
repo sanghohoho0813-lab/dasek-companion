@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { LoginGate, PurchaseReportSheet, StampCard } from '@/components/customer/parts';
 import { useCustomer } from '@/components/customer/Shell';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
+import { ExpansionNav } from '@/components/shell/Expansion';
 import { Button, PageSkeleton } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { couponsFor, stampCount, stampRule, verifiedUses } from '@/lib/rules';
@@ -104,6 +105,9 @@ export default function MyPage() {
           </li>
         ))}
       </ul>
+      <div className="mt-4">
+        <ExpansionNav tone="brand" />
+      </div>
       <button onClick={() => act((d) => D.logout(d))} className="mt-4 flex min-h-11 items-center gap-2 px-2 text-[0.9375rem] font-semibold text-ink-2 hover:text-ink">
         <LogOut className="h-4 w-4" /> 로그아웃
       </button>

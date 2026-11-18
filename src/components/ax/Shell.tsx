@@ -26,6 +26,7 @@ import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
+import { ExpansionNav } from '@/components/shell/Expansion';
 import { LiveClock } from '@/components/shell/LiveClock';
 import { LogoMark } from '@/components/shell/Logo';
 import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
@@ -328,7 +329,13 @@ export function AxShell({ children }: { children: React.ReactNode }) {
               </span>
             )}
           </Link>
-          <div className={cx('min-h-0 flex-1 overflow-y-auto pb-4 no-scrollbar', compact ? 'px-2' : 'px-3')}>{s && <NavList s={s} collapsed={compact} />}</div>
+          <div className={cx('min-h-0 flex-1 overflow-y-auto pb-4 no-scrollbar', compact ? 'px-2' : 'px-3')}>
+            {s && <NavList s={s} collapsed={compact} />}
+            {/* 추가 확장 예정 (대표 기획안) — 평소엔 접혀 있음 */}
+            <div className="mt-5">
+              <ExpansionNav tone="shell" compact={compact} />
+            </div>
+          </div>
           <div className={cx('shrink-0 space-y-2 border-t border-black/10', compact ? 'px-2 py-3' : 'p-3')} data-testid="sidebar-footer">
             {compact ? (
               <Link href="/" data-testid="surface-to-customer" title="고객 화면 보기" aria-label="고객 화면 보기" className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">
@@ -430,6 +437,9 @@ export function AxShell({ children }: { children: React.ReactNode }) {
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">
                 <NavList s={s} onNavigate={() => setDrawer(false)} />
+                <div className="mt-5">
+                  <ExpansionNav tone="shell" onNavigate={() => setDrawer(false)} />
+                </div>
                 <div className="mt-5 space-y-0.5 border-t border-black/10 pt-3">
                   <button
                     onClick={() => {

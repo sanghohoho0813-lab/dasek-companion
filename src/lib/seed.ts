@@ -8,7 +8,7 @@ import * as D from './domain';
 import type { AppState, ArtSpec, CafeCat, CatPhoto, FactField, LoyaltyRule, MenuItem, Store } from './types';
 import { addDays, DAY, dailyCheckinCode, dayKey, mulberry32 } from './util';
 
-export const SCHEMA_VERSION = 5;
+export const SCHEMA_VERSION = 6;
 const NAVER_SRC = '사용자 제공 네이버 플레이스 공개정보 (2026-11-17)';
 
 const fact = <T = string>(value: NoInfer<T> | null, evidence: FactField['evidence'], source: string, checkedAt: string | null = null): FactField<T> => ({ value, evidence, source, checkedAt });
@@ -97,20 +97,21 @@ function baseState(nowIso: string): AppState {
     mi({ id: 'm_cat_cookie', brand: 'dasek', categoryId: 'dn_dessert', name: '초코칩 쿠키', summary: '포장해 가기 좋은 간식', description: 'DEMO 예시 메뉴입니다. 사람이 먹는 간식이에요 — 고양이에게 주지 마세요.', price: 3000, priceEvidence: 'ASSUMPTION', tags: ['디저트', '포장 가능'], art: { kind: 'snack', variant: 1 } }, 4),
   ];
 
-  const catDefs: [string, string, ArtSpec & { kind: 'cat' }, string[], string[]][] = [
+  const catDefs: CatDef[] = [
     ['cat_1', '모카', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 0 }, ['느긋함', '창가 담당'], ['햇볕 쬐기', '깃털 장난감']],
     ['cat_2', '보리', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'loaf', bg: 1 }, ['애교 많음', '사람 좋아함'], ['턱 쓰다듬기', '공 굴리기']],
     ['cat_3', '구름', { kind: 'cat', coat: 'white', pattern: 'solid', eyes: 'blue', pose: 'sit', bg: 2 }, ['조용함', '관찰형'], ['높은 곳', '낚싯대 장난감']],
     ['cat_4', '콩떡', { kind: 'cat', coat: 'black', pattern: 'tuxedo', eyes: 'amber', pose: 'peek', bg: 3 }, ['호기심 왕', '장난꾸러기'], ['상자 탐험', '레이저 놀이 대신 깃털']],
     ['cat_5', '단풍', { kind: 'cat', coat: 'white', pattern: 'calico', eyes: 'copper', pose: 'loaf', bg: 4 }, ['도도함', '낮잠 장인'], ['담요', '조용한 손님']],
     ['cat_6', '라떼', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'sleep', bg: 0 }, ['순둥이', '무릎 고양이'], ['쓰다듬기', '간식 시간']],
+    ...EXTRA_CATS,
   ];
   const tips = ['자고 있을 때는 깨우지 않아요', '억지로 안아 올리지 않아요', '간식은 직원 안내에 따라 주세요', '플래시 없이 촬영해 주세요'];
   const cats: CafeCat[] = catDefs.map(([id, name, art, personality, likes], i) => ({
     id,
     name,
     isPlaceholder: true,
-    tagline: ['창가 자리를 지키는 느긋한 형님', '먼저 다가와 인사하는 애교쟁이', '높은 곳에서 손님을 관찰해요', '상자만 보면 들어가는 탐험가', '담요 위 낮잠이 하루 일과', '무릎 위가 제일 좋아요'][i],
+    tagline: ['창가 자리를 지키는 느긋한 형님', '먼저 다가와 인사하는 애교쟁이', '높은 곳에서 손님을 관찰해요', '상자만 보면 들어가는 탐험가', '담요 위 낮잠이 하루 일과', '무릎 위가 제일 좋아요'][i] ?? EXTRA_TAGLINES[i - 6],
     personality,
     likes,
     interactionTips: tips,
@@ -122,7 +123,8 @@ function baseState(nowIso: string): AppState {
   const poses = ['sit', 'loaf', 'peek', 'sleep'] as const;
   const captions = ['대표 사진', '가까이서 본 얼굴', '오늘의 한 컷', '쉬는 시간'];
   const catPhotos: CatPhoto[] = cats.flatMap((c, ci) =>
-    poses.map((pose, pi) => ({
+    // 기존 6마리: 사진 4장 · 추가 19마리: 대표 사진 1장 (샘플 사진 풀에서 서로 다른 고양이)
+    (ci < 6 ? poses : poses.slice(0, 1)).map((pose, pi) => ({
       id: `pho_${c.id}_${pi}`,
       catId: c.id,
       art: pi === 0 ? c.coverArt : { ...(c.coverArt as ArtSpec & { kind: 'cat' }), pose, bg: (ci + pi + 1) % 5 },
@@ -183,6 +185,40 @@ function baseState(nowIso: string): AppState {
 }
 
 /** 데모 이력 재생 */
+/**
+ * 다색냥 고양이 수: 25마리 (운영자 전달 정보 · 매장 확인 전).
+ * 7~25번은 예시 이름·성향이며 사진은 CC0 샘플 사진 — 실제 이름·사진은 AX '메뉴·고양이 사진'에서 교체한다.
+ */
+export const DASEK_CAT_COUNT = 25;
+type CatDef = [string, string, ArtSpec & { kind: 'cat' }, string[], string[]];
+export const EXTRA_CATS: CatDef[] = [
+  ['cat_7', '율무', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'loaf', bg: 1 }, ['느긋함', '바닥 담당'], ['햇볕', '담요']],
+  ['cat_8', '호두', { kind: 'cat', coat: 'gray', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 2 }, ['산책 좋아함', '호기심'], ['풀 냄새', '창밖 구경']],
+  ['cat_9', '도토리', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 3 }, ['정면 응시', '차분함'], ['눈 맞춤', '조용한 손님']],
+  ['cat_10', '깨비', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'peek', bg: 4 }, ['관찰형', '도도함'], ['높은 곳', '깃털']],
+  ['cat_11', '쿠키', { kind: 'cat', coat: 'gray', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 0 }, ['손 냄새 확인', '애교'], ['턱 쓰다듬기', '간식 시간']],
+  ['cat_12', '솜이', { kind: 'cat', coat: 'gray', pattern: 'tabby', eyes: 'blue', pose: 'sleep', bg: 1 }, ['막내', '잠꾸러기'], ['낮잠', '부드러운 쿠션']],
+  ['cat_13', '치즈', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 2 }, ['문지기', '사람 좋아함'], ['입구 자리', '인사']],
+  ['cat_14', '망고', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'blue', pose: 'loaf', bg: 3 }, ['뒹굴기', '장난꾸러기'], ['배 보이기', '공 굴리기']],
+  ['cat_15', '귤이', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'amber', pose: 'peek', bg: 4 }, ['활발함', '사냥 놀이'], ['낚싯대 장난감', '달리기']],
+  ['cat_16', '루이', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 0 }, ['창가 담당', '사색가'], ['창밖 새 구경', '화분 옆']],
+  ['cat_17', '호박', { kind: 'cat', coat: 'orange', pattern: 'tabby', eyes: 'green', pose: 'sit', bg: 1 }, ['꽃 좋아함', '순함'], ['화분 옆 자리', '햇살']],
+  ['cat_18', '두부', { kind: 'cat', coat: 'white', pattern: 'tuxedo', eyes: 'green', pose: 'peek', bg: 2 }, ['조심성', '관찰형'], ['숨숨집', '조용한 곳']],
+  ['cat_19', '설기', { kind: 'cat', coat: 'white', pattern: 'tuxedo', eyes: 'green', pose: 'loaf', bg: 3 }, ['느긋함', '무릎 고양이'], ['담요', '쓰다듬기']],
+  ['cat_20', '찹쌀', { kind: 'cat', coat: 'white', pattern: 'tabby', eyes: 'amber', pose: 'sleep', bg: 4 }, ['배 보이기', '엉뚱함'], ['벤치', '뒹굴기']],
+  ['cat_21', '산책이', { kind: 'cat', coat: 'brown', pattern: 'tabby', eyes: 'amber', pose: 'sit', bg: 0 }, ['산책길 담당', '자신감'], ['순찰', '손님 마중']],
+  ['cat_22', '카푸', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'loaf', bg: 1 }, ['우아함', '수다쟁이'], ['대화', '따뜻한 자리']],
+  ['cat_23', '마루', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'sit', bg: 2 }, ['포근함', '사람 좋아함'], ['빗질', '무릎']],
+  ['cat_24', '연유', { kind: 'cat', coat: 'cream', pattern: 'point', eyes: 'blue', pose: 'peek', bg: 3 }, ['수줍음', '천천히 친해짐'], ['풀밭', '조용한 손님']],
+  ['cat_25', '꾸벅이', { kind: 'cat', coat: 'brown', pattern: 'tuxedo', eyes: 'green', pose: 'sleep', bg: 4 }, ['낮잠 장인', '순둥이'], ['쿠션', '담요']],
+];
+const EXTRA_TAGLINES = [
+  '바닥에 길게 누워 손님을 맞아요', '풀 냄새를 좋아하는 산책파', '빤히 바라보다 천천히 다가와요', '높은 곳에서 가게를 지켜봐요', '손 냄새부터 확인하는 신중파',
+  '막내라 아직은 낮잠이 일순위', '입구에서 먼저 인사하는 문지기', '배를 보이며 뒹구는 장난꾸러기', '깃털만 보면 달려오는 사냥꾼', '창가에서 새를 구경하는 사색가',
+  '화분 옆이 지정석이에요', '숨숨집에서 살짝 얼굴만 내밀어요', '담요 위에서 느긋하게 쉬어요', '벤치에서 배를 보이며 자요', '가게 앞 산책길 순찰 담당',
+  '말을 걸면 대답하는 수다쟁이', '빗질을 좋아하는 포근한 친구', '천천히 친해지는 수줍은 친구', '쿠션에서 꾸벅꾸벅 졸아요',
+];
+
 export function createSeed(now: Date = new Date()): AppState {
   const nowIso = now.toISOString();
   const s = baseState(nowIso);
