@@ -554,7 +554,7 @@ export function PageIntro({ title, body, more, right }: { title: string; body: s
         </p>
         {more && open && <p className="mt-1.5 max-w-3xl rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-600">{more}</p>}
       </div>
-      {right && <div className="flex shrink-0 flex-wrap items-center gap-2">{right}</div>}
+      {right && <div className="flex min-w-0 max-w-full flex-wrap items-center gap-2">{right}</div>}
     </div>
   );
 }

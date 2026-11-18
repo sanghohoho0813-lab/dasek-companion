@@ -266,8 +266,8 @@ function PhoneDual({ label }: { label: string }) {
   let pcW: number, pcH: number, moS: number;
   if (portrait) {
     pcW = box.w - gap * 2;
-    pcH = Math.round((box.h - gap * 3) * 0.46);
-    moS = Math.min((box.h - gap * 3 - pcH - 22) / PHONE_H, (box.w - gap * 2) / PHONE_W);
+    pcH = Math.round((box.h - gap * 3 - 44) * 0.46);
+    moS = Math.min((box.h - gap * 3 - pcH - 44) / PHONE_H, (box.w - gap * 2) / PHONE_W); // 두 화면 제목줄(22px×2)
   } else {
     moS = (box.h - gap * 2 - 22) / PHONE_H;
     pcW = box.w - gap * 3 - PHONE_W * moS;

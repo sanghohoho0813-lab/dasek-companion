@@ -94,7 +94,7 @@ function DesktopHeader() {
   const [q, setQ] = useState('');
   return (
     <header className="sticky top-0 z-30 hidden border-b border-line bg-white md:block">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-5 lg:gap-6">
         <Link href="/" aria-label="다색컴패니언 홈" className="inline-flex min-h-11 shrink-0 items-center">
           <Wordmark compact={compact} />
         </Link>
@@ -165,8 +165,8 @@ export function MoreMenuButton({ variant }: { variant: 'desktop' | 'icon' }) {
       </button>
     );
   return (
-    <button onClick={open} aria-haspopup="dialog" data-testid="more-open-desktop" className="inline-flex h-11 items-center gap-1.5 rounded-full px-3 text-[0.9375rem] font-semibold text-ink-2 transition hover:bg-canvas hover:text-ink">
-      <Menu className="h-5 w-5" /> 더보기
+    <button onClick={open} aria-haspopup="dialog" aria-label="더보기 (전체 메뉴)" data-testid="more-open-desktop" className="inline-flex h-11 min-w-11 shrink-0 items-center justify-center gap-1.5 rounded-full px-2.5 text-[0.9375rem] font-semibold text-ink-2 transition hover:bg-canvas hover:text-ink lg:px-3">
+      <Menu className="h-5 w-5" /> <span className="hidden lg:inline">더보기</span>
     </button>
   );
 }
