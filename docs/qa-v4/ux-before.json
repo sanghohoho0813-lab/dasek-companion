@@ -1,0 +1,415 @@
+{
+ "label": "before (2abbd7a)",
+ "base": "http://localhost:3400",
+ "measuredAt": "2026-11-18T01:32:50.522Z",
+ "firstScreen": {
+  "/ax @390x844": {
+   "fold": 771,
+   "identity": null,
+   "clock": null,
+   "pendingCount": {
+    "top": 271,
+    "bottom": 364,
+    "text": "3 방문·구매 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 701,
+    "bottom": 745,
+    "text": "방문 확인",
+    "inFirstScreen": true
+   },
+   "kpi": {
+    "top": 1747,
+    "bottom": 2161,
+    "text": "확인된 구매 0 오늘 확인된 방문 0 오늘 신규 회원 0 오늘 가입 재이용 고객 0 오늘 ",
+    "inFirstScreen": false
+   },
+   "quickActions": {
+    "top": 1500,
+    "bottom": 1548,
+    "text": "구매 등록",
+    "inFirstScreen": false
+   },
+   "toCustomer": null
+  },
+  "/ax @360x667": {
+   "fold": 594,
+   "identity": null,
+   "clock": null,
+   "pendingCount": {
+    "top": 271,
+    "bottom": 364,
+    "text": "3 방문·구매 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 701,
+    "bottom": 745,
+    "text": "방문 확인",
+    "inFirstScreen": false
+   },
+   "kpi": {
+    "top": 1769,
+    "bottom": 2203,
+    "text": "확인된 구매 0 오늘 확인된 방문 0 오늘 신규 회원 0 오늘 가입 재이용 고객 0 오늘 ",
+    "inFirstScreen": false
+   },
+   "quickActions": {
+    "top": 1521,
+    "bottom": 1569,
+    "text": "구매 등록",
+    "inFirstScreen": false
+   },
+   "toCustomer": null
+  },
+  "/ax @430x932": {
+   "fold": 859,
+   "identity": null,
+   "clock": null,
+   "pendingCount": {
+    "top": 271,
+    "bottom": 364,
+    "text": "3 방문·구매 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 701,
+    "bottom": 745,
+    "text": "방문 확인",
+    "inFirstScreen": true
+   },
+   "kpi": {
+    "top": 1701,
+    "bottom": 2107,
+    "text": "확인된 구매 0 오늘 확인된 방문 0 오늘 신규 회원 0 오늘 가입 재이용 고객 0 오늘 ",
+    "inFirstScreen": false
+   },
+   "quickActions": {
+    "top": 1476,
+    "bottom": 1524,
+    "text": "구매 등록",
+    "inFirstScreen": false
+   },
+   "toCustomer": null
+  },
+  "/ @390x844": {
+   "fold": 763,
+   "identity": {
+    "top": 363,
+    "bottom": 423,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 496,
+    "bottom": 544,
+    "text": "메뉴 보기",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 496,
+    "bottom": 544,
+    "text": "다색냥 만나기",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 868,
+    "bottom": 893,
+    "text": "다색냥 대표 디저트",
+    "inFirstScreen": false
+   },
+   "membership": {
+    "top": 2423,
+    "bottom": 2448,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  },
+  "/ @360x667": {
+   "fold": 586,
+   "identity": {
+    "top": 368,
+    "bottom": 428,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 525,
+    "bottom": 573,
+    "text": "메뉴 보기",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 525,
+    "bottom": 573,
+    "text": "다색냥 만나기",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 887,
+    "bottom": 912,
+    "text": "다색냥 대표 디저트",
+    "inFirstScreen": false
+   },
+   "membership": {
+    "top": 2423,
+    "bottom": 2448,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  },
+  "/ @430x932": {
+   "fold": 851,
+   "identity": {
+    "top": 383,
+    "bottom": 443,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 516,
+    "bottom": 564,
+    "text": "메뉴 보기",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 516,
+    "bottom": 564,
+    "text": "다색냥 만나기",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 900,
+    "bottom": 925,
+    "text": "다색냥 대표 디저트",
+    "inFirstScreen": false
+   },
+   "membership": {
+    "top": 2386,
+    "bottom": 2411,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  }
+ },
+ "scroll": {
+  "/ @390x844": {
+   "px": 5369,
+   "screens": 6.36
+  },
+  "/realsicdan @390x844": {
+   "px": 3009,
+   "screens": 3.57
+  },
+  "/dasek @390x844": {
+   "px": 4752,
+   "screens": 5.63
+  },
+  "/my @390x844": {
+   "px": 1724,
+   "screens": 2.04
+  },
+  "/ax @390x844": {
+   "px": 6007,
+   "screens": 7.12
+  },
+  "/ax/members @390x844": {
+   "px": 1137,
+   "screens": 1.35
+  },
+  "/ @360x667": {
+   "px": 5472,
+   "screens": 8.2
+  },
+  "/realsicdan @360x667": {
+   "px": 2993,
+   "screens": 4.49
+  },
+  "/dasek @360x667": {
+   "px": 4757,
+   "screens": 7.13
+  },
+  "/my @360x667": {
+   "px": 1756,
+   "screens": 2.63
+  },
+  "/ax @360x667": {
+   "px": 6127,
+   "screens": 9.19
+  },
+  "/ax/members @360x667": {
+   "px": 1137,
+   "screens": 1.7
+  },
+  "/ @430x932": {
+   "px": 5212,
+   "screens": 5.59
+  },
+  "/realsicdan @430x932": {
+   "px": 3045,
+   "screens": 3.27
+  },
+  "/dasek @430x932": {
+   "px": 4650,
+   "screens": 4.99
+  },
+  "/my @430x932": {
+   "px": 1694,
+   "screens": 1.82
+  },
+  "/ax @430x932": {
+   "px": 5851,
+   "screens": 6.28
+  },
+  "/ax/members @430x932": {
+   "px": 1113,
+   "screens": 1.19
+  },
+  "/ @1440x900": {
+   "px": 4389,
+   "screens": 4.88
+  },
+  "/realsicdan @1440x900": {
+   "px": 2684,
+   "screens": 2.98
+  },
+  "/dasek @1440x900": {
+   "px": 3585,
+   "screens": 3.98
+  },
+  "/my @1440x900": {
+   "px": 1292,
+   "screens": 1.44
+  },
+  "/ax @1440x900": {
+   "px": 3092,
+   "screens": 3.44
+  },
+  "/ax/members @1440x900": {
+   "px": 1009,
+   "screens": 1.12
+  }
+ },
+ "tasks": {
+  "방문 확인 (업무 완료) @390": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "방문 확인"
+   ]
+  },
+  "구매 확인 (업무 완료) @390": {
+   "taps": 2,
+   "scrollPx": 244,
+   "ok": true,
+   "path": [
+    "구매 확인",
+    "확인 완료"
+   ]
+  },
+  "회원 검색 (검색창 입력 가능) @390": {
+   "taps": 2,
+   "scrollPx": 49,
+   "ok": true,
+   "path": [
+    "회원",
+    "회원 검색"
+   ]
+  },
+  "쿠폰 확인 (쿠폰 사용 창 열림) @390": {
+   "taps": 1,
+   "scrollPx": 773,
+   "ok": true,
+   "path": [
+    "쿠폰 사용"
+   ]
+  },
+  "메뉴·사진 관리 진입 @390": {
+   "taps": 2,
+   "scrollPx": 49,
+   "ok": true,
+   "path": [
+    "더보기",
+    "메뉴·고양이 콘텐츠"
+   ]
+  },
+  "AX → 고객 화면 @390": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "DEMO",
+    "고객 플랫폼 메뉴·고양이·멤버십"
+   ]
+  },
+  "고객 화면 → 시연용 AX @390": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "DEMO",
+    "운영 AX 확인 큐·회원·실증"
+   ]
+  },
+  "방문 확인 (업무 완료) @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "방문 확인"
+   ]
+  },
+  "구매 확인 (업무 완료) @1440": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "구매 확인",
+    "확인 완료"
+   ]
+  },
+  "회원 검색 (검색창 입력 가능) @1440": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "회원·동의",
+    "회원 검색"
+   ]
+  },
+  "쿠폰 확인 (쿠폰 사용 창 열림) @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "쿠폰 사용"
+   ]
+  },
+  "메뉴·사진 관리 진입 @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "메뉴·고양이 콘텐츠"
+   ]
+  },
+  "AX → 고객 화면 @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "고객 플랫폼 보기"
+   ]
+  },
+  "고객 화면 → 시연용 AX @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "운영 AX"
+   ]
+  }
+ }
+}

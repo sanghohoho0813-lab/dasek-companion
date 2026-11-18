@@ -22,7 +22,7 @@ export default function CoachPage() {
   ];
   return (
     <div className="space-y-4">
-      <PageIntro title="오늘 할 일 · AX Coach" body="AX Coach는 규칙으로 오늘 처리할 일 1~3개만 골라 줍니다. 각 일은 실제 화면으로 연결되고, 처리하면 실증 기록(Proof Event)이 남아요. AI 예측이 아니라 대기 시간·후보 수·세그먼트 크기에 따른 우선순위 규칙입니다." />
+      <PageIntro title="오늘 추천 업무" body="지금 하면 도움이 되는 일을 1~3개만 골라 드려요. 누르면 처리 화면으로 이동해요." more="AX Coach는 AI 예측이 아니라 대기 시간·후보 수·세그먼트 크기에 따른 우선순위 규칙입니다. 처리하면 성과 기록(Proof Event)이 남아요." />
       <div className="grid gap-4 xl:grid-cols-[1.4fr_1fr]">
         <Panel title="오늘의 미션" sub="Mission → Action → Result → Proof Event">
           <MissionList missions={missions} canManage={can('campaign.approve')} />

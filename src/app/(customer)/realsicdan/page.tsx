@@ -1,11 +1,11 @@
 'use client';
 import { Info, Search, SlidersHorizontal, Store, X } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { AssetImage } from '@/components/art/AssetImage';
 import { MenuCard, MenuRow, Rail, SectionHeader, WhySheet } from '@/components/customer/parts';
 import { BackHeader, useCustomer } from '@/components/customer/Shell';
-import { Button, Chip, Empty, PageSkeleton, Sheet, Toggle, useRun } from '@/components/ui';
+import { Button, Chip, Disclosure, Empty, PageSkeleton, Sheet, Toggle, useRun } from '@/components/ui';
 import * as D from '@/lib/domain';
 import { recommendMenus, storeOfBrand, type Recommendation } from '@/lib/rules';
 import { act } from '@/lib/store';
@@ -26,6 +26,11 @@ function Inner() {
   const [tags, setTags] = useState<string[]>([]);
   const [sort, setSort] = useState<Sort>('recommend');
   const [why, setWhy] = useState<Recommendation | null>(null);
+  const [showAll, setShowAll] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (sp.get('focus') === 'search') searchRef.current?.focus();
+  }, [sp]);
 
   const items = useMemo(() => {
     if (!s) return [];
@@ -58,21 +63,29 @@ function Inner() {
   const pop = new Map<string, number>();
   for (const v of s.verifications.filter((x) => x.status === 'CONFIRMED')) for (const id of v.menuItemIds) pop.set(id, (pop.get(id) ?? 0) + 1);
   const all = s.menuItems.filter((m) => m.published && m.brand === 'realsicdan');
-  const popular = [...all].sort((a, b) => (pop.get(b.id) ?? 0) - (pop.get(a.id) ?? 0)).slice(0, 5);
+  const popular = [...all].sort((a, b) => (pop.get(b.id) ?? 0) - (pop.get(a.id) ?? 0)).slice(0, 4);
   const saved = all.filter((m) => favIds.has(m.id));
   const browsing = !q.trim() && cat === 'all' && activeFilters === 0;
-  const recs = recommendMenus(s, me?.id ?? null, 6).filter((r) => r.item.brand === 'realsicdan').slice(0, 3);
+  const recs = recommendMenus(s, me?.id ?? null, 6).filter((r) => r.item.brand === 'realsicdan').slice(0, 2);
 
   return (
     <div>
       <BackHeader title="리얼식단" />
-      <section className="mx-auto max-w-6xl px-4 pt-3 md:px-5 md:pt-7">
+      {/* 모바일: 짧은 소개 한 줄 (사진은 아래 메뉴 카드가 충분히 보여 준다) */}
+      <section className="mx-auto flex max-w-6xl items-center gap-3 px-4 pt-3 md:hidden">
+        <AssetImage slot="service_01_food" fallback={{ kind: 'salad', variant: 1 }} alt="" className="h-16 w-16 shrink-0 rounded-2xl" sizes="64px" />
+        <div className="min-w-0">
+          <h1 className="text-[1.5rem] font-extrabold leading-tight tracking-[-0.02em] text-ink">리얼식단</h1>
+          <p className="truncate text-[0.9375rem] text-ink-2">샐러드·도시락 · 매장 구매 가능 · 배달 채널 확인 중</p>
+        </div>
+      </section>
+      <section className="mx-auto hidden max-w-6xl px-4 pt-3 md:block md:px-5 md:pt-7">
         <div className="relative overflow-hidden rounded-[24px] md:rounded-[28px]">
           <AssetImage slot="service_01_food" fallback={{ kind: 'salad', variant: 1 }} alt="여러 가지 샐러드 재료 (샘플 사진)" className="aspect-[16/8] md:aspect-[16/4.6]" sampleBadge badgePosition="tr" priority sizes="(min-width: 1024px) 1100px, 100vw" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/35" />
           <div data-on-media className="absolute inset-y-0 left-0 flex flex-col justify-end p-5 text-white [text-shadow:0_1px_2px_rgba(0,0,0,.3)] md:justify-center md:p-9">
             <p className="text-[0.875rem] font-semibold text-white">식단 · 샐러드 · 도시락</p>
-            <h1 className="text-[1.75rem] font-extrabold tracking-[-0.02em] md:text-[2.375rem]">리얼식단</h1>
+            <p className="text-[1.75rem] font-extrabold tracking-[-0.02em] md:text-[2.375rem]" aria-hidden>리얼식단</p>
             <p className="text-[1rem] font-semibold text-white">{store.tagline}</p>
             <p className="mt-2 hidden items-center gap-1.5 text-[0.875rem] font-semibold text-white md:flex">
               <Store className="h-4 w-4" /> 매장 구매 가능 · 배달 채널 확인 중
@@ -86,7 +99,7 @@ function Inner() {
           <div className="flex gap-2">
             <label className="flex h-12 flex-1 items-center gap-2 rounded-2xl bg-canvas px-4 ring-1 ring-inset ring-cardline focus-within:ring-2 focus-within:ring-brand-300">
               <Search className="h-[18px] w-[18px] shrink-0 text-ink-3" />
-              <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="메뉴·재료 검색" aria-label="메뉴 검색" className="w-full bg-transparent text-[1rem] outline-none placeholder:text-ink-3" />
+              <input value={q} onChange={(e) => setQ(e.target.value)} ref={searchRef} enterKeyHint="search" placeholder="메뉴·재료 검색" aria-label="메뉴 검색" className="w-full bg-transparent text-[1rem] outline-none placeholder:text-ink-3" />
               {q && (
                 <button onClick={() => setQ('')} aria-label="검색어 지우기" className="-mr-2 grid h-11 w-11 place-items-center text-ink-3 hover:text-ink">
                   <X className="h-4 w-4" />
@@ -167,11 +180,17 @@ function Inner() {
           <SectionHeader title={!browsing && q ? `'${q}' 검색 결과` : cat === 'all' ? '전체 메뉴' : cats.find((c) => c.id === cat)?.name ?? '메뉴'} sub={`${items.length}개 · 확인된 메뉴 먼저 보여드려요`} />
           {items.length ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-6 md:grid-cols-3 md:gap-x-4 lg:grid-cols-4" data-testid="menu-grid">
-              {items.map((m) => (
+              {(browsing && !showAll ? items.slice(0, 6) : items).map((m) => (
                 <MenuCard key={m.id} item={m} s={s} layout="grid" saved={favIds.has(m.id)} onToggleSave={() => save(m.id)} />
               ))}
             </div>
-          ) : (
+          ) : null}
+          {items.length > 0 && browsing && !showAll && items.length > 6 && (
+            <button type="button" onClick={() => setShowAll(true)} aria-expanded={false} data-testid="menu-show-all" className="mt-5 flex h-12 w-full items-center justify-center gap-1 rounded-2xl bg-white text-[1rem] font-bold text-ink ring-1 ring-inset ring-cardline hover:bg-canvas">
+              전체 메뉴 {items.length}개 모두 보기
+            </button>
+          )}
+          {items.length ? null : (
             <Empty
               title="조건에 맞는 메뉴가 없어요"
               body="검색어나 필터를 바꿔 보세요."
@@ -192,13 +211,12 @@ function Inner() {
             />
           )}
         </section>
-        <p className="mt-6 flex items-start gap-1.5 rounded-2xl bg-canvas px-4 py-3 text-[0.8125rem] leading-relaxed text-ink-2">
+        <p className="mt-6 flex items-start gap-1.5 rounded-2xl bg-canvas px-4 py-3 text-[0.875rem] leading-relaxed text-ink-2">
           <Info className="mt-0.5 h-4 w-4 shrink-0 text-ink-3" />
           영양성분·알레르기 정보는 매장 확인 전에는 표시하지 않아요. &lsquo;예시 메뉴&rsquo;와 &lsquo;예시가&rsquo;는 실제 메뉴 등록 전 시연용이에요.
         </p>
-        <div className="mt-4 rounded-[24px] bg-white p-5 ring-1 ring-line">
-          <p className="text-[1.0625rem] font-extrabold text-ink">주문 방법</p>
-          <ul className="mt-3 space-y-3 text-[0.9375rem]">
+        <Disclosure label="어떻게 주문하나요? (매장 구매·적립·배달)" openLabel="주문 방법 접기" className="mt-4">
+          <ul className="space-y-3 rounded-[20px] bg-white p-5 text-[0.9375rem] ring-1 ring-line">
             <li className="flex gap-2.5">
               <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-600 text-[0.8125rem] font-bold text-white">1</span>
               <span className="text-ink-2">매장(향동천 산책길, 다색냥 매장 내 판매로 확인 중)에서 직접 구매하세요.</span>
@@ -212,7 +230,7 @@ function Inner() {
               <span className="text-ink-3">배달은 운영 중이지만 채널 링크는 확인 후 연결될 예정이에요.</span>
             </li>
           </ul>
-        </div>
+        </Disclosure>
       </div>
       <WhySheet rec={why} onClose={() => setWhy(null)} />
 

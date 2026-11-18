@@ -13,7 +13,7 @@ test('home: photo-led layout, categories route to filters, no broken images', as
   await page.setViewportSize(MOBILE);
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('산책길에서 만나는');
-  await expect(page.getByText('샘플 사진').first()).toBeVisible();
+  await expect(page.getByText('샘플 사진').filter({ visible: true }).first()).toBeVisible(); // 4차: PC 전용 Hero 사진은 모바일에서 숨김
   // 지연 로딩 이미지까지 불러오기
   for (let y = 0; y < 6000; y += 700) {
     await page.mouse.wheel(0, 700);
@@ -86,8 +86,8 @@ test('AX home shows work-first tiers and quick staff actions', async ({ page }) 
   await page.setViewportSize(DESKTOP);
   await page.goto('/ax');
   const tiers = page.locator('h2[id^="tier-"]');
-  await expect(tiers).toHaveText(['지금 처리할 일', '오늘 매장 현황', '다음 행동', '분석 · 실증']);
-  await expect(page.getByTestId('urgent-summary')).toContainText('방문·구매 확인 대기');
+  await expect(tiers).toHaveText(['지금 처리할 일', '오늘 매장 현황', '다음 행동', '분석 · 성과']); // 4차: '실증' → '성과' 용어 변경
+  await expect(page.getByTestId('urgent-count')).toContainText('확인 대기'); // 4차: 요약 타일 4개 → 대기 건수 한 줄
   await expect(page.getByTestId('content-fixes')).toContainText('예시 고양이 프로필');
   // 첫 화면 큐에서 바로 확인 → 오늘 현황 반영
   const visitsBefore = Number((await page.getByTestId('today-stats').locator('div', { hasText: '확인된 방문' }).locator('[data-stat-value]').first().textContent())!.trim());

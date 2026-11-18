@@ -107,7 +107,7 @@ function Inner() {
   const sum = (st: string) => s.coupons.filter((c) => effectiveCouponStatus(c) === st).length;
   return (
     <div>
-      <PageIntro title="쿠폰·추천·보상" body="혜택 규칙과 발급·사용·추천 귀속·보상 원장을 관리합니다. 보상은 모두 멱등 키로 중복 지급을 막고, 추천 보상은 피추천인의 직원확인 이용 후에만 확정돼요." />
+      <PageIntro title="쿠폰·혜택" body="스탬프·쿠폰 규칙과 발급·사용 내역, 친구 추천 보상을 관리해요." more="보상은 모두 멱등 키로 중복 지급을 막고, 추천 보상은 추천받은 친구의 첫 이용을 직원이 확인한 뒤에만 확정돼요. 환불·취소 시 회수됩니다." />
       <Segmented
         tone="ax"
         label="보기"
@@ -163,12 +163,30 @@ function Inner() {
                   ['CANCELLED', `취소 ${sum('CANCELLED')}`],
                 ] as [typeof cf, string][]
               ).map(([v, l]) => (
-                <button key={v} onClick={() => setCf(v)} className={cx('rounded-full px-3 py-1 font-semibold ring-1', cf === v ? 'bg-slate-900 text-white ring-slate-900' : 'bg-white text-slate-600 ring-slate-200')}>
+                <button key={v} onClick={() => setCf(v)} aria-pressed={cf === v} className={cx('inline-flex h-11 items-center rounded-full px-3.5 text-[0.9375rem] font-semibold ring-1 lg:h-9', cf === v ? 'bg-slate-900 text-white ring-slate-900' : 'bg-white text-slate-700 ring-slate-300')}>
                   {l}
                 </button>
               ))}
             </div>
-            <div className="overflow-x-auto">
+            <ul className="space-y-2 lg:hidden" data-testid="coupon-cards">
+              {coupons.slice(0, 40).map((c) => (
+                <li key={c.id} className="rounded-xl border border-axline bg-white p-3.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <p className="text-[1rem] font-bold text-slate-900">{c.benefit}</p>
+                      <Link href={`/ax/members/${c.userId}`} className="-ml-1 inline-flex min-h-11 items-center px-1 text-[0.9375rem] font-semibold text-ax-primary hover:underline">
+                        {name(c.userId)} 회원
+                      </Link>
+                    </div>
+                    <StatusPill kind={statusOf.coupon(c.status)} size="sm" />
+                  </div>
+                  <p className="text-[0.875rem] text-slate-600">
+                    {c.source} · {fmtDate(c.expiresAt)}까지 · <span className="font-mono">{c.code}</span>
+                  </p>
+                </li>
+              ))}
+            </ul>
+            <div className="hidden overflow-x-auto lg:block">
               <table className="ax-table w-full min-w-[720px] text-left text-[0.875rem]">
                 <thead className="border-b border-slate-100 text-[0.8125rem] text-slate-500">
                   <tr>

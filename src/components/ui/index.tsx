@@ -1,5 +1,5 @@
 'use client';
-import { AlertCircle, CheckCircle2, Info, X } from 'lucide-react';
+import { AlertCircle, CheckCircle2, ChevronDown, Info, X } from 'lucide-react';
 import { createContext, useCallback, useContext, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { CapabilityStatus, DataStatus, Evidence } from '@/lib/types';
@@ -79,6 +79,56 @@ export function Chip({ active, className, ...rest }: React.ButtonHTMLAttributes<
 }
 
 /* ── Skeleton / Empty ─────────────────────────────── */
+/**
+ * 단계적 공개 — 처음엔 요약만, 누르면 자세히. 접힌 내용도 DOM 에 남겨 입력·상태가 유실되지 않는다(hidden).
+ * aria-expanded / aria-controls 로 상태를 알린다.
+ */
+export function Disclosure({
+  label,
+  openLabel,
+  children,
+  defaultOpen = false,
+  tone = 'brand',
+  testId,
+  className,
+  hint,
+}: {
+  label: React.ReactNode;
+  openLabel?: React.ReactNode;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+  tone?: Tone;
+  testId?: string;
+  className?: string;
+  hint?: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const id = useId();
+  return (
+    <div className={className} data-testid={testId} data-open={open || undefined}>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={id}
+        onClick={() => setOpen((v) => !v)}
+        className={cx(
+          'flex min-h-11 w-full items-center justify-between gap-2 rounded-xl px-3.5 py-2 text-left text-[0.9375rem] font-bold transition focus-visible:outline-none focus-visible:ring-2',
+          tone === 'brand' ? 'bg-canvas text-ink-2 ring-1 ring-inset ring-line hover:bg-line focus-visible:ring-brand-400' : 'bg-slate-50 text-slate-800 ring-1 ring-inset ring-slate-200 hover:bg-slate-100 focus-visible:ring-ax-primary',
+        )}
+      >
+        <span className="flex min-w-0 items-center gap-2">
+          <span className="min-w-0">{open && openLabel ? openLabel : label}</span>
+          {hint && !open && <span className={cx('shrink-0 text-[0.8125rem] font-semibold', tone === 'brand' ? 'text-ink-3' : 'text-slate-500')}>{hint}</span>}
+        </span>
+        <ChevronDown className={cx('h-5 w-5 shrink-0 transition-transform duration-200', open && 'rotate-180')} aria-hidden />
+      </button>
+      <div id={id} role="region" aria-label={typeof label === 'string' ? label : undefined} hidden={!open} className="pt-3">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export function Skeleton({ className }: { className?: string }) {
   return <div className={cx('animate-pulse rounded-xl bg-slate-200/60', className)} />;
 }

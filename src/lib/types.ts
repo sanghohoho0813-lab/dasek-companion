@@ -75,6 +75,8 @@ export interface Profile {
   isDemo: boolean;
   status: 'active' | 'deletion_requested' | 'anonymized';
   preferredBrands: BrandId[];
+  /** 직함 (예: '대표'). 운영자 프로필 표시에 쓴다. 고객은 비워 둔다 */
+  title?: string | null;
 }
 
 export type ConsentPurpose = 'terms' | 'privacy' | 'age14' | 'marketing_inapp' | 'marketing_push' | 'marketing_kakao';

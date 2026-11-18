@@ -24,7 +24,7 @@ function Inner() {
   const segs = (Object.keys(SEGMENTS) as SegmentKey[]).map((k) => ({ k, ...SEGMENTS[k], n: segmentMembers(s, k).length }));
   return (
     <div className="space-y-4">
-      <PageIntro title="캠페인" body="규칙(세그먼트)이 대상과 문안 초안을 만들고, 운영 책임자가 승인한 것만 마케팅 수신 동의 고객에게 앱 알림으로 보냅니다. 성과는 발송 수가 아니라 이후 '직원확인 이용'으로만 측정해요." />
+      <PageIntro title="고객 알림 보내기" body="대상을 고르면 문안 초안이 만들어지고, 책임자가 승인해야 발송돼요." more="규칙(세그먼트)이 대상과 문안 초안을 만들고, 운영 책임자가 승인한 것만 마케팅 수신 동의 고객에게 앱 알림으로 보냅니다(캠페인). 성과는 발송 수가 아니라 이후 '직원확인 이용'으로만 측정해요." />
       <Panel title="대상 세그먼트 (RULE)" sub="앱 알림 수신 동의자만 포함">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {segs.map((g) => (

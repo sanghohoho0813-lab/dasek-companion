@@ -84,7 +84,7 @@ export function MissionList({ missions, canManage }: { missions: Mission[]; canM
                 {m.managerOnly && !canManage && <Tag>책임자 권한</Tag>}
               </span>
               <span className="mt-0.5 block text-[0.8438rem] leading-relaxed text-slate-500">{m.detail}</span>
-              <span className="mt-1 block text-[0.8125rem] text-slate-500">남는 실증 기록: {m.proof}</span>
+              <span className="mt-1 block text-[0.8125rem] text-slate-500">남는 성과 기록: {m.proof}</span>
             </span>
             <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500" />
           </Link>
@@ -158,7 +158,7 @@ export function EvidenceBars({ levels }: { levels: Record<'LINK_CLICK' | 'SELF_R
 }
 
 /** 확인 큐 한 줄 + 처리 */
-export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTask; canVerify: boolean; compact?: boolean }) {
+export function QueueRow({ s, t, canVerify, compact, mini }: { s: AppState; t: AdminTask; canVerify: boolean; compact?: boolean; mini?: boolean }) {
   const run = useRun();
   const [reject, setReject] = useState(false);
   const [confirmBuy, setConfirmBuy] = useState(false);
@@ -176,8 +176,39 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
     if (t.type === 'VERIFY_CHECKIN') run(() => opAct((d, c) => D.decideCheckin(d, c, t.refId, true)), '방문을 확인했어요. 스탬프·추천 보상이 반영됐어요.');
     else setConfirmBuy(true);
   };
+  const typeLabel = { VERIFY_CHECKIN: '방문 체크인', VERIFY_PURCHASE: '구매 확인', PHOTO_REVIEW: '사진 승인', CUSTOMER_REQUEST: '고객 요청', REFERRAL_REVIEW: '보상 검토', REORDER_REVIEW: '재구매' }[t.type];
+  const body = mini ? (
+    <>
+      <span aria-hidden className={cx('hidden h-10 w-10 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold min-[400px]:grid', t.type === 'VERIFY_CHECKIN' ? 'bg-[#E6EEFC] text-[#2A55B0]' : 'bg-[#E3F3EC] text-[#1F6648]')}>{user?.name.slice(0, 1) ?? '·'}</span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[1rem] font-bold text-slate-900" title={typeLabel}>
+          {user?.name ?? t.title}
+          <span className="sr-only"> · {typeLabel}</span>
+        </p>
+        <p className={cx('mt-0.5 truncate text-[0.875rem]', wait > 30 ? 'font-bold text-red-700' : 'text-slate-600')}>
+          {store?.name} · {relTime(t.createdAt)}
+          {wait > 30 ? ' · 지연' : ''}
+          {pendingReferral ? ' · 추천 보상' : ''}
+        </p>
+      </div>
+      {isVerify && canVerify ? (
+        <div className="flex shrink-0 items-center gap-1.5">
+          <button onClick={() => setReject(true)} aria-label={`${user?.name ?? ''} 요청 반려`} data-testid="queue-reject" className="grid h-11 w-11 place-items-center rounded-xl text-slate-600 ring-1 ring-inset ring-axline hover:bg-slate-50">
+            <X className="h-5 w-5" />
+          </button>
+          <Button tone="ax" className="h-11 px-3.5" onClick={approve} data-testid="queue-approve">
+            <Check className="h-4 w-4" /> {t.type === 'VERIFY_CHECKIN' ? '방문 확인' : '구매 확인'}
+          </Button>
+        </div>
+      ) : isVerify ? (
+        <Locked reason="권한 없음" />
+      ) : null}
+    </>
+  ) : null;
   return (
-    <li className={cx('flex flex-col gap-3 rounded-xl bg-white p-3.5 ring-1 ring-axline transition hover:ring-slate-300 sm:flex-row sm:items-center', compact && 'p-3')} data-testid="queue-row">
+    <li className={mini ? 'flex items-center gap-3 rounded-xl bg-white p-3 ring-1 ring-axline' : cx('flex flex-col gap-3 rounded-xl bg-white p-3.5 ring-1 ring-axline transition hover:ring-slate-300 sm:flex-row sm:items-center', compact && 'p-3')} data-testid="queue-row">
+      {mini ? body : (
+      <>
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <span aria-hidden className={cx('grid h-10 w-10 lg:h-9 lg:w-9 shrink-0 place-items-center rounded-full text-[0.9375rem] font-bold', t.type === 'VERIFY_CHECKIN' ? 'bg-[#E6EEFC] text-[#2A55B0]' : 'bg-[#E3F3EC] text-[#1F6648]')}>{user?.name.slice(0, 1) ?? '·'}</span>
         <div className="min-w-0">
@@ -217,6 +248,8 @@ export function QueueRow({ s, t, canVerify, compact }: { s: AppState; t: AdminTa
         <Link href={t.type === 'PHOTO_REVIEW' ? '/ax/content?tab=photos' : t.userId ? `/ax/members/${t.userId}` : '/ax/rewards?tab=referrals'} className="inline-flex min-h-11 shrink-0 items-center text-[0.9375rem] font-semibold text-ax-primary hover:underline lg:min-h-9">
           처리하러 가기 →
         </Link>
+      )}
+      </>
       )}
       <Sheet
         open={reject}

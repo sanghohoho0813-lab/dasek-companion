@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
 import { Sheet, useToast } from '@/components/ui';
 import { resetDemo } from '@/lib/store';
+import { SHOW_DEMO_AX_ENTRY } from '@/lib/mode';
 import { cx } from '@/lib/util';
 
 export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolean; onClose: () => void; tone?: 'brand' | 'ax' }) {
@@ -39,18 +40,20 @@ export function DemoToolsSheet({ open, onClose, tone = 'brand' }: { open: boolea
         <section>
           <p className="mb-2 text-[0.875rem] font-bold text-slate-500">화면 전환</p>
           <div className="grid grid-cols-2 gap-2">
-            <Link href="/" aria-current={!onAx ? 'page' : undefined} className={cx(btn, !onAx ? on : off)} data-testid="demo-to-customer">
+            <Link href="/" aria-current={!onAx ? 'page' : undefined} className={cx(btn, !onAx ? 'bg-brand-600 text-white ring-brand-600' : off)} data-testid="demo-to-customer">
               <span className="flex items-center gap-1.5 text-[1rem] font-bold">
-                <Smartphone className="h-4 w-4" /> 고객 플랫폼
+                <Smartphone className="h-4 w-4" /> 고객 화면
               </span>
-              <span className={cx('text-[0.8125rem]', !onAx ? 'text-slate-200' : 'text-slate-500')}>메뉴·고양이·멤버십</span>
+              <span className={cx('text-[0.875rem]', !onAx ? 'text-white' : 'text-slate-600')}>{!onAx ? '지금 보는 화면' : '메뉴·고양이·멤버십'}</span>
             </Link>
-            <Link href="/ax" aria-current={onAx ? 'page' : undefined} className={cx(btn, onAx ? on : off)} data-testid="demo-to-ax">
-              <span className="flex items-center gap-1.5 text-[1rem] font-bold">
-                <LayoutDashboard className="h-4 w-4" /> 운영 AX
-              </span>
-              <span className={cx('text-[0.8125rem]', onAx ? 'text-slate-200' : 'text-slate-500')}>확인 큐·회원·실증</span>
-            </Link>
+            {SHOW_DEMO_AX_ENTRY && (
+              <Link href="/ax" aria-current={onAx ? 'page' : undefined} className={cx(btn, onAx ? on : off)} data-testid="demo-to-ax">
+                <span className="flex items-center gap-1.5 text-[1rem] font-bold">
+                  <LayoutDashboard className="h-4 w-4" /> 시연용 운영 AX
+                </span>
+                <span className={cx('text-[0.875rem]', onAx ? 'text-white' : 'text-slate-600')}>{onAx ? '지금 보는 화면' : '방문 확인·회원·혜택'}</span>
+              </Link>
+            )}
           </div>
         </section>
 

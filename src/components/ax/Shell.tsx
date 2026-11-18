@@ -13,6 +13,7 @@ import {
   Settings,
   ShieldCheck,
   Smartphone,
+  Store,
   Sparkles,
   UserCog,
   Users,
@@ -25,10 +26,11 @@ import { usePathname } from 'next/navigation';
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { DeviceSwitch, useDevice } from '@/components/device/Device';
 import { DemoToolsButton } from '@/components/shell/DemoTools';
+import { LiveClock } from '@/components/shell/LiveClock';
 import { LogoMark } from '@/components/shell/Logo';
 import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
 import { can as canFn, type Permission } from '@/lib/permissions';
-import { getProfile } from '@/lib/rules';
+import { getProfile, operatorIdentity } from '@/lib/rules';
 import { dispatch, resetDemo, useAppState } from '@/lib/store';
 import type { AppState, Profile } from '@/lib/types';
 import { cx } from '@/lib/util';
@@ -39,39 +41,40 @@ export function useOperator(): { s: AppState | null; op: Profile | null; can: (p
   return { s, op, can: (p) => !!op && canFn(op.role, p) };
 }
 
-type NavItem = { href: string; label: string; icon: React.ComponentType<{ className?: string }>; badge?: (s: AppState) => number };
+type NavItem = { href: string; label: string; title?: string; icon: React.ComponentType<{ className?: string }>; badge?: (s: AppState) => number };
 type NavGroup = { key: string; label: string; hue: string; items: NavItem[] };
 
+/** 메뉴 이름은 매장에서 쓰는 말로. 기술 용어(AX Coach·Proof 등)는 각 화면 안 설명과 'Why AX'에 남긴다 */
 export const AX_NAV: NavGroup[] = [
   {
     key: 'ops',
-    label: '운영',
+    label: '매일 하는 일',
     hue: '#5B8DEF',
     items: [
-      { href: '/ax', label: '대시보드', icon: LayoutDashboard },
-      { href: '/ax/coach', label: '오늘 할 일 · AX Coach', icon: ListChecks },
+      { href: '/ax', label: '오늘의 매장', title: '오늘의 매장 운영', icon: LayoutDashboard },
       { href: '/ax/queue', label: '방문·구매 확인', icon: ClipboardCheck, badge: (s) => s.tasks.filter((t) => t.status === 'OPEN').length },
+      { href: '/ax/coach', label: '오늘 추천 업무', icon: ListChecks },
     ],
   },
   {
     key: 'growth',
-    label: '고객·매출',
+    label: '고객·혜택',
     hue: '#D79A43',
     items: [
-      { href: '/ax/members', label: '회원·동의', icon: Users },
-      { href: '/ax/content', label: '메뉴·고양이 콘텐츠', icon: UtensilsCrossed },
-      { href: '/ax/rewards', label: '쿠폰·추천·보상', icon: Gift },
-      { href: '/ax/campaigns', label: '캠페인', icon: Megaphone },
+      { href: '/ax/members', label: '회원 관리', icon: Users },
+      { href: '/ax/content', label: '메뉴·고양이 사진', icon: UtensilsCrossed },
+      { href: '/ax/rewards', label: '쿠폰·혜택', icon: Gift },
+      { href: '/ax/campaigns', label: '고객 알림 보내기', icon: Megaphone },
     ],
   },
   {
     key: 'intel',
-    label: 'AX·성과',
+    label: '분석·성과',
     hue: '#3C9A75',
     items: [
-      { href: '/ax/analytics', label: '고객 행동·전환', icon: BarChart3 },
-      { href: '/ax/reorder', label: '추천·재구매', icon: Repeat2 },
-      { href: '/ax/evidence', label: 'Proof · 12주 실증', icon: ShieldCheck },
+      { href: '/ax/analytics', label: '고객 이용 분석', icon: BarChart3 },
+      { href: '/ax/reorder', label: '다시 올 고객 찾기', icon: Repeat2 },
+      { href: '/ax/evidence', label: '성과 기록', icon: ShieldCheck },
     ],
   },
   {
@@ -79,8 +82,8 @@ export const AX_NAV: NavGroup[] = [
     label: '관리',
     hue: '#718096',
     items: [
-      { href: '/ax/settings', label: '설정·역할·데이터', icon: Settings },
-      { href: '/ax/why', label: 'Why AX · 로드맵', icon: BookOpenText },
+      { href: '/ax/settings', label: '설정·권한', icon: Settings },
+      { href: '/ax/why', label: '서비스 소개·로드맵', icon: BookOpenText },
     ],
   },
 ];
@@ -101,7 +104,6 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
   }, [pathname, collapsed]);
   return (
     <nav aria-label="운영 메뉴" className="relative space-y-5" ref={navRef}>
-      {/* 선택 메뉴 강조 막대 — 누른 메뉴로 미끄러져 간다 (비원미래 0103 layoutId 방식을 CSS transform 으로) */}
       <span
         aria-hidden
         className="pointer-events-none absolute left-0 top-0 w-1 rounded-r-full bg-ax-highlight transition-[transform,height,opacity] duration-200 ease-out"
@@ -110,7 +112,7 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
       {AX_NAV.map((g) => (
         <div key={g.key}>
           {!collapsed && (
-            <p className="mb-1.5 flex items-center gap-2 px-2.5 text-[0.8125rem] font-bold tracking-[0.08em] text-ax-shell-muted">
+            <p className="mb-1.5 flex items-center gap-2 px-2.5 text-[0.8125rem] font-bold tracking-[0.04em] text-ax-shell-muted">
               <span className="h-2 w-2 rounded-full" style={{ background: g.hue }} aria-hidden />
               {g.label}
             </p>
@@ -150,11 +152,11 @@ function NavList({ s, collapsed, onNavigate }: { s: AppState; collapsed?: boolea
   );
 }
 
-function RoleSwitch({ s }: { s: AppState }) {
+function RoleSwitch({ s, onShell }: { s: AppState; onShell?: boolean }) {
   const toast = useToast();
   const op = getProfile(s, s.session.operatorId)!;
   return (
-    <div role="radiogroup" aria-label="역할 미리보기" data-testid="role-switch" className="inline-flex items-center gap-0.5 rounded-lg bg-slate-100 p-0.5">
+    <div role="radiogroup" aria-label="역할 미리보기 (DEMO)" data-testid="role-switch" className={cx('inline-flex items-center gap-0.5 rounded-lg p-0.5', onShell ? 'w-full bg-ax-shell-hover/[.10]' : 'bg-slate-100')}>
       {(['op_manager', 'op_staff'] as const).map((id) => {
         const p = getProfile(s, id)!;
         const on = op.id === id;
@@ -167,7 +169,11 @@ function RoleSwitch({ s }: { s: AppState }) {
               dispatch((d) => void (d.session.operatorId = id));
               toast(`${p.role === 'manager' ? '운영 책임자' : '매장 직원'} 권한으로 보는 중`, 'info');
             }}
-            className={cx('inline-flex h-11 items-center gap-1 rounded-md px-2.5 text-[0.875rem] font-semibold transition lg:h-8', on ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:text-slate-900')}
+            className={cx(
+              'inline-flex h-11 items-center justify-center gap-1 rounded-md px-2.5 text-[0.875rem] font-semibold transition lg:h-9',
+              onShell && 'flex-1',
+              on ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : onShell ? 'text-ax-shell-fg hover:bg-ax-shell-hover/[.08]' : 'text-slate-600 hover:text-slate-900',
+            )}
           >
             {p.role === 'manager' ? '책임자' : '직원'}
           </button>
@@ -177,11 +183,66 @@ function RoleSwitch({ s }: { s: AppState }) {
   );
 }
 
+/** 로그인 사용자처럼 보이는 프로필 — 이름·직함은 프로필 데이터, 역할은 현재 미리보기 역할. 서버 인증 전이므로 DEMO 를 함께 표시 */
+function OperatorCard({ op, compact }: { op: Profile; compact?: boolean }) {
+  const id = operatorIdentity(op);
+  return (
+    <Link
+      href="/ax/settings?tab=roles"
+      data-testid="operator-profile"
+      title={compact ? `${id.displayName} · ${id.roleLabel} · DEMO` : undefined}
+      aria-label={`${id.displayName}, ${id.roleLabel}, DEMO 계정 — 역할·권한 설정 열기`}
+      className={cx('flex min-h-11 items-center gap-3 rounded-xl transition hover:bg-ax-shell-hover/[.08]', compact ? 'justify-center p-1' : 'px-2 py-2')}
+    >
+      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-ax-primary text-[1rem] font-extrabold text-white ring-2 ring-ax-shell-hover/20">{id.initial}</span>
+      {!compact && (
+        <span className="min-w-0 flex-1 leading-tight">
+          <span className="block truncate text-[0.9375rem] font-bold text-ax-shell-fg" data-testid="operator-name">
+            {id.displayName}
+          </span>
+          <span className="mt-1 flex items-center gap-1.5 text-[0.8125rem] font-semibold text-ax-shell-muted">
+            {id.roleLabel}
+            {id.isDemo && <StatusBadge status="DEMO" />}
+          </span>
+        </span>
+      )}
+    </Link>
+  );
+}
+
+const Credit = ({ className }: { className?: string }) => (
+  <p data-testid="maker-credit" className={cx('text-[0.8125rem] font-medium text-ax-shell-muted', className)}>
+    제작 · 미래에이아이랩
+  </p>
+);
+
+/** 운영 AX → 고객 화면 (고객 플랫폼 색 = 청록) */
+function ToCustomerButton({ className, label = '고객 화면 보기', short }: { className?: string; label?: string; short?: string }) {
+  return (
+    <Link
+      href="/"
+      data-testid="to-customer"
+      aria-label="고객 화면 보기 (고객 플랫폼으로 전환)"
+      className={cx('inline-flex h-11 shrink-0 items-center gap-1.5 rounded-xl bg-brand-600 px-3 text-[0.9375rem] font-bold text-white shadow-sm transition hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 focus-visible:ring-offset-2 lg:h-10', className)}
+    >
+      <Store className="h-[18px] w-[18px]" aria-hidden />
+      {short ? (
+        <>
+          <span className="min-[400px]:hidden">{short}</span>
+          <span className="hidden min-[400px]:inline">{label}</span>
+        </>
+      ) : (
+        label
+      )}
+    </Link>
+  );
+}
+
 const TUTORIAL = [
-  { t: '오늘 할 일부터 보세요', b: 'AX Coach가 지금 처리하면 매출·재방문에 가장 도움이 되는 일 1~3개를 골라 줍니다.', href: '/ax/coach' },
-  { t: '방문·구매 확인이 핵심이에요', b: '고객이 체크인하거나 구매 확인을 요청하면 이 큐에 들어옵니다. 직원이 확인해야 스탬프·추천 보상이 지급되고 실증 기록(Proof)이 남아요.', href: '/ax/queue' },
-  { t: '숫자는 근거 수준을 구분해요', b: '링크 클릭·자가신고·직원확인·POS를 섞지 않습니다. 실적 KPI에는 직원확인 이상만 들어가요.', href: '/ax/analytics' },
-  { t: '발송은 사람이 승인해요', b: '재구매 안내·캠페인은 규칙이 후보를 만들고, 운영 책임자가 승인한 것만 수신 동의 고객에게 앱 알림으로 갑니다.', href: '/ax/campaigns' },
+  { t: '이 화면은 매장 운영관리 프로그램이에요', b: '리얼식단·다색냥의 고객 방문·구매·회원 혜택을 한곳에서 관리합니다. 첫 화면에서 지금 확인할 요청과 오늘 현황을 먼저 보여 드려요.', href: '/ax' },
+  { t: '방문·구매 확인이 가장 중요해요', b: '고객이 체크인하거나 구매 확인을 요청하면 이 목록에 들어와요. 직원이 확인해야 스탬프·친구 추천 보상이 지급되고 성과 기록이 남아요.', href: '/ax/queue' },
+  { t: '오늘 추천 업무를 참고하세요', b: '규칙으로 고른 1~3개의 할 일이에요. 재방문·콘텐츠 보완 등 지금 하면 도움이 되는 일을 알려 줍니다.', href: '/ax/coach' },
+  { t: '알림 발송은 책임자가 승인해요', b: '다시 올 고객 안내·고객 알림은 규칙이 대상을 고르고, 운영 책임자가 승인한 것만 수신 동의 고객에게 앱 알림으로 가요.', href: '/ax/campaigns' },
   { t: '설정에서 테마·권한·데이터 상태를 관리해요', b: '7개 테마, 직원/책임자 권한 미리보기, 매장 정보의 확인 상태를 바꿀 수 있어요.', href: '/ax/settings' },
 ];
 
@@ -197,7 +258,7 @@ function Tutorial({ open, onClose }: { open: boolean; onClose: () => void }) {
       onClose={onClose}
       tone="ax"
       title={step.t}
-      description={`운영 AX 둘러보기 ${i + 1} / ${TUTORIAL.length}`}
+      description={`둘러보기 ${i + 1} / ${TUTORIAL.length}`}
       size="sm"
       testId="ax-tutorial"
       footer={
@@ -218,8 +279,8 @@ function Tutorial({ open, onClose }: { open: boolean; onClose: () => void }) {
         </div>
       }
     >
-      <p className="text-[0.9688rem] leading-relaxed text-slate-700">{step.b}</p>
-      <Link href={step.href} onClick={onClose} className="mt-3 inline-block text-[0.875rem] font-semibold text-ax-primary underline-offset-2 hover:underline">
+      <p className="text-[1rem] leading-relaxed text-slate-700">{step.b}</p>
+      <Link href={step.href} onClick={onClose} className="mt-3 inline-flex min-h-11 items-center text-[0.9375rem] font-semibold text-ax-primary underline-offset-2 hover:underline">
         이 화면 열기 →
       </Link>
     </Sheet>
@@ -232,7 +293,7 @@ export const useOpenTutorial = () => useContext(TutorialCtx);
 export function AxShell({ children }: { children: React.ReactNode }) {
   const { s, op } = useOperator();
   const pathname = usePathname();
-  const { compact, inFrame } = useDevice();
+  const { compact, inFrame, desktop } = useDevice();
   const toast = useToast();
   const [drawer, setDrawer] = useState(false);
   const [tutorial, setTutorial] = useState(false);
@@ -247,136 +308,156 @@ export function AxShell({ children }: { children: React.ReactNode }) {
     dispatch((d) => void (d.settings.axTutorialDone = true));
   };
 
-  const title = AX_NAV.flatMap((g) => g.items).find((i) => isActive(pathname, i.href))?.label ?? '운영 AX';
+  const item = AX_NAV.flatMap((g) => g.items).find((i) => isActive(pathname, i.href));
+  const title = item?.title ?? item?.label ?? '매장 운영';
+  // 역할 미리보기 위치: PC(넓은 사이드바) → 사이드바 프로필 아래, PC 동시보기(좁은 사이드바) → 헤더, 모바일 → 메뉴(Drawer)
+  const roleInSidebar = desktop && !compact && !inFrame;
+  const roleInHeader = desktop && (compact || inFrame);
 
   return (
     <TutorialCtx.Provider value={() => setTutorial(true)}>
       <div className="min-h-dvh bg-[#F4F6F8] text-slate-900">
-        {/* Desktop sidebar */}
+        {/* PC 사이드바: 위 로고 · 가운데 메뉴(따로 스크롤) · 아래 고객 화면·프로필·제작 표기(항상 보임) */}
         <aside className={cx('fixed inset-y-0 left-0 z-30 hidden flex-col border-r border-black/10 bg-ax-shell lg:flex', compact ? 'w-[76px]' : 'w-[264px]')} data-testid="ax-sidebar">
-          <Link href="/ax" className={cx('flex h-16 shrink-0 items-center gap-2.5', compact ? 'justify-center' : 'px-5')}>
+          <Link href="/ax" className={cx('flex h-16 shrink-0 items-center gap-2.5', compact ? 'justify-center' : 'px-5')} aria-label="다색컴패니언 BUSINESS AX — 오늘의 매장">
             <LogoMark className="h-11 w-11 lg:h-8 lg:w-8" />
             {!compact && (
               <span className="leading-none">
                 <span className="block text-[1rem] font-extrabold tracking-tight text-ax-shell-fg">다색컴패니언</span>
-                <span className="mt-1 block text-[0.8125rem] font-bold tracking-[0.16em] text-ax-shell-muted">BUSINESS AX</span>
+                <span className="mt-1 block text-[0.8125rem] font-bold tracking-[0.14em] text-ax-shell-muted">BUSINESS AX</span>
               </span>
             )}
           </Link>
           <div className={cx('min-h-0 flex-1 overflow-y-auto pb-4 no-scrollbar', compact ? 'px-2' : 'px-3')}>{s && <NavList s={s} collapsed={compact} />}</div>
-          {!compact && (
-            <div className="border-t border-black/10 p-3">
-              <Link href="/" data-testid="surface-to-customer" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80 transition hover:bg-ax-shell-hover/[.06] hover:text-ax-shell-fg">
-                <Smartphone className="h-4 w-4" /> 고객 플랫폼 보기
+          <div className={cx('shrink-0 space-y-2 border-t border-black/10', compact ? 'px-2 py-3' : 'p-3')} data-testid="sidebar-footer">
+            {compact ? (
+              <Link href="/" data-testid="surface-to-customer" title="고객 화면 보기" aria-label="고객 화면 보기" className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">
+                <Store className="h-5 w-5" />
               </Link>
-            </div>
-          )}
+            ) : (
+              <Link href="/" data-testid="surface-to-customer" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-brand-600 px-3 text-[0.9375rem] font-bold text-white shadow-sm transition hover:bg-brand-700">
+                <Store className="h-[18px] w-[18px]" /> 고객 화면 보기
+              </Link>
+            )}
+            {op && <OperatorCard op={op} compact={compact} />}
+            {roleInSidebar && s && <RoleSwitch s={s} onShell />}
+            {!compact && <Credit className="px-2 pt-0.5" />}
+          </div>
         </aside>
 
         <div className={cx(compact ? 'lg:pl-[76px]' : 'lg:pl-[264px]')}>
-          {/* Header */}
           <header className="sticky top-0 z-20 border-b border-axline bg-white">
-            <div className="flex h-16 items-center gap-2 px-3 md:px-6">
-              <button onClick={() => setDrawer(true)} aria-label="메뉴 열기" data-testid="ax-menu" className="grid h-11 w-11 lg:h-10 lg:w-10 place-items-center rounded-xl text-slate-700 hover:bg-slate-100 lg:hidden">
+            <div className="flex h-14 items-center gap-2 px-3 md:h-16 md:px-6">
+              <button onClick={() => setDrawer(true)} aria-label="메뉴 열기" data-testid="ax-menu" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-slate-700 hover:bg-slate-100 lg:hidden">
                 <Menu className="h-5 w-5" />
               </button>
-              <div className="min-w-0 flex-1">
-                <p className="hidden text-[0.8125rem] font-semibold text-slate-500 md:block">다색냥 · 리얼식단 매장 운영</p>
-                <h1 className="truncate text-[1.125rem] font-extrabold tracking-tight text-slate-900 md:text-[1.1875rem]">{title}</h1>
+              <div className="min-w-0 flex-1 overflow-hidden">
+                <h1 className="truncate text-[1.125rem] font-extrabold leading-tight tracking-tight text-slate-900 md:text-[1.25rem]">{title}</h1>
+                <p className="mt-0.5 hidden truncate text-[0.8125rem] font-semibold text-slate-500 md:block">리얼식단 · 다색냥 고객·매장 운영관리</p>
               </div>
-              <StatusBadge status="DEMO" className="hidden lg:inline-flex" />
+              <LiveClock variant="pill" className="hidden lg:inline-flex" />
+              <ToCustomerButton className="hidden md:inline-flex" label="고객 화면 보기" />
+              <ToCustomerButton className="md:hidden" label="고객 화면" short="고객" />
               <DemoToolsButton tone="ax" className="lg:hidden" />
-              {s && <RoleSwitch s={s} />}
-              <div className={cx('hidden items-center gap-2', compact ? '2xl:flex' : 'xl:flex')}>
-                <Link href="/" className="inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[0.8438rem] font-semibold text-slate-600 ring-1 ring-slate-200 transition hover:bg-slate-50">
-                  <Smartphone className="h-3.5 w-3.5" /> 고객 화면
-                </Link>
-              </div>
-              <DeviceSwitch />
-              <button onClick={() => setTutorial(true)} aria-label="둘러보기 다시 보기" className="hidden h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
+              {roleInHeader && s && <RoleSwitch s={s} />}
+              <DeviceSwitch className="hidden lg:inline-flex" iconOnly={!compact ? 'below-2xl' : 'always'} />
+              <button onClick={() => setTutorial(true)} aria-label="둘러보기 다시 보기" className="hidden h-10 w-10 place-items-center rounded-xl text-slate-600 hover:bg-slate-100 lg:grid">
                 <HelpCircle className="h-[18px] w-[18px]" />
               </button>
-              <button onClick={() => setReset(true)} aria-label="데모 초기화" className="hidden h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-xl text-slate-500 hover:bg-slate-100 md:grid">
+              <button onClick={() => setReset(true)} aria-label="데모 초기화" className="hidden h-10 w-10 place-items-center rounded-xl text-slate-600 hover:bg-slate-100 lg:grid">
                 <RotateCcw className="h-[18px] w-[18px]" />
               </button>
             </div>
+            {/* 휴대폰·태블릿: 날짜·시각은 따로 한 줄 (제목·버튼과 겹치지 않게) */}
+            <div className="flex h-8 items-center justify-between gap-2 border-t border-slate-100 bg-slate-50 px-4 md:px-6 lg:hidden" data-testid="clock-row">
+              <LiveClock />
+              <span className="truncate text-[0.8125rem] font-semibold text-slate-500">{op ? operatorIdentity(op).roleLabel : ''} · DEMO</span>
+            </div>
             {op?.role === 'staff' && (
-              <div className="flex items-center gap-2 border-t border-amber-200/70 bg-amber-50 px-4 py-1.5 text-[0.8125rem] font-medium text-amber-900 md:px-6">
-                <UserCog className="h-3.5 w-3.5" /> 매장 직원 권한으로 보는 중 — 규칙 변경·캠페인 승인·쿠폰 취소는 잠겨 있어요.
+              <div className="flex items-center gap-2 border-t border-amber-200 bg-amber-50 px-4 py-1.5 text-[0.875rem] font-medium text-amber-900 md:px-6">
+                <UserCog className="h-4 w-4 shrink-0" /> 매장 직원 권한으로 보는 중 — 규칙 변경·캠페인 승인·쿠폰 취소는 잠겨 있어요.
               </div>
             )}
           </header>
 
-          <main key={pathname} className="route-in mx-auto max-w-[1360px] px-3 pb-28 pt-4 md:px-6 md:pt-6 lg:pb-12">
+          <main key={pathname} className="route-in mx-auto max-w-[1360px] px-3 pb-28 pt-3 md:px-6 md:pt-6 lg:pb-12">
             {children}
           </main>
         </div>
 
-        {/* Mobile bottom nav */}
+        {/* 모바일 하단 메뉴 — 자주 쓰는 4개 + 더보기 */}
         <nav aria-label="운영 하단 메뉴" className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white lg:hidden">
           <div className="grid grid-cols-5 pb-safe pt-1">
             {[
-              { href: '/ax', label: '대시보드', icon: LayoutDashboard },
-              { href: '/ax/queue', label: '확인 큐', icon: ClipboardCheck },
-              { href: '/ax/coach', label: '오늘 할 일', icon: Sparkles },
+              { href: '/ax', label: '홈', icon: LayoutDashboard },
+              { href: '/ax/queue', label: '확인', icon: ClipboardCheck },
               { href: '/ax/members', label: '회원', icon: Users },
+              { href: '/ax/coach', label: '추천 업무', icon: Sparkles },
             ].map((n) => {
               const active = isActive(pathname, n.href);
               const badge = n.href === '/ax/queue' && s ? s.tasks.filter((t) => t.status === 'OPEN').length : 0;
               return (
-                <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined} className="press relative flex flex-col items-center gap-0.5 py-1.5">
+                <Link key={n.href} href={n.href} aria-current={active ? 'page' : undefined} aria-label={badge ? `${n.label} (대기 ${badge}건)` : undefined} className="press relative flex flex-col items-center gap-0.5 py-1.5">
                   <n.icon className={cx('h-[22px] w-[22px]', active ? 'text-ax-primary' : 'text-slate-500')} />
                   <span className={cx('text-[0.8125rem]', active ? 'font-bold text-slate-900' : 'font-semibold text-slate-600')}>{n.label}</span>
-                  {badge > 0 && <span data-badge className="absolute right-[18%] top-0 grid h-5 min-w-5 place-items-center rounded-full bg-red-600 px-1 text-[0.75rem] font-bold text-white ring-2 ring-white">{badge}</span>}
+                  {badge > 0 && <span data-badge aria-hidden className="absolute right-[18%] top-0 grid h-5 min-w-5 place-items-center rounded-full bg-red-600 px-1 text-[0.75rem] font-bold text-white ring-2 ring-white">{badge}</span>}
                 </Link>
               );
             })}
-            <button onClick={() => setDrawer(true)} className="press flex flex-col items-center gap-0.5 py-1.5">
+            <button onClick={() => setDrawer(true)} className="press flex flex-col items-center gap-0.5 py-1.5" aria-haspopup="dialog">
               <Menu className="h-[22px] w-[22px] text-slate-500" />
               <span className="text-[0.8125rem] font-semibold text-slate-600">더보기</span>
             </button>
           </div>
         </nav>
 
-        {/* Mobile drawer */}
+        {/* 모바일 메뉴(Drawer) — 메뉴는 따로 스크롤, 아래에 프로필·역할·제작 표기 */}
         {drawer && s && (
           <div className="fixed inset-0 z-[70] lg:hidden" role="dialog" aria-modal="true" aria-label="운영 메뉴">
             <div className="absolute inset-0 animate-fade-in bg-black/40" onClick={() => setDrawer(false)} />
-            <div className="absolute inset-y-0 left-0 flex w-[84%] max-w-[320px] animate-drawer-in flex-col bg-ax-shell shadow-2xl">
-              <div className="flex h-14 items-center justify-between px-4">
-                <span className="flex items-center gap-2">
-                  <LogoMark className="h-11 w-11 lg:h-7 lg:w-7" />
-                  <span className="text-[0.9375rem] font-extrabold text-ax-shell-fg">Business AX</span>
+            <div className="absolute inset-y-0 left-0 flex w-[86%] max-w-[330px] animate-drawer-in flex-col bg-ax-shell shadow-2xl" data-testid="ax-drawer">
+              <div className="flex h-16 shrink-0 items-center justify-between px-4">
+                <span className="flex items-center gap-2.5">
+                  <LogoMark className="h-9 w-9" />
+                  <span className="leading-none">
+                    <span className="block text-[1rem] font-extrabold text-ax-shell-fg">다색컴패니언</span>
+                    <span className="mt-1 block text-[0.8125rem] font-bold tracking-[0.14em] text-ax-shell-muted">BUSINESS AX</span>
+                  </span>
                 </span>
-                <button onClick={() => setDrawer(false)} aria-label="메뉴 닫기" className="grid h-11 w-11 lg:h-9 lg:w-9 place-items-center rounded-lg text-ax-shell-fg/80 hover:bg-ax-shell-hover/10">
+                <button onClick={() => setDrawer(false)} aria-label="메뉴 닫기" className="grid h-11 w-11 place-items-center rounded-lg text-ax-shell-fg hover:bg-ax-shell-hover/10">
                   <X className="h-5 w-5" />
                 </button>
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-3 pb-4">
                 <NavList s={s} onNavigate={() => setDrawer(false)} />
+                <div className="mt-5 space-y-0.5 border-t border-black/10 pt-3">
+                  <button
+                    onClick={() => {
+                      setDrawer(false);
+                      setTutorial(true);
+                    }}
+                    className="flex min-h-11 w-full items-center gap-2 rounded-xl px-2.5 text-[0.9375rem] font-semibold text-ax-shell-fg"
+                  >
+                    <HelpCircle className="h-5 w-5" /> 둘러보기
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDrawer(false);
+                      setReset(true);
+                    }}
+                    className="flex min-h-11 w-full items-center gap-2 rounded-xl px-2.5 text-[0.9375rem] font-semibold text-ax-shell-fg"
+                  >
+                    <RotateCcw className="h-5 w-5" /> 데모 초기화
+                  </button>
+                </div>
               </div>
-              <div className="space-y-1 border-t border-black/10 p-3">
-                <Link href="/" className="flex items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80">
-                  <Smartphone className="h-4 w-4" /> 고객 플랫폼 보기
+              <div className="shrink-0 space-y-2 border-t border-black/10 p-3 pb-safe">
+                <Link href="/" className="flex h-11 items-center justify-center gap-2 rounded-xl bg-brand-600 text-[0.9375rem] font-bold text-white">
+                  <Store className="h-[18px] w-[18px]" /> 고객 화면 보기
                 </Link>
-                <button
-                  onClick={() => {
-                    setDrawer(false);
-                    setTutorial(true);
-                  }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80"
-                >
-                  <HelpCircle className="h-4 w-4" /> 둘러보기
-                </button>
-                <button
-                  onClick={() => {
-                    setDrawer(false);
-                    setReset(true);
-                  }}
-                  className="flex w-full items-center gap-2 rounded-xl px-2 py-2 text-[0.875rem] font-semibold text-ax-shell-fg/80"
-                >
-                  <RotateCcw className="h-4 w-4" /> 데모 초기화
-                </button>
+                {op && <OperatorCard op={op} />}
+                <RoleSwitch s={s} onShell />
+                <Credit className="px-2" />
               </div>
             </div>
           </div>
@@ -443,13 +524,25 @@ export function Locked({ reason }: { reason: string }) {
   );
 }
 
-/** 화면 머리 — 제목 24~26px, 설명 15px (비원미래 PageHeader: 제목이 짓눌리지 않게 basis 를 준다) */
-export function PageIntro({ title, body, right }: { title: string; body: string; right?: React.ReactNode }) {
+/**
+ * 화면 머리 (4차) — 제목은 상단 헤더에 이미 있으므로 다시 크게 쓰지 않는다(스크린리더용 h2 만).
+ * 한 줄 요약을 먼저, 긴 설명(기술 용어 포함)은 '설명 더보기'로 단계 공개.
+ */
+export function PageIntro({ title, body, more, right }: { title: string; body: string; more?: string; right?: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="mb-5 flex flex-wrap items-end justify-between gap-3 md:mb-6">
+    <div className="mb-4 flex flex-wrap items-start justify-between gap-3 md:mb-5">
       <div className="min-w-0 flex-[1_1_20rem]">
-        <h2 className="ax-h1">{title}</h2>
-        <p className="mt-1.5 max-w-3xl text-[0.9375rem] leading-relaxed text-slate-600">{body}</p>
+        <h2 className="sr-only">{title}</h2>
+        <p className="max-w-3xl text-[0.9375rem] font-medium leading-relaxed text-slate-700 md:text-[1rem]">
+          {body}
+          {more && (
+            <button type="button" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="ml-1.5 inline-flex min-h-11 items-center align-middle text-[0.875rem] font-bold text-ax-primary underline-offset-2 hover:underline lg:min-h-0">
+              {open ? '설명 접기' : '설명 더보기'}
+            </button>
+          )}
+        </p>
+        {more && open && <p className="mt-1.5 max-w-3xl rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[0.875rem] leading-relaxed text-slate-600">{more}</p>}
       </div>
       {right && <div className="flex shrink-0 flex-wrap items-center gap-2">{right}</div>}
     </div>

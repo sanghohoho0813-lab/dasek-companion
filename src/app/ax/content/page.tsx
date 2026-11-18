@@ -293,8 +293,9 @@ function Inner() {
   return (
     <div>
       <PageIntro
-        title="메뉴·고양이 콘텐츠"
-        body="고객 화면에 보이는 메뉴와 고양이 프로필·사진을 관리합니다. 모든 항목에 근거 상태가 붙고, 사진은 공개 승인 후에만 노출돼요."
+        title="메뉴·고양이 사진"
+        body="고객 화면에 보이는 메뉴·가격·사진과 고양이 프로필을 바꿔요."
+        more="모든 항목에 근거 상태(운영자 확인·제공 정보·가정·미확인)가 붙고, 고양이 사진은 공개 승인 후에만 고객에게 보여요."
         right={!canEdit ? <Locked reason="수정은 책임자 권한" /> : undefined}
       />
       <Segmented

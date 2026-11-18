@@ -20,12 +20,13 @@ test('Device View: PC / Mobile / PC+Mobile with route sync and no recursion', as
   await expect(frame.getByTestId('device-frame')).toHaveCount(0);
 
   // PC → Mobile
-  await page.getByTestId('ax-sidebar').getByRole('link', { name: '회원·동의' }).click();
+  await page.getByTestId('ax-sidebar').getByRole('link', { name: '회원 관리' }).click();
   await expect(page).toHaveURL(/\/ax\/members$/);
-  await expect(frame.getByTestId('member-table')).toBeVisible();
+  // 4차: 390px 프레임에서는 표 대신 카드 목록
+  await expect(frame.getByTestId('member-cards')).toBeVisible();
 
   // Mobile → PC
-  await frame.getByRole('link', { name: '확인 큐' }).click();
+  await frame.getByRole('navigation', { name: '운영 하단 메뉴' }).getByRole('link', { name: /^확인/ }).click();
   await expect(page).toHaveURL(/\/ax\/queue/);
 
   // 같은 데이터

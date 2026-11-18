@@ -10,6 +10,7 @@ import { Button, Sheet, StatusBadge, useToast } from '@/components/ui';
 import { getProfile } from '@/lib/rules';
 import { dispatch, resetDemo, useAppState } from '@/lib/store';
 import type { AppState, Profile } from '@/lib/types';
+import { SHOW_DEMO_AX_ENTRY } from '@/lib/mode';
 import { cx } from '@/lib/util';
 
 export function useCustomer(): { s: AppState | null; me: Profile | null } {
@@ -39,9 +40,11 @@ function DemoBar() {
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <DeviceSwitch tone="brand" />
-          <Link href="/ax" data-testid="surface-to-ax" className="inline-flex h-8 items-center gap-1 rounded-md bg-white px-2.5 font-semibold text-slate-800 ring-1 ring-slate-300 transition hover:bg-slate-50">
-            <LayoutDashboard className="h-3.5 w-3.5" /> 운영 AX
-          </Link>
+          {SHOW_DEMO_AX_ENTRY && (
+            <Link href="/ax" data-testid="surface-to-ax" title="시연용 — 실제 운영에서는 인증된 직원·관리자에게만 보입니다" className="inline-flex h-8 items-center gap-1.5 rounded-lg bg-slate-900 px-3 font-bold text-white shadow-sm transition hover:bg-slate-700">
+              <LayoutDashboard className="h-4 w-4" /> 시연용 AX 보기
+            </Link>
+          )}
           <button onClick={() => setConfirm(true)} className="inline-flex h-8 items-center gap-1 rounded-md px-2 font-semibold text-amber-900 transition hover:bg-amber-100">
             <RotateCcw className="h-3.5 w-3.5" /> 데모 초기화
           </button>
@@ -206,9 +209,11 @@ function Footer() {
           <Link href="/credits" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
             샘플 사진 출처
           </Link>
-          <Link href="/ax" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
-            매장 운영자
-          </Link>
+          {SHOW_DEMO_AX_ENTRY && (
+            <Link href="/ax" className="inline-flex min-h-11 items-center rounded-md px-2 font-medium text-ink-2 hover:bg-white hover:text-ink">
+              매장 운영자(시연)
+            </Link>
+          )}
         </div>
         <p className="mt-3">리얼식단 · 다색냥 — 사업자 정보와 운영 주체는 운영자 확인 후 표기됩니다.</p>
         <p>현재 화면은 DEMO 데이터로 동작하며, 결제·예약 확정은 이 앱에서 처리하지 않습니다. 외부 예약은 각 채널에서 확정됩니다.</p>

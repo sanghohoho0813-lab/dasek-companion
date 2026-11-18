@@ -33,8 +33,9 @@ export default function EvidencePage() {
   return (
     <div className="space-y-4">
       <PageIntro
-        title="Proof · 12주 실증"
-        body="로그인 수나 화면 캡처가 아니라 'Trigger → 결정 → 사람 승인 → 조치 → 결과 → KPI 변화 → 데이터 출처'가 남는 사건만 실증으로 기록합니다. 현재는 DEMO 기록이며, 실제 운영 Baseline 측정 전에는 개선율을 만들지 않아요."
+        title="성과 기록"
+        body="확인·승인·알림 같은 실제 처리 결과가 남은 기록만 모아요. 지금은 DEMO 기록이에요."
+        more="로그인 수나 화면 캡처가 아니라 '요청(Trigger) → 결정 → 사람 승인 → 조치 → 결과 → KPI 변화 → 데이터 출처'가 남는 사건만 실증(Proof Event)으로 기록합니다. 실제 운영 Baseline 측정 전에는 개선율을 만들지 않아요(12주 실증 계획)."
         right={
           <Button tone="ax" variant="outline" onClick={download} data-testid="evidence-export">
             <Download className="h-4 w-4" /> Evidence Pack(JSON)

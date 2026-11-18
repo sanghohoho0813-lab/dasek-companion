@@ -95,7 +95,7 @@ function Inner() {
   if (!s) return <PageSkeleton />;
   return (
     <div className="space-y-4">
-      <PageIntro title="설정·역할·데이터" body="테마와 글자 크기, 역할별 권한, 매장 정보의 근거 상태, 연동·데이터 상태와 감사 기록을 관리합니다." />
+      <PageIntro title="설정·권한" body="테마·글자 크기, 직원/책임자 권한, 매장 정보와 데이터 상태를 관리해요." more="매장 정보의 근거 상태, 연동·데이터 상태(Supabase는 초안·미연결), 감사 기록도 여기에서 확인해요." />
       <Segmented
         tone="ax"
         label="설정 구분"

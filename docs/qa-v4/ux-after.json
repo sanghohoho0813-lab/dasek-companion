@@ -1,0 +1,456 @@
+{
+ "label": "after (4차)",
+ "base": "http://localhost:3401",
+ "measuredAt": "2026-11-18T01:33:56.921Z",
+ "firstScreen": {
+  "/ax @390x844": {
+   "fold": 771,
+   "identity": {
+    "top": 101,
+    "bottom": 164,
+    "text": "다색컴패니언 BUSINESS AX · DEMO 데이터 리얼식단·다색냥의 고객 방문·구매·회",
+    "inFirstScreen": true
+   },
+   "clock": {
+    "top": 62,
+    "bottom": 83,
+    "text": "2026.11.18 (수) 10:33:58",
+    "inFirstScreen": true
+   },
+   "pendingCount": {
+    "top": 201,
+    "bottom": 237,
+    "text": "3건 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 263,
+    "bottom": 307,
+    "text": "방문 확인",
+    "inFirstScreen": true
+   },
+   "kpi": {
+    "top": 596,
+    "bottom": 674,
+    "text": "확인 구매 0건 신규 회원 0명 확인 매출 0원",
+    "inFirstScreen": true
+   },
+   "quickActions": {
+    "top": 763,
+    "bottom": 1012,
+    "text": "빠른 업무 회원 검색 쿠폰 사용 구매 등록 체크인 코드 메뉴·사진 고객 알림",
+    "inFirstScreen": false
+   },
+   "toCustomer": {
+    "top": 6,
+    "bottom": 50,
+    "text": "고객",
+    "inFirstScreen": true
+   }
+  },
+  "/ax @360x667": {
+   "fold": 594,
+   "identity": {
+    "top": 101,
+    "bottom": 164,
+    "text": "다색컴패니언 BUSINESS AX · DEMO 데이터 리얼식단·다색냥의 고객 방문·구매·회",
+    "inFirstScreen": true
+   },
+   "clock": {
+    "top": 62,
+    "bottom": 83,
+    "text": "2026.11.18 (수) 10:33:59",
+    "inFirstScreen": true
+   },
+   "pendingCount": {
+    "top": 201,
+    "bottom": 237,
+    "text": "3건 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 263,
+    "bottom": 307,
+    "text": "방문 확인",
+    "inFirstScreen": true
+   },
+   "kpi": {
+    "top": 596,
+    "bottom": 674,
+    "text": "확인 구매 0건 신규 회원 0명 확인 매출 0원",
+    "inFirstScreen": false
+   },
+   "quickActions": {
+    "top": 763,
+    "bottom": 1012,
+    "text": "빠른 업무 회원 검색 쿠폰 사용 구매 등록 체크인 코드 메뉴·사진 고객 알림",
+    "inFirstScreen": false
+   },
+   "toCustomer": {
+    "top": 6,
+    "bottom": 50,
+    "text": "고객",
+    "inFirstScreen": true
+   }
+  },
+  "/ax @430x932": {
+   "fold": 859,
+   "identity": {
+    "top": 101,
+    "bottom": 164,
+    "text": "다색컴패니언 BUSINESS AX · DEMO 데이터 리얼식단·다색냥의 고객 방문·구매·회",
+    "inFirstScreen": true
+   },
+   "clock": {
+    "top": 62,
+    "bottom": 83,
+    "text": "2026.11.18 (수) 10:34:00",
+    "inFirstScreen": true
+   },
+   "pendingCount": {
+    "top": 201,
+    "bottom": 237,
+    "text": "3건 확인 대기",
+    "inFirstScreen": true
+   },
+   "primaryCta": {
+    "top": 263,
+    "bottom": 307,
+    "text": "방문 확인",
+    "inFirstScreen": true
+   },
+   "kpi": {
+    "top": 596,
+    "bottom": 674,
+    "text": "확인 구매 0건 신규 회원 0명 확인 매출 0원",
+    "inFirstScreen": true
+   },
+   "quickActions": {
+    "top": 763,
+    "bottom": 1012,
+    "text": "빠른 업무 회원 검색 쿠폰 사용 구매 등록 체크인 코드 메뉴·사진 고객 알림",
+    "inFirstScreen": true
+   },
+   "toCustomer": {
+    "top": 6,
+    "bottom": 50,
+    "text": "고객 화면",
+    "inFirstScreen": true
+   }
+  },
+  "/ @390x844": {
+   "fold": 763,
+   "identity": {
+    "top": 113,
+    "bottom": 178,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 254,
+    "bottom": 458,
+    "text": "샘플 사진 리얼식단 샐러드·도시락",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 254,
+    "bottom": 458,
+    "text": "샘플 사진 다색냥 고양이카페",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 606,
+    "bottom": 631,
+    "text": "대표·인기 메뉴",
+    "inFirstScreen": true
+   },
+   "membership": {
+    "top": 1494,
+    "bottom": 1519,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  },
+  "/ @360x667": {
+   "fold": 586,
+   "identity": {
+    "top": 113,
+    "bottom": 178,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 254,
+    "bottom": 447,
+    "text": "샘플 사진 리얼식단 샐러드·도시락",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 254,
+    "bottom": 447,
+    "text": "샘플 사진 다색냥 고양이카페",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 594,
+    "bottom": 619,
+    "text": "대표·인기 메뉴",
+    "inFirstScreen": false
+   },
+   "membership": {
+    "top": 1483,
+    "bottom": 1508,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  },
+  "/ @430x932": {
+   "fold": 851,
+   "identity": {
+    "top": 113,
+    "bottom": 178,
+    "text": "산책길에서 만나는 든든한 한 끼와 고양이",
+    "inFirstScreen": true
+   },
+   "realsicdan": {
+    "top": 254,
+    "bottom": 473,
+    "text": "샘플 사진 리얼식단 샐러드·도시락",
+    "inFirstScreen": true
+   },
+   "dasek": {
+    "top": 254,
+    "bottom": 473,
+    "text": "샘플 사진 다색냥 고양이카페",
+    "inFirstScreen": true
+   },
+   "signature": {
+    "top": 621,
+    "bottom": 646,
+    "text": "대표·인기 메뉴",
+    "inFirstScreen": true
+   },
+   "membership": {
+    "top": 1490,
+    "bottom": 1515,
+    "text": "가입하면 받는 혜택",
+    "inFirstScreen": false
+   }
+  }
+ },
+ "scroll": {
+  "/ @390x844": {
+   "px": 2663,
+   "screens": 3.16
+  },
+  "/realsicdan @390x844": {
+   "px": 2745,
+   "screens": 3.25
+  },
+  "/dasek @390x844": {
+   "px": 3859,
+   "screens": 4.57
+  },
+  "/my @390x844": {
+   "px": 1696,
+   "screens": 2.01
+  },
+  "/ax @390x844": {
+   "px": 2312,
+   "screens": 2.74
+  },
+  "/ax/members @390x844": {
+   "px": 2232,
+   "screens": 2.64
+  },
+  "/ @360x667": {
+   "px": 2652,
+   "screens": 3.98
+  },
+  "/realsicdan @360x667": {
+   "px": 2700,
+   "screens": 4.05
+  },
+  "/dasek @360x667": {
+   "px": 3908,
+   "screens": 5.86
+  },
+  "/my @360x667": {
+   "px": 1684,
+   "screens": 2.52
+  },
+  "/ax @360x667": {
+   "px": 2383,
+   "screens": 3.57
+  },
+  "/ax/members @360x667": {
+   "px": 2417,
+   "screens": 3.62
+  },
+  "/ @430x932": {
+   "px": 2592,
+   "screens": 2.78
+  },
+  "/realsicdan @430x932": {
+   "px": 2738,
+   "screens": 2.94
+  },
+  "/dasek @430x932": {
+   "px": 3736,
+   "screens": 4.01
+  },
+  "/my @430x932": {
+   "px": 1645,
+   "screens": 1.77
+  },
+  "/ax @430x932": {
+   "px": 2238,
+   "screens": 2.4
+  },
+  "/ax/members @430x932": {
+   "px": 2148,
+   "screens": 2.3
+  },
+  "/ @1440x900": {
+   "px": 2839,
+   "screens": 3.15
+  },
+  "/realsicdan @1440x900": {
+   "px": 2549,
+   "screens": 2.83
+  },
+  "/dasek @1440x900": {
+   "px": 3593,
+   "screens": 3.99
+  },
+  "/my @1440x900": {
+   "px": 1252,
+   "screens": 1.39
+  },
+  "/ax @1440x900": {
+   "px": 1628,
+   "screens": 1.81
+  },
+  "/ax/members @1440x900": {
+   "px": 945,
+   "screens": 1.05
+  }
+ },
+ "tasks": {
+  "방문 확인 (업무 완료) @390": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "방문 확인"
+   ]
+  },
+  "구매 확인 (업무 완료) @390": {
+   "taps": 2,
+   "scrollPx": 61,
+   "ok": true,
+   "path": [
+    "구매 확인",
+    "확인 완료"
+   ]
+  },
+  "회원 검색 (검색창 입력 가능) @390": {
+   "taps": 1,
+   "scrollPx": 92,
+   "ok": true,
+   "path": [
+    "회원 검색"
+   ]
+  },
+  "쿠폰 확인 (쿠폰 사용 창 열림) @390": {
+   "taps": 1,
+   "scrollPx": 92,
+   "ok": true,
+   "path": [
+    "쿠폰 사용"
+   ]
+  },
+  "메뉴·사진 관리 진입 @390": {
+   "taps": 1,
+   "scrollPx": 184,
+   "ok": true,
+   "path": [
+    "메뉴·사진"
+   ]
+  },
+  "AX → 고객 화면 @390": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "고객"
+   ]
+  },
+  "고객 화면 → 시연용 AX @390": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "DEMO",
+    "시연용 운영 AX 방문 확인·회원·혜택"
+   ]
+  },
+  "방문 확인 (업무 완료) @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "방문 확인"
+   ]
+  },
+  "구매 확인 (업무 완료) @1440": {
+   "taps": 2,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "구매 확인",
+    "확인 완료"
+   ]
+  },
+  "회원 검색 (검색창 입력 가능) @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "회원 검색"
+   ]
+  },
+  "쿠폰 확인 (쿠폰 사용 창 열림) @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "쿠폰 사용"
+   ]
+  },
+  "메뉴·사진 관리 진입 @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "메뉴·사진"
+   ]
+  },
+  "AX → 고객 화면 @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "고객 화면 보기"
+   ]
+  },
+  "고객 화면 → 시연용 AX @1440": {
+   "taps": 1,
+   "scrollPx": 0,
+   "ok": true,
+   "path": [
+    "시연용 AX 보기"
+   ]
+  }
+ }
+}

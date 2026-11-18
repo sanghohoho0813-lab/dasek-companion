@@ -21,8 +21,9 @@ export default function ReorderPage() {
   return (
     <div className="space-y-4">
       <PageIntro
-        title="추천·재구매"
-        body="고객이 저장한 메뉴 중 14일간 확인 구매가 없는 경우를 규칙으로 찾아 후보를 만듭니다. 운영 책임자가 승인한 후보만 (동의 고객에게) 앱 알림으로 안내되고, 이후 해당 메뉴의 직원확인 구매가 생기면 '전환'으로 기록돼요."
+        title="다시 올 고객 찾기"
+        body="메뉴를 저장했지만 14일간 사지 않은 고객을 찾아 안내 후보로 보여줘요."
+        more="규칙으로 후보를 만들고, 운영 책임자가 승인한 후보만 알림 동의 고객에게 앱 알림으로 안내합니다. 이후 해당 메뉴의 직원확인 구매가 생기면 '전환'으로 기록돼요(재구매 후보 · REORDER)."
         right={
           <Button tone="ax" onClick={() => run(() => opAct((d, c) => D.refreshReorderCandidates(d, c)), (n) => (n ? `새 후보 ${n}건을 만들었어요.` : '새 후보가 없어요.'))} data-testid="reorder-refresh">
             <RefreshCw className="h-4 w-4" /> 후보 갱신 {fresh > 0 && `(${fresh})`}

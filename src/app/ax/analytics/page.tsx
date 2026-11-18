@@ -31,7 +31,7 @@ export default function AnalyticsPage() {
   ] as const;
   return (
     <div className="space-y-4">
-      <PageIntro title="고객 행동·전환" body="모든 수치는 집계(ANALYTICS)이며 AI 예측이 아닙니다. 근거 수준(클릭 < 자가신고 < 직원확인 < POS)을 섞지 않고, 매출 금액은 직원이 입력한 경우만 합산해요." right={<Tag tone="amber">DEMO 시드 데이터</Tag>} />
+      <PageIntro title="고객 이용 분석" body="가입부터 재이용까지 고객이 어디서 멈추는지 봐요. AI 예측이 아닌 집계예요." more="모든 수치는 집계(ANALYTICS)입니다. 근거 수준(클릭 < 자가신고 < 직원확인 < POS)을 섞지 않고, 매출 금액은 직원이 입력한 경우만 합산해요." right={<Tag tone="amber">DEMO 시드 데이터</Tag>} />
       <div className="grid gap-4 xl:grid-cols-3">
         <Panel title="가입 → 확인 이용 전환" className="xl:col-span-2">
           <div className="grid grid-cols-3 gap-2">

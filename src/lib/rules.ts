@@ -8,6 +8,12 @@ import { DAY, dayKey, daysBetween } from './util';
 
 /* ── 기본 조회 ─────────────────────────────────────── */
 export const getProfile = (s: AppState, id: string | null | undefined) => (id ? s.profiles.find((p) => p.id === id) ?? null : null);
+
+/** 운영자 표시 정보 — 이름·직함은 프로필 데이터에서 온다 (실제 인증 연결 시 로그인 사용자 프로필로 대체) */
+export function operatorIdentity(p: Profile) {
+  const roleLabel = p.role === 'manager' ? '운영 책임자' : p.role === 'staff' ? '매장 직원' : '고객';
+  return { displayName: p.title ? `${p.name} ${p.title}` : p.name, roleLabel, initial: p.name.slice(0, 1), isDemo: p.isDemo };
+}
 export const getMenuItem = (s: AppState, id: string) => s.menuItems.find((m) => m.id === id) ?? null;
 export const getStore = (s: AppState, id: string) => s.stores.find((x) => x.id === id) ?? null;
 export const storeOfBrand = (s: AppState, brand: BrandId) => s.stores.find((x) => x.brand === brand)!;

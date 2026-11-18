@@ -35,7 +35,8 @@ function Inner() {
     <div>
       <PageIntro
         title="방문·구매 확인"
-        body="고객의 체크인과 구매 확인 요청을 직원이 확인하는 곳입니다. 확인된 건만 스탬프·추천 보상·KPI·Proof에 반영됩니다. 오래된 요청부터 보여요."
+        body="오래 기다린 요청부터 보여요. 확인해야 스탬프·추천 보상이 지급돼요."
+        more="고객의 체크인과 구매 확인 요청을 직원이 확인하는 곳입니다. 확인된 건만 스탬프·추천 보상·운영 수치(KPI)·성과 기록(Proof)에 반영돼요."
         right={
           <>
             <Button tone="ax" variant="outline" onClick={() => setRedeem(true)} data-testid="open-redeem">

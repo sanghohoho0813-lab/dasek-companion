@@ -109,7 +109,7 @@ export function FrameSync() {
   return null;
 }
 
-export function DeviceSwitch({ tone = 'ax', className }: { tone?: 'ax' | 'brand'; className?: string }) {
+export function DeviceSwitch({ tone = 'ax', className, iconOnly }: { tone?: 'ax' | 'brand'; className?: string; iconOnly?: 'below-2xl' | 'always' }) {
   const { mode, setMode, desktop, inFrame } = useDevice();
   if (inFrame || !desktop) return null;
   const opts: { v: DeviceMode; label: string; icon: React.ReactNode }[] = [
@@ -125,14 +125,16 @@ export function DeviceSwitch({ tone = 'ax', className }: { tone?: 'ax' | 'brand'
           role="radio"
           aria-checked={mode === o.v}
           data-testid={`device-${o.v}`}
+          title={o.label}
+          aria-label={o.label}
           onClick={() => setMode(o.v)}
           className={cx(
-            'inline-flex h-7 items-center gap-1 rounded-md px-2 text-[0.8125rem] font-semibold transition duration-150',
+            'inline-flex h-8 items-center gap-1 rounded-md px-2 text-[0.8125rem] font-semibold transition duration-150',
             mode === o.v ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:text-slate-900',
           )}
         >
           {o.icon}
-          {o.label}
+          <span className={cx(iconOnly === 'always' && 'sr-only', iconOnly === 'below-2xl' && 'sr-only 2xl:not-sr-only')}>{o.label}</span>
         </button>
       ))}
     </div>

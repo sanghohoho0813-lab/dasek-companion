@@ -8,7 +8,7 @@ import * as D from './domain';
 import type { AppState, ArtSpec, CafeCat, CatPhoto, FactField, LoyaltyRule, MenuItem, Store } from './types';
 import { addDays, DAY, dailyCheckinCode, dayKey, mulberry32 } from './util';
 
-export const SCHEMA_VERSION = 4;
+export const SCHEMA_VERSION = 5;
 const NAVER_SRC = '사용자 제공 네이버 플레이스 공개정보 (2026-11-17)';
 
 const fact = <T = string>(value: NoInfer<T> | null, evidence: FactField['evidence'], source: string, checkedAt: string | null = null): FactField<T> => ({ value, evidence, source, checkedAt });
@@ -149,8 +149,8 @@ function baseState(nowIso: string): AppState {
     ],
     stores,
     profiles: [
-      { id: 'op_manager', name: '운영 책임자 (데모)', role: 'manager', memberCode: 'OP-0001', phoneHash: null, phoneLast4: null, storeIds: ['store_dasek', 'store_realsicdan'], referralCode: null, createdAt: addDays(nowIso, -60), isDemo: true, status: 'active', preferredBrands: [] },
-      { id: 'op_staff', name: '매장 직원 (데모)', role: 'staff', memberCode: 'OP-0002', phoneHash: null, phoneLast4: null, storeIds: ['store_dasek', 'store_realsicdan'], referralCode: null, createdAt: addDays(nowIso, -60), isDemo: true, status: 'active', preferredBrands: [] },
+      { id: 'op_manager', name: '김서윤', title: '대표', role: 'manager', memberCode: 'OP-0001', phoneHash: null, phoneLast4: null, storeIds: ['store_dasek', 'store_realsicdan'], referralCode: null, createdAt: addDays(nowIso, -60), isDemo: true, status: 'active', preferredBrands: [] },
+      { id: 'op_staff', name: '매장 직원', title: null, role: 'staff', memberCode: 'OP-0002', phoneHash: null, phoneLast4: null, storeIds: ['store_dasek', 'store_realsicdan'], referralCode: null, createdAt: addDays(nowIso, -60), isDemo: true, status: 'active', preferredBrands: [] },
     ],
     consents: [],
     menuCategories: [

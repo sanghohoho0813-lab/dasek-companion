@@ -22,6 +22,11 @@ function load(): AppState {
     if (raw) {
       const parsed = JSON.parse(raw) as AppState;
       if (parsed.schemaVersion === SCHEMA_VERSION) return parsed;
+      const migrated = migrate(parsed);
+      if (migrated) {
+        persist(migrated);
+        return migrated;
+      }
     }
   } catch {
     /* 손상·접근 불가 시 새 시드 */
@@ -29,6 +34,21 @@ function load(): AppState {
   const seeded = createSeed();
   persist(seeded);
   return seeded;
+}
+
+/** 이전 버전 저장 데이터를 지우지 않고 올린다 (시연 기록 보존). 모르는 버전이면 null → 새 시드 */
+export function migrate(prev: AppState): AppState | null {
+  if (prev.schemaVersion === 4) {
+    const s = { ...prev, schemaVersion: SCHEMA_VERSION } as AppState;
+    // v5: 운영자 기본 프로필(DEMO) — 이름을 바꾼 적이 없을 때만 새 기본값으로
+    s.profiles = prev.profiles.map((p) => {
+      if (p.id === 'op_manager' && p.name === '운영 책임자 (데모)') return { ...p, name: '김서윤', title: '대표' };
+      if (p.id === 'op_staff' && p.name === '매장 직원 (데모)') return { ...p, name: '매장 직원', title: null };
+      return p;
+    });
+    return s;
+  }
+  return null;
 }
 
 function persist(s: AppState) {
